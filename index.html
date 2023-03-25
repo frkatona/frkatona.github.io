@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Clickable Cube</title>
+	<title>Click the Cube</title>
 	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
 		canvas {
-			border: 1px solid black;
+			display: block;
+			margin: auto;
+			background-color: #222;
 		}
 	</style>
 </head>
 <body>
-	<canvas id="canvas" width="500" height="500"></canvas>
+	<canvas id="canvas"></canvas>
+
+	<audio id="bg-music" src="bgmusic.wav" loop></audio>
 	<script src="script.js"></script>
 </body>
 </html>
