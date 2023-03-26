@@ -1,25 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Click the Cube</title>
-	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-			padding: 0;
-		}
-
-		canvas {
-			display: block;
-			margin: auto;
-			background-color: #222;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish Home Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
 </head>
 <body>
-	<canvas id="canvas"></canvas>
-
-	<audio id="bg-music" src="bgmusic.wav" loop></audio>
-	<script src="script.js"></script>
+	<div class="sidebar">
+        <div class="sidebar-tab">
+            <span>&#x25C0;</span>
+        </div>
+        <div class="bio">
+            <img src="https://via.placeholder.com/100x100" alt="Profile picture">
+            <h3>Hey hi hello it's me yes hi</h3>
+        </div>
+        <button>Button 1</button>
+        <button>Button 2</button>
+        <button>Button 3</button>
+        <div class="social-media">
+            <a href="https://www.facebook.com/anthony.p.katona/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com/FRKatona" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/akatona8/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.instagram.com/anthonyphillipkatona/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.deviantart.com/frkatona" target="_blank"><i class="fab fa-deviantart"></i></a>
+            <a href="https://github.com/frkatona" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://soundcloud.com/anthony-phillip-katona/" target="_blank"><i class="fab fa-soundcloud"></i></a>
+            <a href="https://open.spotify.com/artist/3y4NQcSLdOR1YGWKhEbmHy?si=8fVnoXfCRl61DnbVYepZFA" target="_blank"><i class="fab fa-spotify"></i></a>
+        </div>
+    </div>
+    <div class="content">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="banner">
+                <div class="banner-text">
+                    <h1>Anthony's WIP</h1>
+                    <p>professional portfolio and personal playground</p>
+                </div>
+            </section>
+            
+            <div class="centered-head">
+                <h1>Recent Projects</h1>
+            </div>
+            
+            <section class="thumbnails">
+                <div class="thumbnail-container">
+                    <img src="https://via.placeholder.com/300x200" alt="Placeholder thumbnail 1">
+                    <h3>Box Clicker</h3>
+                    <a href="Cubeclicker\boxclicker.html">Explore</a>
+                </div>
+                <div class="thumbnail-container">
+                    <img src="https://via.placeholder.com/300x200" alt="Placeholder thumbnail 2">
+                    <h3>MIDI Controller</h3>
+                    <a href="#">Explore</a>
+                </div>
+                <div class="thumbnail-container">
+                    <img src="https://via.placeholder.com/300x200" alt="Placeholder thumbnail 3">
+                    <h3>Graphing</h3>
+                    <a href="#">Explore</a>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2023 Stylish Home Page. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
