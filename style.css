@@ -39,11 +39,12 @@ nav ul li a:hover {
   margin-top: 20px
 }
 .banner {
-  background-image: url("https://via.placeholder.com/1920x600");
+  /* background-image: url("https://via.placeholder.com/1920x600"); */
+  background-image: url("images/toothmuseum.png");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain; /* Changed from 'cover' to 'contain' */
   height: 600px;
   display: flex;
   justify-content: center;

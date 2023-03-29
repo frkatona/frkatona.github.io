@@ -33,8 +33,8 @@ function drawScatterplot(data) {
   const x = d3.scaleLinear().range([0, width]);
   const y = d3.scaleLinear().range([height, 0]);
 
-  x.domain(d3.extent(data, d => d.x));
-  y.domain(d3.extent(data, d => d.y));
+  x.domain(d3.extent(data, d => +d.x));
+  y.domain(d3.extent(data, d => +d.y));
 
   // Set axes
   const xAxis = d3.axisBottom(x);
@@ -47,28 +47,35 @@ function drawScatterplot(data) {
     .call(xAxis);
 
   svg.append("g")
-  .attr("class", "y axis")
-  .call(yAxis);
+    .attr("class", "y axis")
+    .call(yAxis);
 
-// Append data points
-svg.selectAll(".dot")
-  .data(data)
-  .enter()
-  .append("circle")
-  .attr("class", "dot")
-  .attr("r", 5)
-  .attr("cx", d => x(d.x))
-  .attr("cy", d => y(d.y))
-  .attr("fill", "steelblue");
+  // Append data points
+  const dots = svg.selectAll(".dot")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("class", "dot")
+    .attr("r", 5)
+    .attr("cx", d => x(+d.x))
+    .attr("cy", d => y(+d.y))
+    .attr("fill", "steelblue")
+    .on("mouseover", function (d) {
+      d3.select(this).attr("r", 8).style("fill", "red");
+    })
+    .on("mouseout", function (d) {
+      d3.select(this).attr("r", 5).style("fill", "steelblue");
+    });
 
-// Append axis labels
-svg.append("text")
-  .attr("text-anchor", "middle")
-  .attr("transform", "translate(" + (-margin.left / 1.5) + "," + (height / 2) + ")rotate(-90)")
-  .text("Y Axis Label");
+  // Append axis labels
+  svg.append("text")
+    .attr("text-anchor", "middle")
+    .attr("transform", "translate(" + (-margin.left / 1.5) + "," + (height / 2) + ")rotate(-90)")
+    .text("Y Axis Label");
 
-svg.append("text")
-  .attr("text-anchor", "middle")
-  .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom / 1.5) + ")")
-  .text("X Axis Label");
+  svg.append("text")
+    .attr("text-anchor", "middle")
+    .attr("transform", "translate(" + (width / 2) + "," + (height + margin.bottom / 1.5) + ")")
+    .text("X Axis Label");
 }
+

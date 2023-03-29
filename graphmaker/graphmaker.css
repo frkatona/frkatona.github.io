@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #eee;
+    background-color: #d5d5d5;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -9,7 +9,7 @@ body {
   }
   
   .container {
-    background-color: #fff;
+    background-color: #d5d5d5;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -25,11 +25,31 @@ body {
   .axis line,
   .axis path {
     fill: none;
-    stroke: #000;
+    stroke: #ffffff;
     shape-rendering: crispEdges;
   }
   
   .dot {
     fill: steelblue;
     stroke: #fff;
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  
+  nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 24px;
+    transition: color 0.3s;
+  }
+  
+  nav a:hover {
+    color: #9c9c9c;
   }
