@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSV Scatterplot</title>
-  <link rel="stylesheet" href="graphmaker.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Scatterplot</title>
+    <link rel="stylesheet" href="graphmaker.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-  <nav>
-    <a href="../index.html">Home</a>
-  </nav>
-  <div class="container">
-    <div id="my_dataviz"></div>
-    <input type="file" id="csv-file" accept=".csv">
+    <h1>IR Correction and Band Integration</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+    </nav>
+    <div class="toggle-container">
+      <input type="checkbox" id="dark-mode-toggle" class="toggle" checked>
+      <label for="dark-mode-toggle" class="toggle-label"></label>
+    </div>
+    <input type="file" id="csvFile" accept=".csv" />
     <div id="scatterplot"></div>
-  </div>
-  <script src="https://d3js.org/d3.v7.js"></script>
-  <script src="graphmaker.js"></script>
+
+    <script src="graphmaker.js"></script>
 </body>
 </html>
