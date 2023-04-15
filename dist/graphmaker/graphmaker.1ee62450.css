@@ -1,0 +1,103 @@
+body {
+  height: 100vh;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+h1 {
+  vertical-align: text-top;
+  margin: 10px;
+  font-size: 50px;
+}
+
+p {
+  margin: 0;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
+
+body.dark-mode {
+  color: #dedede74;
+  background-color: #333;
+}
+
+body.dark-mode .box {
+  background-color: #006bb2;
+}
+
+.toggle-container {
+  position: fixed;
+  top: 40px;
+  right: 10px;
+}
+
+.toggle {
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.toggle-label {
+  width: 60px;
+  height: 34px;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: background-color .2s;
+  display: block;
+  position: relative;
+}
+
+.toggle-label:before {
+  content: "";
+  width: 26px;
+  height: 26px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform .2s;
+  display: block;
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+}
+
+.toggle:checked + .toggle-label {
+  background-color: #2196f3;
+}
+
+.toggle:checked + .toggle-label:before {
+  transform: translateX(26px);
+}
+
+nav {
+  width: 100%;
+  z-index: 1;
+  background-color: #00000080;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+nav a {
+  color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+  transition: color .3s;
+}
+
+nav a:hover {
+  color: #9c9c9c;
+}
+
+/*# sourceMappingURL=graphmaker.1ee62450.css.map */

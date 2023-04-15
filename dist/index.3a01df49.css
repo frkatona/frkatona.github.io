@@ -1,0 +1,231 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+header {
+  background: #333;
+  padding: 1rem;
+}
+
+nav ul {
+  justify-content: center;
+  list-style: none;
+  display: flex;
+}
+
+nav ul li a {
+  color: #fff;
+  padding: .5rem 1rem;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  background: #444;
+}
+
+.centered-head {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  display: flex;
+}
+
+.banner {
+  height: 600px;
+  background-image: url("toothmuseum.86bc3229.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-attachment: fixed;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-text {
+  color: #fff;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.banner-text h1 {
+  margin-bottom: 1rem;
+  font-size: 48px;
+}
+
+.banner-text p {
+  font-size: 24px;
+}
+
+.banner:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: #00000080;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.thumbnails {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  display: flex;
+}
+
+.thumbnail-container {
+  width: 300px;
+  text-align: center;
+  background: #f4f4f4;
+  border-radius: 5px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px #0000001a;
+}
+
+.thumbnail-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.thumbnail-container h3 {
+  margin: 1rem 0;
+}
+
+.thumbnail-container a {
+  color: #fff;
+  background: #333;
+  border-radius: 5px;
+  padding: .5rem 1rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.thumbnail-container a:hover {
+  background: #444;
+}
+
+footer {
+  color: #fff;
+  text-align: center;
+  background: #333;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.bio {
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.bio img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.bio h3 {
+  color: #fff;
+  margin-bottom: .5rem;
+  font-size: 18px;
+}
+
+.bio p {
+  color: #ccc;
+  text-align: center;
+  font-size: 14px;
+}
+
+.sidebar-tab {
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  cursor: pointer;
+  background-color: #333;
+  border-radius: 0 5px 5px 0;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  transform: translateY(-50%);
+}
+
+.sidebar {
+  z-index: 1000;
+  background-color: #333;
+  border-radius: 0 10px 10px 0;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  transition: left .3s ease-in-out;
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: -245px;
+  transform: translateY(-50%);
+}
+
+.sidebar:hover {
+  left: 0;
+}
+
+.sidebar button {
+  color: #fff;
+  cursor: pointer;
+  background-color: #444;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color .3s ease-in-out;
+}
+
+.sidebar button:hover {
+  background-color: #555;
+}
+
+.content {
+  transition: margin-left .3s ease-in-out;
+}
+
+.social-media {
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+  display: flex;
+}
+
+.social-media a {
+  color: #fff;
+  font-size: 24px;
+  transition: color .3s ease-in-out;
+}
+
+.social-media a:hover {
+  color: #ccc;
+}
+
+/*# sourceMappingURL=index.3a01df49.css.map */

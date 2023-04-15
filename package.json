@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "gridstack": "^7.3.0",
+    "jzz-midi-smf": "^1.7.3"
+  }
+}

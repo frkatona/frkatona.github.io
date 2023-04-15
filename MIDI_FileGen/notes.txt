@@ -1,0 +1,9 @@
+interface
+ - visual blocks appear to auto-complete progression
+ - shows list of songs that use the chord progression or are close to it
+   - would need some kind of dictionary of songs with chord progressions
+
+later
+ - play a sine wave simulation of chord progression w/ volume/bpm sliders
+ - creative sliders (voicing/leading, extensions, mode mixture, etc.)
+ - would 3/4 be hard?
