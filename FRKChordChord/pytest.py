@@ -28,13 +28,11 @@ base_chords = {
 }
 
 extensions = {
-    'min7': 10,
-    'dom7': 10,
-    '7': 10,
-    'maj7': 11,
+    '7': np.array([10]),
+    '9': np.array([10, 14]),
+    '11': np.array([10, 14, 17]),
+    '13': np.array( [10, 14, 17, 21])
 }
-
-MIDI_C = 60
 
 key_adjustment = {
     'C':0,
@@ -51,42 +49,106 @@ key_adjustment = {
     'B':11
 }
 
-test_chord = 'bIII_maj7_b5'
-numeral_list = test_chord.split('_') #input('enter chord: ').split('_')
+MIDI_C = 60
 
-## check for (1) flatted, (2) root/quality, (3) extensions/adds, (4) alterations/suspensions, (5) slashes(bass note)
+def MakeChord(chord_name):
+    '''take chord name and use it to output chord interval array'''
 
-## (1) START WITH ROOT NOTES & CHECK FOR/APPLY FLAT ##
-if numeral_list[0][0] == 'b':
-    chord = base_chords[numeral_list[0][1:].upper()] - 1
-else:
-    chord = base_chords[numeral_list[0]]
+    numeral_list = chord_name.split('_')
+    prior_extension = False
+    slash = 0
 
-## (2) CHECK FOR/APPLY MINOR ##
-if numeral_list[0].lower() != numeral_list[0][1:]:
-    chord[1] -= 1
+    ## (1) START WITH ROOT NOTES & CHECK FOR/APPLY FLAT ##
+    if numeral_list[0][0] == 'b':
+        chord = base_chords[numeral_list[0][1:].upper()] - 1
+    else:
+        chord = base_chords[numeral_list[0].upper()]
 
-## (3) CHECK FOR EXTENSIONS/ADDS AND ALTERATIONS/SUSPENSIONS ##
-for i in numeral_list[1:]:
-    for j in extensions:
-        if i.lower() == j.lower:
-            chord.append(extensions[j])
-            break
-    if i.lower()[0:3] == 'sus2':
-        chord[1] = chord[0] + 2
-    elif i.lower()[0:2] == 'sus':
-        chord[1] = chord[0] + 5
-    elif i.lower()[0:2] == 'add':
-        
+    ## (2) CHECK FOR/APPLY MINOR ##
+    if numeral_list[0][1:].lower() == numeral_list[0][1:]:
+        chord[1] -= 1
+
+    ## (3) CHECK FOR EXTENSIONS/ADDS AND ALTERATIONS/SUSPENSIONS ##
+    for i in numeral_list[1:]:
+        for j in extensions:
+            if i[-1] == j[-1]: 
+                # e.g., C_maj9_#13
+                # (1): if no departures --> append
+                # (2): if sharp/flat, check for previous extension trigger:
+                    # yes: just add that interval
+                    # no: add the whole 
 
 
-print(chord)
+                # if no departures, append unaltered extension list
+                if i.lower() == j.lower(): 
+                    chord = np.append(chord, chord[0]+extensions[j])
+                    prior_extension = True
 
-## (4) CHECK FOR SLASHES ##
+                ## assess for adds and maj modifiers
+                if i.lower()[0:3] == 'add':
+                    chord = np.append(chord, chord[0]+extensions[j][-1]) # append last item in extension entry list
+                elif i.lower()[0:3] == 'maj':
+                    major_extension = extensions[j]
+                    major_extension[0] = 11
+                    chord = np.append(chord, (chord[0] + major_extension))
+                    prior_extension = True
 
+                
+                ## if there is an additional first character, assess for sharpened/flatted extension
+                if i[1:] == j: 
+                    if i[0] == '#':
+                        alteration = 1
+                    else:
+                        alteration = -1
+                    if prior_extension == False:
+                        altered_extension = np.append(extensions[j][:-1], (extensions[j][-1] + alteration))
+                    else:
+                        altered_extension = extensions[j][-1] + alteration
+                    chord = np.append(chord, (altered_extension))
+
+        ## assess for sus and altered 5 modifiers
+        if i.lower()[0:4] == 'sus2':
+            chord[1] = chord[0] + 2
+        elif i.lower()[0:3] == 'sus':
+            chord[1] = chord[0] + 5
+        elif i[-1] == '5':
+            if i[0] == '#':
+                chord[2] += 1
+            elif i[0] == 'b':
+                chord[2] -=1
+
+        ## (4) CHECK FOR SLASHES ##
+        if i[0] == '/':
+            slash = i[1:]
+    
+    return(chord, slash) #slash
+
+def ModifyVoicing (chord, slash, min_interval):
+    '''transpose notes to change voicing'''
+    i = 1
+    while i < len(chord):
+        interval = (chord[i] - chord[i-1])
+        if chord[i] == int(slash):
+            chord[i] -= 12
+        if interval < min_interval:
+            chord[i] -= 12
+            for j in chord:
+                if j < chord[i]:
+                    chord[i] -= 12
+        i += 1
+
+    return(chord)
+
+def basenote_to_MIDInote(note, key):
+    '''take relative-interval note and convert to MIDI note in given key'''
+    midi_note = note + MIDI_C + key_adjustment[key]
+    # midi_command = noteOn(midi_note, duration), noteOff(midi_note, duration)
 
 key = 'C'
 
-def basenote_to_MIDInote(note, key):
-    midi_note = note + MIDI_C + key_adjustment[key]
-    # midi_command = noteOn(midi_note, duration), noteOff(midi_note, duration)
+test_chord = 'I_7_#9_/10'
+min_interval = 5
+
+chord, slash = MakeChord(test_chord)
+print(chord, slash)
+print(ModifyVoicing(chord, slash, min_interval))
