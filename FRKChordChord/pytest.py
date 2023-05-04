@@ -72,12 +72,6 @@ def MakeChord(chord_name):
     for i in numeral_list[1:]:
         for j in extensions:
             if i[-1] == j[-1]: 
-                # e.g., C_maj9_#13
-                # (1): if no departures --> append
-                # (2): if sharp/flat, check for previous extension trigger:
-                    # yes: just add that interval
-                    # no: add the whole 
-
 
                 # if no departures, append unaltered extension list
                 if i.lower() == j.lower(): 
@@ -123,6 +117,7 @@ def MakeChord(chord_name):
     
     return(chord, slash) #slash
 
+
 def ModifyVoicing (chord, slash, min_interval):
     '''transpose notes to change voicing'''
     i = 1
@@ -139,16 +134,18 @@ def ModifyVoicing (chord, slash, min_interval):
 
     return(chord)
 
-def basenote_to_MIDInote(note, key):
+def Relative_to_MIDI(note, key):
     '''take relative-interval note and convert to MIDI note in given key'''
     midi_note = note + MIDI_C + key_adjustment[key]
-    # midi_command = noteOn(midi_note, duration), noteOff(midi_note, duration)
+    midi_command = noteOn(midi_note, duration), noteOff(midi_note, duration)
+
 
 key = 'C'
-
-test_chord = 'I_7_#9_/10'
 min_interval = 5
+test_chord = 'I_7_#9_/10'
 
 chord, slash = MakeChord(test_chord)
+modified_chord = ModifyVoicing(chord, slash, min_interval)
+
 print(chord, slash)
-print(ModifyVoicing(chord, slash, min_interval))
+print(modified_chord)
