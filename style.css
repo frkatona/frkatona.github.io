@@ -33,15 +33,14 @@ nav ul li a:hover {
 .centered-head {
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px
+  margin-top: 0px;
+  color: #dce2ed;
+  font-size: 40px;
+  font-family: 'Roboto', sans-serif;
 }
 .banner {
-  /* background-image: url("https://via.placeholder.com/1920x600"); */
-  background-image: url("images/toothmuseum.png");
-  height: 100vh; /* 100% of the viewport height */
+  background-image: url("../images/toothmuseum.PNG");
+  height: 100vh;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -142,9 +141,54 @@ nav ul li a:hover {
 }
 
 #resume-icon{
-  margin-top: 75px;
+  margin-top: 100px;
   width: 70px;
   align-items: center;
+}
+
+.about-section {
+  border-top: 10px solid #7a7a7a;
+  background-color: #595959;
+  padding: 50px 0;
+  color: #c2c2c2;
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.about-section p1 {
+  font-size: 18px;
+}
+
+.about-section p2 {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  font-size: 18px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
 }
 
 footer {
@@ -256,20 +300,27 @@ footer {
   color: #ccc;
 }
 
-.timeline {
-  width: 100%;
-  margin-bottom: 50px;
+.timeline-container {
+  background-color: #252525;
+  position: relative;
+  border-top: 10px solid #7a7a7a;
+  overflow: hidden;
 }
 
-.timeline-container {
-  position: relative;
+.timeline {
+  position:relative;
+  width: 100%;
   padding: 50px 0;
 }
 
-.timeline-point {
+.timeline-content {
   position: relative;
-  padding: 20px;
-  /* opacity: 0; */
+  z-index: 1;
+}
+
+.timeline-point {
+  color: #fff;
+  padding: 30px;
   transform: translateY(50px);
   transition: opacity 1s, transform 1s;
 }
@@ -282,10 +333,42 @@ footer {
   width: 100%;
   height: 2px;
   background-color: #ccc;
-  z-index: -1;
+  z-index: 1;
 }
 
 .timeline-point:first-child::before {
   top: 50%;
   height: 1px;
+}
+
+.rotating-background {
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dot {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.small-dot {
+  width: 2px;
+  height: 2px;
+}
+
+.medium-dot {
+  width: 4px;
+  height: 4px;
+}
+
+.large-dot {
+  width: 6px;
+  height: 6px;
 }

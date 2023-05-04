@@ -74,28 +74,66 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Timeline scroll animation
 
-    // // Initialize ScrollMagic
-    // const controller = new ScrollMagic.Controller({ globalSceneOptions: { triggerHook: 0.9 } });
+    // Initialize ScrollMagic
+    const controller = new ScrollMagic.Controller({ globalSceneOptions: { triggerHook: 0.9 } });
 
-    // // Get all elements with data-animation attribute
-    // const timelinePoints = document.querySelectorAll(".timeline-point[data-animation]");
+    // Get all elements with data-animation attribute
+    const timelinePoints = document.querySelectorAll(".timeline-point[data-animation]");
 
-    // // Loop through each element and create a scene
-    // timelinePoints.forEach((point) => {
-    //     const animation = point.getAttribute("data-animation");
+    // Loop through each element and create a scene
+    timelinePoints.forEach((point) => {
+        const animation = point.getAttribute("data-animation");
 
-    //     // Create a GSAP timeline for the animation
-    //     const timeline = gsap.timeline();
-    //     timeline.from(point, { duration: 1, y: 50, autoAlpha: 0 });
+        // Create a GSAP timeline for the animation
+        const timeline = gsap.timeline();
+        timeline.from(point, { duration: 1, y: 50, autoAlpha: 0 });
 
-    //     // Create a ScrollMagic scene
-    //     const scene = new ScrollMagic.Scene({
-    //         triggerElement: point,
-    //         reverse: false,
-    //         // offset: -200, // Remove or comment this line
-    //     })
-    //         .setTween(timeline)
-    //         .addTo(controller);
+        // Create a ScrollMagic scene
+        const scene = new ScrollMagic.Scene({
+            triggerElement: point,
+            reverse: false,
+            offset: -100, //
+        })
+            .setTween(timeline)
+            .addTo(controller);
+    });
+
+
+    // Rotating stars animation
+
+    const rotatingBackground = document.querySelector(".rotating-background");
+    const numDots = 50;
+
+    // Create and position the dots
+    for (let i = 0; i < numDots; i++) {
+        const dot = document.createElement("div");
+        dot.classList.add("dot");
+        dot.classList.add(Math.random() > 0.5 ? (Math.random() > 0.5 ? "small-dot" : "medium-dot") : "large-dot");
+        dot.style.left = Math.random() * 100 + "%";
+        dot.style.top = Math.random() * 100 + "%";
+        rotatingBackground.appendChild(dot);
+    }
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let centerX = window.innerWidth / 2;
+    let centerY = window.innerHeight / 2;
+
+    // // Update mouse coordinates
+    // document.addEventListener("mousemove", (e) => {
+    //     mouseX = e.clientX;
+    //     mouseY = e.clientY;
     // });
 
+    // // Rotate the background based on cursor position
+    // function update() {
+    //     const deltaX = centerX - mouseX;
+    //     const deltaY = centerY - mouseY;
+    //     const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+    //     rotatingBackground.style.transform = `rotate(${angle}deg)`;
+
+    //     requestAnimationFrame(update);
+    // }
+
+    // update();
 });
