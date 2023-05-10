@@ -98,42 +98,56 @@ document.addEventListener("DOMContentLoaded", function() {
             .addTo(controller);
     });
 
+    // Dots animation
+    var canvas = document.getElementById('dotCanvas');
+    var ctx = canvas.getContext('2d');
 
-    // Rotating stars animation
-
-    const rotatingBackground = document.querySelector(".rotating-background");
-    const numDots = 50;
-
-    // Create and position the dots
-    for (let i = 0; i < numDots; i++) {
-        const dot = document.createElement("div");
-        dot.classList.add("dot");
-        dot.classList.add(Math.random() > 0.5 ? (Math.random() > 0.5 ? "small-dot" : "medium-dot") : "large-dot");
-        dot.style.left = Math.random() * 100 + "%";
-        dot.style.top = Math.random() * 100 + "%";
-        rotatingBackground.appendChild(dot);
+    function setCanvasSize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let centerX = window.innerWidth / 2;
-    let centerY = window.innerHeight / 2;
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
 
-    // // Update mouse coordinates
-    // document.addEventListener("mousemove", (e) => {
-    //     mouseX = e.clientX;
-    //     mouseY = e.clientY;
-    // });
+    var dots = [];
 
-    // // Rotate the background based on cursor position
-    // function update() {
-    //     const deltaX = centerX - mouseX;
-    //     const deltaY = centerY - mouseY;
-    //     const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-    //     rotatingBackground.style.transform = `rotate(${angle}deg)`;
+    function Dot() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.dx = Math.random() - 0.5;
+        this.dy = Math.random() - 0.5;
 
-    //     requestAnimationFrame(update);
-    // }
+        this.draw = function() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, 0, Math.PI * 2, false);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+        }
 
-    // update();
+        this.update = function() {
+            this.x += this.dx;
+            this.y += this.dy;
+
+            if (this.x < 0 || this.x > canvas.width) this.dx = -this.dx;
+            if (this.y < 0 || this.y > canvas.height) this.dy = -this.dy;
+
+            this.draw();
+        }
+    }
+
+    for (var i = 0; i < 100; i++) {
+        dots.push(new Dot());
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < dots.length; i++) {
+            dots[i].update();
+        }
+    }
+
+    animate();
 });

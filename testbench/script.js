@@ -1,22 +1,51 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const starContainers = document.querySelectorAll('.star-container');
-    const nightSky = document.querySelector('.night-sky');
-    const starsContainer = document.querySelector('.stars-container');
+var canvas = document.getElementById('dotCanvas');
+var ctx = canvas.getContext('2d');
 
-    starContainers.forEach((starContainer, index) => {
-        const angle = (index / starContainers.length) * 2 * Math.PI;
-        const distance = 50 + Math.random() * 100; // Adjust this value to change the distance of the dots from the pivot point
-        const x = 150 + distance * Math.cos(angle);
-        const y = 150 + distance * Math.sin(angle);
+function setCanvasSize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 
-        starContainer.style.transform = `translate(${x}px, ${y}px)`;
-    });
+setCanvasSize();
+window.addEventListener('resize', setCanvasSize);
 
-    nightSky.addEventListener('mousemove', (event) => {
-        const x = (event.clientX - starsContainer.clientWidth / 2) / 15; // Reduce the value 15 to move the pivot point more towards the cursor
-        const y = (event.clientY - starsContainer.clientHeight / 2) / 15; // Reduce the value 15 to move the pivot point more towards the cursor
+var dots = [];
 
-        starsContainer.style.left = `calc(50% + ${x}px)`;
-        starsContainer.style.top = `calc(50% + ${y}px)`;
-    });
-});
+function Dot() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.dx = Math.random() - 0.5;
+    this.dy = Math.random() - 0.5;
+
+    this.draw = function() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2, false);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+    }
+
+    this.update = function() {
+        this.x += this.dx;
+        this.y += this.dy;
+
+        if (this.x < 0 || this.x > canvas.width) this.dx = -this.dx;
+        if (this.y < 0 || this.y > canvas.height) this.dy = -this.dy;
+
+        this.draw();
+    }
+}
+
+for (var i = 0; i < 100; i++) {
+    dots.push(new Dot());
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (var i = 0; i < dots.length; i++) {
+        dots[i].update();
+    }
+}
+
+animate();

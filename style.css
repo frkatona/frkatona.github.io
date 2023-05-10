@@ -90,7 +90,7 @@ nav ul li a:hover {
 .thumbnail-container {
   width: 300px;
   text-align: center;
-  background: #f4f4f4;
+  background: #7d7d7d;
   padding: 1rem;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -184,8 +184,9 @@ nav ul li a:hover {
 }
 
 .projects {
-  display: flex;
-  flex-wrap: wrap;
+  border-top: 10px solid #7a7a7a;
+  background-color: #595959;
+  color: aliceblue;
   justify-content: center;
   gap: 1rem;
   padding: 2rem;
@@ -371,4 +372,18 @@ footer {
 .large-dot {
   width: 6px;
   height: 6px;
+}
+
+#dotCanvas {
+  z-index: 1;
+}
+
+.dottext {
+  position: relative;
+  z-index: 2;
+  color: #5a5a5a; /* Ensure your text color contrasts with the dot color */
+}
+
+.dotcontainer {
+  position: relative;
 }

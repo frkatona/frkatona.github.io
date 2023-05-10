@@ -1,44 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-.dot {
-  height: 25px;
-  width: 25px;
-  background-color: rgb(0, 0, 0);
-  border-radius: 50%;
-  display: inline-block;
-}
-</style>
-</head>
-<body>
-
-<div id="circle"></div>
-
-<script>
-const circle = document.getElementById("circle");
-const dots = [];
-const radius = 50;
-const numDots = 5;
-
-for (let i = 0; i < numDots; i++) {
-  const dot = document.createElement("span");
-  dot.classList.add("dot");
-  circle.appendChild(dot);
-  dots.push(dot);
-}
-
-document.addEventListener("mousemove", (e) => {
-  const x = e.clientX;
-  const y = e.clientY;
-
-  for (let i = 0; i < numDots; i++) {
-    const angle = (i / numDots) * Math.PI * 2;
-    dots[i].style.left = x + radius * Math.cos(angle) + "px";
-    dots[i].style.top = y + radius * Math.sin(angle) + "px";
-  }
-});
-</script>
-
-</body>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="container">
+			<canvas id="dotCanvas"></canvas>
+			<div class="text">
+				<h1>Your Text Here</h1>
+			</div>
+		</div>
+		
+		<p>test</p>
+		<script src="script.js" async defer></script>
+	</body>
 </html>
