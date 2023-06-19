@@ -1,0 +1,20 @@
+.chord {
+    border: 1px solid #ddd;
+    padding: 10px;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #ddd;
+}
+
+.chord-group {
+    margin-bottom: 20px;
+}
+
+.chord-group h2 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+}
