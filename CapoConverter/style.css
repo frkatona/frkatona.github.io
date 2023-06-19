@@ -1,20 +1,39 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+}
+
 .chord {
     border: 1px solid #ddd;
     padding: 10px;
-    display: inline-block;
     margin: 10px;
     cursor: pointer;
 }
 
 .selected {
-    background-color: #ddd;
+    background-color: #797979;
 }
 
 .chord-group {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 20px;
 }
 
-.chord-group h2 {
+.chord-group h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+}
+
+.output-group h2 {
     margin: 0 0 10px 0;
     font-size: 20px;
 }
