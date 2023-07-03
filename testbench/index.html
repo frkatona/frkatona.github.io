@@ -1,100 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>NMR Spectrum</title>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <style>
-    .axis path,
-    .axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-    }
-
-    .x.axis path {
-      display: none;
-    }
-
-    .line {
-      fill: none;
-      stroke: steelblue;
-      stroke-width: 1.5px;
-    }
-  </style>
+  <title>Lyrics with Chords</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <script>
-    var margin = {top: 20, right: 20, bottom: 30, left: 50},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+    <div id="metronome">
+      BPM: <span id="bpm">60</span>
+      <button id="playPause">Play</button>
+      <select id="timeSignatureSelect">
+        <option value="4">4/4</option>
+        <option value="3">3/4</option>
+      </select>
+    </div>
+    <!-- The rest of your code... -->
+  </body>
+  
+  <div id="controls">
+    <select id="songSelect"></select>
+    <button id="scrollButton">Start Scrolling</button>
+    <div id="cooldownProgress"></div>
+  </div>
 
-    var x = d3.scaleLinear()
-        .range([width, 0]);  // Reverse x-axis
+  <div class="content" id="content">
+  </div>
 
-    var y = d3.scaleLinear()
-        .range([height, 0]);
-
-    var xAxis = d3.axisBottom(x);
-
-    var yAxis = d3.axisLeft(y)
-        .tickFormat("");  // Remove y-axis units
-
-    var line = d3.line()
-        .curve(d3.curveCatmullRom.alpha(0.5))  // Smooth curve for line
-        .x(function(d) { return x(d.shift); })
-        .y(function(d) { return y(d.intensity); });
-
-    var svg = d3.select("body").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    var data = getNMRData('H2O');
-
-    x.domain(d3.extent(data, function(d) { return d.shift; }));
-    y.domain([0, d3.max(data, function(d) { return d.intensity; })]);
-
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-      .append("text")
-        .attr("fill", "#000")
-        .attr("y", -20)
-        .attr("x", width)
-        .attr("dy", "0.71em")
-        .attr("text-anchor", "end")
-        .text("Shift (ppm)");
-
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-
-    svg.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("d", line);
-
-    function getNMRData(molecule) {
-      var shifts = [1.5, 3.2, 7.4];
-      var intensities = [3, 2, 1];
-      var splitting = [2, 1, 3];
-      var data = [];
-
-      for (var i = 0; i < shifts.length; i++) {
-        var shiftStep = 0.05;
-
-        for (var j = 0; j < splitting[i]; j++) {
-          var shift = shifts[i] - shiftStep * (splitting[i] - 1) / 2 + shiftStep * j;
-          var intensity = intensities[i] * (1 - Math.abs(j - (splitting[i] - 1) / 2) / splitting[i]);
-          data.push({shift: shift, intensity: intensity});
-        }
-      }
-
-      return data;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

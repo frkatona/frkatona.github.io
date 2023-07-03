@@ -1,18 +1,91 @@
 body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-}
+    min-height: 100vh;
+    background: #f8f9fa;
+  }
+  .content {
+    text-align: center;
+    line-height: 1.5;
+    width: 80%;
+    margin: auto;
+  }
+  .line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .line .word {
+    position: relative;
+    margin: 0 5px;
+  }
+  .line .word .chord {
+    position: absolute;
+    top: -20px;
+    color: #0069d9;
+    font-weight: bold;
+  }
+  #scrollButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border: none;
+    background: #0069d9;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-input {
+  #metronome {
+    user-select: none;
+    position: fixed;
+    top: 10px;
+    left: 10px;
     padding: 10px;
-    margin-bottom: 10px;
-}
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+  }
+  
+  #metronome button,
+  #metronome select {
+    margin-left: 10px;
+  }
 
-button {
-    padding: 10px;
-}
+  #metronome span {
+    font-weight: bold;
+  }
+
+
+#controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+  }
+  
+  #cooldownProgress {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  
+  .section h3 {
+    font-size: 24px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+  
