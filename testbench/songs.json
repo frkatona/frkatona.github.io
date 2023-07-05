@@ -40,7 +40,7 @@
         },
         {
           "name": "Verse 1",
-          "lines": [
+          "lines": [[
             {"word": "You", "chord": "D"},
             {"word": "used", "chord": null},
             {"word": "to", "chord": "A"},
@@ -48,10 +48,37 @@
             {"word": "down", "chord": "D"},
             {"word": "the", "chord": null},
             {"word": "alley", "chord": null}
-          ]
+          ],
+          [
+            {"word": "You", "chord": "D"},
+            {"word": "used", "chord": null},
+            {"word": "to", "chord": "A"},
+            {"word": "walk", "chord": null},
+            {"word": "down", "chord": "D"},
+            {"word": "the", "chord": null},
+            {"word": "alley", "chord": null}
+          ],
+          [
+            {"word": "You", "chord": "D"},
+            {"word": "used", "chord": null},
+            {"word": "to", "chord": "A"},
+            {"word": "walk", "chord": null},
+            {"word": "down", "chord": "D"},
+            {"word": "the", "chord": null},
+            {"word": "alley", "chord": null}
+          ],
+          [
+            {"word": "You", "chord": "D"},
+            {"word": "used", "chord": null},
+            {"word": "to", "chord": "A"},
+            {"word": "walk", "chord": null},
+            {"word": "down", "chord": "D"},
+            {"word": "the", "chord": null},
+            {"word": "alley", "chord": null}
+          ]]
         },
         {
-            "name": "Verse 1",
+            "name": "Chorus",
             "lines": 
           [
             [

@@ -1,32 +1,36 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
+    margin: 5vh 0;
+    font-size: 2vw;
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
-    background: #f8f9fa;
+    background: #b7c6d6;
+    overflow: hidden;
   }
   .content {
     text-align: center;
     line-height: 1.5;
-    width: 80%;
+    width: 85%;
     margin: auto;
   }
   .line {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 3vh;
   }
   .line .word {
+    font-size: 3vw;
+    display: inline-block;
     position: relative;
-    margin: 0 5px;
+    margin-right: 1vw;
   }
   .line .word .chord {
     position: absolute;
-    top: -20px;
+    top: -2vh;
     color: #0069d9;
     font-weight: bold;
   }
@@ -45,15 +49,16 @@ body {
   #metronome {
     user-select: none;
     position: fixed;
-    top: 10px;
-    left: 10px;
+    bottom: 20px;
+    left: 20px;
     padding: 10px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
+    background-color: #6f7171;
+    border: 1px solid #ffffff;
     border-radius: 5px;
     transition: background-color 0.2s;
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   
   #metronome button,
@@ -70,7 +75,7 @@ body {
     position: fixed;
     bottom: 20px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-10%);
     z-index: 1000;
   }
   
@@ -83,9 +88,7 @@ body {
   }
   
   .section h3 {
-    font-size: 24px;
-    margin-top: 40px;
-    margin-bottom: 20px;
+    font-size: 8vw;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
   }
-  
-  
