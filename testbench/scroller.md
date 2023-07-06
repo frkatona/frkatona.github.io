@@ -1,14 +1,20 @@
 # to-do
- - metronome functionality with more style?
- - song name at top
- - be sure that it's scrollable back up or at least a button to help
- - animation for song list
- 
- 
+ ## additional functionality and bugs
+ - metronome functionality brainstorming
+    - circle flashing stop button?  
+    - stopwatch animation with 1,2,3,4 next to the first chord?
+ - subtle animation for song list panel
  - get global css working for dark mode
- - get metronome working and more intuitive and less obstructive for phone
- - get the font size working
- - make song selection more stylish and intuitive for picking songs during a live set
- - print a QR code link
- - add sections for key and capo and maybe a blurb about the song, Genius-style
- - replace text with icons (scrolling -> down arrow, metronome -> metronome icon)
+ - make it responsively readable for non-portrait-oriented phones
+ - "undefined" songs in panel
+ - scroll should stop on opening song panel
+ - hamburger icon too small on phone
+
+ ## Chelsea:
+ - come up with common-sense format for encoding line and chord changes for Chelsea to customizethat I can process into json after
+    - maybe like "\Am test test test \C test test \line etc."?
+
+ ## Audience/other users:
+ - landing page with link to Chelsea's artist IG
+ - create/print (engrave?) QR code link
+ - maybe a blurb about the song, Genius-style
