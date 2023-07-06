@@ -1,159 +1,262 @@
 [
-    {
-      "title": "Slowly",
-      "key": "Em",
-      "capo": 3,
-      "sections": [
-        {
-          "name": "Intro",
-          "lines": 
+  {
+    "title": "Better Than Nothing",
+    "key": "Cm -> Am",
+    "capo": 3,
+    "sections": [
+      {
+        "name": "Verse 1",
+        "lines": [
+          [{"word": "I don’t know if it’s you", "chord": "Am"}, {"word": "or it’s me", "chord": "F"}],
+          [{"word": "But I can’t seem", "chord": "Am"}, {"word": "to feel anything", "chord": "Dm7"}, {"word": "----------", "chord": "F"}],
+          [{"word": "When you say you love me", "chord": "Am"}, {"word": "It goes over my head", "chord": "F"}],
+          [{"word": "----------", "chord": "Am"}, {"word": "----------", "chord": "Dm7"}, {"word": "----------", "chord": "F"}, {"word": "----------", "chord": "Fsus2"}]
+    ]
+      },
+      {
+        "name": "Chorus",
+        "lines": [
           [
+            {"word": "To love and to lose is", "chord": "Am"},
+            {"word": "better than nothing", "chord": "F"}],
             [
-              {"word": "I remember when you", "chord": "Em"},
-              {"word": "touched me for the first", "chord": "G"},
-              {"word": "time", "chord": "C"}
-            ],
-            [
-              {"word": "Nothing compares to the", "chord": "Em"},
-              {"word": "anticipation of that first", "chord": "D"},
-              {"word": "night", "chord": "G"}
-            ],
-            [
-              {"word": "I feel", "chord": "G"},
-              {"word": "deep and", "chord": "D"},
-              {"word": "I pulled you", "chord": "Am"},
-              {"word": "down with me", "chord": "Em"}
-            ],
-            [
-              {"word": "Wish I hadn’t let you in", "chord": "C"}
-            ],
-            [
-              {"word": "Then I could let you go", "chord": "G"}
-            ],
-            [
-              {"word": "Wish I could start again", "chord": "C"}
-            ],
-            [
-              {"word": "Then I wouldn’t let you get so close", "chord": "G"}
-            ]
+            {"word": "But I lost you and", "chord": "Am"},
+            {"word": "you never loved me", "chord": "G"}
+          ],
+          [
+            {"word": "To go and come back", "chord": "Am"},
+            {"word": "means more than to stay", "chord": "F"}],[
+            {"word": "But you won’t come back", "chord": "Dm"},
+            {"word": "you weren’t here in the first place", "chord": "F"}
+          ],
+          [
+            {"word": "I don’t know if it’s you", "chord": "Am"},
+            {"word": "or it’s me but", "chord": "F"}],[
+            {"word": "I can’t seem", "chord": "Dm"},
+            {"word": "to feel anything", "chord": "F"}
+          ],
+          [
+            {"word": "When you say you love me", "chord": "Am"},
+            {"word": "it goes over my head", "chord": "F"}],[
+            {"word": "----------", "chord": "Dm"},
+            {"word": "----------", "chord": "Cadd9"}
           ]
-        },
-        {
-          "name": "Verse 1",
-          "lines": [[
-            {"word": "You", "chord": "D"},
-            {"word": "used", "chord": null},
-            {"word": "to", "chord": "A"},
-            {"word": "walk", "chord": null},
-            {"word": "down", "chord": "D"},
-            {"word": "the", "chord": null},
-            {"word": "alley", "chord": null}
-          ],
+        ]
+      },
+      {
+        "name": "Bridge",
+        "lines": [
           [
-            {"word": "You", "chord": "D"},
-            {"word": "used", "chord": null},
-            {"word": "to", "chord": "A"},
-            {"word": "walk", "chord": null},
-            {"word": "down", "chord": "D"},
-            {"word": "the", "chord": null},
-            {"word": "alley", "chord": null}
-          ],
-          [
-            {"word": "You", "chord": "D"},
-            {"word": "used", "chord": null},
-            {"word": "to", "chord": "A"},
-            {"word": "walk", "chord": null},
-            {"word": "down", "chord": "D"},
-            {"word": "the", "chord": null},
-            {"word": "alley", "chord": null}
-          ],
-          [
-            {"word": "You", "chord": "D"},
-            {"word": "used", "chord": null},
-            {"word": "to", "chord": "A"},
-            {"word": "walk", "chord": null},
-            {"word": "down", "chord": "D"},
-            {"word": "the", "chord": null},
-            {"word": "alley", "chord": null}
-          ]]
-        },
-        {
-            "name": "Chorus",
-            "lines": 
-          [
-            [
-              {"word": "I remember when you", "chord": "Em"},
-              {"word": "touched me for the first", "chord": "G"},
-              {"word": "time", "chord": "C"}
-            ],
-            [
-              {"word": "Nothing compares to the", "chord": "Em"},
-              {"word": "anticipation of that first", "chord": "D"},
-              {"word": "night", "chord": "G"}
-            ],
-            [
-              {"word": "I feel", "chord": "G"},
-              {"word": "deep and", "chord": "D"},
-              {"word": "I pulled you", "chord": "Am"},
-              {"word": "down with me", "chord": "Em"}
-            ],
-            [
-              {"word": "Wish I hadn’t let you in", "chord": "C"}
-            ],
-            [
-              {"word": "Then I could let you go", "chord": "G"}
-            ],
-            [
-              {"word": "Wish I could start again", "chord": "C"}
-            ],
-            [
-              {"word": "Then I wouldn’t let you get so close", "chord": "G"}
-            ]
+            {"word": "----------", "chord": "Gsus4"},
+            {"word": "----------", "chord": "Cadd9"},
+            {"word": "----------", "chord": "G7"},
+            {"word": "----------", "chord": "Cadd9"},
+            {"word": "----------", "chord": "F7"}
           ]
-          }      ]
-    },
-    {
-        "title": "Start Again",
-        "key": "Em",
-        "capo": 2,
-        "sections": [
-          {
-            "name": "Intro",
-            "lines": [
-              [
-                {"word": "You", "chord": "D"},
-                {"word": "used", "chord": null},
-                {"word": "to", "chord": "A"},
-                {"word": "walk", "chord": null},
-                {"word": "down", "chord": "D"},
-                {"word": "the", "chord": null},
-                {"word": "alley", "chord": null}
-              ]
-            ]
-          },
-          {
-            "name": "Verse 1",
-            "lines": [
-              {"word": "You", "chord": "D"},
-              {"word": "used", "chord": null},
-              {"word": "to", "chord": "A"},
-              {"word": "walk", "chord": null},
-              {"word": "down", "chord": "D"},
-              {"word": "the", "chord": null},
-              {"word": "alley", "chord": null}
-            ]
-          },
-          {
-              "name": "Verse 1",
-              "lines": [
-                {"word": "You", "chord": "D"},
-                {"word": "used", "chord": null},
-                {"word": "to", "chord": "A"},
-                {"word": "walk", "chord": null},
-                {"word": "down", "chord": "D"},
-                {"word": "the", "chord": null},
-                {"word": "alley", "chord": null}
-              ]
-            }      ]
+        ]
+      },
+      {
+        "name": "Verse 2",
+        "lines": [
+          [
+            {"word": "I wanted you from the", "chord": "Cadd9"},
+            {"word": "bottom of all of me. Loved you", "chord": "G7"}],[
+            {"word": "from the tips", "chord": "Cadd9"},
+            {"word": "of my fingers down into my bones", "chord": "F7"}
+          ],
+          [
+            {"word": "I felt you from the center", "chord": "Cadd9"},
+            {"word": "of everything", "chord": "G7"}],[
+            {"word": "In me, in a way,", "chord": "Cadd9"},
+            {"word": "that I didn’t know", "chord": "F7"}
+          ],
+          [
+            {"word": "It was possible for anyone", "chord": "Cadd9"},
+            {"word": "to love anyone", "chord": "G7"}],[
+            {"word": "But if you felt", "chord": "Cadd9"},
+            {"word": "the same way", "chord": "F7"},
+            {"word": "it didn’t show", "chord": ""}
+          ],
+          [
+            {"word": "You wanted me from what’s", "chord": "Cadd9"},
+            {"word": "broken inside of you", "chord": "G7"}],[
+            {"word": "You’re lonely from the tips", "chord": "Cadd9"}],[
+            {"word": "of your fingers down into your bones", "chord": "F7"}
+          ],
+          [
+            {"word": "You’re empty from the center", "chord": "Cadd9"},
+            {"word": "of everything", "chord": "G7"}],[
+            {"word": "In you, in a way,", "chord": "Cadd9"},
+            {"word": "that you’ll never fill", "chord": "F7"}
+          ],
+          [
+            {"word": "And it’s possible for anyone", "chord": "Cadd9"},
+            {"word": "to love anyone", "chord": "G7"}],[
+            {"word": "That’s the way you loved me", "chord": "Cadd9"},
+            {"word": "and it showed", "chord": "F7"}
+          ]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "lines": [
+          [
+            {"word": "To love and to lose", "chord": "Am"},
+            {"word": "Is better than nothing", "chord": "F"},
+            {"word": "But I lost you", "chord": "Am"}],[
+            {"word": "And you never loved me", "chord": "Dm7"},
+            {"word": "", "chord": "F"}
+          ],
+          [
+            {"word": "To go and come back", "chord": "Am"},
+            {"word": "Means more than to stay", "chord": "F"}],[
+            {"word": "But you won’t come back", "chord": "Am"},
+            {"word": "You weren’t here in the first place", "chord": "Dm7"},
+            {"word": "", "chord": "F"}
+          ],
+          [
+            {"word": "I don’t know if it’s you or it’s me", "chord": "Am"}],[
+            {"word": "But I can’t seem to feel anything", "chord": "F"}],[
+            {"word": "When you say you love me", "chord": "Am"},
+            {"word": "It goes over my head", "chord": "F"}
+          ]
+        ]
       }
-  ]
+    ]
+  },
+
+  
+  {
+    "title": "Start Again",
+    "key": "Em",
+    "capo": 2,
+    "sections": [
+      {
+        "name": "Verse 1",
+        "lines": [
+          [
+            {"word": "I remember when", "chord": "Em"},
+            {"word": "you touched me", "chord": "G"},
+            {"word": "for the first time", "chord": "C"}
+          ],
+          [
+            {"word": "Nothing compares to", "chord": "Em"},
+            {"word": "the anticipation of", "chord": "G"},
+            {"word": "that first night", "chord": "C"}
+          ],
+          [{"word": "I didn’t know then", "chord": "Em"}, {"word": "I could love you", "chord": "D"}],
+          [{"word": "Truth be told", "chord": "G"}, {"word": "it took awhile", "chord": ""}]
+        ]
+      },
+      {
+        "name": "Chorus 1",
+        "lines": [
+          [
+            {"word": "I fell deep and", "chord": "G"},
+            {"word": "I pulled you", "chord": "D"},
+            {"word": "down with me", "chord": "Am"},
+            {"word": "", "chord": "Em"}
+          ],
+          [
+            {"word": "Wish I hadn’t", "chord": "C"},
+            {"word": "let you in", "chord": "G"},
+            {"word": "Then I could", "chord": "C"},
+            {"word": "let you go", "chord": "G"}
+          ],
+          [
+            {"word": "Wish I could", "chord": "C"},
+            {"word": "start again", "chord": "G"},
+            {"word": "Then I wouldn’t", "chord": "C"},
+            {"word": "let you get", "chord": "G"},
+            {"word": "so close", "chord": ""}
+          ]
+        ]
+      }]},
+      {
+        "name": "Verse 2",
+        "lines": [
+          [
+            {"word": "I remember when", "chord": "Em"},
+            {"word": "you kissed me", "chord": "G"},
+            {"word": "for the last time", "chord": "C"}
+          ],
+          [
+            {"word": "Nothing compares to", "chord": "Em"},
+            {"word": "the cold resignation of", "chord": "G"},
+            {"word": "that last night", "chord": "C"}
+          ],
+          [
+            {"word": "I knew then", "chord": "Em"},
+            {"word": "what it was", "chord": "D"},
+            {"word": "to love you", "chord": "G"},
+            {"word": "Truth be told", "chord": ""},
+            {"word": "I hadn’t for awhile", "chord": ""}
+          ]
+        ]
+      },
+      {
+        "name": "Chorus 2",
+        "lines": [
+          [
+            {"word": "I fell deep and", "chord": "G"},
+            {"word": "I pulled you", "chord": "D"},
+            {"word": "down with me", "chord": "Am"},
+            {"word": "", "chord": "Em"}
+          ]]
+          },
+
+  {
+    "title": "Slowly",
+    "key": "Em",
+    "capo": 3,
+    "sections": [
+      {
+        "name": "Intro",
+        "lines": [
+          [{"word": "----------", "chord": "Em"}, {"word": "----------", "chord": "G"}, {"word": "----------", "chord": "C"}]
+        ]
+      },
+      {
+        "name": "Verse 1",
+        "lines": [
+          [{"word": "I felt God’s hands", "chord": "Em"}, {"word": "around my throat", "chord": "D"}],
+          [{"word": "They felt identical to yours", "chord": "G"}, {"word": "I started choking slowly", "chord": "Em"}],
+          [{"word": "Puncture and a slow leak", "chord": "G"}, {"word": "The moment I met you (x2)", "chord": "C"}]
+        ]
+      },
+      {
+        "name": "Verse 2",
+        "lines": [
+          [{"word": "I saw God burn", "chord": "Em"}, {"word": "down my house", "chord": "D"}],
+          [{"word": "Saw you throw your zippo lighter down", "chord": "G"}],
+          [{"word": "I started burning slowly", "chord": "Em"}],
+          [{"word": "Turpentine and gasoline", "chord": "G"}, {"word": "The moment I met you (x2)", "chord": "C"}]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "lines": [
+          [{"word": "You invited me to be", "chord": "Em"}],
+          [{"word": "The guest of honor at your feast", "chord": "Am"}, {"word": "----------", "chord": "D"}],
+          [{"word": "Everything you fed to me", "chord": "Em"}],
+          [{"word": "Turned to ash between my teeth", "chord": "G"}, {"word": "----------", "chord": "C"}],
+          [{"word": "I saw something change", "chord": "Em"}, {"word": "----------", "chord": "Am"}, {"word": "----------", "chord": "D"}],
+          [{"word": "Something twisted in your face", "chord": "Em"}],
+          [{"word": "Your sour apple game", "chord": "G"}, {"word": "----------", "chord": "C"}],
+          [{"word": "Left me naked and ashamed", "chord": "Em"}, {"word": "----------", "chord": "Am"}, {"word": "----------", "chord": "D"}],
+          [{"word": "Oh oh", "chord": "Em"}, {"word": "oh", "chord": "G"}, {"word": "Oh oh oh", "chord": "C"}]
+        ]
+      },
+      {
+        "name": "Outro",
+        "lines": [
+          [{"word": "I heard God damn", "chord": "Em"}, {"word": "me with a curse", "chord": "G"}],
+          [{"word": "His voice identical to yours", "chord": "C"}],
+          [{"word": "I started losing my mind", "chord": "Em"}, {"word": "slowly", "chord": "G"}],
+          [{"word": "Ear worm poison sounded so sweet", "chord": "C"}],    
+          [{"word": "The moment I met", "chord": "G"}, {"word": "you (x2)", "chord": "C"}]
+        ]
+      }
+    ]
+  }
+]

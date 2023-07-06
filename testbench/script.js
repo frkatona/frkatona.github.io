@@ -20,29 +20,37 @@ fetch('songs.json')
     };
   });
 
-function loadSong(song) {
-  var content = document.getElementById('content');
-  
-  content.innerHTML = song.sections.map(section =>
-    `<div class="section">
-      <h3>${section.name}</h3}</h3>
-      ${Array.isArray(section.lines[0]) // Check if "lines" is an array of arrays
-        ? section.lines.map(line => // If yes, map over each line (which is an array)
-            `<div class="line">
-              ${line.map(({word, chord}) =>
+  function loadSong(song) {
+    var content = document.getElementById('content');
+
+    var songInfo = `
+    <div class="song-info">
+      <h2>${song.title}</h2>
+      <p><span class="key">Key: ${song.key}</span>, <span class="capo">Capo: ${song.capo}</span></p>
+    </div>
+    `;
+
+    content.innerHTML = songInfo + song.sections.map(section =>
+      `<div class="section">
+        <h3>${section.name}</h3>
+        ${Array.isArray(section.lines[0]) // Check if "lines" is an array of arrays
+          ? section.lines.map(line => // If yes, map over each line (which is an array)
+              `<div class="line">
+                ${line.map(({word, chord}) =>
+                  `<div class="word">${chord ? `<span class="chord">${chord}</span>` : ''}${word}</div>`
+                ).join('')}
+              </div>`
+            ).join('')
+          : `<div class="line">
+              ${section.lines.map(({word, chord}) =>
                 `<div class="word">${chord ? `<span class="chord">${chord}</span>` : ''}${word}</div>`
               ).join('')}
             </div>`
-          ).join('')
-        : `<div class="line">
-            ${section.lines.map(({word, chord}) =>
-              `<div class="word">${chord ? `<span class="chord">${chord}</span>` : ''}${word}</div>`
-            ).join('')}
-          </div>`
-      }
-    </div>`
-  ).join('');
-}
+        }
+      </div>`
+    ).join('');
+  }
+  
 
 var scrollButton = document.getElementById('scroll');
 var scrolling = false;
