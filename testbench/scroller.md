@@ -1,4 +1,10 @@
 # to-do
+ - metronome functionality with more style?
+ - song name at top
+ - be sure that it's scrollable back up or at least a button to help
+ - animation for song list
+ 
+ 
  - get global css working for dark mode
  - get metronome working and more intuitive and less obstructive for phone
  - get the font size working
