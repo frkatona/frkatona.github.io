@@ -1,29 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lyrics with Chords</title>
+  <title>Chelsea Performance Helper WIP</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div id="metronome">
-      BPM: <span id="bpm">60</span>
-      <button id="playPause">Play</button>
-      <select id="timeSignatureSelect">
-        <option value="4">4/4</option>
-        <option value="3">3/4</option>
-      </select>
-    </div>
-  </body>
-
   <div id="controls">
-    <select id="songSelect"></select>
-    <button id="scrollButton">Start Scrolling</button>
-    <div id="cooldownProgress"></div>
+    <button id="hamburger">
+      <img src="images/hamburger.svg">
+    </button>
+    <div id="panel" style="display: none;">
+      <ul id="songList"></ul>
+    </div>
+    <button id="scroll">
+      <img id="startIcon" src="images/scroll-start.svg">
+      <img id="stopIcon" src="images/scroll-stop.svg" style="display: none;">
+    </button>
   </div>
-
-  <div class="content" id="content">
-  </div>
-
+  <div class="content" id="content"></div>
   <script src="script.js"></script>
 </body>
 </html>
