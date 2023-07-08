@@ -1,0 +1,93 @@
+{
+  "title": "Broken Things",
+  "key": "Dm (Am, Capo 5)",
+  "sections": [
+    {
+      "name": "Verse 1",
+      "lines": [
+        [
+          {
+            "word": "What does it mean to break",
+            "chord": "Am"
+          }
+        ],
+        [
+          {
+            "word": "when you\u00e2\u20ac\u2122re gone and I\u00e2\u20ac\u2122m cryin\u00e2\u20ac\u2122 all day",
+            "chord": "D"
+          }
+        ],
+        [
+          {
+            "word": "What does it mean to laugh",
+            "chord": "Am"
+          }
+        ],
+        [
+          {
+            "word": "when you say you don\u00e2\u20ac\u2122t love me back",
+            "chord": "D"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "Verse 2",
+      "lines": [
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "name": "Chorus 1",
+      "lines": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+          {
+            "word": "I turned",
+            "chord": "G"
+          },
+          {
+            "word": "out to be",
+            "chord": "C"
+          },
+          {
+            "word": "just one",
+            "chord": "Em"
+          },
+          {
+            "word": "more",
+            "chord": "D"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "Verse 3",
+      "lines": [
+        [],
+        [],
+        [],
+        []
+      ]
+    },
+    {
+      "name": "Verse 4",
+      "lines": [
+        [],
+        [],
+        [],
+        []
+      ]
+    }
+  ]
+}
