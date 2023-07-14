@@ -29,11 +29,10 @@ body.dark-mode .box {
   background-color: #006bb2;
 }
 
-
 .toggle-container {
   position: fixed;
-  top: 100px;
-  right: 10px;
+  top: 40px;
+  right: 150px;
 }
 
 .toggle {
@@ -107,8 +106,7 @@ body.dark-mode .box {
 }
 .line {
   display: flex;
-  justify-content: left;
-  align-items: center;
+  justify-content: center;
   margin-top: 20px;
 }
 .line .word {
@@ -169,6 +167,27 @@ body.dark-mode .box {
   width:  100px;
   height: 100px;
   background-color: #943a26c8;
+}
+
+#scrollButtonsContainer {
+  cursor: pointer;
+  position: fixed;
+  bottom: 5vh;
+  display: flex;
+  flex-direction: row;
+  right: 5vw;
+  align-items: center;
+}
+
+button {
+  background-color: lightgray;
+  right: 10px;
+  width: 45vw;
+  height: 25vh;
+}
+
+button.active {
+  background-color: darkgray;
 }
   
 #panel {

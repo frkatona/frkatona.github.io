@@ -34,8 +34,8 @@ fetch('utilities/lyrics_library.json')
     content.innerHTML = songInfo + song.sections.map(section =>
       `<div class="section">
         <h3>${section.name}</h3>
-        ${Array.isArray(section.lines[0]) // Check if "lines" is an array of arrays
-          ? section.lines.map(line => // If yes, map over each line (which is an array)
+        ${Array.isArray(section.lines[0])
+          ? section.lines.map(line =>
               `<div class="line">
                 ${line.map(({word, chord}) =>
                   `<div class="word">${chord ? `<span class="chord">${chord}</span>` : ''}${word}</div>`
@@ -51,11 +51,36 @@ fetch('utilities/lyrics_library.json')
       </div>`
     ).join('');
   }
-  
 
 var scrollButton = document.getElementById('scroll');
 var scrolling = false;
-var speed = 1; // Adjust the scrolling speed here
+var speed = 1;
+
+// Obtain references to the speed control buttons
+var increaseSpeedButton = document.getElementById('increaseSpeed');
+var decreaseSpeedButton = document.getElementById('decreaseSpeed');
+
+// Update speed and button colors when the increase speed button is clicked
+increaseSpeedButton.onclick = function() {
+    if (speed < 4) {
+        speed += 1;
+    }
+    updateButtonColors();
+};
+
+// Update speed and button colors when the decrease speed button is clicked
+decreaseSpeedButton.onclick = function() {
+    if (speed > -2) {
+        speed -= 1;
+    }
+    updateButtonColors();
+};
+
+// Function to update button colors based on the current speed
+function updateButtonColors() {
+    increaseSpeedButton.className = speed > 1 ? 'active' : '';
+    decreaseSpeedButton.className = speed < 1 ? 'active' : '';
+}
 
 scrollButton.onclick = function() {
   scrolling = !scrolling;
