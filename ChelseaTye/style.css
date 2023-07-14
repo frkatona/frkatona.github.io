@@ -22,12 +22,12 @@ body {
 }
 
 .intro h1 {
-    font-size: 30px;
+    font-size: 60px;
 }
 
 .artist-image {
-    width: 150px;
-    height: 150px;
+    width: 450px;
+    height: 450px;
     border-radius: 40%;
     margin: 0px;
 }
