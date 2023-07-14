@@ -383,14 +383,14 @@
     },
     {
         "title": "Push You Away",
-        "key": "G (C, Capo 7)",
+        "key": "G (C -> Capo 7)",
         "sections": [
             {
                 "name": "Verse 1",
                 "lines": [
                     [
                         {
-                            "word": "A tiger'''s not to blame",
+                            "word": "A tiger's not to blame",
                             "chord": "C"
                         }
                     ],
@@ -400,7 +400,7 @@
                             "chord": "F"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "Fsus2"
                         }
                     ],
@@ -416,7 +416,7 @@
                             "chord": "F"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "Fsus2"
                         }
                     ],
@@ -454,7 +454,7 @@
                             "chord": "F"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "G"
                         }
                     ]
@@ -469,13 +469,13 @@
                             "chord": "C"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "F"
                         }
                     ],
                     [
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "Am"
                         },
                         {
@@ -489,7 +489,7 @@
                             "chord": "C"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "F"
                         }
                     ],
@@ -566,7 +566,7 @@
                             "chord": "F"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "Fsus2"
                         }
                     ],
@@ -582,7 +582,7 @@
                             "chord": "F"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "Fsus2"
                         }
                     ],
@@ -620,7 +620,7 @@
                             "chord": "F"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "G"
                         }
                     ]
@@ -635,13 +635,13 @@
                             "chord": "C"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "F"
                         }
                     ],
                     [
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "Am"
                         },
                         {
@@ -655,7 +655,7 @@
                             "chord": "C"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "F"
                         }
                     ],
@@ -754,7 +754,7 @@
                             "chord": "F"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "G"
                         }
                     ]
@@ -769,13 +769,13 @@
                             "chord": "C"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "F"
                         }
                     ],
                     [
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "Am"
                         },
                         {
@@ -789,7 +789,7 @@
                             "chord": "C"
                         },
                         {
-                            "word": "",
+                            "word": "-----",
                             "chord": "F"
                         }
                     ],
@@ -850,10 +850,312 @@
                         }
                     ]
                 ]
+            }
+        ]
+    },
+    {
+        "title": "Quiet Love",
+        "key": "Eb (C -> Capo 3)",
+        "sections": [
+            {
+                "name": "Verse 1",
+                "lines": [
+                    [
+                        {
+                            "word": "You're not composing love poems",
+                            "chord": "Am"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "You're making sure that I get home",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Making appointments cause you know I won't call",
+                            "chord": "Am"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Forgiving all my flaws",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "You're not",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "composing love poems",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "you to know",
+                            "chord": "G"
+                        }
+                    ]
+                ]
             },
             {
-                "name": "Chorus 3",
-                "lines": []
+                "name": "Chorus",
+                "lines": [
+                    [
+                        {
+                            "word": "Oh my",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "Em"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I love your",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "quiet",
+                            "chord": "Em"
+                        },
+                        {
+                            "word": "kind of",
+                            "chord": "Dm"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Oh my",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "Em"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I love your",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "quiet",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "kind of",
+                            "chord": "G"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Oh my",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "Em"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I love your",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "quiet",
+                            "chord": "Em"
+                        },
+                        {
+                            "word": "kind of",
+                            "chord": "Dm"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Oh my",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "Em"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I love your",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "quiet",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "kind of",
+                            "chord": "G"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "C"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Verse 2",
+                "lines": [
+                    [
+                        {
+                            "word": "You're not singing love songs at my window",
+                            "chord": "Am"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "You're kissing my head and you're holding me close",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Making dinner cause you don't mind I forgot",
+                            "chord": "Am"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Forgiving me all my flaws",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "You're not singing",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "love songs at my window",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "you to know",
+                            "chord": "G"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus",
+                "lines": [
+                    [
+                        {
+                            "word": "Oh my",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "Em"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I love your",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "quiet",
+                            "chord": "Em"
+                        },
+                        {
+                            "word": "kind of",
+                            "chord": "Dm"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Oh my",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "Em"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I love your",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "quiet",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "kind of",
+                            "chord": "G"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Oh my",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "Em"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I love your",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "quiet",
+                            "chord": "Em"
+                        },
+                        {
+                            "word": "kind of",
+                            "chord": "Dm"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Oh my",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "Em"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I love your",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "quiet",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "kind of",
+                            "chord": "G"
+                        },
+                        {
+                            "word": "love",
+                            "chord": "C"
+                        }
+                    ]
+                ]
             }
         ]
     },

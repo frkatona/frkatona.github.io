@@ -27,7 +27,7 @@ fetch('utilities/lyrics_library.json')
     var songInfo = `
     <div class="song-info">
       <h2>${song.title}</h2>
-      <p><span class="key">Key: ${song.key}</span>, <span class="capo">Capo: ${song.capo}</span></p>
+      <p><span class="key">Key: ${song.key}</span></p>
     </div>
     `;
 
@@ -74,3 +74,10 @@ scrollButton.onclick = function() {
   }
 };
 
+// Dark Mode
+document.body.classList.add("dark-mode");
+const toggle = document.getElementById("dark-mode-toggle");
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+}
+toggle.addEventListener("change", toggleDarkMode);

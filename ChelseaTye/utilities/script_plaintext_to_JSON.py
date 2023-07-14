@@ -39,20 +39,28 @@ def write_to_json(song, filename):
     with open(filename, 'w') as file:
         json.dump(song, file, indent=2)
 
-def replace_characters(filename):
-    with open(filename, 'r', encoding='utf-8') as file:
+def replace_unicode(filename):
+    with open(filename, 'r') as file:
         text = file.read()
 
-    corrected_text = text.replace('\u00e2\u20ac\u2122', "'")
+    corrected_text = text.replace(r'\u00e2\u20ac\u2122', "'")
 
     with open(filename, 'w', encoding='utf-8') as file:
         file.write(corrected_text)
 
+def replace_spaces(filename):
+    with open(filename, 'r') as file:
+        text = file.read()
 
+    corrected_text = text.replace(r'""', '"-----"')
 
-filename_in = r'ChelseaTye\utilities\input.txt'
-filename_out = r'ChelseaTye\utilities\output.json'
+    with open(filename, 'w', encoding='utf-8') as file:
+        file.write(corrected_text)
+
+filename_in = r'ChelseaTye\utilities\plaintext_song_input.txt'
+filename_out = r'ChelseaTye\utilities\lyrics_songExport.json'
 
 song = parse_song(filename_in)
 write_to_json(song, filename_out)
-replace_characters(filename_out)
+replace_unicode(filename_out)
+replace_spaces(filename_out)
