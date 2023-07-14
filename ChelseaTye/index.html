@@ -1,24 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chelsea Performance Helper WIP</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="../images/favicon_io/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>ChelseaTyeMusic</title>
 </head>
 <body>
-  <div id="controls">
-    <button id="hamburger">
-      <i class="fas fa-bars"></i>
-    </button>
-    <div id="panel" style="display: none;">
-      <ul id="songList"></ul>
+    <div class="container">
+        <div class="intro">
+            <img src="..\Images\chelsea_thumbnail.jpg" alt="Artist" class="artist-image">
+            <h1>Welcome to Chelsea Tye Music!</h1>        
+        <div class="links">
+            <a class="link-item" href="songs.html" target"_self">
+                <i class="fab fa-pied-piper-hat"></i>
+                <span>Lyrics Library</span>
+            </a>
+            <a class="link-item" href="https://www.instagram.com/chelseatyemusic/" target="_blank">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            <a class="link-item" href="https://soundcloud.com/chelsea-tye-512350695" target="_blank">
+                <i class="fab fa-soundcloud"></i>
+                <span>Soundcloud</span>
+            </a>
+            <a class="link-item" href="https://www.twitch.tv/chelseatyemusic" target="_blank">
+                <i class="fab fa-twitch"></i>
+                <span>Twitch</span>
+            </a>
+        </div>
     </div>
-    <button id="scroll">
-      <img id="startIcon" src="images/scroll-start.svg">
-      <img id="stopIcon" src="images/scroll-stop.svg" style="display: none;">
-    </button>
-  </div>
-  <div class="content" id="content"></div>
-  <script src="script.js"></script>
+        <div class="bio-section">
+            <h2>Recent Performances and News</h2>
+            <p>7/18/23 at 3dots in downtown State College</p>
+            <img src="images/3dots_poster.png" alt="3dots Featured Performer Poster" class="bio-image">
+        </div>
+    </div>
 </body>
 </html>

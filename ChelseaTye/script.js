@@ -1,5 +1,6 @@
 fetch('songs.json')
-  .then(response => response.json())
+  
+.then(response => response.json())
   .then(songs => {
     var songList = document.getElementById('songList');
     songs.forEach((song, i) => {

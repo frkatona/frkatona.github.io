@@ -1,4 +1,17 @@
-{
+import json
+
+def replace_special_characters(data):
+    if isinstance(data, dict):
+        return {key: replace_special_characters(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [replace_special_characters(element) for element in data]
+    elif isinstance(data, str):
+        return data.replace('\u00e2\u20ac\u2122', "'")
+    else:
+        return data
+
+# Load the JSON object into a Python dictionary
+json_data = {
   "title": "Push You Away",
   "key": "G (C, Capo 7)",
   "sections": [
@@ -474,3 +487,10 @@
     }
   ]
 }
+
+# Apply the function to replace special characters
+cleaned_json_data = replace_special_characters(json_data)
+
+# Write the cleaned data to a file
+with open('cleaned_json_data.json', 'w', encoding='utf-8') as f:
+    json.dump(cleaned_json_data, f, ensure_ascii=False, indent=4)

@@ -1,9 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 5vh 0;
-    font-size: 2vw;
-    padding: 0;
-    min-height: 100vh;
+
     background: #b7c6d6;
   }
 
@@ -21,10 +19,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 .song-info {
-  font-size: 5vw;
+  font-size: 30px;
   font-style:italic;
   text-align: left;
-  margin-left: 1vh;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
@@ -36,51 +33,51 @@ body::-webkit-scrollbar-thumb {
 .song-info .capo {
   font-family: Arial, sans-serif;
   display: inline;
-  font-size: 4vw;
+  font-size: 30px;
 }
 
 .section h3 {
-  font-size: 8vw;
-  margin-top: 3vh;
+  font-size: 40px;
+  margin-top: 10vh;
   margin-bottom: 1vh;
 }
 .content {
   text-align: center;
-  line-height: .8;
-  width: 85%;
+  line-height: 30px;
+  width: 90%;
   margin: auto;
 }
 .line {
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-top: 3vh;
-  margin-left: 3vw;
+  margin-top: 20px;
 }
 .line .word {
-  font-size: 3vw;
+  font-size: 20px;
   display: inline-block;
   position: relative;
-  margin-right: 1vw;
+  margin-top: 20px;
+  margin-right: 0;
 }
 .line .word .chord {
   position: absolute;
-  top: -2vh;
+  top: -25px;
   color: #0069d9;
   font-weight: bold;
 }
 
 #startIcon {
-  width: 20vw;
+  width: 250px;
 }
 
 #stopIcon {
-  width: 10vw;
+  width: 50px;
 }
 
 #hamburger {
-  width: 8vh;
-  height: 5vh;
+  width: 100px;
+  height: 50px;
   position: fixed;
   top: 4vh;
   right: 1vh;
@@ -98,8 +95,8 @@ body::-webkit-scrollbar-thumb {
   color: #fff;
   padding: 0;
   border-radius: 50%;
-  width: 40vw;
-  height: 40vw;
+  width: 300px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,8 +107,8 @@ body::-webkit-scrollbar-thumb {
 
 #scroll.scrolling {
   bottom: 1vh;
-  width: 25vw;
-  height: 25vw;
+  width:  100px;
+  height: 100px;
   background-color: #943a26c8;
 }
   
