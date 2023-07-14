@@ -1,5 +1,5 @@
-fetch('songs.json')
-  
+fetch('utilities/lyrics_library.json')
+
 .then(response => response.json())
   .then(songs => {
     var songList = document.getElementById('songList');
