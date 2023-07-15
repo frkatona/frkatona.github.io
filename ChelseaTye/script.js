@@ -21,9 +21,9 @@ fetch('utilities/lyrics_library.json')
     };
   });
 
-  function loadSong(song) {
-    var content = document.getElementById('content');
-
+function loadSong(song) {
+  window.scrollTo(0, 0);
+  var content = document.getElementById('content');
     var songInfo = `
     <div class="song-info">
       <h2>${song.title}</h2>
@@ -34,23 +34,17 @@ fetch('utilities/lyrics_library.json')
     content.innerHTML = songInfo + song.sections.map(section =>
       `<div class="section">
         <h3>${section.name}</h3>
-        ${Array.isArray(section.lines[0])
-          ? section.lines.map(line =>
-              `<div class="line">
-                ${line.map(({word, chord}) =>
-                  `<div class="word">${chord ? `<span class="chord">${chord}</span>` : ''}${word}</div>`
-                ).join('')}
-              </div>`
-            ).join('')
-          : `<div class="line">
-              ${section.lines.map(({word, chord}) =>
-                `<div class="word">${chord ? `<span class="chord">${chord}</span>` : ''}${word}</div>`
-              ).join('')}
-            </div>`
-        }
+        ${section.lines.map(line =>
+          `<div class="line">
+            ${line.map(({word, chord}) =>
+              `<div class="word">${chord ? `<span class="chord">${chord}</span>` : ''}${word}</div>`
+            ).join('')}
+          </div>`
+        ).join('')}
       </div>`
     ).join('');
   }
+
 
 var scrollButton = document.getElementById('scroll');
 var scrolling = false;

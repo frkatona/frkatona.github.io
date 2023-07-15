@@ -19,20 +19,26 @@ def parse_song(filename):
             if current_section is not None:
                 song['sections'].append({'name': current_section, 'lines': current_lines})
                 current_lines = []
+            current_section = None
             continue
         if 'Verse' in line or 'Chorus' in line:
             current_section = line
             continue
 
         line_content = []
-        for chord, phrase in re.findall('\((.*?)\)([^()]*)', line):
-            words = phrase.split()
-            line_content.append({'word': ' '.join(words), 'chord': chord})
+        parts = re.findall(r'(\(.*?\)[^()]*|[^()]+)', line)
+        for part in parts:
+            m = re.match(r'\((.*?)\)(.*)', part)
+            if m:
+                line_content.append({'chord': m.group(1), 'word': m.group(2).strip()})
+            else:
+                line_content.append({'chord': '', 'word': part.strip()})
+
         current_lines.append(line_content)
 
     if current_section is not None:
         song['sections'].append({'name': current_section, 'lines': current_lines})
-    
+
     return song
 
 def write_to_json(song, filename):
@@ -52,7 +58,7 @@ def replace_spaces(filename):
     with open(filename, 'r') as file:
         text = file.read()
 
-    corrected_text = text.replace(r'""', '"-----"')
+    corrected_text = text.replace(r'""', '" "')
 
     with open(filename, 'w', encoding='utf-8') as file:
         file.write(corrected_text)

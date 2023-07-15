@@ -1,48 +1,86 @@
 {
-  "title": "Quiet Love",
-  "key": "Eb (C -> Capo 3)",
+  "title": "Push You Away",
+  "key": "G (C, Capo 7)",
   "sections": [
     {
       "name": "Verse 1",
       "lines": [
         [
           {
-            "word": "You're not composing love poems",
-            "chord": "Am"
+            "chord": "C",
+            "word": "A tiger's not to blame"
           }
         ],
         [
           {
-            "word": "You're making sure that I get home",
-            "chord": "F"
-          }
-        ],
-        [
-          {
-            "word": "Making appointments cause you know I won't call",
-            "chord": "Am"
-          }
-        ],
-        [
-          {
-            "word": "Forgiving all my flaws",
-            "chord": "F"
-          }
-        ],
-        [
-          {
-            "word": "You're not",
-            "chord": "Am"
+            "chord": "F",
+            "word": "When there's no change in his stripes"
           },
           {
-            "word": "composing love poems",
-            "chord": "F"
+            "chord": "Fsus2",
+            "word": " "
           }
         ],
         [
           {
-            "word": "you to know",
-            "chord": "G"
+            "chord": "C",
+            "word": "Tortoise can't complain"
+          }
+        ],
+        [
+          {
+            "chord": "F",
+            "word": "About a scorpion bite"
+          },
+          {
+            "chord": "Fsus2",
+            "word": " "
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "So when"
+          },
+          {
+            "chord": "Am",
+            "word": "I betrayed all the"
+          },
+          {
+            "chord": "G",
+            "word": "promises I made"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "It"
+          },
+          {
+            "chord": "F",
+            "word": "shouldn't come as much of a"
+          },
+          {
+            "chord": "G",
+            "word": "surprise"
+          }
+        ],
+        [
+          {
+            "chord": "Am",
+            "word": "Some people just aren't"
+          },
+          {
+            "chord": "G",
+            "word": "made to have a happy"
+          },
+          {
+            "chord": "F",
+            "word": "life"
+          },
+          {
+            "chord": "G",
+            "word": " "
           }
         ]
       ]
@@ -52,102 +90,124 @@
       "lines": [
         [
           {
-            "word": "Oh my",
-            "chord": "C"
+            "chord": " ",
+            "word": "It was so"
           },
           {
-            "word": "love",
-            "chord": "Em"
+            "chord": "C",
+            "word": "lovely"
+          },
+          {
+            "chord": "F",
+            "word": " "
           }
         ],
         [
           {
-            "word": "I love your",
-            "chord": "F"
+            "chord": " ",
+            "word": "To feel like you"
           },
           {
-            "word": "quiet",
-            "chord": "Em"
+            "chord": "Am",
+            "word": " "
           },
           {
-            "word": "kind of",
-            "chord": "Dm"
+            "chord": "F",
+            "word": "loved me"
           }
         ],
         [
           {
-            "word": "Oh my",
-            "chord": "C"
+            "chord": " ",
+            "word": "But there's something so"
           },
           {
-            "word": "love",
-            "chord": "Em"
+            "chord": "C",
+            "word": "ugly"
+          },
+          {
+            "chord": "F",
+            "word": " "
           }
         ],
         [
           {
-            "word": "I love your",
-            "chord": "F"
+            "chord": " ",
+            "word": "In"
           },
           {
-            "word": "quiet",
-            "chord": "Am"
+            "chord": "Am",
+            "word": "me that you just"
           },
           {
-            "word": "kind of",
-            "chord": "G"
+            "chord": "F",
+            "word": "wouldn't see"
           }
         ],
         [
           {
-            "word": "Oh my",
-            "chord": "C"
+            "chord": " ",
+            "word": "And so I"
           },
           {
-            "word": "love",
-            "chord": "Em"
+            "chord": "C",
+            "word": "pushed you away"
           }
         ],
         [
           {
-            "word": "I love your",
-            "chord": "F"
+            "chord": " ",
+            "word": "And"
           },
           {
-            "word": "quiet",
-            "chord": "Em"
+            "chord": "G",
+            "word": "away and away and"
           },
           {
-            "word": "kind of",
-            "chord": "Dm"
+            "chord": "F",
+            "word": "away and"
+          },
+          {
+            "chord": "Dm",
+            "word": "away"
           }
         ],
         [
           {
-            "word": "Oh my",
-            "chord": "C"
+            "chord": " ",
+            "word": "I"
           },
           {
-            "word": "love",
-            "chord": "Em"
+            "chord": "C",
+            "word": "held you at arm's length"
           }
         ],
         [
           {
-            "word": "I love your",
-            "chord": "F"
+            "chord": " ",
+            "word": "And"
           },
           {
-            "word": "quiet",
-            "chord": "Am"
+            "chord": "G",
+            "word": "away and"
           },
           {
-            "word": "kind of",
-            "chord": "G"
+            "chord": "F",
+            "word": "away and"
           },
           {
-            "word": "love",
-            "chord": "C"
+            "chord": "Dm",
+            "word": "away"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "And"
+          },
+          {
+            "chord": "C",
+            "word": "I kept you safe"
           }
         ]
       ]
@@ -157,42 +217,80 @@
       "lines": [
         [
           {
-            "word": "You're not singing love songs at my window",
-            "chord": "Am"
+            "chord": "C",
+            "word": "Some molds don't break"
           }
         ],
         [
           {
-            "word": "You're kissing my head and you're holding me close",
-            "chord": "F"
-          }
-        ],
-        [
-          {
-            "word": "Making dinner cause you don't mind I forgot",
-            "chord": "Am"
-          }
-        ],
-        [
-          {
-            "word": "Forgiving me all my flaws",
-            "chord": "F"
-          }
-        ],
-        [
-          {
-            "word": "You're not singing",
-            "chord": "Am"
+            "chord": "F",
+            "word": "I've stayed true to type"
           },
           {
-            "word": "love songs at my window",
-            "chord": "F"
+            "chord": "Fsus2",
+            "word": " "
           }
         ],
         [
           {
-            "word": "you to know",
-            "chord": "G"
+            "chord": "C",
+            "word": "Baby I ain't trying to claim"
+          }
+        ],
+        [
+          {
+            "chord": "F",
+            "word": "That what I did was right"
+          },
+          {
+            "chord": "Fsus2",
+            "word": " "
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "So when"
+          },
+          {
+            "chord": "Am",
+            "word": "I betrayed all the"
+          },
+          {
+            "chord": "G",
+            "word": "promises we made"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "I"
+          },
+          {
+            "chord": "F",
+            "word": "hope you know it wasn't out of"
+          },
+          {
+            "chord": "G",
+            "word": "spite"
+          }
+        ],
+        [
+          {
+            "chord": "Am",
+            "word": "Some people just aren't"
+          },
+          {
+            "chord": "G",
+            "word": "made to have a happy"
+          },
+          {
+            "chord": "F",
+            "word": "life"
+          },
+          {
+            "chord": "G",
+            "word": " "
           }
         ]
       ]
@@ -202,102 +300,299 @@
       "lines": [
         [
           {
-            "word": "Oh my",
-            "chord": "C"
+            "chord": " ",
+            "word": "It was so"
           },
           {
-            "word": "love",
-            "chord": "Em"
+            "chord": "C",
+            "word": "lovely"
+          },
+          {
+            "chord": "F",
+            "word": " "
           }
         ],
         [
           {
-            "word": "I love your",
-            "chord": "F"
+            "chord": " ",
+            "word": "To feel like you"
           },
           {
-            "word": "quiet",
-            "chord": "Em"
+            "chord": "Am",
+            "word": " "
           },
           {
-            "word": "kind of",
-            "chord": "Dm"
+            "chord": "F",
+            "word": "loved me"
           }
         ],
         [
           {
-            "word": "Oh my",
-            "chord": "C"
+            "chord": " ",
+            "word": "But there's something so"
           },
           {
-            "word": "love",
-            "chord": "Em"
+            "chord": "C",
+            "word": "ugly"
+          },
+          {
+            "chord": "F",
+            "word": " "
           }
         ],
         [
           {
-            "word": "I love your",
-            "chord": "F"
+            "chord": " ",
+            "word": "In"
           },
           {
-            "word": "quiet",
-            "chord": "Am"
+            "chord": "Am",
+            "word": "me that you just"
           },
           {
-            "word": "kind of",
-            "chord": "G"
+            "chord": "F",
+            "word": "wouldn't see"
           }
         ],
         [
           {
-            "word": "Oh my",
-            "chord": "C"
+            "chord": " ",
+            "word": "And so I"
           },
           {
-            "word": "love",
-            "chord": "Em"
+            "chord": "C",
+            "word": "pushed you away"
           }
         ],
         [
           {
-            "word": "I love your",
-            "chord": "F"
+            "chord": " ",
+            "word": "And"
           },
           {
-            "word": "quiet",
-            "chord": "Em"
+            "chord": "G",
+            "word": "away and away and"
           },
           {
-            "word": "kind of",
-            "chord": "Dm"
+            "chord": "F",
+            "word": "away and"
+          },
+          {
+            "chord": "Dm",
+            "word": "away"
           }
         ],
         [
           {
-            "word": "Oh my",
-            "chord": "C"
+            "chord": " ",
+            "word": "I"
           },
           {
-            "word": "love",
-            "chord": "Em"
+            "chord": "C",
+            "word": "held you at arm's length"
           }
         ],
         [
           {
-            "word": "I love your",
-            "chord": "F"
+            "chord": " ",
+            "word": "And"
           },
           {
-            "word": "quiet",
-            "chord": "Am"
+            "chord": "G",
+            "word": "away and"
           },
           {
-            "word": "kind of",
-            "chord": "G"
+            "chord": "F",
+            "word": "away and"
           },
           {
-            "word": "love",
-            "chord": "C"
+            "chord": "Dm",
+            "word": "away"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "And"
+          },
+          {
+            "chord": "C",
+            "word": "I kept you safe"
+          }
+        ]
+      ]
+    },
+    {
+      "name": "Chorus",
+      "lines": [
+        [
+          {
+            "chord": " ",
+            "word": "Bridge"
+          }
+        ],
+        [
+          {
+            "chord": "Am",
+            "word": "And when I be"
+          },
+          {
+            "chord": "G",
+            "word": "trayed"
+          },
+          {
+            "chord": "F",
+            "word": "every single promise that I"
+          },
+          {
+            "chord": "G",
+            "word": "made"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "it wasn't out of spite"
+          }
+        ],
+        [
+          {
+            "chord": "Am",
+            "word": "Baby I'm just not"
+          },
+          {
+            "chord": "G",
+            "word": "made"
+          },
+          {
+            "chord": "F",
+            "word": "to have a happy life"
+          },
+          {
+            "chord": "G",
+            "word": " "
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "It was so"
+          },
+          {
+            "chord": "C",
+            "word": "lovely"
+          },
+          {
+            "chord": "F",
+            "word": " "
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "To feel like you"
+          },
+          {
+            "chord": "Am",
+            "word": " "
+          },
+          {
+            "chord": "F",
+            "word": "loved me"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "But there's something so"
+          },
+          {
+            "chord": "C",
+            "word": "ugly"
+          },
+          {
+            "chord": "F",
+            "word": " "
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "In"
+          },
+          {
+            "chord": "Am",
+            "word": "me that you just"
+          },
+          {
+            "chord": "F",
+            "word": "wouldn't see"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "And so I"
+          },
+          {
+            "chord": "C",
+            "word": "pushed you away"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "And"
+          },
+          {
+            "chord": "G",
+            "word": "away and away and"
+          },
+          {
+            "chord": "F",
+            "word": "away and"
+          },
+          {
+            "chord": "Dm",
+            "word": "away"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "I"
+          },
+          {
+            "chord": "C",
+            "word": "held you at arm's length"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "And"
+          },
+          {
+            "chord": "G",
+            "word": "away and"
+          },
+          {
+            "chord": "F",
+            "word": "away and"
+          },
+          {
+            "chord": "Dm",
+            "word": "away"
+          }
+        ],
+        [
+          {
+            "chord": " ",
+            "word": "And"
+          },
+          {
+            "chord": "C",
+            "word": "I kept you safe"
           }
         ]
       ]
