@@ -1,13 +1,13 @@
 # to-do
  ## additional functionality and bugs
+ - user controls
+  - alignment, font size, song helper mode vs lyrics view
+  - better scroll speed
  - metronome functionality brainstorming
     - circle flashing stop button?  
     - stopwatch animation with 1,2,3,4 next to the first chord?
  - subtle animation for song list panel
- - get global css working for dark mode
  - make it responsively readable for non-portrait-oriented phones
- - "undefined" songs in panel
- - scroll should stop on opening song panel
  - hamburger icon too small on phone
 
  ## Chelsea:

@@ -48,7 +48,7 @@ function loadSong(song) {
 
 var scrollButton = document.getElementById('scroll');
 var scrolling = false;
-var speed = 1;
+var speed = 4;
 
 // Obtain references to the speed control buttons
 var increaseSpeedButton = document.getElementById('increaseSpeed');
@@ -56,16 +56,16 @@ var decreaseSpeedButton = document.getElementById('decreaseSpeed');
 
 // Update speed and button colors when the increase speed button is clicked
 increaseSpeedButton.onclick = function() {
-    if (speed < 4) {
-        speed += 1;
+    if (speed < 8) {
+        speed += 2;
     }
     updateButtonColors();
 };
 
 // Update speed and button colors when the decrease speed button is clicked
 decreaseSpeedButton.onclick = function() {
-    if (speed > -2) {
-        speed -= 1;
+    if (speed > 0) {
+        speed -= 2;
     }
     updateButtonColors();
 };
