@@ -76,7 +76,7 @@ body.dark-mode .box {
 }
 
 .song-info {
-  font-size: 45px;
+  font-size: 50px;
   font-style:italic;
   text-align: left;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -108,13 +108,14 @@ body.dark-mode .box {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 .line .word {
-  font-size: 35px;
+  font-size: 45px;
   display: inline-block;
   position: relative;
   margin-top: 40px;
-  margin-right: 0;
+  margin-bottom: 10px;
   padding-right: 10px;
 }
 .line .word .chord {
