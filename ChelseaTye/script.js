@@ -49,20 +49,15 @@ function loadSong(song) {
 var scrollButton = document.getElementById('scroll');
 var scrolling = false;
 var speed = 4;
-
-// Obtain references to the speed control buttons
 var increaseSpeedButton = document.getElementById('increaseSpeed');
 var decreaseSpeedButton = document.getElementById('decreaseSpeed');
 
-// Update speed and button colors when the increase speed button is clicked
 increaseSpeedButton.onclick = function() {
     if (speed < 8) {
         speed += 2;
     }
     updateButtonColors();
 };
-
-// Update speed and button colors when the decrease speed button is clicked
 decreaseSpeedButton.onclick = function() {
     if (speed > 0) {
         speed -= 2;
@@ -70,7 +65,6 @@ decreaseSpeedButton.onclick = function() {
     updateButtonColors();
 };
 
-// Function to update button colors based on the current speed
 function updateButtonColors() {
     increaseSpeedButton.className = speed > 1 ? 'active' : '';
     decreaseSpeedButton.className = speed < 1 ? 'active' : '';
@@ -92,6 +86,33 @@ scrollButton.onclick = function() {
     }, 100);
   }
 };
+
+// font size controllers
+document.getElementById("increaseSize").addEventListener("click", function() {
+  var style = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--root-size'));
+  document.documentElement.style.setProperty('--root-size', (style + 5) + 'px');
+  console.log(style);
+});
+
+document.getElementById("decreaseSize").addEventListener("click", function() {
+  var style = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--root-size'));
+  document.documentElement.style.setProperty('--root-size', (style - 5) + 'px');
+  console.log(style);
+});
+
+//alignment controllers
+document.getElementById("alignButton").addEventListener("click", function() {
+  var elements = document.getElementsByClassName('line');
+  for (var i = 0; i < elements.length; i++) {
+    var style = window.getComputedStyle(elements[i], null).getPropertyValue('justify-content');
+    if (style == 'left') {
+      elements[i].style.justifyContent  = 'center';
+    } else {
+      elements[i].style.justifyContent  = 'left';
+    }
+  }
+});
+
 
 // Dark Mode
 document.body.classList.add("dark-mode");

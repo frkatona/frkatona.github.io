@@ -1,5 +1,5 @@
 {
-  "title": "Push You Away",
+  "title": "If I Could Be Happy",
   "key": "G (C, Capo 7)",
   "sections": [
     {
@@ -8,206 +8,226 @@
         [
           {
             "chord": "C",
-            "word": "A tiger's not to blame"
+            "word": "I can't think any"
+          },
+          {
+            "chord": "Em",
+            "word": "more my"
+          },
+          {
+            "chord": "Am",
+            "word": "head's gone"
+          },
+          {
+            "chord": "G",
+            "word": "hazy"
           }
         ],
         [
           {
             "chord": "F",
-            "word": "When there's no change in his stripes"
+            "word": "Always comes"
           },
           {
-            "chord": "Fsus2",
-            "word": " "
+            "chord": "Am",
+            "word": "back around even"
+          },
+          {
+            "chord": "Dm",
+            "word": "with all the love you"
+          },
+          {
+            "chord": "G",
+            "word": "gave me"
           }
         ],
         [
           {
             "chord": "C",
-            "word": "Tortoise can't complain"
+            "word": "Why do you keep"
+          },
+          {
+            "chord": "Em",
+            "word": "betting on me when"
+          },
+          {
+            "chord": "Am",
+            "word": "you always"
+          },
+          {
+            "chord": "G",
+            "word": "lose?"
           }
         ],
         [
           {
             "chord": "F",
-            "word": "About a scorpion bite"
+            "word": "I can see whatever's"
+          },
+          {
+            "chord": "Am",
+            "word": "killing me"
+          },
+          {
+            "chord": "Dm",
+            "word": "killing you"
+          },
+          {
+            "chord": "G",
+            "word": "too"
+          }
+        ],
+        [
+          {
+            "chord": "F",
+            "word": "Don't think it's getting better"
           },
           {
             "chord": "Fsus2",
-            "word": " "
+            "word": "this time"
           }
         ],
         [
           {
-            "chord": " ",
-            "word": "So when"
-          },
-          {
-            "chord": "Am",
-            "word": "I betrayed all the"
-          },
-          {
             "chord": "G",
-            "word": "promises I made"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "It"
+            "word": "Baby I don't have the strength to"
           },
           {
-            "chord": "F",
-            "word": "shouldn't come as much of a"
-          },
-          {
-            "chord": "G",
-            "word": "surprise"
-          }
-        ],
-        [
-          {
-            "chord": "Am",
-            "word": "Some people just aren't"
-          },
-          {
-            "chord": "G",
-            "word": "made to have a happy"
-          },
-          {
-            "chord": "F",
-            "word": "life"
-          },
-          {
-            "chord": "G",
-            "word": " "
+            "chord": "Gsus2",
+            "word": "fight but"
           }
         ]
       ]
     },
     {
-      "name": "Chorus",
+      "name": "Chorus 1",
       "lines": [
         [
           {
-            "chord": " ",
-            "word": "It was so"
+            "chord": "C",
+            "word": "If I"
           },
           {
-            "chord": "C",
-            "word": "lovely"
+            "chord": "Em",
+            "word": "could have been"
           },
           {
             "chord": "F",
-            "word": " "
+            "word": "happy"
           }
         ],
         [
           {
-            "chord": " ",
-            "word": "To feel like you"
+            "chord": "C",
+            "word": "It would've"
+          },
+          {
+            "chord": "Em",
+            "word": "been with"
+          },
+          {
+            "chord": "F",
+            "word": "you"
           },
           {
             "chord": "Am",
             "word": " "
           },
           {
-            "chord": "F",
-            "word": "loved me"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "But there's something so"
-          },
-          {
-            "chord": "C",
-            "word": "ugly"
-          },
-          {
-            "chord": "F",
+            "chord": "G",
             "word": " "
           }
         ],
         [
           {
-            "chord": " ",
-            "word": "In"
+            "chord": "C",
+            "word": "If I"
+          },
+          {
+            "chord": "Em",
+            "word": "could be"
+          },
+          {
+            "chord": "F",
+            "word": "happy"
+          }
+        ],
+        [
+          {
+            "chord": "G",
+            "word": "I would've"
+          },
+          {
+            "chord": "Gsus2",
+            "word": "been happy with"
+          },
+          {
+            "chord": "F",
+            "word": "you"
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "There was"
+          },
+          {
+            "chord": "Em",
+            "word": "nothing you could've"
+          },
+          {
+            "chord": "F",
+            "word": "done"
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "You lifted"
+          },
+          {
+            "chord": "Em",
+            "word": "me up love"
+          },
+          {
+            "chord": "F",
+            "word": "I dragged"
           },
           {
             "chord": "Am",
-            "word": "me that you just"
-          },
-          {
-            "chord": "F",
-            "word": "wouldn't see"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And so I"
-          },
-          {
-            "chord": "C",
-            "word": "pushed you away"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And"
+            "word": "you"
           },
           {
             "chord": "G",
-            "word": "away and away and"
+            "word": "down"
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "When I'm"
+          },
+          {
+            "chord": "Em",
+            "word": "gone you"
           },
           {
             "chord": "F",
-            "word": "away and"
-          },
-          {
-            "chord": "Dm",
-            "word": "away"
+            "word": "gotta know it's true"
           }
         ],
         [
-          {
-            "chord": " ",
-            "word": "I"
-          },
-          {
-            "chord": "C",
-            "word": "held you at arm's length"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And"
-          },
           {
             "chord": "G",
-            "word": "away and"
+            "word": "That if ever I was"
+          },
+          {
+            "chord": "Gsus2",
+            "word": "happy,"
           },
           {
             "chord": "F",
-            "word": "away and"
-          },
-          {
-            "chord": "Dm",
-            "word": "away"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And"
-          },
-          {
-            "chord": "C",
-            "word": "I kept you safe"
+            "word": "it was with you"
           }
         ]
       ]
@@ -218,212 +238,232 @@
         [
           {
             "chord": "C",
-            "word": "Some molds don't break"
+            "word": "I can't write any"
+          },
+          {
+            "chord": "Em",
+            "word": "more all my"
+          },
+          {
+            "chord": "Am",
+            "word": "words have"
+          },
+          {
+            "chord": "G",
+            "word": "left me"
           }
         ],
         [
           {
             "chord": "F",
-            "word": "I've stayed true to type"
+            "word": "They won't come"
           },
           {
-            "chord": "Fsus2",
-            "word": " "
+            "chord": "Am",
+            "word": "back I'm pen in"
+          },
+          {
+            "chord": "Dm",
+            "word": "hand, cramped,"
+          },
+          {
+            "chord": "G",
+            "word": "tired of trying"
           }
         ],
         [
           {
             "chord": "C",
-            "word": "Baby I ain't trying to claim"
+            "word": "Stop betting on"
+          },
+          {
+            "chord": "Em",
+            "word": "me I'm begging"
+          },
+          {
+            "chord": "Am",
+            "word": "you, you always"
+          },
+          {
+            "chord": "G",
+            "word": "lose"
           }
         ],
         [
           {
             "chord": "F",
-            "word": "That what I did was right"
+            "word": "I don't want the"
+          },
+          {
+            "chord": "Am",
+            "word": "thing that's killing"
+          },
+          {
+            "chord": "Dm",
+            "word": "me to kill"
+          },
+          {
+            "chord": "G",
+            "word": "you too"
+          }
+        ],
+        [
+          {
+            "chord": "F",
+            "word": "Don't think it's getting better"
           },
           {
             "chord": "Fsus2",
-            "word": " "
+            "word": "this time"
           }
         ],
         [
           {
-            "chord": " ",
-            "word": "So when"
-          },
-          {
-            "chord": "Am",
-            "word": "I betrayed all the"
-          },
-          {
             "chord": "G",
-            "word": "promises we made"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "I"
+            "word": "Baby I don't have the strength to"
           },
           {
-            "chord": "F",
-            "word": "hope you know it wasn't out of"
-          },
-          {
-            "chord": "G",
-            "word": "spite"
-          }
-        ],
-        [
-          {
-            "chord": "Am",
-            "word": "Some people just aren't"
-          },
-          {
-            "chord": "G",
-            "word": "made to have a happy"
-          },
-          {
-            "chord": "F",
-            "word": "life"
-          },
-          {
-            "chord": "G",
-            "word": " "
+            "chord": "Gsus2",
+            "word": "fight but"
           }
         ]
       ]
     },
     {
-      "name": "Chorus",
+      "name": "Chorus 2",
       "lines": [
         [
           {
-            "chord": " ",
-            "word": "It was so"
+            "chord": "C",
+            "word": "If I"
           },
           {
-            "chord": "C",
-            "word": "lovely"
+            "chord": "Em",
+            "word": "could have been"
           },
           {
             "chord": "F",
-            "word": " "
+            "word": "happy"
           }
         ],
         [
           {
-            "chord": " ",
-            "word": "To feel like you"
+            "chord": "C",
+            "word": "It would've"
+          },
+          {
+            "chord": "Em",
+            "word": "been with"
+          },
+          {
+            "chord": "F",
+            "word": "you"
           },
           {
             "chord": "Am",
             "word": " "
           },
           {
-            "chord": "F",
-            "word": "loved me"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "But there's something so"
-          },
-          {
-            "chord": "C",
-            "word": "ugly"
-          },
-          {
-            "chord": "F",
+            "chord": "G",
             "word": " "
           }
         ],
         [
           {
-            "chord": " ",
-            "word": "In"
+            "chord": "C",
+            "word": "If I"
+          },
+          {
+            "chord": "Em",
+            "word": "could be"
+          },
+          {
+            "chord": "F",
+            "word": "happy"
+          }
+        ],
+        [
+          {
+            "chord": "G",
+            "word": "I would've"
+          },
+          {
+            "chord": "Gsus2",
+            "word": "been happy with"
+          },
+          {
+            "chord": "F",
+            "word": "you"
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "There was"
+          },
+          {
+            "chord": "Em",
+            "word": "nothing you could've"
+          },
+          {
+            "chord": "F",
+            "word": "done"
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "You lifted"
+          },
+          {
+            "chord": "Em",
+            "word": "me up love"
+          },
+          {
+            "chord": "F",
+            "word": "I dragged"
           },
           {
             "chord": "Am",
-            "word": "me that you just"
-          },
-          {
-            "chord": "F",
-            "word": "wouldn't see"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And so I"
-          },
-          {
-            "chord": "C",
-            "word": "pushed you away"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And"
+            "word": "you"
           },
           {
             "chord": "G",
-            "word": "away and away and"
+            "word": "down"
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "When I'm"
+          },
+          {
+            "chord": "Em",
+            "word": "gone you"
           },
           {
             "chord": "F",
-            "word": "away and"
-          },
-          {
-            "chord": "Dm",
-            "word": "away"
+            "word": "gotta know it's true"
           }
         ],
         [
-          {
-            "chord": " ",
-            "word": "I"
-          },
-          {
-            "chord": "C",
-            "word": "held you at arm's length"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And"
-          },
           {
             "chord": "G",
-            "word": "away and"
+            "word": "That if ever I was"
+          },
+          {
+            "chord": "Gsus2",
+            "word": "happy,"
           },
           {
             "chord": "F",
-            "word": "away and"
-          },
-          {
-            "chord": "Dm",
-            "word": "away"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And"
-          },
-          {
-            "chord": "C",
-            "word": "I kept you safe"
+            "word": "it was with you"
           }
         ]
       ]
     },
     {
-      "name": "Chorus",
+      "name": "Chorus 3",
       "lines": [
         [
           {
@@ -434,165 +474,169 @@
         [
           {
             "chord": "Am",
-            "word": "And when I be"
+            "word": "Whatever's broke inside of"
           },
           {
-            "chord": "G",
-            "word": "trayed"
-          },
-          {
-            "chord": "F",
-            "word": "every single promise that I"
-          },
-          {
-            "chord": "G",
-            "word": "made"
+            "chord": "Em",
+            "word": "me won't fix with time"
           }
         ],
         [
           {
-            "chord": " ",
-            "word": "it wasn't out of spite"
+            "chord": "F",
+            "word": "Know you want me to stay"
+          },
+          {
+            "chord": "C",
+            "word": "I just can't fight"
           }
         ],
         [
           {
             "chord": "Am",
-            "word": "Baby I'm just not"
-          },
-          {
-            "chord": "G",
-            "word": "made"
-          },
-          {
-            "chord": "F",
-            "word": "to have a happy life"
-          },
-          {
-            "chord": "G",
-            "word": " "
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "It was so"
-          },
-          {
-            "chord": "C",
-            "word": "lovely"
-          },
-          {
-            "chord": "F",
-            "word": " "
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "To feel like you"
-          },
-          {
-            "chord": "Am",
-            "word": " "
-          },
-          {
-            "chord": "F",
-            "word": "loved me"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "But there's something so"
-          },
-          {
-            "chord": "C",
-            "word": "ugly"
-          },
-          {
-            "chord": "F",
-            "word": " "
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "In"
-          },
-          {
-            "chord": "Am",
-            "word": "me that you just"
-          },
-          {
-            "chord": "F",
-            "word": "wouldn't see"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And so I"
-          },
-          {
-            "chord": "C",
-            "word": "pushed you away"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And"
-          },
-          {
-            "chord": "G",
-            "word": "away and away and"
-          },
-          {
-            "chord": "F",
-            "word": "away and"
+            "word": "But my love"
           },
           {
             "chord": "Dm",
-            "word": "away"
+            "word": "before I go"
           }
         ],
         [
           {
-            "chord": " ",
-            "word": "I"
-          },
-          {
-            "chord": "C",
-            "word": "held you at arm's length"
-          }
-        ],
-        [
-          {
-            "chord": " ",
-            "word": "And"
+            "chord": "F",
+            "word": "I need"
           },
           {
             "chord": "G",
-            "word": "away and"
-          },
-          {
-            "chord": "F",
-            "word": "away and"
-          },
-          {
-            "chord": "Dm",
-            "word": "away"
+            "word": "you to know"
           }
         ],
         [
           {
-            "chord": " ",
-            "word": "And"
+            "chord": "C",
+            "word": "If I"
           },
           {
+            "chord": "Em",
+            "word": "could have been"
+          },
+          {
+            "chord": "F",
+            "word": "happy"
+          }
+        ],
+        [
+          {
             "chord": "C",
-            "word": "I kept you safe"
+            "word": "It would've"
+          },
+          {
+            "chord": "Em",
+            "word": "been with"
+          },
+          {
+            "chord": "F",
+            "word": "you"
+          },
+          {
+            "chord": "Am",
+            "word": " "
+          },
+          {
+            "chord": "G",
+            "word": " "
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "If I"
+          },
+          {
+            "chord": "Em",
+            "word": "could be"
+          },
+          {
+            "chord": "F",
+            "word": "happy"
+          }
+        ],
+        [
+          {
+            "chord": "G",
+            "word": "I would've"
+          },
+          {
+            "chord": "Gsus2",
+            "word": "been happy with"
+          },
+          {
+            "chord": "F",
+            "word": "you"
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "Doesn't matter"
+          },
+          {
+            "chord": "Em",
+            "word": "what you would've"
+          },
+          {
+            "chord": "F",
+            "word": "done"
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "You lifted"
+          },
+          {
+            "chord": "Em",
+            "word": "me up love"
+          },
+          {
+            "chord": "F",
+            "word": "I dragged"
+          },
+          {
+            "chord": "Am",
+            "word": "you"
+          },
+          {
+            "chord": "G",
+            "word": "down"
+          }
+        ],
+        [
+          {
+            "chord": "C",
+            "word": "When I'm"
+          },
+          {
+            "chord": "Em",
+            "word": "gone please"
+          },
+          {
+            "chord": "F",
+            "word": "know it's true"
+          }
+        ],
+        [
+          {
+            "chord": "G",
+            "word": "That if ever I was"
+          },
+          {
+            "chord": "Gsus2",
+            "word": "happy,"
+          },
+          {
+            "chord": "F",
+            "word": "I was happy because of you"
           }
         ]
       ]
