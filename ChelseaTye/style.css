@@ -97,9 +97,10 @@ body {
     width: 20%;
     font-size: 1.5em;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     margin-top: 15%;
-    margin-left: 10%;
+    margin-left: 20%;
+    margin-right: -15%;
 }
 
 .timeline-image {
@@ -107,8 +108,9 @@ body {
     max-width: 300px; /* Optional: set max-width to prevent it from becoming too large */
     height: auto;
     margin-bottom: 20px; /* Add some space between the image and the description */
-    margin-top: 20px; /* Add some space between the image and the description */
+    margin-top: 5px; /* Add some space between the image and the description */
     border-radius: 1%;
+    border: 1px solid #fff;
 }
 
 .timeline-content {
@@ -137,7 +139,7 @@ body {
     color: #fff;
     padding: 10px;
     background: transparent;
-    cursor: pointer;
+    /* cursor: pointer; */
     animation: hoverArrow 1s infinite alternate;
 }
 
