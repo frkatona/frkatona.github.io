@@ -153,6 +153,11 @@ body {
     transform: rotate(-45deg); /* change rotation */
 }
 
+#stealth-link {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
 @keyframes hoverArrow {
     0% {
         transform: translateY(0);
