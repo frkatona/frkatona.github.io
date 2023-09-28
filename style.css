@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Fira Sans', sans-serif;
   line-height: 1.6;
 }
 
@@ -36,7 +36,7 @@ nav ul li a:hover {
   margin-top: 0px;
   color: #dce2ed;
   font-size: 40px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Fira Sans', sans-serif;
 }
 .banner {
   background-image: url("../images/toothmuseum.PNG");
@@ -144,6 +144,7 @@ nav ul li a:hover {
   margin-top: 100px;
   width: 70px;
   align-items: center;
+  border-radius: 3px;
 }
 
 .about-section {
@@ -177,10 +178,13 @@ nav ul li a:hover {
 }
 
 .profile img {
-  width: 200px;
+  width: 180;
   height: 200px;
   border-radius: 50%;
-  margin-right: 20px;
+  margin-right: 50px;
+  object-fit: cover;
+  border-radius: 85px;
+  border: 1px solid #0f0f0f;
 }
 
 .projects {
