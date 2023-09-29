@@ -97,9 +97,9 @@ nav ul li a:hover {
 }
 
 .thumbnail-container img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
+  height: 200px;
+  width: 200px;
+  border-radius: 10px;
 }
 
 .thumbnail-container h3 {
