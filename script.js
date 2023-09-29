@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Shadow effect
     const heading = document.getElementById("shadow");
-    const shadowMaxDistance = 30; // Maximum distance (in pixels) for shadow effect
+    const shadowMaxDistance = 400; // Maximum distance (in pixels) for shadow effect
     const shadowMaxLength = 10;    // Maximum length (in pixels) of the shadow
 
     document.addEventListener('mousemove', (e) => {
