@@ -4,21 +4,30 @@
   box-sizing: border-box;
 }
 
+
 body {
+  min-height: 100vh;
+  background: #212534;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
   font-family: 'Fira Sans', sans-serif;
   line-height: 1.6;
 }
 
-header {
+/* header {
   background: #333;
   padding: 1rem;
-}
+} */
 
-nav ul {
+/* nav ul {
   display: flex;
   justify-content: center;
   list-style: none;
-}
+} */
 
 nav ul li a {
   color: #fff;
@@ -38,6 +47,7 @@ nav ul li a:hover {
   font-size: 40px;
   font-family: 'Fira Sans', sans-serif;
 }
+
 .banner {
   background-image: url("../images/toothmuseum.PNG");
   height: 100vh;
@@ -60,12 +70,12 @@ nav ul li a:hover {
 }
 
 .banner-text h1 {
-  font-size: 100px;
-  margin-bottom: 1rem;
+  font-size: 5vw;
+  /* margin-bottom: 1rem; */
 }
 
 .banner-text p {
-  font-size: 24px;
+  font-size: 2vw;
 }
 
 .banner::before {
@@ -120,8 +130,8 @@ nav ul li a:hover {
 }
 
 #pdf-container {
-  width: 100%;
-  height: 1300px;
+  width: 900px;
+  height: 100vh;
   display: none;
   position: relative;
 }
@@ -148,8 +158,9 @@ nav ul li a:hover {
 }
 
 .about-section {
-  border-top: 10px solid #7a7a7a;
-  background-color: #595959;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  /* background-color: #595959; */
   padding: 50px 0;
   color: #c2c2c2;
 }
@@ -187,14 +198,14 @@ nav ul li a:hover {
   border: 1px solid #0f0f0f;
 }
 
-.projects {
+/* .projects {
   border-top: 10px solid #7a7a7a;
   background-color: #595959;
   color: aliceblue;
   justify-content: center;
   gap: 1rem;
   padding: 2rem;
-}
+} */
 
 footer {
   background: #333;
@@ -417,4 +428,93 @@ footer {
   color: rgb(255, 255, 255);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   z-index: 1;
+}
+
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
+}
+
+:root {
+  --card-height: 65vh;
+  --card-width: calc(var(--card-height) / 1.5);
+}
+
+.card {
+  background: #191c29;
+  width: var(--card-width);
+  height: var(--card-height);
+  padding: 3px;
+  position: relative;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  font-size: 1.5em;
+  color: rgb(88 199 250 / 0%);
+  cursor: pointer;
+  font-family: cursive;
+}
+
+.card:hover {
+  color: rgb(255, 255, 255);
+  transition: color 1s;
+}
+.card:hover:before, .card:hover:after {
+  animation: none;
+  opacity: 0;
+}
+
+.card::before {
+  content: "";
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    position: absolute;
+    z-index: -1;
+    top: -1%;
+    left: -2%;
+    animation: spin 2.5s linear infinite;
+}
+
+.card::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--card-height) / 6);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(calc(var(--card-height) / 6));
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    opacity: 1;
+  transition: opacity .5s;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  margin-top: 2rem;
 }

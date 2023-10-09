@@ -3,36 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noise Texture Animation</title>
-    <style>
-        body { margin: 0; }
-        canvas { display: block; }
-    </style>
+    <title>testbench</title>
+    <link rel="icon" type="image/x-icon" href="./images/favicon_io/favicon.ico">
+    <link rel="stylesheet" href="testbench.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <div class="card">
+        Magic Card
+    </div>
+      <a href="https://mythrillfiction.com/" target="_blank">Mythrill</a>
 </head>
-<body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
-<script>
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    var renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    var geometry = new THREE.PlaneGeometry(5, 5, 128, 128);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-    var mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-
-    camera.position.z = 5;
-
-    function animate() {
-        requestAnimationFrame(animate);
-        mesh.rotation.x += 0.01;
-        mesh.rotation.y += 0.01;
-        renderer.render(scene, camera);
-    }
-
-    animate();
-</script>
-</body>
-</html>
