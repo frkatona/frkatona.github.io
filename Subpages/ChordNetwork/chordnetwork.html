@@ -1,18 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Network Diagram Utility</title>
-  <link rel="stylesheet" type="text/css" href="chordnetwork.css">
-  <script src="https://d3js.org/d3.v6.min.js"></script>
-</head>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <body>
-  <div id="network-diagram"></div>
-  <div id="controls">
-    <label for="nodeDistance">Node Distance:</label>
-    <input type="range" id="nodeDistance" min="10" max="200" value="100">
-  </div>
+    <style>
+        .unselectable {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-  <script src="chordnetwork.js"></script>
+        body {
+            background-color: #000;
+        }
+    </style>
+    <script>
+        var colors = ["#d00000", "#ffba08", "#3f88c5", "#032b43", "#136f63", "#66635b"];
+
+        var svg = d3.select("body").append("svg")
+        .attr("width", window.innerWidth)
+        .attr("height", window.innerHeight);
+
+        var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+        var simulation = d3.forceSimulation()
+        .force("link", d3.forceLink().id(function(d) { return d.id; })
+            .distance(300)  // Set the link distance
+            .strength(0.1))  // Set the link strength
+        .force("charge", d3.forceManyBody()
+            .strength(-200)  // Make nodes repel each other more strongly
+            .distanceMin(10)  // Avoid instability for very close nodes
+            .distanceMax(100)  // Ignore nodes that are very far away
+            .theta(1))  // Make the simulation run faster but less accurately
+        .force("center", d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2));
+            
+        d3.json("chord-flow-D3-tight.json", function(error, graph) {
+            if (error) {
+                console.error("Error loading file:", error);  // Log the error to the console
+                return;
+            }
+
+        var linkColor = d3.scaleOrdinal()
+            .domain(["natural", "driven", "delicate"])  // Add all possible types here
+            .range([colors[0], colors[2], colors[4]]);  // Add the corresponding colors here
+
+        svg.append("defs").selectAll("marker")
+            .data(["end"])      // Different link/path types can be defined here
+            .enter().append("marker")    // This section adds in the arrows
+            .attr("id", String)
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 20)
+            .attr("refY", 0)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", "M0,-5L10,0L0,5");
+
+
+        var link = svg.append("g")
+            .attr("class", "links")
+            .selectAll("line")
+            .data(graph.links)
+            .enter().append("line")
+            .attr("stroke-width", function(d) { return Math.sqrt(d.value); })
+            .attr("stroke", function(d) { return linkColor(d.type); })
+            .attr("marker-end", "url(#end)");
+
+        var node = svg.append("g")
+            .attr("class", "nodes")
+            .selectAll("circle")
+            .data(graph.nodes)
+            .enter().append("circle")
+            .attr("r", 30)
+            .attr("fill", function(d) { return color(d.group); })
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+
+        // node.append("title")
+        //     .text(function(d) { return d.id; });
+
+        var labels = svg.append("g")
+            .attr("class", "labels")
+            .selectAll("text")
+            .data(graph.nodes)
+            .enter().append("text")
+            .attr("class", "unselectable")
+            .text(function(d) { return d.id; })
+            .style("text-anchor", "middle")
+            .style("fill", "#111")
+            .style("font-family", "Arial")
+            .style("font-size", 25)
+            .call(d3.drag()  // Add the same drag handlers to the labels
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+        simulation
+            .nodes(graph.nodes)
+            .on("tick", ticked);
+
+        simulation.force("link")
+            .links(graph.links);
+
+        function ticked() {
+            link
+                .attr("x1", function(d) { return d.source.x; })
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; });
+
+            node
+                .attr("cx", function(d) { return d.x; })
+                .attr("cy", function(d) { return d.y; });
+
+            labels
+                .attr("x", function(d) { return d.x; })
+                .attr("y", function(d) { return d.y + 7; });
+            }
+        });
+
+        function dragstarted(d) {
+        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+        }
+
+        function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+        }
+
+        function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+        }
+
+        function dragended(d) {
+        if (!d3.event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+        }
+    </script>
 </body>
-</html>
