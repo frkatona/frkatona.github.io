@@ -1,0 +1,134 @@
+[
+    {
+        "chord": "I",
+        "function" : "tonic",
+        "notes": [0, 4, 7, 11],
+        "next": [
+            {
+                "natural": ["ii", "iii", "IV", "V", "vi"],
+                "driven": [],
+                "delicate": ["bIII", "iv", "v", "bVI", "bVII"]
+            }
+        ]
+    },
+    {
+        "chord": "ii",
+        "function": "pre-dominant",
+        "notes": [2, 5, 9, 12],
+        "next": [
+            {
+                "natural": ["iii"],
+                "driven": ["V"],
+                "delicate": ["bIII"]
+            }
+        ]
+    },
+    {
+        "chord": "iii",
+        "function": "tonic",
+        "notes": [4, 7, 11, 14],
+        "next": [
+            {
+                "natural": ["ii"],
+                "driven": ["IV"],
+                "delicate": []
+            }
+        ]
+    },
+    {
+        "chord": "IV",
+        "function": "pre-dominant",
+        "notes": [5, 9, 12, 16],
+        "next": [
+            {
+                "natural": ["iii"],
+                "driven": ["V"],
+                "delicate": ["iv"]
+            }
+        ]
+    },
+    {
+        "chord": "V",
+        "function": "dominant",
+        "notes": [7, 11, 14, 17],
+        "next": [
+            {
+                "natural": ["I", "IV", "vi"],
+                "driven": ["bVI"],
+                "delicate": []
+            }
+        ]
+    },
+    {
+        "chord": "vi",
+        "function": "tonic",
+        "notes": [9, 12, 16, 19],
+        "next": [
+            {
+                "natural": ["I", "bVII", "bIII"],
+                "driven": [],
+                "delicate": ["bVI"]
+            }
+        ]
+    },
+    {
+        "chord": "bIII",
+        "function": "tonic",
+        "notes": [3, 7, 10, 14],
+        "next": [
+            {
+                "natural": ["IV", "bVI"],
+                "driven": [],
+                "delicate": ["bVII"]
+            }
+        ]
+    },
+    {
+        "chord": "iv",
+        "function": "pre-dominant",
+        "notes": [5, 8, 12, 15],
+        "next": [
+            {
+                "natural": ["bIII"],
+                "driven": ["I", "V"],
+                "delicate": []
+            }
+        ]
+    },
+    {
+        "chord": "v",
+        "function": "tonic",
+        "notes": [7, 10, 14, 17],
+        "next": [
+            {
+                "natural": ["IV", "ii"],
+                "driven": ["bIII"],
+                "delicate": []
+            }
+        ]
+    },
+    {
+        "chord": "bVI",
+        "function": "pre-dominant",
+        "notes": [8, 12, 15, 19],
+        "next": [
+            {
+                "natural": [],
+                "driven": ["bVII"],
+                "delicate": ["IV"]
+            }
+        ]
+    },
+    {
+        "chord": "bVII",
+        "function": "dominant",
+        "notes": [10, 14, 17, 20],
+        "next": [
+            {
+                "natural": ["ii", "bVI"],
+                "driven": ["I", "IV"],
+                "delicate": ["V"]
+            }
+        ]
+    }
+]

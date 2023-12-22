@@ -14,8 +14,10 @@
         }
     </style>
     <script>
+        
+        var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
         var colors = ["#d00000", "#ffba08", "#3f88c5", "#032b43", "#136f63", "#66635b"];
-
         var svg = d3.select("body").append("svg")
         .attr("width", window.innerWidth)
         .attr("height", window.innerHeight);
@@ -24,16 +26,16 @@
 
         var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; })
-            .distance(300)  // Set the link distance
-            .strength(0.1))  // Set the link strength
+            .distance(350)  // Set the link distance
+            .strength(0.05))  // Set the link strength
         .force("charge", d3.forceManyBody()
-            .strength(-200)  // Make nodes repel each other more strongly
+            .strength(-250)  // Make nodes repel each other more strongly
             .distanceMin(10)  // Avoid instability for very close nodes
             .distanceMax(100)  // Ignore nodes that are very far away
-            .theta(1))  // Make the simulation run faster but less accurately
+            .theta(.5))  // Make the simulation run faster but less accurately
         .force("center", d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2));
             
-        d3.json("chord-flow-D3-tight.json", function(error, graph) {
+        d3.json("chord-flow-D3.json", function(error, graph) {
             if (error) {
                 console.error("Error loading file:", error);  // Log the error to the console
                 return;
@@ -71,7 +73,7 @@
             .selectAll("circle")
             .data(graph.nodes)
             .enter().append("circle")
-            .attr("r", 30)
+            .attr("r", 50)
             .attr("fill", function(d) { return color(d.group); })
             .call(d3.drag()
                 .on("start", dragstarted)
@@ -89,13 +91,80 @@
             .attr("class", "unselectable")
             .text(function(d) { return d.id; })
             .style("text-anchor", "middle")
-            .style("fill", "#111")
+            .style("fill", "#000")
             .style("font-family", "Arial")
-            .style("font-size", 25)
+            .style("font-size", 30)
             .call(d3.drag()  // Add the same drag handlers to the labels
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended));
+
+        function propagateEffect(node) {
+            // Find the links connected to the node
+            var connectedLinks = graph.links.filter(function(link) {
+                return link.source.id === node.id || link.target.id === node.id;
+            });
+
+            // Create a transition for each link
+            connectedLinks.forEach(function(link) {
+                d3.select("#link-" + link.id)  // Assuming each link has an ID
+                    .transition()
+                    .duration(500)
+                    .style("stroke", "#ff0")  // Change the color
+                    .style("stroke-width", 5);  // Increase the stroke width
+            });
+}
+
+        let volume = 0.2;
+        let octaveSelect = 4;
+        let attack = 0.1;
+
+        // Define the frequencies for the notes starting from middle C
+        let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
+        frequencies = frequencies.map(function(value) {
+            return value * Math.pow(2, octaveSelect - 1);
+        });
+
+        function handleClick(d) {
+            // audio
+            console.log(d);
+            for (var i = 0; i < d.notes.length; i++) {
+                // Create an oscillator for each note
+                let oscillator = audioContext.createOscillator()
+                let gainNode = audioContext.createGain();
+                // gainNode.gain.value = 0.1; // volume, from 0.0 (silent) to 1.0 (full volume)
+                oscillator.connect(gainNode);
+                oscillator.type = 'sine'; // or 'square', 'sawtooth', 'triangle'
+                var now = audioContext.currentTime;
+                gainNode.gain.setValueAtTime(0, now);
+                gainNode.gain.linearRampToValueAtTime(volume, now + attack); // Attack
+                // gainNode.gain.linearRampToValueAtTime(0.5, now + 0.2); // Decay
+                // gainNode.gain.setValueAtTime(0.5, now + 0.7); // Sustain
+                gainNode.gain.linearRampToValueAtTime(0, now + 1); // Release
+                oscillator.frequency.value = frequencies[d.notes[i]];
+                // console.log(frequencies[d.notes[i]]);
+                gainNode.connect(audioContext.destination); // Connect gainNode to destination
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 1);
+            }
+
+            // visual effect
+            d3.select(node._groups[0][d.index])
+            .transition()
+            .duration(attack * 1000)
+            .attr("r", 100)
+            .style("fill", "#511")
+            .transition()  // Add another transition
+            .duration(attack * 20000)
+            .attr("r", 50)  // Reset the radius
+            .style("fill", function(d) { return color(d.group); });  // Reset the color
+
+            propagateEffect(d);
+            console.log(d);
+        };
+
+        node.on("click", handleClick);
+        labels.on("click", handleClick);
 
         simulation
             .nodes(graph.nodes)
