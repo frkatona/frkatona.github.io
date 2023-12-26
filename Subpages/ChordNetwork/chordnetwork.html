@@ -17,6 +17,47 @@
     </style>
 
     <script>
+        // User parameters (audio)
+
+    </script>
+
+    <script>
+        // User parameters (audio)
+        var volume = 0.2;
+        var octaveSelect = 4;
+        var attack = 0.1;
+        // User parameters placeholder (UI - color scheme etc.)
+        // User parameters placeholder (chordchord - [voicing openness/voice-leading], etc.)
+    </script>
+    
+    <form id="parameters">
+        <label for="volume">Volume:</label>
+        <input type="range" id="volume" name="volume" min="0" max="0.5" step="0.01">
+        
+        <label for="octaveSelect">Octave:</label>
+        <input type="number" id="octaveSelect" name="octaveSelect" min="0" max="8">
+        
+        <label for="attack">Attack:</label>
+        <input type="number" id="attack" name="attack" min="0" max="1" step="0.01">
+    </form>
+    
+    <script>
+        document.getElementById('volume').value = volume;
+        document.getElementById('octaveSelect').value = octaveSelect;
+        document.getElementById('attack').value = attack;
+        
+        document.getElementById('parameters').addEventListener('change', function(e) {
+            if (e.target.id === 'volume') {
+                volume = parseFloat(e.target.value);
+            } else if (e.target.id === 'octaveSelect') {
+                octaveSelect = parseInt(e.target.value);
+            } else if (e.target.id === 'attack') {
+                attack = parseFloat(e.target.value);
+            }
+        });
+    </script>
+
+    <script>
         var audioContext = new (window.AudioContext || window.webkitAudioContext)();
         
         var colors = ["#d00000", "#ffba08", "#3f88c5", "#032b43", "#136f63", "#66635b"];
@@ -70,16 +111,6 @@
             .attr("stroke", function(d) { return linkColor(d.type); })
             .attr("marker-end", "url(#end)");
 
-        // graph.links.forEach(function(link) {
-        //     svg.append("line")
-        //         .attr("id", "link-" + link.source + "-" + link.target)
-        // });
-
-        // console log the properties of the links
-        graph.links.forEach(function(link) {
-            console.log(link);
-        });
-
         var node = svg.append("g")
             .attr("class", "nodes")
             .selectAll("circle")
@@ -91,9 +122,6 @@
                 .on("start", dragstarted)
                 .on("drag", dragged)
                 .on("end", dragended));
-
-        // node.append("title")
-        //     .text(function(d) { return d.id; });
 
         var labels = svg.append("g")
             .attr("class", "labels")
@@ -122,25 +150,14 @@
                     d3.select("#link-" + link.id)
                         .transition()
                         .duration(attack * 2000)
-                        .style("stroke", "#ff0")  // Change the color
-                        .style("stroke-width", 7)  // Increase the stroke width
+                        .style("stroke", function(d) { return linkColor(d.type); })  // Change the color
+                        .style("stroke-width", 8)  // Increase the stroke width
                         .transition()  // Add another transition
-                        .duration(500)  // Set the duration for the second transition
+                        .duration(1000)  // Set the duration for the second transition
                         .style("stroke", function(d) { return linkColor(d.type); })  // Reset the color
                         .style("stroke-width", function(d) { return Math.sqrt(d.value); });  // Reset the stroke width
                 });
             }
-
-        // User parameters placeholder (UI - color scheme etc.)
-
-
-        // User parameters (audio)
-        let volume = 0.2;
-        let octaveSelect = 3;
-        let attack = 0.1;
-
-        // User parameters placeholder (chordchord - [voicing openness/voice-leading], etc.)
-
 
         // Define the frequencies for the notes starting from middle C
         let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
@@ -150,7 +167,7 @@
 
         function handleClick(d) {
             // audio
-            // console.log(d);
+            console.log(volume);
             for (var i = 0; i < d.notes.length; i++) {
                 // Create an oscillator for each note
                 let oscillator = audioContext.createOscillator()
@@ -165,7 +182,6 @@
                 // gainNode.gain.setValueAtTime(0.5, now + 0.7); // Sustain
                 gainNode.gain.linearRampToValueAtTime(0, now + 1); // Release
                 oscillator.frequency.value = frequencies[d.notes[i]];
-                // console.log(frequencies[d.notes[i]]);
                 gainNode.connect(audioContext.destination); // Connect gainNode to destination
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + 1);
