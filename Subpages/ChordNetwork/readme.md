@@ -6,19 +6,27 @@
 
 - [ ] fancy on-click events
 
-  - [ ] playing the chord (requires reworking the json structure and by extension the json maker script)
+  - [x] playing the chord (requires reworking the json structure and by extension the json maker script) - done, works in C major, won't be tough to allow other key modifiers
+  
+  - [ ] have setting to change voicing depending on the most recent chord played
 
   - [ ] bloom that moves along the line to show the various connections and maybe flash their node ids at the top for a moment
 
-- [ ] add connection colors and a legend for them and arrows
+- [ ] connection logic
+
+  - [x] add connection colors
+
+  - [ ] legends for color coordination
+
+  - [ ] arrows/directionality for chord functions
 
 - [ ] add an option to change from relative to a given key
 
-- [ ] dark mode
+- [x] dark mode
 
 - [ ] distinct click and drag spot for changing the force center
 
-- [ ] polish script that converts the json
+- [x] polish script that converts the json
 
 - [ ] "create"/"randomize" functionality
 

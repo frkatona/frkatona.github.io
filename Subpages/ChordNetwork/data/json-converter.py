@@ -9,7 +9,8 @@ def transform_data(input_file):
     for item in data:
         for type, chords in item["next"][0].items():
             for chord in chords:
-                links.append({"source": item["chord"], "target": chord, "value": 1, "type": type})
+                link_id = f"{item['chord']}-{chord}"
+                links.append({"id": link_id, "source": item["chord"], "target": chord, "value": 1, "type": type})
     output = {"nodes": nodes, "links": links}
 
     return output
@@ -37,6 +38,6 @@ def write_output(output, input_file):
     with open(output_file, 'w') as f:
         f.write(file_content)
 
-input_file = 'data\chord-flow.json'
+input_file = 'Subpages\ChordNetwork\data\chord-flow.json'
 output = transform_data(input_file)
 write_output(output, input_file)
