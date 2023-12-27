@@ -22,39 +22,64 @@
     </script>
 
     <script>
+        // Global Constants
+        //twelth root of two
+        const twelthRoot = 1.0594630943592952645618252949463;
+
         // User parameters (audio)
         var volume = 0.2;
         var octaveSelect = 4;
         var attack = 0.1;
+        var waveShape = "sine";
+        var lowpassCutoff = 4000;
+
         // User parameters placeholder (UI - color scheme etc.)
+        
+
         // User parameters placeholder (chordchord - [voicing openness/voice-leading], etc.)
+        var openness = 0.5;
+        var voiceLeading = .1;
+        var butter = 0.5;
+        var color;
+        var lastChord = null;
     </script>
     
     <form id="parameters">
         <label for="volume">Volume:</label>
-        <input type="range" id="volume" name="volume" min="0" max="0.5" step="0.01">
+        <input type="range" id="volume" name="volume" min="0" max="0.3" step="0.01">
         
         <label for="octaveSelect">Octave:</label>
-        <input type="number" id="octaveSelect" name="octaveSelect" min="0" max="8">
+        <input type="number" id="octaveSelect" name="octaveSelect" min="3" max="7">
         
-        <label for="attack">Attack:</label>
-        <input type="number" id="attack" name="attack" min="0" max="1" step="0.01">
+        <label for="waveShape">Wave Shape:</label>
+        <select id="waveShape" name="waveShape">
+            <option value="sine">Sine</option>
+            <option value="square">Square</option>
+            <option value="sawtooth">Sawtooth</option>
+            <option value="triangle">Triangle</option>
+
+        <label for="lowpassCutoff">Lowpass Cutoff:</label>
+        <input type="range" id="lowpassCutoff" name="lowpassCutoff" min="100" max="10000" step="100">
+
     </form>
     
     <script>
         document.getElementById('volume').value = volume;
         document.getElementById('octaveSelect').value = octaveSelect;
-        document.getElementById('attack').value = attack;
+        // document.getElementById('attack').value = attack;
         
         document.getElementById('parameters').addEventListener('change', function(e) {
             if (e.target.id === 'volume') {
                 volume = parseFloat(e.target.value);
             } else if (e.target.id === 'octaveSelect') {
                 octaveSelect = parseInt(e.target.value);
-            } else if (e.target.id === 'attack') {
-                attack = parseFloat(e.target.value);
+            } else if (e.target.id === 'waveShape') {
+                waveShape = e.target.value;
+            } else if (e.target.id === 'lowpassCutoff') {
+                lowpassCutoff = parseInt(e.target.value);
             }
         });
+
     </script>
 
     <script>
@@ -69,7 +94,7 @@
 
         var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; })
-            .distance(350)  // Set the link distance
+            .distance(500)  // Set the link distance
             .strength(0.05))  // Set the link strength
         .force("charge", d3.forceManyBody()
             .strength(-250)  // Make nodes repel each other more strongly
@@ -159,30 +184,58 @@
                 });
             }
 
-        // Define the frequencies for the notes starting from middle C
-        let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
-        frequencies = frequencies.map(function(value) {
-            return value * Math.pow(2, octaveSelect - 1);
-        });
-
+        
         function handleClick(d) {
+            // Define the frequencies for the notes starting from middle C
+            let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
+            frequencies = frequencies.map(function(value) {
+                return value * Math.pow(2, octaveSelect - 1);
+            });
+
+            let chordShape = d.notes.map(note => frequencies[note]);
+            console.log("chord frequencies: " + chordShape);
+
+            // butter
+
+
+            // voicing
+            if (voiceLeading < 0.33) {
+                // close voicing
+                voicedShape = [chordShape[0], chordShape[1]/2, chordShape[2]/2, chordShape[3]/2];
+            } else if (voiceLeading < 0.66) {
+                // middle voicing
+                voicedShape = [chordShape[0], chordShape[1], chordShape[2]/2, chordShape[3]/2];
+            } else {
+                // open voicing
+                voicedShape = chordShape;
+            }
+
+            console.log("voiced frequencies: " + voicedShape);
+            // openness
+
+
+
+            // TODO: calculate the frequencies from scratch here instead of using the frequencies array
+
             // audio
-            console.log(volume);
-            for (var i = 0; i < d.notes.length; i++) {
+            for (var i = 0; i < voicedShape.length; i++) {
                 // Create an oscillator for each note
-                let oscillator = audioContext.createOscillator()
+                let oscillator = audioContext.createOscillator();
                 let gainNode = audioContext.createGain();
-                // gainNode.gain.value = 0.1; // volume, from 0.0 (silent) to 1.0 (full volume)
-                oscillator.connect(gainNode);
-                oscillator.type = 'sine'; // or 'square', 'sawtooth', 'triangle'
+                let filter = audioContext.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = lowpassCutoff;  
+                oscillator.type = waveShape; 
                 var now = audioContext.currentTime;
                 gainNode.gain.setValueAtTime(0, now);
                 gainNode.gain.linearRampToValueAtTime(volume, now + attack); // Attack
                 // gainNode.gain.linearRampToValueAtTime(0.5, now + 0.2); // Decay
                 // gainNode.gain.setValueAtTime(0.5, now + 0.7); // Sustain
                 gainNode.gain.linearRampToValueAtTime(0, now + 1); // Release
-                oscillator.frequency.value = frequencies[d.notes[i]];
-                gainNode.connect(audioContext.destination); // Connect gainNode to destination
+                oscillator.frequency.value = voicedShape[i];
+                oscillator.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioContext.destination);
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + 1);
             }
@@ -199,6 +252,8 @@
             .style("fill", function(d) { return color(d.group); });  // Reset the color
 
             propagateEffect(d);
+
+            lastChord = d;
         };
 
         node.on("click", handleClick);

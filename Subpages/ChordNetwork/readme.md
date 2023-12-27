@@ -18,7 +18,7 @@
 
   - [ ] legends for color coordination
 
-  - [ ] arrows/directionality for chord functions
+  - [x] arrows/directionality for chord functions
 
 - [ ] add an option to change from relative to a given key
 
@@ -33,3 +33,7 @@
   - [ ] create 'x' bars chord progression randomize button with fancy blooms and then plays the progression
 
   - [ ] allow user to reroll any of the chords in the new progression without affecting the others
+
+- [ ] optimizing
+
+  - [ ] don't re-calculate the pitch array each click event

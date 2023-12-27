@@ -17,9 +17,9 @@
         "notes": [2, 5, 9, 12],
         "next": [
             {
-                "natural": ["iii"],
+                "natural": ["iii", "IV"],
                 "driven": ["V"],
-                "delicate": ["bIII"]
+                "delicate": ["I", "bIII", "vi"]
             }
         ]
     },
@@ -29,9 +29,9 @@
         "notes": [4, 7, 11, 14],
         "next": [
             {
-                "natural": ["ii"],
+                "natural": ["I", "ii"],
                 "driven": ["IV"],
-                "delicate": []
+                "delicate": ["bIII", "iv"]
             }
         ]
     },
@@ -41,9 +41,9 @@
         "notes": [5, 9, 12, 16],
         "next": [
             {
-                "natural": ["iii"],
+                "natural": ["iii", "bIII", "ii", "vi"],
                 "driven": ["V"],
-                "delicate": ["iv"]
+                "delicate": ["iv", "IV", "v"]
             }
         ]
     },
@@ -55,7 +55,7 @@
             {
                 "natural": ["I", "IV", "vi"],
                 "driven": ["bVI"],
-                "delicate": []
+                "delicate": ["iv", "iii"]
             }
         ]
     },
@@ -66,8 +66,8 @@
         "next": [
             {
                 "natural": ["I", "bVII", "bIII"],
-                "driven": [],
-                "delicate": ["bVI"]
+                "driven": ["ii"],
+                "delicate": ["bVI", "IV"]
             }
         ]
     },
@@ -78,8 +78,8 @@
         "next": [
             {
                 "natural": ["IV", "bVI"],
-                "driven": [],
-                "delicate": ["bVII"]
+                "driven": ["V"],
+                "delicate": ["bVII", "iv"]
             }
         ]
     },
@@ -89,8 +89,8 @@
         "notes": [5, 8, 12, 15],
         "next": [
             {
-                "natural": ["bIII"],
-                "driven": ["I", "V"],
+                "natural": ["bIII", "v"],
+                "driven": ["I", "V", "bVI", "bVII"],
                 "delicate": []
             }
         ]
@@ -101,9 +101,9 @@
         "notes": [7, 10, 14, 17],
         "next": [
             {
-                "natural": ["IV", "ii"],
+                "natural": ["IV", "ii", "bVI"],
                 "driven": ["bIII"],
-                "delicate": []
+                "delicate": ["iv"]
             }
         ]
     },
@@ -113,9 +113,9 @@
         "notes": [8, 12, 15, 19],
         "next": [
             {
-                "natural": [],
-                "driven": ["bVII"],
-                "delicate": ["IV"]
+                "natural": ["I"],
+                "driven": ["bVII", "iv"],
+                "delicate": ["IV", "V"]
             }
         ]
     },
@@ -126,8 +126,8 @@
         "next": [
             {
                 "natural": ["ii", "bVI"],
-                "driven": ["I", "IV"],
-                "delicate": ["V"]
+                "driven": ["I", "IV", "bIII"],
+                "delicate": ["V", "v"]
             }
         ]
     }
