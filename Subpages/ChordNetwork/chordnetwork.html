@@ -54,6 +54,15 @@
             display: none;
         }
 
+        #bottomContainer {
+            display: flex;
+            /* justify-content: center;
+            align-items: center; */
+            position: fixed;
+            bottom: 10px;
+            width: 50%;
+        }
+
         #chordBoxes {
             display: flex;
             justify-content: center;
@@ -75,10 +84,20 @@
             align-items: center;
             text-align: center;
             color: #fff;
+            /* add outline to text */
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
             font-size: 25px;
             font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
+        #randomNext {
+            position: fixed;
+            bottom: 50px;
+            left: 50px;
+            z-index: 1;
+            margin-left: 20px; /* Adjust as needed */
+
+        }
     </style>
 
     <script>
@@ -92,23 +111,27 @@
                 2: " add9",
                 4: " add11"
             }
+        let repeatTest = false;
+        let repeatCounter = 0;
         
         // User parameters (audio)
-        var key = 0;
-        var volume = 0.2;
-        var octaveSelect = 4;
-        var attack = 0.1;
-        var waveShape = "sine";
-        var lowpassCutoff = 4000;
+        let key = 0;
+        let volume = 0.2;
+        let octaveSelect = 4;
+        let attack = 0.1;
+        let waveShape = "sine";
+        let lowpassCutoff = 4000;
+        let randomDelay = 1000;
 
         // User parameters (UI) [placeholder]
-        
+        let chordBars = 4; // use this to construct more boxes as a user UI control later
+
         // User parameters (chord quality)
-        var openness = 3;
-        var voiceLeading = 0.1;
-        var butter = 0.5;
-        var chordColor = 0;
-        var lastChord = null;
+        let openness = 3;
+        let voiceLeading = 0.1;
+        let butter = 0.5;
+        let chordColor = 0;
+        let lastNode = d3.select("#I");
     </script>
     
     <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -171,15 +194,17 @@
         </form>
     </div>
 
-    <!-- create a button for "random next" -->
-
-    <div id="chordBoxes">
-        <div id="box1"></div>
-        <div id="box2"></div>
-        <div id="box3"></div>
-        <div id="box4"></div>
+    <div id="bottomContainer">
+        <div id="chordBoxes">
+            <div id="box1"></div>
+            <div id="box2"></div>
+            <div id="box3"></div>
+            <div id="box4"></div>
+        </div>
+        <!-- onclick set randomNext to true -->
+        <button id="randomNext" onclick="repeatTest = true">Random Next</button>
     </div>
-    
+
     <script>
         const handlers = {
             'key': (value) => key = parseInt(value),
@@ -292,12 +317,12 @@
 
         function propagateEffect(node) {
 
-            // Find the links connected to the node
-            let connectedLinks = graph.links.filter(function(link) {
+            // Find the links connected to the node as a source
+            let linksFrom = graph.links.filter(function(link) {
                 return link.source === node;
             });
             // Create a transition for each link
-            connectedLinks.forEach(function(link) {
+            linksFrom.forEach(function(link) {
                 d3.select("#link-" + link.id)
                     .transition()
                     .duration(attack * 2000)
@@ -308,18 +333,32 @@
                     .style("stroke", function(d) { return linkColor(d.type); })  // Reset the color
                     .style("stroke-width", function(d) { return Math.sqrt(d.value); });  // Reset the stroke width
             });
+            // pick a random node that is connected to the node as a target
+            let linksTo = graph.links.filter(function(link) {
+                return link.target === node;
+            });
+            let randomLink = linksTo[Math.floor(Math.random() * linksTo.length)];
+            let randomNode = randomLink.source;
+            
+            if (repeatTest == true && repeatCounter < chordBars - 1) {
+                setTimeout(function() { handleClick(randomNode); }, randomDelay);
+                repeatCounter++;
+            } else {
+                repeatTest = false;
+                repeatCounter = 0;
+            }
         }
 
         var lastFourChords = [];
 
-        function chordClicked(chord, color) {
+        function chordClicked(chordName, color) {
             // If there are already four chords, remove the first one
             if (lastFourChords.length === 4) {
                 lastFourChords.shift();
             }
 
             // Add the new chord and its color
-            lastFourChords.push({ identity: chord, color: color });
+            lastFourChords.push({ identity: chordName, color: color });
 
             // Update the boxes
             for (var i = 0; i < lastFourChords.length; i++) {
@@ -330,6 +369,8 @@
         }
 
         function handleClick(d) {
+            // console.log(node.datum());
+
             // Define the frequencies for the notes starting from C1 and then correct for octave and key selection
             let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
             frequencies = frequencies.map(function(value) {
@@ -349,7 +390,6 @@
                 chordTonality = "" //dominant
             }
 
-            // also consider that this will ultimately need to become midi output and so that might be the simplest place to start and then work up to the chord names from there
             chordName = keyArray[d.notes[0] + key] + chordTonality + extensions[chordColor]
             console.log(chordName)
             console.log("key: " + keyArray[key]);
@@ -357,6 +397,8 @@
             console.log("chord tonality: " + chordTonality);
             console.log("chord color: " + extensions[chordColor]);
             console.log("original frequency shape: " + chordShape);
+
+            // construct the midi message this will become and maybe append it as a property in an object with the circle buffer chords
 
             // extensions (chordColor value is movement from the 7 except for 1 which is no extension which takes the root up an octave)
             if (chordColor == 1) {
@@ -420,7 +462,7 @@
                 oscillator.stop(audioContext.currentTime + 1);
             }
 
-            chordClicked(d.id, color(d.group));
+            chordClicked(chordName, color(d.group));
 
             // visual effect
             d3.select(node._groups[0][d.index])
@@ -435,7 +477,13 @@
 
             propagateEffect(d);
 
-            lastChord = d;
+            // use voicing for next chord voicing
+
+            // random next chord from d links
+            // var randomLink = d.links[Math.floor(Math.random() * d.links.length)];
+            // console.log("random link = " + randomLink);
+
+            console.log(d.links)
         };
 
         node.on("click", handleClick);
@@ -486,5 +534,7 @@
         d.fx = null;
         d.fy = null;
         }
+
     </script>
+    
 </body>
