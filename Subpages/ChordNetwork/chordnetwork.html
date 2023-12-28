@@ -95,8 +95,16 @@
             bottom: 50px;
             left: 50px;
             z-index: 1;
-            margin-left: 20px; /* Adjust as needed */
+            margin-left: 20px;
+            background-color: white;
+        }
 
+        #exportMIDI {
+            position: fixed;
+            bottom: 20px;
+            left: 50px;
+            z-index: 1;
+            margin-left: 20px;
         }
     </style>
 
@@ -132,6 +140,17 @@
         let butter = 0.5;
         let chordColor = 0;
         let lastNode = d3.select("#I");
+
+        //random next toggle function
+        function toggleRandomNext() {
+            if (repeatTest == false) {
+                repeatTest = true;
+                document.getElementById("randomNext").style.backgroundColor = "green";
+            } else {
+                repeatTest = false;
+                document.getElementById("randomNext").style.backgroundColor = "white";
+            }
+        }
     </script>
     
     <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -201,8 +220,9 @@
             <div id="box3"></div>
             <div id="box4"></div>
         </div>
-        <!-- onclick set randomNext to true -->
-        <button id="randomNext" onclick="repeatTest = true">Random Next</button>
+        <!-- onclick set randomNext to true and set background color to red -->
+        <button id="randomNext" onclick="toggleRandomNext()">Random Next</button>
+        <button id="exportMIDI">Export MIDI (todo)</button>
     </div>
 
     <script>
@@ -346,6 +366,8 @@
             } else {
                 repeatTest = false;
                 repeatCounter = 0;
+                document.getElementById("randomNext").style.backgroundColor = "white";
+
             }
         }
 
@@ -366,6 +388,9 @@
                 box.textContent = lastFourChords[i].identity;
                 box.style.backgroundColor = lastFourChords[i].color;
             }
+
+            // add an animation to the box most recently changed (will be box4 except for first 3 clicks)
+
         }
 
         function handleClick(d) {
