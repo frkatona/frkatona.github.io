@@ -4,7 +4,7 @@ import os
 def transform_data(input_file):
     with open(input_file, 'r') as f:
         data = json.load(f)
-    nodes = [{"id": item["chord"], "group": item["function"], "notes": item["notes"]} for item in data]
+    nodes = [{"id": item["chord"], "majmin" : item["majmin"], "group": item["function"], "notes": item["notes"]} for item in data]
     links = []
     for item in data:
         for type, chords in item["next"][0].items():

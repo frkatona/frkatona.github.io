@@ -37,7 +37,6 @@
         }
 
         .hamburger {
-            /* position: absolute; */
             font-size: 50px;
             cursor: pointer;
             top: 10px;
@@ -46,7 +45,6 @@
 
         .menu {
             display: none;
-            /* position: absolute; */
         }
 
     </style>
@@ -86,14 +84,14 @@
                 <option value="0">C</option>
                 <option value="1">C#</option>
                 <option value="2">D</option>
-                <option value="3#">D#</option>
+                <option value="3">D#</option>
                 <option value="4">E</option>
                 <option value="5">F</option>
-                <option value="6#">F#</option>
+                <option value="6">F#</option>
                 <option value="7">G</option>
-                <option value="8#">G#</option>
+                <option value="8">G#</option>
                 <option value="9">A</option>
-                <option value="10#">A#</option>
+                <option value="10">A#</option>
                 <option value="11">B</option>
             </select>
 
@@ -277,6 +275,19 @@
 
             let chordShape = d.notes.map(note => frequencies[note]);
             
+            let chordName;
+            if (chordShape[1] - chordShape[0] == 3){
+                chordName = "minor";
+            } else if (chordShape[3] - chordShape[2] == 1) {
+                chordName = "major";
+            } else {
+                chordName = "dominant"
+            }
+            // think on how I want to change the extension section to make the name work here
+            // also on how I want to get the key + chordShape[0] to initialize the chord name (probably make an array of keys)
+            // also consider that this will ultimately need to become midi output and so that might be the simplest place to start and then work up to the chord names from there
+            // chordName = chordName + " " + d.id;
+
             console.log("original: " + chordShape);
 
             // extensions (chordColor value is movement from the 7 except for 1 which is no extension which takes the root up an octave)
@@ -287,7 +298,10 @@
             }
 
             // butter
-            // if butter = False, remove the 5
+            // if butter = False, remove the third index from the array
+            // if (butter == 0) {
+            //     chordShape[2] = asdfasdf
+            // }
 
             // voice leading
             // if voiceLeading > 0, calculate array index distance between current and last chord arrays and shift octaves to minimize it proportionate to the value
