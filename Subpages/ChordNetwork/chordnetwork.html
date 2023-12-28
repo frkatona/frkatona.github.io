@@ -66,7 +66,7 @@
         }
 
         #chordBoxes > div {
-            border: 3px solid #000;
+            border: 5px solid #000;
             width: 100px; /* Adjust as needed */
             height: 100px; /* Adjust as needed */
             margin: 10px 10px; /* Adjust as needed */
@@ -74,7 +74,8 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            font-size: 20px;
+            color: #fff;
+            font-size: 25px;
             font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
@@ -170,6 +171,8 @@
         </form>
     </div>
 
+    <!-- create a button for "random next" -->
+
     <div id="chordBoxes">
         <div id="box1"></div>
         <div id="box2"></div>
@@ -224,7 +227,7 @@
             .distanceMin(1)  // Avoid instability for very close nodes
             .distanceMax(100)  // Ignore nodes that are very far away
             .theta(.5))  // Make the simulation run faster but less accurately
-        .force("center", d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2));
+        .force("center", d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2.5));
             
         d3.json("chord-flow-D3.json", function(error, graph) {
             if (error) {
@@ -287,40 +290,42 @@
             .on("drag", dragged)
             .on("end", dragended));
 
-            function propagateEffect(node) {
+        function propagateEffect(node) {
 
-                // Find the links connected to the node
-                let connectedLinks = graph.links.filter(function(link) {
-                    return link.source === node;
-                });
-                // Create a transition for each link
-                connectedLinks.forEach(function(link) {
-                    d3.select("#link-" + link.id)
-                        .transition()
-                        .duration(attack * 2000)
-                        .style("stroke", function(d) { return linkColor(d.type); })  // Change the color
-                        .style("stroke-width", 8)  // Increase the stroke width
-                        .transition()  // Add another transition
-                        .duration(1000)  // Set the duration for the second transition
-                        .style("stroke", function(d) { return linkColor(d.type); })  // Reset the color
-                        .style("stroke-width", function(d) { return Math.sqrt(d.value); });  // Reset the stroke width
-                });
-            }
+            // Find the links connected to the node
+            let connectedLinks = graph.links.filter(function(link) {
+                return link.source === node;
+            });
+            // Create a transition for each link
+            connectedLinks.forEach(function(link) {
+                d3.select("#link-" + link.id)
+                    .transition()
+                    .duration(attack * 2000)
+                    .style("stroke", function(d) { return linkColor(d.type); })  // Change the color
+                    .style("stroke-width", 8)  // Increase the stroke width
+                    .transition()  // Add another transition
+                    .duration(1000)  // Set the duration for the second transition
+                    .style("stroke", function(d) { return linkColor(d.type); })  // Reset the color
+                    .style("stroke-width", function(d) { return Math.sqrt(d.value); });  // Reset the stroke width
+            });
+        }
 
         var lastFourChords = [];
 
-        function chordClicked(chord) {
+        function chordClicked(chord, color) {
             // If there are already four chords, remove the first one
             if (lastFourChords.length === 4) {
                 lastFourChords.shift();
             }
 
-            // Add the new chord
-            lastFourChords.push(chordName);
+            // Add the new chord and its color
+            lastFourChords.push({ identity: chord, color: color });
 
             // Update the boxes
             for (var i = 0; i < lastFourChords.length; i++) {
-                document.getElementById('box' + (i + 1)).textContent = lastFourChords[i];
+                var box = document.getElementById('box' + (i + 1));
+                box.textContent = lastFourChords[i].identity;
+                box.style.backgroundColor = lastFourChords[i].color;
             }
         }
 
@@ -415,7 +420,7 @@
                 oscillator.stop(audioContext.currentTime + 1);
             }
 
-            chordClicked(d.id);
+            chordClicked(d.id, color(d.group));
 
             // visual effect
             d3.select(node._groups[0][d.index])
