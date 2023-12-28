@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chord Network Diagram</title>
+    <!-- <link rel="stylesheet" href="chordnetwork.css"> -->
+</html>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <body>
     
@@ -41,10 +47,35 @@
             cursor: pointer;
             top: 10px;
             left: 10px;
+            /* position: fixed; */
         }
 
         .menu {
             display: none;
+        }
+
+        #chordBoxes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            height: 100px; /* Adjust as needed */
+            background-color: #161522; /* Adjust as needed */
+        }
+
+        #chordBoxes > div {
+            border: 3px solid #000;
+            width: 100px; /* Adjust as needed */
+            height: 100px; /* Adjust as needed */
+            margin: 10px 10px; /* Adjust as needed */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 20px;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
     </style>
@@ -53,7 +84,14 @@
         // Global Constants
         //twelth root of two
         const twelthRoot = 1.0594630943592952645618252949463;
-
+        const keyArray = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A","A#", "B"];
+        const extensions = {
+                0: "7",
+                1: "",
+                2: " add9",
+                4: " add11"
+            }
+        
         // User parameters (audio)
         var key = 0;
         var volume = 0.2;
@@ -62,9 +100,9 @@
         var waveShape = "sine";
         var lowpassCutoff = 4000;
 
-        // User parameters placeholder (UI)
+        // User parameters (UI) [placeholder]
         
-        // User parameters placeholder (chord quality)
+        // User parameters (chord quality)
         var openness = 3;
         var voiceLeading = 0.1;
         var butter = 0.5;
@@ -112,7 +150,7 @@
 
             <label for="lowpassCutoff">Lowpass Cutoff:</label>
             <input type="range" id="lowpassCutoff" name="lowpassCutoff" min="300" max="12300" step="2000" oninput="this.title = this.value + ' Hz'">
-            
+
             <label for="chordColor">Extension:</label>
             <select id="chordColor" name="chordColor">
                 <option value="1">None</option>
@@ -130,6 +168,13 @@
                 <option value="5">Very Open</option>
             </select>
         </form>
+    </div>
+
+    <div id="chordBoxes">
+        <div id="box1"></div>
+        <div id="box2"></div>
+        <div id="box3"></div>
+        <div id="box4"></div>
     </div>
     
     <script>
@@ -149,7 +194,6 @@
                 handler(e.target.value);
             }
         });
-
 
         function toggleMenu() {
             var menu = document.getElementById('parameters');
@@ -263,7 +307,23 @@
                 });
             }
 
-        
+        var lastFourChords = [];
+
+        function chordClicked(chord) {
+            // If there are already four chords, remove the first one
+            if (lastFourChords.length === 4) {
+                lastFourChords.shift();
+            }
+
+            // Add the new chord
+            lastFourChords.push(chordName);
+
+            // Update the boxes
+            for (var i = 0; i < lastFourChords.length; i++) {
+                document.getElementById('box' + (i + 1)).textContent = lastFourChords[i];
+            }
+        }
+
         function handleClick(d) {
             // Define the frequencies for the notes starting from C1 and then correct for octave and key selection
             let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
@@ -275,20 +335,23 @@
 
             let chordShape = d.notes.map(note => frequencies[note]);
             
-            let chordName;
-            if (chordShape[1] - chordShape[0] == 3){
-                chordName = "minor";
-            } else if (chordShape[3] - chordShape[2] == 1) {
-                chordName = "major";
+            let chordTonality;
+            if (d.notes[1] - d.notes[0] == 3){
+                chordTonality = "min";
+            } else if (d.notes[3] - d.notes[0] == 11) {
+                chordTonality = "maj";
             } else {
-                chordName = "dominant"
+                chordTonality = "" //dominant
             }
-            // think on how I want to change the extension section to make the name work here
-            // also on how I want to get the key + chordShape[0] to initialize the chord name (probably make an array of keys)
-            // also consider that this will ultimately need to become midi output and so that might be the simplest place to start and then work up to the chord names from there
-            // chordName = chordName + " " + d.id;
 
-            console.log("original: " + chordShape);
+            // also consider that this will ultimately need to become midi output and so that might be the simplest place to start and then work up to the chord names from there
+            chordName = keyArray[d.notes[0] + key] + chordTonality + extensions[chordColor]
+            console.log(chordName)
+            console.log("key: " + keyArray[key]);
+            console.log("chord root: "+ keyArray[d.notes[0] + key]);
+            console.log("chord tonality: " + chordTonality);
+            console.log("chord color: " + extensions[chordColor]);
+            console.log("original frequency shape: " + chordShape);
 
             // extensions (chordColor value is movement from the 7 except for 1 which is no extension which takes the root up an octave)
             if (chordColor == 1) {
@@ -298,7 +361,7 @@
             }
 
             // butter
-            // if butter = False, remove the third index from the array
+            // remove the third index from the array
             // if (butter == 0) {
             //     chordShape[2] = asdfasdf
             // }
@@ -325,7 +388,7 @@
                 voicedShape = [chordShape[0], chordShape[1] * 2, chordShape[2] * 2, chordShape[3]];
             }
 
-            console.log("voiced shape: " + voicedShape + " " + chordColor);
+            console.log("voiced frequency shape: " + voicedShape + " " + chordColor);
 
             // TODO: calculate the frequencies from scratch here instead of using the frequencies array?
 
@@ -351,6 +414,8 @@
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + 1);
             }
+
+            chordClicked(d.id);
 
             // visual effect
             d3.select(node._groups[0][d.index])
