@@ -78,7 +78,7 @@
         "next": [
             {
                 "natural": ["IV", "bVI"],
-                "driven": ["V"],
+                "driven": ["V", "v"],
                 "delicate": ["bVII", "iv"]
             }
         ]
@@ -113,7 +113,7 @@
         "notes": [8, 12, 15, 19],
         "next": [
             {
-                "natural": ["I"],
+                "natural": ["I", "v"],
                 "driven": ["bVII", "iv"],
                 "delicate": ["IV", "V"]
             }

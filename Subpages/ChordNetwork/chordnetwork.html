@@ -14,12 +14,42 @@
             background-color: #161522;
         }
 
+        #parameters label, #parameters select {
+            display: inline-block;
+            margin-bottom: 5px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: bold;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 10%;
+            margin-top: 5px
+        }
+
+        #parameters input, #parameters select {
+            display: inline-block;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 10%;
+        }
+
+        .hamburger {
+            /* position: absolute; */
+            font-size: 50px;
+            cursor: pointer;
+            top: 10px;
+            left: 10px;
+        }
+
+        .menu {
+            display: none;
+            /* position: absolute; */
+        }
+
     </style>
-
-    <script>
-        // User parameters (audio)
-
-    </script>
 
     <script>
         // Global Constants
@@ -27,59 +57,110 @@
         const twelthRoot = 1.0594630943592952645618252949463;
 
         // User parameters (audio)
+        var key = 0;
         var volume = 0.2;
         var octaveSelect = 4;
         var attack = 0.1;
         var waveShape = "sine";
         var lowpassCutoff = 4000;
 
-        // User parameters placeholder (UI - color scheme etc.)
+        // User parameters placeholder (UI)
         
-
-        // User parameters placeholder (chordchord - [voicing openness/voice-leading], etc.)
-        var openness = 0.5;
-        var voiceLeading = .1;
+        // User parameters placeholder (chord quality)
+        var openness = 3;
+        var voiceLeading = 0.1;
         var butter = 0.5;
-        var color;
+        var chordColor = 0;
         var lastChord = null;
     </script>
     
-    <form id="parameters">
-        <label for="volume">Volume:</label>
-        <input type="range" id="volume" name="volume" min="0" max="0.3" step="0.01">
-        
-        <label for="octaveSelect">Octave:</label>
-        <input type="number" id="octaveSelect" name="octaveSelect" min="3" max="7">
-        
-        <label for="waveShape">Wave Shape:</label>
-        <select id="waveShape" name="waveShape">
-            <option value="sine">Sine</option>
-            <option value="square">Square</option>
-            <option value="sawtooth">Sawtooth</option>
-            <option value="triangle">Triangle</option>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
 
-        <label for="lowpassCutoff">Lowpass Cutoff:</label>
-        <input type="range" id="lowpassCutoff" name="lowpassCutoff" min="100" max="10000" step="100">
+    <div id="parameters" class="menu">
+        <form id="parameters">
+            <label for="volume">Volume:</label>
+            <input type="range" id="volume" name="volume" min="0" max="0.3" step="0.05">
+            
+            <label for="key">Key:</label>
+            <select id="key" name="key">
+                <option value="0">C</option>
+                <option value="1">C#</option>
+                <option value="2">D</option>
+                <option value="3#">D#</option>
+                <option value="4">E</option>
+                <option value="5">F</option>
+                <option value="6#">F#</option>
+                <option value="7">G</option>
+                <option value="8#">G#</option>
+                <option value="9">A</option>
+                <option value="10#">A#</option>
+                <option value="11">B</option>
+            </select>
 
-    </form>
+            <label for="octaveSelect">Octave:</label>
+            <select id="octaveSelect" name="octaveSelect" value="4">
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            
+            <label for="waveShape">Wave Shape:</label>
+            <select id="waveShape" name="waveShape">
+                <option value="sine">Sine</option>
+                <option value="square">Square</option>
+                <option value="sawtooth">Sawtooth</option>
+                <option value="triangle">Triangle</option>
+            </select>
+
+            <label for="lowpassCutoff">Lowpass Cutoff:</label>
+            <input type="range" id="lowpassCutoff" name="lowpassCutoff" min="300" max="12300" step="2000" oninput="this.title = this.value + ' Hz'">
+            
+            <label for="chordColor">Extension:</label>
+            <select id="chordColor" name="chordColor">
+                <option value="1">None</option>
+                <option value="0" selected>7</option>
+                <option value="2">add9</option>
+                <option value="4">add11</option>
+            </select>
+
+            <label for="openness">Voice Openness:</label>
+            <select id="openness" name="openness">
+                <option value="1">Very Closed</option>
+                <option value="2">Closed</option>
+                <option value="3" selected>Original</option>
+                <option value="4">Open</option>
+                <option value="5">Very Open</option>
+            </select>
+        </form>
+    </div>
     
     <script>
-        document.getElementById('volume').value = volume;
-        document.getElementById('octaveSelect').value = octaveSelect;
-        // document.getElementById('attack').value = attack;
-        
+        const handlers = {
+            'key': (value) => key = parseInt(value),
+            'volume': (value) => volume = parseFloat(value),
+            'octaveSelect': (value) => octaveSelect = parseInt(value),
+            'waveShape': (value) => waveShape = value,
+            'openness': (value) => openness = parseInt(value),
+            'lowpassCutoff': (value) => lowpassCutoff = parseInt(value),
+            'chordColor': (value) => chordColor = parseInt(value)
+        };
+
         document.getElementById('parameters').addEventListener('change', function(e) {
-            if (e.target.id === 'volume') {
-                volume = parseFloat(e.target.value);
-            } else if (e.target.id === 'octaveSelect') {
-                octaveSelect = parseInt(e.target.value);
-            } else if (e.target.id === 'waveShape') {
-                waveShape = e.target.value;
-            } else if (e.target.id === 'lowpassCutoff') {
-                lowpassCutoff = parseInt(e.target.value);
+            const handler = handlers[e.target.id];
+            if (handler) {
+                handler(e.target.value);
             }
         });
 
+
+        function toggleMenu() {
+            var menu = document.getElementById('parameters');
+            if (menu.style.display !== 'block') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
     </script>
 
     <script>
@@ -186,36 +267,53 @@
 
         
         function handleClick(d) {
-            // Define the frequencies for the notes starting from middle C
+            // Define the frequencies for the notes starting from C1 and then correct for octave and key selection
             let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
             frequencies = frequencies.map(function(value) {
-                return value * Math.pow(2, octaveSelect - 1);
+                octaveCorrected = value * Math.pow(2, octaveSelect - 1);
+                keyCorrected = octaveCorrected * Math.pow(twelthRoot, key);
+                return keyCorrected;
             });
 
             let chordShape = d.notes.map(note => frequencies[note]);
-            console.log("chord frequencies: " + chordShape);
+            
+            console.log("original: " + chordShape);
 
-            // butter
-
-
-            // voicing
-            if (voiceLeading < 0.33) {
-                // close voicing
-                voicedShape = [chordShape[0], chordShape[1]/2, chordShape[2]/2, chordShape[3]/2];
-            } else if (voiceLeading < 0.66) {
-                // middle voicing
-                voicedShape = [chordShape[0], chordShape[1], chordShape[2]/2, chordShape[3]/2];
+            // extensions (chordColor value is movement from the 7 except for 1 which is no extension which takes the root up an octave)
+            if (chordColor == 1) {
+                chordShape[3] = chordShape[0] * 2;
             } else {
-                // open voicing
-                voicedShape = chordShape;
+                chordShape[3] = chordShape[3] * Math.pow(twelthRoot, chordColor);
             }
 
-            console.log("voiced frequencies: " + voicedShape);
-            // openness
+            // butter
+            // if butter = False, remove the 5
+
+            // voice leading
+            // if voiceLeading > 0, calculate array index distance between current and last chord arrays and shift octaves to minimize it proportionate to the value
 
 
+            // voice openness
+            if (openness == 1) {
+                // full inversion
+                voicedShape = [chordShape[0], chordShape[1] / 2, chordShape[2] / 2, chordShape[3]/2];
+            } else if (openness == 2) {
+                // partial inversion
+                voicedShape = [chordShape[0], chordShape[1], chordShape[2]/2, chordShape[3]/2];
+            } else if (openness == 3) {
+                // no change
+                voicedShape = chordShape;
+            } else if (openness == 4) {
+                // third-widened
+                voicedShape = [chordShape[0], chordShape[1] * 2, chordShape[2], chordShape[3]/2];
+            } else if (openness == 5) {
+                // third/fifth-widened
+                voicedShape = [chordShape[0], chordShape[1] * 2, chordShape[2] * 2, chordShape[3]];
+            }
 
-            // TODO: calculate the frequencies from scratch here instead of using the frequencies array
+            console.log("voiced shape: " + voicedShape + " " + chordColor);
+
+            // TODO: calculate the frequencies from scratch here instead of using the frequencies array?
 
             // audio
             for (var i = 0; i < voicedShape.length; i++) {
