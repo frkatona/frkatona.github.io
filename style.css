@@ -91,6 +91,7 @@ nav ul li a:hover {
   display: flex;
   justify-content: center;
   margin-top: 50px;
+  margin-bottom: 30px;
   color: #dce2ed;
   font-size: 40px;
   font-family: 'Fira Sans', sans-serif;
@@ -207,20 +208,20 @@ footer {
 /* BIO SECTION */
 
 .about-section {
+  padding-bottom: 50px;
   border-top: 3px solid #000000;
   border-bottom: 3px solid #000000;
-  padding: 40px 0;
   color: #c2c2c2;
 }
 
 .about-container {
   max-width: 75vw;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 30px 15px;
 }
 
 .about-section p1 {
-  font-size: 18px;
+  font-size: 25px;
 }
 
 .profile {
@@ -233,7 +234,6 @@ footer {
   border-radius: 50%;
   margin-right: 50px;
   object-fit: cover;
-  border-radius: 500px;
   border: 2px solid #0f0f0f;
 }
 
