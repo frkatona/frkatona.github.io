@@ -126,7 +126,7 @@
         // User parameters (audio)
         let key = 0;
         let volume = 0.2;
-        let octaveSelect = 3;
+        let octaveSelect = 4;
         let attack = 0.1;
         let waveShape = "sine";
         let lowpassCutoff = 4000;
@@ -180,8 +180,8 @@
             <label for="octaveSelect">Octave:</label>
             <select id="octaveSelect" name="octaveSelect" value="4">
                 <option value="2">2</option>
-                <option value="3" selected>3</option>
-                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="4"selected>4</option>
                 <option value="5">5</option>
             </select>
             
@@ -273,7 +273,8 @@
         .attr("width", window.innerWidth)
         .attr("height", window.innerHeight);
 
-        var color = d3.scaleOrdinal(d3.schemeCategory20);
+        // var color = d3.scaleOrdinal(d3.schemeCategory20);
+        var color = d3.scaleOrdinal(["#04395e", "#70a288", "#c44900"]);
 
         var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; })
@@ -453,8 +454,12 @@
             // extensions (chordColor value is movement from the 7 except for 1 which is no extension which takes the root up an octave)
             if (chordColor == 1) {
                 chordShape[3] = chordShape[0] * 2;
+                chordNotes[3] = chordNotes[0] + 12;
             } else {
                 chordShape[3] = chordShape[3] * Math.pow(twelthRoot, chordColor);
+                if (chordColor > 1) {
+                    chordNotes[3] = chordNotes[0] + 12 + chordColor;
+            }
             }
 
             // butter
@@ -476,23 +481,27 @@
             if (openness == 1) {
                 // full inversion
                 voicedShape = [chordShape[0], chordShape[1] / 2, chordShape[2] / 2, chordShape[3]/2];
+                chordNotes = [chordNotes[0], chordNotes[1] - 12, chordNotes[2] - 12, chordNotes[3] - 12];
             } else if (openness == 2) {
                 // partial inversion
                 voicedShape = [chordShape[0], chordShape[1], chordShape[2]/2, chordShape[3]/2];
+                chordNotes = [chordNotes[0], chordNotes[1], chordNotes[2] - 12, chordNotes[3] - 12];
             } else if (openness == 3) {
                 // no change
                 voicedShape = chordShape;
             } else if (openness == 4) {
                 // third-widened
                 voicedShape = [chordShape[0], chordShape[1] * 2, chordShape[2], chordShape[3]/2];
+                chordNotes = [chordNotes[0], chordNotes[1] + 12, chordNotes[2], chordNotes[3] - 12];
             } else if (openness == 5) {
                 // third/fifth-widened
                 voicedShape = [chordShape[0], chordShape[1] * 2, chordShape[2] * 2, chordShape[3]];
+                chordNotes = [chordNotes[0], chordNotes[1] + 12, chordNotes[2] + 12, chordNotes[3]];
             }
 
             console.log("voiced frequency shape: " + voicedShape + " " + chordColor);
 
-            // TODO: calculate the frequencies from scratch here instead of using the frequencies array?
+            // TODO: calculate the frequencies from scratch here instead of using the frequencies array? keep as midi notes until frequencies are actually needed?
 
             // audio
             for (var i = 0; i < voicedShape.length; i++) {

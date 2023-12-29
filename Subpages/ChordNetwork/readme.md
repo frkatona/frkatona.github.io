@@ -1,51 +1,83 @@
 # TODO
 
+## BUGS
+
 - [ ] account for AudioContext user gesture requirement
+
+- [ ] Abi's firefox session never removed the arrows once they were created
+
+## FEATURES
 
 - [ ] show and use absolute chord information
 
 - [ ] color legend for chord functions
 
-  - [x] assemble absolute chord information for a single chord (root, extensions, octave, voicing)
+- [ ] rethink how "closed" or "open" a voicing is...maybe actually do math on the average distance?  ask GPT
 
-    - [ ] also show on hover
+- [ ] create 'x' bars chord progression randomize button that plays the progression
 
-  - [x] maintain circle buffer of the last n (init 4) chords played and show them in a row
+  - [ ] continue for 4 bars after note press
 
-  - [ ] button to convert/export row of chords to MIDI info (file? clipboard?)
+  - [ ] start with random chord and continue for n bars where n = number of boxes (which should be a user parameter)
 
-- [ ] fancy on-click events
+  - [ ] 'clear row' button
 
-  - [x] playing the chord (requires reworking the json structure and by extension the json maker script) - done, works in C major, won't be tough to allow other key modifiers
-  
+  - [ ] 'play' button for to play the chord array
+
+- [ ] add missing chord types
+
+  - [ ] seventh scale degree (currently only have 2 dominants)
+
+  - [ ] suspensions, extensions, etc.
+
+- [x] assemble absolute chord information for a single chord (root, extensions, octave, voicing)
+
+  - [ ] also show on hover
+
+- [x] maintain circle buffer of the last n (init 4) chords played and show them in a row
+
+  - [x] button to convert/export row of chords to MIDI info (file? clipboard?)
+
   - [ ] have setting to change voicing depending on the most recent chord played
 
-  - [ ] bloom that moves along the line to show the various connections and maybe flash their node ids at the top for a moment
+- [x] playing the chord (requires reworking the json structure and by extension the json maker script) - done, works in C major, won't be tough to allow other key modifiers
+
+- [x] polish script that converts the json
+
+## SPEED / OPTIMIZATIONS
+
+- [ ] don't re-calculate the pitch array each click event
+
+- [ ] maintain note information strictly as midi until frequencies are absolutely needed
+
+## USER EXPERIENCE
+
+- [ ] top and bottom bars with transparent backgrounds and that don't take up the center of the screen or push the content away
 
 - [ ] distinct click and drag spot for changing the force center
 
-- [ ] "create"/"randomize" functionality
+- [ ] mode selection for Zack
 
-  - [ ] create 'x' bars chord progression randomize button with fancy blooms and then plays the progression
+- [ ] fancier graphical fx
+  
+  - [ ] bloom that moves along the line to show the various connections and maybe flash their node ids at the top for a moment\
 
-  - [ ] allow user to reroll any of the chords in the new progression without affecting the others
+- [ ] better iconography/UI
 
-- [ ] optimizing
+  - [ ] "copy" icon for copy midi placed closer to the chords
 
-  - [ ] don't re-calculate the pitch array each click event
-
-- [ ] connection logic
+  - [ ] "random" icon for random progression
+  
+- [X] connection logic
 
   - [x] add connection colors
 
   - [x] arrows/directionality for chord functions
 
-- [ ] add an option to change from relative to a given key
+- [x] key selection
 
 - [x] dark mode
 
 - [x] get chord names to appear as text
 
 - [x] fine tune the force and size so everything is readable and things don't move so far away from each other
-
-- [x] polish script that converts the json
