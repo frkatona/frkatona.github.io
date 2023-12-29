@@ -178,7 +178,8 @@
 
             <label for="octaveSelect">Octave:</label>
             <select id="octaveSelect" name="octaveSelect" value="4">
-                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
@@ -415,8 +416,12 @@
                 chordTonality = "" //dominant
             }
 
-            chordName = keyArray[d.notes[0] + key] + chordTonality + extensions[chordColor]
-            console.log(chordName)
+            chordName = keyArray[(d.notes[0] + key + 12) % 12] + chordTonality + extensions[chordColor]
+            console.log("d.notes[0]: " + d.notes[0]);
+            console.log("key: " + key);
+            console.log("keyArray.length: " + keyArray.length);
+            console.log(keyArray.length % (d.notes[0] + key));
+            console.log(chordName);
             console.log("key: " + keyArray[key]);
             console.log("chord root: "+ keyArray[d.notes[0] + key]);
             console.log("chord tonality: " + chordTonality);
@@ -440,7 +445,12 @@
 
             // voice leading
             // if voiceLeading > 0, calculate array index distance between current and last chord arrays and shift octaves to minimize it proportionate to the value
-
+            // if (d.notes[0] > 6) {
+            //     for (var i = 0; i < chordShape.length; i++) {
+            //         chordShape[i] /= 2;
+            //         console.log("halved " + chordShape[i]);
+            //     }
+            // }
 
             // voice openness
             if (openness == 1) {

@@ -4,15 +4,15 @@
 
 - [ ] show and use absolute chord information
 
+- [ ] color legend for chord functions
+
   - [x] assemble absolute chord information for a single chord (root, extensions, octave, voicing)
+
+    - [ ] also show on hover
 
   - [x] maintain circle buffer of the last n (init 4) chords played and show them in a row
 
   - [ ] button to convert/export row of chords to MIDI info (file? clipboard?)
-
-  - [ ] show absolute chord with name, extensions, voicing, and function on hover
-
-- [ ] color legend
 
 - [ ] fancy on-click events
 
@@ -37,8 +37,6 @@
 - [ ] connection logic
 
   - [x] add connection colors
-
-  - [ ] legends for color coordination
 
   - [x] arrows/directionality for chord functions
 
