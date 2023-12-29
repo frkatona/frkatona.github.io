@@ -121,11 +121,12 @@
             }
         let repeatTest = false;
         let repeatCounter = 0;
+        let clipboardText = "no chords played yet"
         
         // User parameters (audio)
         let key = 0;
         let volume = 0.2;
-        let octaveSelect = 4;
+        let octaveSelect = 3;
         let attack = 0.1;
         let waveShape = "sine";
         let lowpassCutoff = 4000;
@@ -223,7 +224,7 @@
         </div>
         <!-- onclick set randomNext to true and set background color to red -->
         <button id="randomNext" onclick="toggleRandomNext()">Random Next</button>
-        <button id="exportMIDI">Export MIDI (todo)</button>
+<button id="exportMIDI" onclick="copyToClipboard()">Copy MIDI</button>
     </div>
 
     <script>
@@ -243,6 +244,16 @@
                 handler(e.target.value);
             }
         });
+
+        function copyToClipboard() {
+            navigator.clipboard.writeText(clipboardText)
+                .then(() => {
+                console.log('Text copied to clipboard');
+                })
+                .catch(err => {
+                console.error('Error in copying text: ', err);
+            });
+        }
 
         function toggleMenu() {
             var menu = document.getElementById('parameters');
@@ -372,25 +383,33 @@
             }
         }
 
-        var lastFourChords = [];
+        var lastFourChordNames = [];
+        var lastFourChordNotes = [];
 
-        function chordClicked(chordName, color) {
+        function chordClicked(chordName, color, chordNotes) {
             // If there are already four chords, remove the first one
-            if (lastFourChords.length === 4) {
-                lastFourChords.shift();
+            if (lastFourChordNames.length === 4) {
+                lastFourChordNames.shift();
+                lastFourChordNotes.shift();
             }
 
             // Add the new chord and its color
-            lastFourChords.push({ identity: chordName, color: color });
+            lastFourChordNames.push({ identity: chordName, color: color });
+            lastFourChordNotes.push({ identity: chordNotes});
 
             // Update the boxes
-            for (var i = 0; i < lastFourChords.length; i++) {
+            for (var i = 0; i < lastFourChordNames.length; i++) {
                 var box = document.getElementById('box' + (i + 1));
-                box.textContent = lastFourChords[i].identity;
-                box.style.backgroundColor = lastFourChords[i].color;
+                box.textContent = lastFourChordNames[i].identity;
+                box.style.backgroundColor = lastFourChordNames[i].color;
             }
 
-            // add an animation to the box most recently changed (will be box4 except for first 3 clicks)
+            // Update the clipboard text with chordNotes
+            clipboardText = lastFourChordNotes.map(function(chord) {
+                return chord.identity;
+            }).join(' ');
+
+            // PLACEHOLDER - add an animation to the box most recently changed (will be box4 except for first 3 clicks)
 
         }
 
@@ -416,7 +435,8 @@
                 chordTonality = "" //dominant
             }
 
-            chordName = keyArray[(d.notes[0] + key + 12) % 12] + chordTonality + extensions[chordColor]
+            chordNotes = d.notes.map(note => note + key + octaveSelect * 12);
+            chordName = keyArray[(d.notes[0] + key + 12) % 12] + chordTonality + extensions[chordColor];
             console.log("d.notes[0]: " + d.notes[0]);
             console.log("key: " + key);
             console.log("keyArray.length: " + keyArray.length);
@@ -497,7 +517,7 @@
                 oscillator.stop(audioContext.currentTime + 1);
             }
 
-            chordClicked(chordName, color(d.group));
+            chordClicked(chordName, color(d.group), chordNotes);
 
             // visual effect
             d3.select(node._groups[0][d.index])
