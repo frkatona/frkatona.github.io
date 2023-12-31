@@ -7,8 +7,70 @@
 </html>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <body>
-    
     <style>
+        #overlay {
+            display: flex;
+            position: fixed;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .overlay-text {
+            font-family: 'Roboto', sans-serif;
+            text-align: left;
+            margin: 10px 0; /* adjust as needed */
+            position: relative;
+            left: 25%;
+            top: 20%;
+            font-size: 20px;
+            color: white;
+        }
+
+        .overlay-click {
+            font-family: 'Roboto', sans-serif;
+            font-style: italic;
+            text-align: center;
+            margin: 75px 0; /* adjust as needed */
+            position: relative;
+            top: 20%;
+            font-size: 75px;
+            color: white;
+        }
+        
+        h4 {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+        }
+
+        #legend {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--background);
+            padding: 20px;
+            border: 5px solid #000;
+            z-index: -1;
+            font-size: 20px;
+            color: white;
+            text-shadow: #000;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .color-box {
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
         .unselectable {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -16,8 +78,12 @@
             user-select: none;
         }
 
+        :root {
+            --background: #161522;
+        }
+
         body {
-            background-color: #161522;
+            background-color: var(--background);
         }
 
         #parameters label, #parameters select {
@@ -25,7 +91,7 @@
             margin-bottom: 5px;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-weight: bold;
-            color: #fff;
+            color: white;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -35,7 +101,7 @@
 
         #parameters input, #parameters select {
             display: inline-block;
-            color: #000;
+            color: black;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -47,7 +113,6 @@
             cursor: pointer;
             top: 10px;
             left: 10px;
-            /* position: fixed; */
         }
 
         .menu {
@@ -56,8 +121,6 @@
 
         #bottomContainer {
             display: flex;
-            /* justify-content: center;
-            align-items: center; */
             position: fixed;
             bottom: 10px;
             width: 50%;
@@ -71,7 +134,7 @@
             bottom: 10px;
             width: 100%;
             height: 100px; /* Adjust as needed */
-            background-color: #161522; /* Adjust as needed */
+            background-color: var(--background); /* Adjust as needed */
         }
 
         #chordBoxes > div {
@@ -84,7 +147,6 @@
             align-items: center;
             text-align: center;
             color: #fff;
-            /* add outline to text */
             text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
             font-size: 25px;
             font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -92,20 +154,56 @@
 
         #randomNext {
             position: fixed;
-            bottom: 50px;
+            bottom: 75px;
             left: 50px;
             z-index: 1;
             margin-left: 20px;
-            background-color: white;
+            background-color: #666666;
+            color: white; 
+            border: none; 
+            padding: 15px 32px; 
+            text-align: center; 
+            text-decoration: none; 
+            display: inline-block;
+            font-size: 16px;
+            transition-duration: 0.4s; 
+            cursor: pointer; 
+        }
+
+        #randomNext:hover {
+            background-color: #bbbbbb;
+            color: black;
         }
 
         #exportMIDI {
+            /* position: fixed;
+            bottom: 20px;
+            left: 50px;
+            z-index: 1;
+            margin-left: 20px; */
+            
             position: fixed;
             bottom: 20px;
             left: 50px;
             z-index: 1;
             margin-left: 20px;
+            background-color: #666666;
+            color: white; 
+            border: none; 
+            padding: 15px 32px; 
+            text-align: center; 
+            text-decoration: none; 
+            display: inline-block;
+            font-size: 16px;
+            transition-duration: 0.4s; 
+            cursor: pointer; 
         }
+
+        #exportMIDI:hover {
+            background-color: #bbbbbb;
+            color: black;
+        }
+
     </style>
 
     <script>
@@ -149,11 +247,33 @@
                 document.getElementById("randomNext").style.backgroundColor = "green";
             } else {
                 repeatTest = false;
-                document.getElementById("randomNext").style.backgroundColor = "white";
+                document.getElementById("randomNext").style.backgroundColor = "#666666";
             }
         }
     </script>
     
+    <div id="overlay">
+        <div class="overlay-click">Welcome!</div>
+        <div class="overlay-text">patch 0.9.10</div>
+        <div class="overlay-text"> - try using "Copy MIDI" clipboard output with FL piano roll script (found in "../ChordNetwork/data")</div>
+        <div class="overlay-text"> - try toggling on the "random next" button at the bottom to automatically play 3 random (linked) chords after your next selection</div>
+        <div class="overlay-text"> - try a more colorful wave shape (e.g., sawtooth) with the lowpass slider in the hamburger menu</div>
+        <div class="overlay-text"> - try pairing lower octaves with open voicings and higher octaves with closed voicings</div>
+        <div class="overlay-text"> - next up: procedural voicing </div>
+        <div class="overlay-click">Click anywhere to continue</div>
+    </div>
+
+    <div id="legend">
+        <h4>chord functions</h4>
+        <div><span class="color-box" style="background-color: #04395e"></span> tonic (home)</div>
+        <div><span class="color-box" style="background-color: #70a288"></span> pre-dominant (wandering)</div>
+        <div><span class="color-box" style="background-color: #c44900"></span> dominant (home-sick)
+        </div><h4>link movements</h4>
+        <div><span class="color-box" style="background-color: #d00000"></span> driven</div>
+        <div><span class="color-box" style="background-color: #3f88c5"></span> regular</div>
+        <div><span class="color-box" style="background-color: #136f63"></span> delicate</div>
+      </div>
+
     <button class="hamburger" onclick="toggleMenu()">☰</button>
 
     <div id="parameters" class="menu">
@@ -222,12 +342,19 @@
             <div id="box3"></div>
             <div id="box4"></div>
         </div>
-        <!-- onclick set randomNext to true and set background color to red -->
         <button id="randomNext" onclick="toggleRandomNext()">Random Next</button>
-<button id="exportMIDI" onclick="copyToClipboard()">Copy MIDI</button>
+        <button id="exportMIDI" onclick="copyToClipboard()">Copy MIDI</button>
     </div>
 
     <script>
+        window.onload = function() {
+            document.getElementById('overlay').style.display = "block";
+        }
+
+        document.getElementById('overlay').onclick = function() {
+        this.style.display = 'none';
+}
+
         const handlers = {
             'key': (value) => key = parseInt(value),
             'volume': (value) => volume = parseFloat(value),
@@ -253,6 +380,11 @@
                 .catch(err => {
                 console.error('Error in copying text: ', err);
             });
+            var button = document.getElementById('exportMIDI');
+            button.innerHTML = 'Copied to clipboard!'; 
+            setTimeout(function() {
+                button.innerHTML = 'Copy MIDI';
+            }, 1000);
         }
 
         function toggleMenu() {
@@ -268,13 +400,13 @@
     <script>
         var audioContext = new (window.AudioContext || window.webkitAudioContext)();
         
-        var colors = ["#d00000", "#ffba08", "#3f88c5", "#032b43", "#136f63", "#66635b"];
+        var linkColors = ["#d00000", "#3f88c5", "#136f63"];
         var svg = d3.select("body").append("svg")
         .attr("width", window.innerWidth)
         .attr("height", window.innerHeight);
 
-        // var color = d3.scaleOrdinal(d3.schemeCategory20);
-        var color = d3.scaleOrdinal(["#04395e", "#70a288", "#c44900"]);
+        var functionColors = ["#04395e", "#70a288", "#c44900"]; // tonic blue; pre-dom green; dom orange
+        var color = d3.scaleOrdinal(functionColors);
 
         var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; })
@@ -295,7 +427,7 @@
 
         var linkColor = d3.scaleOrdinal()
             .domain(["natural", "driven", "delicate"])  // Add all possible types here
-            .range([colors[0], colors[2], colors[4]]);  // Add the corresponding colors here
+            .range([linkColors[0], linkColors[1], linkColors[2]]);  // Add the corresponding colors here
 
         svg.append("defs").selectAll("marker")
             .data(["end"])      // Different link/path types can be defined here
@@ -377,9 +509,9 @@
                 setTimeout(function() { handleClick(randomNode); }, randomDelay);
                 repeatCounter++;
             } else {
-                repeatTest = false;
+                // repeatTest = false;
                 repeatCounter = 0;
-                document.getElementById("randomNext").style.backgroundColor = "white";
+                // document.getElementById("randomNext").style.backgroundColor = "#666666";
 
             }
         }
@@ -598,6 +730,7 @@
         d.fx = null;
         d.fy = null;
         }
+
 
     </script>
     

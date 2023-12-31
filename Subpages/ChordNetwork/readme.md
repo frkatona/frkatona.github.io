@@ -4,6 +4,8 @@
 
 - [ ] account for AudioContext user gesture requirement
 
+  - [ ] include a "patch changes" pop-up that only lightly grays the screen and includes a "click anywhere to continue"
+
 - [ ] Abi's firefox session never removed the arrows once they were created
 
 ## FEATURES
@@ -44,11 +46,19 @@
 
 - [x] polish script that converts the json
 
+- [X] connection logic
+
+  - [x] add connection colors
+
+  - [x] arrows/directionality for chord functions
+
+- [x] key selection
+
 ## SPEED / OPTIMIZATIONS
 
 - [ ] don't re-calculate the pitch array each click event
 
-- [ ] maintain note information strictly as midi until frequencies are absolutely needed
+- [ ] maintain note information strictly as midi until frequencies are needed then calculate them (although how expensive is the power function compared to the array lookup I wonder?...either way, there's a better way)
 
 ## USER EXPERIENCE
 
@@ -64,17 +74,11 @@
 
 - [ ] better iconography/UI
 
+  - [ ] more aesthetic dropdowns and text boxes that scale better with the screen size
+
   - [ ] "copy" icon for copy midi placed closer to the chords
 
   - [ ] "random" icon for random progression
-  
-- [X] connection logic
-
-  - [x] add connection colors
-
-  - [x] arrows/directionality for chord functions
-
-- [x] key selection
 
 - [x] dark mode
 

@@ -215,7 +215,7 @@ footer {
 }
 
 .about-container {
-  max-width: 75vw;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 30px 15px;
 }
@@ -271,7 +271,7 @@ footer {
 }
 
 :root {
-  --card-height: 60vh;
+  --card-height: 500px;
   --card-width: calc(var(--card-height) / 1.5);
 }
 
@@ -286,7 +286,7 @@ footer {
   align-items: center;
   text-align: center;
   display: flex;
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: rgb(88 199 250 / 0%);
   cursor: pointer;
   font-family: cursive;
