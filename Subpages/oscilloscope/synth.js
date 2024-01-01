@@ -5,14 +5,14 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const oscillator = audioContext.createOscillator();
 const gainNode = audioContext.createGain();
 
+
+
 oscillator.type = "sine";
 oscillator.frequency.value = frequencyInput.value;
 gainNode.gain.value = 0;
 
 oscillator.connect(gainNode);
 gainNode.connect(audioContext.destination);
-
-oscillator.start();
 
 function updateFrequency() {
     frequencyValue.textContent = frequencyInput.value;
@@ -87,12 +87,19 @@ function isClickWithinOscilloscope(event) {
     );
 }
 
+let isPlaying = false;
+
 document.addEventListener("mousedown", (event) => {
     if (isClickWithinOscilloscope(event)) {
         const now = audioContext.currentTime;
         gainNode.gain.cancelScheduledValues(now);
         gainNode.gain.setValueAtTime(gainNode.gain.value, now);
         gainNode.gain.linearRampToValueAtTime(volumeInput.value, now + 0.01);
+
+        if (!isPlaying) {
+            oscillator.start();
+            isPlaying = true;
+        }
     }
 });
 
@@ -104,3 +111,11 @@ document.addEventListener("mouseup", (event) => {
         gainNode.gain.linearRampToValueAtTime(0, now + 0.01);
     }
 });
+
+window.onload = function() {
+    document.getElementById('overlay').style.display = "block";
+}
+
+document.getElementById('overlay').onclick = function() {
+this.style.display = 'none';
+}
