@@ -29,7 +29,7 @@
             margin: 10px 0; /* adjust as needed */
             position: relative;
             left: 25%;
-            top: 20%;
+            top: 0%;
             font-size: 20px;
             color: white;
         }
@@ -40,7 +40,7 @@
             text-align: center;
             margin: 75px 0; /* adjust as needed */
             position: relative;
-            top: 20%;
+            top: 0%;
             font-size: 75px;
             color: white;
         }
@@ -176,12 +176,7 @@
         }
 
         #exportMIDI {
-            /* position: fixed;
-            bottom: 20px;
-            left: 50px;
-            z-index: 1;
-            margin-left: 20px; */
-            
+
             position: fixed;
             bottom: 20px;
             left: 50px;
@@ -235,7 +230,7 @@
 
         // User parameters (chord quality)
         let openness = 3;
-        let voiceLeading = 0.1;
+        let voiceLeading = 1;
         let butter = 0.5;
         let chordColor = 0;
         let lastNode = d3.select("#I");
@@ -324,13 +319,21 @@
                 <option value="4">add11</option>
             </select>
 
-            <label for="openness">Voice Openness:</label>
+            <!-- <label for="openness">Voice Openness:</label>
             <select id="openness" name="openness">
                 <option value="1">Very Closed</option>
                 <option value="2">Closed</option>
                 <option value="3" selected>Original</option>
                 <option value="4">Open</option>
                 <option value="5">Very Open</option>
+            </select> -->
+
+            <label for="voiceLeading">Voice Leading:</label>
+            <select id="voiceLeading" name="voiceLeading">
+                <option value="0"selected>None</option>
+                <option value="3">loose</option>
+                <option value="2">modest</option>
+                <option value="1">tight</option>
             </select>
         </form>
     </div>
@@ -530,6 +533,8 @@
             lastFourChordNames.push({ identity: chordName, color: color });
             lastFourChordNotes.push({ identity: chordNotes});
 
+            console.log("MIDI notes: " + chordNotes)
+
             // Update the boxes
             for (var i = 0; i < lastFourChordNames.length; i++) {
                 var box = document.getElementById('box' + (i + 1));
@@ -546,18 +551,51 @@
 
         }
 
+        function voiceLeadChord(firstChord, secondChord, voiceLeading) {
+            const LOWER_LIMIT = 24; // MIDI note for C1
+            const UPPER_LIMIT = 84; // MIDI note for C6
+            const referenceNote = firstChord[0]; // First note of the first chord
+
+            let voiceLedChord = [];
+
+            // depending on voiceleading value, keep the first n notes of the first chord
+            for (var i = 0; i < voiceLeading; i++){
+                voiceLedChord.push(firstChord[i]);
+            }
+
+            // then change the rest
+            for (var i = voiceLeading; i < secondChord.length; i++){
+                // Adjust the note to be as close as possible to the reference note
+                while (Math.abs(note - referenceNote) > 6) {
+                    note += (referenceNote > note) ? 12 : -12;
+                }
+                while (note < LOWER_LIMIT) {
+                    note += 12; // Move up an octave if below lower limit
+                }
+                while (note > UPPER_LIMIT) {
+                    note -= 12; // Move down an octave if above upper limit
+                }
+                voiceLedChord.push(note);
+            }
+
+            return voiceLedChord;
+        }
+
+        function midiNoteToFrequency(midiNote) {
+            const A4 = 440;
+            return A4 * Math.pow(2, (midiNote - 69) / 12);
+        }
+
         function handleClick(d) {
-            // console.log(node.datum());
-
             // Define the frequencies for the notes starting from C1 and then correct for octave and key selection
-            let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
-            frequencies = frequencies.map(function(value) {
-                octaveCorrected = value * Math.pow(2, octaveSelect - 1);
-                keyCorrected = octaveCorrected * Math.pow(twelthRoot, key);
-                return keyCorrected;
-            });
+            // let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
+            // frequencies = frequencies.map(function(value) {
+            //     octaveCorrected = value * Math.pow(2, octaveSelect - 1);
+            //     keyCorrected = octaveCorrected * Math.pow(twelthRoot, key);
+            //     return keyCorrected;
+            // });
 
-            let chordShape = d.notes.map(note => frequencies[note]);
+            // let chordShape = d.notes.map(note => frequencies[note]);
             
             let chordTonality;
             if (d.notes[1] - d.notes[0] == 3){
@@ -579,65 +617,53 @@
             console.log("chord root: "+ keyArray[d.notes[0] + key]);
             console.log("chord tonality: " + chordTonality);
             console.log("chord color: " + extensions[chordColor]);
-            console.log("original frequency shape: " + chordShape);
 
             // construct the midi message this will become and maybe append it as a property in an object with the circle buffer chords
 
             // extensions (chordColor value is movement from the 7 except for 1 which is no extension which takes the root up an octave)
             if (chordColor == 1) {
-                chordShape[3] = chordShape[0] * 2;
                 chordNotes[3] = chordNotes[0] + 12;
             } else {
-                chordShape[3] = chordShape[3] * Math.pow(twelthRoot, chordColor);
                 if (chordColor > 1) {
                     chordNotes[3] = chordNotes[0] + 12 + chordColor;
             }
             }
 
-            // butter
-            // remove the third index from the array
-            // if (butter == 0) {
-            //     chordShape[2] = asdfasdf
-            // }
-
-            // voice leading
-            // if voiceLeading > 0, calculate array index distance between current and last chord arrays and shift octaves to minimize it proportionate to the value
-            // if (d.notes[0] > 6) {
-            //     for (var i = 0; i < chordShape.length; i++) {
-            //         chordShape[i] /= 2;
-            //         console.log("halved " + chordShape[i]);
-            //     }
-            // }
-
             // voice openness
             if (openness == 1) {
                 // full inversion
-                voicedShape = [chordShape[0], chordShape[1] / 2, chordShape[2] / 2, chordShape[3]/2];
                 chordNotes = [chordNotes[0], chordNotes[1] - 12, chordNotes[2] - 12, chordNotes[3] - 12];
             } else if (openness == 2) {
                 // partial inversion
-                voicedShape = [chordShape[0], chordShape[1], chordShape[2]/2, chordShape[3]/2];
                 chordNotes = [chordNotes[0], chordNotes[1], chordNotes[2] - 12, chordNotes[3] - 12];
             } else if (openness == 3) {
                 // no change
-                voicedShape = chordShape;
             } else if (openness == 4) {
                 // third-widened
-                voicedShape = [chordShape[0], chordShape[1] * 2, chordShape[2], chordShape[3]/2];
                 chordNotes = [chordNotes[0], chordNotes[1] + 12, chordNotes[2], chordNotes[3] - 12];
             } else if (openness == 5) {
                 // third/fifth-widened
-                voicedShape = [chordShape[0], chordShape[1] * 2, chordShape[2] * 2, chordShape[3]];
                 chordNotes = [chordNotes[0], chordNotes[1] + 12, chordNotes[2] + 12, chordNotes[3]];
             }
+            
+            // butter
+            // remove the third index from the array
+            // if (butter == 0) {
+            //     chordNOtes[2] = asdfasdf
+            // }
 
-            console.log("voiced frequency shape: " + voicedShape + " " + chordColor);
+            // voice leading
+            if (voiceLeading > 0 && lastFourChordNotes.length > 0) {
+                chordNotes = voiceLeadChord(lastFourChordNotes[lastFourChordNotes.length - 1].identity, chordNotes, voiceLeading);
+                // voiceShape = chordNotes.map(note => frequencies[note]);
+            }
 
             // TODO: calculate the frequencies from scratch here instead of using the frequencies array? keep as midi notes until frequencies are actually needed?
 
             // audio
-            for (var i = 0; i < voicedShape.length; i++) {
+            for (var i = 0; i < chordNotes.length; i++) {
                 // Create an oscillator for each note
+
                 let oscillator = audioContext.createOscillator();
                 let gainNode = audioContext.createGain();
                 let filter = audioContext.createBiquadFilter();
@@ -650,7 +676,7 @@
                 // gainNode.gain.linearRampToValueAtTime(0.5, now + 0.2); // Decay
                 // gainNode.gain.setValueAtTime(0.5, now + 0.7); // Sustain
                 gainNode.gain.linearRampToValueAtTime(0, now + 1); // Release
-                oscillator.frequency.value = voicedShape[i];
+                oscillator.frequency.value = midiNoteToFrequency(chordNotes[i]);
                 oscillator.connect(filter);
                 filter.connect(gainNode);
                 gainNode.connect(audioContext.destination);

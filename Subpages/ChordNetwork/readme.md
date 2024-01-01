@@ -2,9 +2,7 @@
 
 ## BUGS
 
-- [ ] account for AudioContext user gesture requirement
-
-  - [ ] include a "patch changes" pop-up that only lightly grays the screen and includes a "click anywhere to continue"
+- [x] account for AudioContext user gesture requirement (patch-change initial overlay)
 
 - [ ] Abi's firefox session never removed the arrows once they were created
 
@@ -66,7 +64,9 @@
 
 - [ ] distinct click and drag spot for changing the force center
 
-- [ ] mode selection for Zack
+- [ ] "?" icon next to settings that aren't obvious (a la overwatch website)
+
+
 
 - [ ] fancier graphical fx
   
@@ -79,6 +79,16 @@
   - [ ] "copy" icon for copy midi placed closer to the chords
 
   - [ ] "random" icon for random progression
+
+- [ ] intro overlay
+
+  - [x] create overlay with "click anywhere to continue" and basic feature notes
+
+  - [ ] hotkeys for opening menu or changing settings and show on overlay
+
+  - [ ] arrows that point to the various features (maybe an option for "take me on a tour" with "next" button that moves arrow)
+
+  - [ ] bring the overlay back up with a "?" that is highlighted when the user first clicks out of the overlay
 
 - [x] dark mode
 
