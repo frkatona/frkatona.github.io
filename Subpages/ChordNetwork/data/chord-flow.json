@@ -5,9 +5,9 @@
         "notes": [0, 4, 7, 11],
         "next": [
             {
-                "natural": ["ii", "iii", "IV", "V", "vi"],
+                "natural": ["ii", "iii", "IV", "V", "vi", "viio"],
                 "driven": [],
-                "delicate": ["bIII", "iv", "v", "bVI", "bVII"]
+                "delicate": ["bIII", "III", "iv", "v", "bVI", "bVII"]
             }
         ]
     },
@@ -18,8 +18,8 @@
         "next": [
             {
                 "natural": ["iii", "IV"],
-                "driven": ["V"],
-                "delicate": ["I", "bIII", "vi", "bVII"]
+                "driven": ["V", "viio"],
+                "delicate": ["I", "bIII", "III", "vi", "bVII"]
             }
         ]
     },
@@ -30,8 +30,8 @@
         "next": [
             {
                 "natural": ["I", "ii"],
-                "driven": ["IV"],
-                "delicate": ["bIII", "iv"]
+                "driven": ["IV", "viio"],
+                "delicate": ["bIII", "III", "iv"]
             }
         ]
     },
@@ -42,7 +42,7 @@
         "next": [
             {
                 "natural": ["iii", "bIII", "ii", "vi"],
-                "driven": ["V"],
+                "driven": ["V", "viio"],
                 "delicate": ["iv", "IV", "v"]
             }
         ]
@@ -53,7 +53,7 @@
         "notes": [7, 11, 14, 17],
         "next": [
             {
-                "natural": ["I", "IV", "vi"],
+                "natural": ["I", "IV", "vi", "viio", "III"],
                 "driven": ["bVI"],
                 "delicate": ["iv", "iii"]
             }
@@ -65,9 +65,21 @@
         "notes": [9, 12, 16, 19],
         "next": [
             {
-                "natural": ["I", "bVII", "bIII"],
+                "natural": ["I", "bVII", "bIII", "viio"],
                 "driven": ["ii"],
                 "delicate": ["bVI", "IV"]
+            }
+        ]
+    },
+    {
+        "chord": "viio",
+        "function": "dominant",
+        "notes": [11, 14, 17, 20],
+        "next": [
+            {
+                "natural": ["iii", "bIII", "bVII", "vi", "IV"],
+                "driven": ["I", "ii", "v"],
+                "delicate": ["IV", "V", "iv"]
             }
         ]
     },
@@ -79,7 +91,19 @@
             {
                 "natural": ["IV", "bVI"],
                 "driven": ["V", "v"],
-                "delicate": ["bVII", "iv"]
+                "delicate": ["I", "bVII", "iv"]
+            }
+        ]
+    },
+    {
+        "chord": "III",
+        "function": "tonic",
+        "notes": [4, 8, 11, 15],
+        "next": [
+            {
+                "natural": ["bVII", "v", "bVII"],
+                "driven": ["iv", "IV", "vi", "V"],
+                "delicate": ["I", "iii", "bIII"]
             }
         ]
     },
@@ -90,8 +114,8 @@
         "next": [
             {
                 "natural": ["bIII", "v"],
-                "driven": ["I", "V", "bVI", "bVII"],
-                "delicate": []
+                "driven": ["I", "V", "bVI", "bVII", "viio"],
+                "delicate": ["iii", "III", "vi"]
             }
         ]
     },
@@ -101,9 +125,9 @@
         "notes": [7, 10, 14, 17],
         "next": [
             {
-                "natural": ["IV", "ii", "bVI"],
+                "natural": ["IV", "ii", "bVI", "vi"],
                 "driven": ["bIII"],
-                "delicate": ["iv"]
+                "delicate": ["iii", "III", "iv"]
             }
         ]
     },
@@ -113,8 +137,8 @@
         "notes": [8, 12, 15, 19],
         "next": [
             {
-                "natural": ["I", "v"],
-                "driven": ["bVII", "iv"],
+                "natural": ["I", "III", "v"],
+                "driven": ["bIII", "bVII", "iv", "viio"],
                 "delicate": ["IV", "V"]
             }
         ]
@@ -126,8 +150,8 @@
         "next": [
             {
                 "natural": ["ii", "bVI"],
-                "driven": ["I", "IV", "bIII"],
-                "delicate": ["V", "v"]
+                "driven": ["I", "IV", "bIII", "viio"],
+                "delicate": ["V", "v", "III"]
             }
         ]
     }

@@ -628,19 +628,18 @@
 
             console.log("this chord (post-VL): " + voiceLedChord);
 
-            // Sort the voiceLedChord array in ascending order
-            voiceLedChord.sort(function(a, b) {
+            sortedChord = voiceLedChord.sort(function(a, b) {
                 return a - b;
             });
 
             // Log the average distance of values in the sorted voiceLedChord array
             let sum = 0;
-            for (let i = 1; i < voiceLedChord.length; i++) {
-                sum += Math.abs(voiceLedChord[i] - voiceLedChord[i-1]);
+            for (let i = 1; i < sortedChord.length; i++) {
+                sum += Math.abs(sortedChord[i] - sortedChord[i-1]);
             }
-            let avg = sum / voiceLedChord.length;
+            let avg = sum / sortedChord.length;
 
-            console.log("sorted voiceLedChord: " + voiceLedChord)
+            console.log("sorted voiceLedChord: " + sortedChord)
             console.log("avg intra-chord intervals: " + avg);
 
             return voiceLedChord;
@@ -652,10 +651,15 @@
         }
 
         function handleClick(d) {
+            console.log("<-----------NEW CHORD----------->");
 
             let chordTonality;
             if (d.notes[1] - d.notes[0] == 3){
-                chordTonality = "min";
+                if (d.notes[2] - d.notes[1] == 4){
+                    chordTonality = "min";
+                } else if (d.notes[2] - d.notes[1] == 3){
+                    chordTonality = "dim";
+                }
             } else if (d.notes[3] - d.notes[0] == 11) {
                 chordTonality = "maj";
             } else {
