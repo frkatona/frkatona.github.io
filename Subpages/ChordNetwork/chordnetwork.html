@@ -230,7 +230,7 @@
 
         // User parameters (chord quality)
         let openness = 3;
-        let voiceLeading = 1;
+        let voiceLeading = 2; //number of inversions
         let butter = 0.5;
         let chordColor = 0;
         let lastNode = d3.select("#I");
@@ -330,9 +330,9 @@
 
             <label for="voiceLeading">Voice Leading:</label>
             <select id="voiceLeading" name="voiceLeading">
-                <option value="0"selected>None</option>
+                <option value="0">None</option>
                 <option value="3">loose</option>
-                <option value="2">modest</option>
+                <option value="2"selected>modest</option>
                 <option value="1">tight</option>
             </select>
         </form>
@@ -533,8 +533,6 @@
             lastFourChordNames.push({ identity: chordName, color: color });
             lastFourChordNotes.push({ identity: chordNotes});
 
-            console.log("MIDI notes: " + chordNotes)
-
             // Update the boxes
             for (var i = 0; i < lastFourChordNames.length; i++) {
                 var box = document.getElementById('box' + (i + 1));
@@ -551,32 +549,66 @@
 
         }
 
+        function neighbor(chordNotes1, chordNotes2) {
+            let neighborDistances_2D = [];
+            let goUp = chordNotes1[0] > chordNotes2[0];
+
+            for (let i = 0; i < chordNotes2.length; i++) {
+                let distances_1D = chordNotes1.map(value => value - chordNotes2[i]);
+                neighborDistances_2D.push(distances_1D);
+            }
+            return neighborDistances_2D;
+}
         function voiceLeadChord(firstChord, secondChord, voiceLeading) {
             const LOWER_LIMIT = 24; // MIDI note for C1
             const UPPER_LIMIT = 84; // MIDI note for C6
-            const referenceNote = firstChord[0]; // First note of the first chord
-
+            neighborDistances_2D = neighbor(lastFourChordNotes[lastFourChordNotes.length - 1].identity, chordNotes);
+            console.log("last chord (pre-VL): " + firstChord);
+            console.log("this chord (pre-VL): " + secondChord);
+            console.log("thisChord - lastChord valuse: " + neighborDistances_2D);
+            
             let voiceLedChord = [];
 
-            // depending on voiceleading value, keep the first n notes of the first chord
-            for (var i = 0; i < voiceLeading; i++){
-                voiceLedChord.push(firstChord[i]);
-            }
+            // iterate through each column of the neighborDistance 2D array
+            for (let i = 0; i < neighborDistances_2D.length; i++) {
+                let minInterval = 1000;
+                let minIndex = 0;
+                let maxInterval = 0;
+                let sumIntervals = 0;
+                // iterate through each row of the neighborDistance 2D array
+                for (let j = 0; j < neighborDistances_2D[i].length; j++) {
+                    // if the value is less than the current min, update the min and minIndex
+                    if (Math.abs(neighborDistances_2D[i][j]) < minInterval) {
+                        minInterval = neighborDistances_2D[i][j];
+                        minIndex = j;
+                    }
+                    // // if the value is greater than the current max, update the max
+                    // if (Math.abs(neighborDistances_2D[i][j]) > maxInterval) {
+                    //     maxInterval = Math.abs(neighborDistances_2D[i][j]);
+                    // }
+                    // sumIntervals += Math.abs(neighborDistances_2D[i][j]);
+                }
 
-            // then change the rest
-            for (var i = voiceLeading; i < secondChord.length; i++){
-                // Adjust the note to be as close as possible to the reference note
-                while (Math.abs(note - referenceNote) > 6) {
-                    note += (referenceNote > note) ? 12 : -12;
-                }
-                while (note < LOWER_LIMIT) {
-                    note += 12; // Move up an octave if below lower limit
-                }
-                while (note > UPPER_LIMIT) {
-                    note -= 12; // Move down an octave if above upper limit
-                }
-                voiceLedChord.push(note);
-            }
+                let j_avg = sumIntervals / neighborDistances_2D[i].length;
+                console.log("i="+i+" minInterval for: " + minInterval);
+                // console.log("i="+i+" maxInterval for: " + maxInterval);
+                // console.log("i="+i+" avgInterval for: " + j_avg);
+                
+                // push the value as-is
+                voiceLedChord.push(secondChord[i])
+
+                // if the smallest inter-chord interval found that index is sufficiently large, move the it an octave towards the smallest interval 
+                // (but maybe I should do towards the biggest?)
+                if (minIndex > 4) {
+                    voiceLedChord[i] += 12 * (minInterval > 0);
+                } 
+
+            // // depending on voiceleading value, keep the first n notes of the first chord
+            // for (var i = 0; i < secondChord.length; i++){
+            //     voiceLedChord.push(secondChord[i]);
+            // }
+
+            console.log("this chord (post-VL): " + voiceLedChord);
 
             return voiceLedChord;
         }
@@ -587,16 +619,7 @@
         }
 
         function handleClick(d) {
-            // Define the frequencies for the notes starting from C1 and then correct for octave and key selection
-            // let frequencies = [32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 48.99, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47]; // C1 to B2
-            // frequencies = frequencies.map(function(value) {
-            //     octaveCorrected = value * Math.pow(2, octaveSelect - 1);
-            //     keyCorrected = octaveCorrected * Math.pow(twelthRoot, key);
-            //     return keyCorrected;
-            // });
 
-            // let chordShape = d.notes.map(note => frequencies[note]);
-            
             let chordTonality;
             if (d.notes[1] - d.notes[0] == 3){
                 chordTonality = "min";
@@ -618,15 +641,13 @@
             console.log("chord tonality: " + chordTonality);
             console.log("chord color: " + extensions[chordColor]);
 
-            // construct the midi message this will become and maybe append it as a property in an object with the circle buffer chords
-
             // extensions (chordColor value is movement from the 7 except for 1 which is no extension which takes the root up an octave)
             if (chordColor == 1) {
                 chordNotes[3] = chordNotes[0] + 12;
             } else {
                 if (chordColor > 1) {
                     chordNotes[3] = chordNotes[0] + 12 + chordColor;
-            }
+                }
             }
 
             // voice openness
@@ -655,15 +676,11 @@
             // voice leading
             if (voiceLeading > 0 && lastFourChordNotes.length > 0) {
                 chordNotes = voiceLeadChord(lastFourChordNotes[lastFourChordNotes.length - 1].identity, chordNotes, voiceLeading);
-                // voiceShape = chordNotes.map(note => frequencies[note]);
             }
-
-            // TODO: calculate the frequencies from scratch here instead of using the frequencies array? keep as midi notes until frequencies are actually needed?
 
             // audio
             for (var i = 0; i < chordNotes.length; i++) {
                 // Create an oscillator for each note
-
                 let oscillator = audioContext.createOscillator();
                 let gainNode = audioContext.createGain();
                 let filter = audioContext.createBiquadFilter();
@@ -699,13 +716,7 @@
 
             propagateEffect(d);
 
-            // use voicing for next chord voicing
-
-            // random next chord from d links
-            // var randomLink = d.links[Math.floor(Math.random() * d.links.length)];
-            // console.log("random link = " + randomLink);
-
-            console.log(d.links)
+            console.log("d.links: " + d.links);
         };
 
         node.on("click", handleClick);
