@@ -230,7 +230,7 @@
 
         // User parameters (chord quality)
         let openness = 3;
-        let voiceLeading = 2; //number of inversions
+        let voiceLeading = 3; // smallest allowed nearest inter-chord neighbor interval
         let butter = 0;
         let chordColor = 0;
         let lastNode = d3.select("#I");
@@ -330,10 +330,10 @@
 
             <label for="voiceLeading">Voice Leading:</label>
             <select id="voiceLeading" name="voiceLeading">
-                <option value="0">None</option>
-                <option value="3">loose</option>
-                <option value="2"selected>modest</option>
-                <option value="1">tight</option>
+                <option value="12">None</option>
+                <option value="5">loose</option>
+                <option value="3"selected>modest</option>
+                <option value="2">tight</option>
             </select>
         </form>
     </div>
@@ -363,6 +363,7 @@
             'volume': (value) => volume = parseFloat(value),
             'octaveSelect': (value) => octaveSelect = parseInt(value),
             'waveShape': (value) => waveShape = value,
+            'voiceLeading': (value) => voiceLeading = parseInt(value),
             'openness': (value) => openness = parseInt(value),
             'lowpassCutoff': (value) => lowpassCutoff = parseInt(value),
             'chordColor': (value) => chordColor = parseInt(value)
@@ -570,43 +571,41 @@
             let voiceLedChord = [];
 
             // iterate through each column of the neighborDistance 2D array
-            for (let i = 0; i < neighborDistances_2D.length; i++) {
+            for (let j = 0; j < neighborDistances_2D.length; j++) {
                 let minInterval = 1000;
                 let minIndex = 0;
                 let maxInterval = 0;
                 let sumIntervals = 0;
                 // iterate through each row of the neighborDistance 2D array
-                for (let j = 0; j < neighborDistances_2D[i].length; j++) {
+                for (let i = 0; i < neighborDistances_2D[j].length; i++) {
                     // if the value is less than the current min, update the min and minIndex
-                    if (Math.abs(neighborDistances_2D[i][j]) < minInterval) {
-                        minInterval = neighborDistances_2D[i][j];
-                        minIndex = j;
+                    if (Math.abs(neighborDistances_2D[j][i]) < Math.abs(minInterval)) {
+                        minInterval = neighborDistances_2D[j][i];
+                        minIndex = i;
                     }
                     // // if the value is greater than the current max, update the max
-                    // if (Math.abs(neighborDistances_2D[i][j]) > maxInterval) {
-                    //     maxInterval = Math.abs(neighborDistances_2D[i][j]);
+                    // if (Math.abs(neighborDistances_2D[j][i]) > maxInterval) {
+                    //     maxInterval = Math.abs(neighborDistances_2D[j][i]);
                     // }
-                    // sumIntervals += Math.abs(neighborDist1ances_2D[i][j]);
+                    // sumIntervals += Math.abs(neighborDistances_2D[j][i]);
                 }
 
-                console.log("i="+i+" minInterval: " + minInterval);
-                // let j_avg = sumIntervals / neighborDistances_2D[i].length; // measure of openness
-                // console.log("i="+i+" maxInterval: " + maxInterval);
-                // console.log("i="+i+" avgInterval: " + j_avg);
+                console.log("j="+j+" minInterval: " + minInterval);
+                // let i_avg = sumIntervals / neighborDistances_2D[j].length; // measure of openness
+                // console.log("j="+j+" maxInterval: " + maxInterval);
+                // console.log("j="+j+" avgInterval: " + i_avg);
                 
                 // push the value as-is
-                voiceLedChord.push(secondChord[i])
+                voiceLedChord.push(secondChord[j])
 
                 // if the smallest inter-chord interval found that index is sufficiently large, move the it an octave towards the smallest interval 
                 // (but maybe I should do towards the biggest?)
-                if (Math.abs(minInterval) > 6) {
+                if (Math.abs(minInterval) > voiceLeading) {
                     let direction = minInterval > 0 ? 1 : -1;
-                    voiceLedChord[i] += 12 * direction;
+                    voiceLedChord[j] += 12 * direction;
                     console.log('-----------------> minInterval = ' + minInterval + ' so moving note ' + direction + ' octave');
                 } 
             }
-
-            console.log("this chord (post-VL): " + voiceLedChord);
 
             // (PLACEHOLDER) open the chord back up if it's too closed 
             // (first tinker with monitoring the intervals between the notes in the chord and the root)
@@ -618,15 +617,32 @@
             // maybe just do this while I'm moving the notes earlier
             let min = Math.min(...voiceLedChord);
             let max = Math.max(...voiceLedChord);
-            if (min < (octaveSelect-1) * 12) {
+            if (min < (octaveSelect) * 12) {
                 for (let i = 0; i < voiceLedChord.length; i++) {
                     voiceLedChord[i] += 12;
                 }
-            } else if (max > (octaveSelect+1) * 12) {
+            } else if (max > (octaveSelect+3) * 12) {
                 for (let i = 0; i < voiceLedChord.length; i++) {
                     voiceLedChord[i] -= 12;
                 }
             }
+
+            console.log("this chord (post-VL): " + voiceLedChord);
+
+            // Sort the voiceLedChord array in ascending order
+            voiceLedChord.sort(function(a, b) {
+                return a - b;
+            });
+
+            // Log the average distance of values in the sorted voiceLedChord array
+            let sum = 0;
+            for (let i = 1; i < voiceLedChord.length; i++) {
+                sum += Math.abs(voiceLedChord[i] - voiceLedChord[i-1]);
+            }
+            let avg = sum / voiceLedChord.length;
+
+            console.log("sorted voiceLedChord: " + voiceLedChord)
+            console.log("avg intra-chord intervals: " + avg);
 
             return voiceLedChord;
         }
@@ -692,7 +708,8 @@
             // }
 
             // voice leading
-            if (voiceLeading > 0 && lastFourChordNotes.length > 0) {
+            if (voiceLeading < 12 && lastFourChordNotes.length > 0) {
+                console.log("voiceLeading: " + voiceLeading);
                 chordNotes = voiceLeadChord(lastFourChordNotes[lastFourChordNotes.length - 1].identity, chordNotes, voiceLeading);
             }
 
@@ -733,8 +750,6 @@
             .style("fill", function(d) { return color(d.group); });  // Reset the color
 
             propagateEffect(d);
-
-            console.log("d.links: " + d.links);
         };
 
         node.on("click", handleClick);
