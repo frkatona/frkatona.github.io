@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Chord Network Diagram</title>
+    <link rel="icon" type="image/x-icon" href="../../Images/icons/favicon.ico">
+
     <!-- <link rel="stylesheet" href="chordnetwork.css"> -->
 </html>
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -263,9 +265,9 @@
         <div><span class="color-box" style="background-color: #70a288"></span> pre-dominant (wandering)</div>
         <div><span class="color-box" style="background-color: #c44900"></span> dominant (home-sick)
         </div><h4>link movements</h4>
-        <div><span class="color-box" style="background-color: #d00000"></span> driven</div>
-        <div><span class="color-box" style="background-color: #3f88c5"></span> regular</div>
-        <div><span class="color-box" style="background-color: #136f63"></span> delicate</div>
+        <div><span class="color-box" style="background-color: #ff4a4a"></span> driven</div>
+        <div><span class="color-box" style="background-color: #87ff83"></span> regular</div>
+        <div><span class="color-box" style="background-color: #78b0ff"></span> delicate</div>
       </div>
 
     <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -402,8 +404,8 @@
 
     <script>
         var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        
-        var linkColors = ["#d00000", "#3f88c5", "#136f63"];
+
+        var linkColors = ["#ff4a4a", "#87ff83", "#78b0ff"];
         var svg = d3.select("body").append("svg")
         .attr("width", window.innerWidth)
         .attr("height", window.innerHeight);
