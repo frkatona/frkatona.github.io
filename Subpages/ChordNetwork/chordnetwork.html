@@ -221,7 +221,7 @@
         let volume = 0.2;
         let octaveSelect = 4;
         let attack = 0.1;
-        let waveShape = "sine";
+        let waveShape = "triangle";
         let lowpassCutoff = 4000;
         let randomDelay = 1000;
 
@@ -231,7 +231,7 @@
         // User parameters (chord quality)
         let openness = 3;
         let voiceLeading = 2; //number of inversions
-        let butter = 0.5;
+        let butter = 0;
         let chordColor = 0;
         let lastNode = d3.select("#I");
 
@@ -305,7 +305,7 @@
                 <option value="sine">Sine</option>
                 <option value="square">Square</option>
                 <option value="sawtooth">Sawtooth</option>
-                <option value="triangle">Triangle</option>
+                <option value="triangle"selected>Triangle</option>
             </select>
 
             <label for="lowpassCutoff">Lowpass Cutoff:</label>
@@ -558,14 +558,14 @@
                 neighborDistances_2D.push(distances_1D);
             }
             return neighborDistances_2D;
-}
+        }
+
         function voiceLeadChord(firstChord, secondChord, voiceLeading) {
-            const LOWER_LIMIT = 24; // MIDI note for C1
-            const UPPER_LIMIT = 84; // MIDI note for C6
             neighborDistances_2D = neighbor(lastFourChordNotes[lastFourChordNotes.length - 1].identity, chordNotes);
-            console.log("last chord (pre-VL): " + firstChord);
+            console.log("last chord: " + firstChord);
             console.log("this chord (pre-VL): " + secondChord);
-            console.log("thisChord - lastChord valuse: " + neighborDistances_2D);
+            console.log("neighborDistances_2D: ");
+            console.log(neighborDistances_2D);
             
             let voiceLedChord = [];
 
@@ -586,29 +586,47 @@
                     // if (Math.abs(neighborDistances_2D[i][j]) > maxInterval) {
                     //     maxInterval = Math.abs(neighborDistances_2D[i][j]);
                     // }
-                    // sumIntervals += Math.abs(neighborDistances_2D[i][j]);
+                    // sumIntervals += Math.abs(neighborDist1ances_2D[i][j]);
                 }
 
-                let j_avg = sumIntervals / neighborDistances_2D[i].length;
-                console.log("i="+i+" minInterval for: " + minInterval);
-                // console.log("i="+i+" maxInterval for: " + maxInterval);
-                // console.log("i="+i+" avgInterval for: " + j_avg);
+                console.log("i="+i+" minInterval: " + minInterval);
+                // let j_avg = sumIntervals / neighborDistances_2D[i].length; // measure of openness
+                // console.log("i="+i+" maxInterval: " + maxInterval);
+                // console.log("i="+i+" avgInterval: " + j_avg);
                 
                 // push the value as-is
                 voiceLedChord.push(secondChord[i])
 
                 // if the smallest inter-chord interval found that index is sufficiently large, move the it an octave towards the smallest interval 
                 // (but maybe I should do towards the biggest?)
-                if (minIndex > 4) {
-                    voiceLedChord[i] += 12 * (minInterval > 0);
+                if (Math.abs(minInterval) > 6) {
+                    let direction = minInterval > 0 ? 1 : -1;
+                    voiceLedChord[i] += 12 * direction;
+                    console.log('-----------------> minInterval = ' + minInterval + ' so moving note ' + direction + ' octave');
                 } 
-
-            // // depending on voiceleading value, keep the first n notes of the first chord
-            // for (var i = 0; i < secondChord.length; i++){
-            //     voiceLedChord.push(secondChord[i]);
-            // }
+            }
 
             console.log("this chord (post-VL): " + voiceLedChord);
+
+            // (PLACEHOLDER) open the chord back up if it's too closed 
+            // (first tinker with monitoring the intervals between the notes in the chord and the root)
+            for (let i = 1; i < voiceLedChord.length; i++) {
+                console.log("inter-chord interval " + i + ": " + (voiceLedChord[i] - voiceLedChord[i-1]));
+            }
+            
+            // force it back to preferred octave if it strayed
+            // maybe just do this while I'm moving the notes earlier
+            let min = Math.min(...voiceLedChord);
+            let max = Math.max(...voiceLedChord);
+            if (min < (octaveSelect-1) * 12) {
+                for (let i = 0; i < voiceLedChord.length; i++) {
+                    voiceLedChord[i] += 12;
+                }
+            } else if (max > (octaveSelect+1) * 12) {
+                for (let i = 0; i < voiceLedChord.length; i++) {
+                    voiceLedChord[i] -= 12;
+                }
+            }
 
             return voiceLedChord;
         }
@@ -629,7 +647,7 @@
                 chordTonality = "" //dominant
             }
 
-            chordNotes = d.notes.map(note => note + key + octaveSelect * 12);
+            chordNotes = d.notes.map(note => note + key + ((octaveSelect+1) * 12));
             chordName = keyArray[(d.notes[0] + key + 12) % 12] + chordTonality + extensions[chordColor];
             console.log("d.notes[0]: " + d.notes[0]);
             console.log("key: " + key);
@@ -670,7 +688,7 @@
             // butter
             // remove the third index from the array
             // if (butter == 0) {
-            //     chordNOtes[2] = asdfasdf
+            //     array.splice(2, 1)
             // }
 
             // voice leading

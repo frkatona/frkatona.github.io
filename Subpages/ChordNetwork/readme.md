@@ -24,11 +24,15 @@
 
   - [ ] 'play' button for to play the chord array
 
+    - [ ] arrows above the box to change voicing and extension to hear again on playback or copy to clipboard (will need to organize lastFourChords as objects probably)
+
 - [ ] add missing chord types
 
   - [ ] seventh scale degree (currently only have 2 dominants)
 
   - [ ] suspensions, extensions, etc.
+  
+- [ ] css piano keyboard to visualize notes played for voicing
 
 - [x] assemble absolute chord information for a single chord (root, extensions, octave, voicing)
 
