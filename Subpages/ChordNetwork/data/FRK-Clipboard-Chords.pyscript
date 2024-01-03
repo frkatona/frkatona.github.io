@@ -8,7 +8,7 @@ from flpianoroll import *
 
 def createDialog():
     # Create a form for input
-    form = ScriptDialog('Chord Input', 'Enter chords separated by spaces, notes by commas (e.g., 48,52,55,59 48,52,55,59)')
+    form = ScriptDialog('Chord Input', 'Paste directly from Chord Network application or enter chords separated by spaces, notes by commas (e.g., 48,52,55,59 48,52,55,59)')
     form.AddInputText('Chord Data', '')
     return form
 
