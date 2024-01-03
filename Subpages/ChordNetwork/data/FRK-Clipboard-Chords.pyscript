@@ -1,3 +1,9 @@
+# to use:
+# download this file (if on GitHub, download button is on the right side of the page just above this text)
+# move this file to the directory "..\Image-Line\FL Studio\Settings\Piano roll scripts";
+# in the piano roll, go to Tools > Scripts > "script-name-here";
+# paste the chord data from the clipboard into the dialog box and click "accept"
+
 from flpianoroll import *
 
 def createDialog():

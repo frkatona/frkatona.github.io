@@ -201,6 +201,12 @@
             color: black;
         }
 
+        a {
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            text-decoration: none;
+            font-size: 15px;
+        }
     </style>
 
     <script>
@@ -239,12 +245,15 @@
 
         //random next toggle function
         function toggleRandomNext() {
+            var button = document.getElementById("randomNext");
             if (repeatTest == false) {
                 repeatTest = true;
-                document.getElementById("randomNext").style.backgroundColor = "green";
+                button.style.backgroundColor = "green";
+                button.innerText = "Click Any Chord";
             } else {
                 repeatTest = false;
-                document.getElementById("randomNext").style.backgroundColor = "#666666";
+                button.style.backgroundColor = "#666666";
+                button.innerText = "Random Next";
             }
         }
     </script>
@@ -266,7 +275,7 @@
         <div><span class="color-box" style="background-color: #c44900"></span> dominant (home-sick)
         </div><h4>link movements</h4>
         <div><span class="color-box" style="background-color: #ff4a4a"></span> driven</div>
-        <div><span class="color-box" style="background-color: #87ff83"></span> regular</div>
+        <div><span class="color-box" style="background-color: #6fc66c"></span> regular</div>
         <div><span class="color-box" style="background-color: #78b0ff"></span> delicate</div>
       </div>
 
@@ -336,6 +345,9 @@
                 <option value="3"selected>modest</option>
                 <option value="2">tight</option>
             </select>
+
+            <!-- link to pyscript file -->
+            <a href="https://github.com/frkatona/frkatona.github.io/blob/main/Subpages/ChordNetwork/data/FRK-Clipboard-Chords.pyscript" target="_blank">[Download FL Script Here]</a>
         </form>
     </div>
 
@@ -347,7 +359,11 @@
             <div id="box4"></div>
         </div>
         <button id="randomNext" onclick="toggleRandomNext()">Random Next</button>
-        <button id="exportMIDI" onclick="copyToClipboard()">Copy MIDI</button>
+        <button 
+            id="exportMIDI" 
+            onclick="copyToClipboard()">Copy MIDI
+            <!-- <img src="../../Images/icons/copy.svg" width="20" height="20"/> -->
+        </button>
     </div>
 
     <script>
@@ -388,7 +404,7 @@
             var button = document.getElementById('exportMIDI');
             button.innerHTML = 'Copied to clipboard!'; 
             setTimeout(function() {
-                button.innerHTML = 'Copy MIDI';
+                button.innerHTML = 'Copy MIDI' ;
             }, 1000);
         }
 
@@ -405,7 +421,7 @@
     <script>
         var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-        var linkColors = ["#ff4a4a", "#87ff83", "#78b0ff"];
+        var linkColors = ["#ff4a4a", "#6fc66c", "#78b0ff"];
         var svg = d3.select("body").append("svg")
         .attr("width", window.innerWidth)
         .attr("height", window.innerHeight);
