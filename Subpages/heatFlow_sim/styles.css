@@ -1,7 +1,10 @@
 body, label, p, button {
     font-family: 'Arial', sans-serif;
+    color: #fff;
+    background-color: #161f35;
+
   }
-  
+
 #header{
   text-align: center;
   font-size: 14px;
