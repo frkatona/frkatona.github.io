@@ -137,8 +137,6 @@ footer {
   margin-bottom: 5rem;
 }
 
-
-
 .banner::before {
   content: "";
   position: absolute;
@@ -176,10 +174,11 @@ footer {
 }
 
 #pdf-container {
-  width: 600px;
-  height: 750px;
+  width: 60vw;
+  height: 100vh;
+  top:0px;
   display: none;
-  position: relative;
+  position: fixed;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -187,13 +186,13 @@ footer {
 #minimize-btn {
   position: absolute;
   top: 60px;
-  right: 10px;
+  left: 30px;
   display: flex;
-  background: #626262;
+  background: #2e2e2e;
   color: #fff;
   border: none;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease-in-out;
