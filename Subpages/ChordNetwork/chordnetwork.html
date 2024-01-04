@@ -137,6 +137,22 @@
             width: 100%;
             height: 100px; /* Adjust as needed */
             background-color: var(--background); /* Adjust as needed */
+            cursor: pointer;
+
+        }
+
+        .circle-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #000;
+            margin: 10px;
+            cursor: pointer;
         }
 
         #chordBoxes > div {
@@ -361,17 +377,19 @@
 
     <div id="bottomContainer">
         <div id="chordBoxes">
+            <!-- <div id="box1circle1">
+                <div class="circle" onclick="handleClick()"></div>
+            </div>
+            <div id="box1circle2">
+                <div class="circle" onclick="handleClick()"></div>
+            </div> -->
             <div id="box1"></div>
             <div id="box2"></div>
             <div id="box3"></div>
             <div id="box4"></div>
         </div>
         <button id="randomNext" onclick="toggleRandomNext()">Random Next</button>
-        <button 
-            id="exportMIDI" 
-            onclick="copyToClipboard()">Copy MIDI
-            <!-- <img src="../../Images/icons/copy.svg" width="20" height="20"/> -->
-        </button>
+        <button id="exportMIDI" onclick="copyToClipboard()">Copy MIDI</button>
     </div>
 
     <script>
@@ -509,11 +527,20 @@
             .on("drag", dragged)
             .on("end", dragended));
 
-        function propagateEffect(node) {
+        function TriggerNodeLinkVisuals(d) {
+            d3.select(node._groups[0][d.index])
+            .transition()
+            .duration(attack * 1000)
+            .attr("r", 100)
+            .style("fill", "#511")
+            .transition()  // Add another transition
+            .duration(attack * 20000)
+            .attr("r", 50)  // Reset the radius
+            .style("fill", function(d) { return color(d.group); });  // Reset the color
 
             // Find the links connected to the node as a source
             let linksFrom = graph.links.filter(function(link) {
-                return link.source === node;
+                return link.source === d;
             });
             // Create a transition for each link
             linksFrom.forEach(function(link) {
@@ -529,13 +556,13 @@
             });
             // pick a random node that is connected to the node as a target
             let linksTo = graph.links.filter(function(link) {
-                return link.target === node;
+                return link.target === d;
             });
             let randomLink = linksTo[Math.floor(Math.random() * linksTo.length)];
             let randomNode = randomLink.source;
             
             if (repeatTest == true && repeatCounter < chordBars - 1) {
-                setTimeout(function() { handleClick(randomNode); }, randomDelay);
+                setTimeout(function() { HandleNodeClick(randomNode); }, randomDelay);
                 repeatCounter++;
             } else {
                 // repeatTest = false;
@@ -548,7 +575,7 @@
         var lastFourChordNames = [];
         var lastFourChordNotes = [];
 
-        function chordClicked(chordName, color, chordNotes) {
+        function PushChordBoxStack(chordName, color, chordNotes) {
             // If there are already four chords, remove the first one
             if (lastFourChordNames.length === 4) {
                 lastFourChordNames.shift();
@@ -572,7 +599,6 @@
             }).join(' ');
 
             // PLACEHOLDER - add an animation to the box most recently changed (will be box4 except for first 3 clicks)
-
         }
 
         function neighbor(chordNotes1, chordNotes2) {
@@ -586,7 +612,7 @@
             return neighborDistances_2D;
         }
 
-        function voiceLeadChord(firstChord, secondChord, voiceLeading) {
+        function VoiceLeadChord(firstChord, secondChord, voiceLeading) {
             neighborDistances_2D = neighbor(lastFourChordNotes[lastFourChordNotes.length - 1].identity, chordNotes);
             console.log("last chord: " + firstChord);
             console.log("this chord (pre-VL): " + secondChord);
@@ -676,9 +702,7 @@
             return A4 * Math.pow(2, (midiNote - 69) / 12);
         }
 
-        function handleClick(d) {
-            console.log("<-----------NEW CHORD----------->");
-
+        function ConstructBaseChord(d, key, chordColor) {
             let chordTonality;
             if (d.notes[1] - d.notes[0] == 3){
                 if (d.notes[2] - d.notes[1] == 4){
@@ -694,15 +718,6 @@
 
             chordNotes = d.notes.map(note => note + key + ((octaveSelect+1) * 12));
             chordName = keyArray[(d.notes[0] + key + 12) % 12] + chordTonality + extensions[chordColor];
-            console.log("d.notes[0]: " + d.notes[0]);
-            console.log("key: " + key);
-            console.log("keyArray.length: " + keyArray.length);
-            console.log(keyArray.length % (d.notes[0] + key));
-            console.log(chordName);
-            console.log("key: " + keyArray[key]);
-            console.log("chord root: "+ keyArray[d.notes[0] + key]);
-            console.log("chord tonality: " + chordTonality);
-            console.log("chord color: " + extensions[chordColor]);
 
             // extensions (chordColor value is movement from the 7 except for 1 which is no extension which takes the root up an octave)
             if (chordColor == 1) {
@@ -713,24 +728,24 @@
                 }
             }
 
-            // voice openness
-            if (openness == 1) {
-                // full inversion
-                chordNotes = [chordNotes[0], chordNotes[1] - 12, chordNotes[2] - 12, chordNotes[3] - 12];
-            } else if (openness == 2) {
-                // partial inversion
-                chordNotes = [chordNotes[0], chordNotes[1], chordNotes[2] - 12, chordNotes[3] - 12];
-            } else if (openness == 3) {
-                // no change
-            } else if (openness == 4) {
-                // third-widened
-                chordNotes = [chordNotes[0], chordNotes[1] + 12, chordNotes[2], chordNotes[3] - 12];
-            } else if (openness == 5) {
-                // third/fifth-widened
-                chordNotes = [chordNotes[0], chordNotes[1] + 12, chordNotes[2] + 12, chordNotes[3]];
-            }
-            
-            // butter
+            return [chordTonality, chordNotes, chordName];
+        }
+
+        function DebugConsoleLog(d, key, chordTonality, chordColor) {
+            console.log("<-----------NEW CHORD----------->");
+            console.log("d.notes[0]: " + d.notes[0]);
+            console.log("key: " + key);
+            console.log("keyArray.length: " + keyArray.length);
+            console.log(keyArray.length % (d.notes[0] + key));
+            console.log(chordName);
+            console.log("key: " + keyArray[key]);
+            console.log("chord root: "+ keyArray[d.notes[0] + key]);
+            console.log("chord tonality: " + chordTonality);
+            console.log("chord color: " + extensions[chordColor]);
+        }
+
+        function ModifyBaseChord(chordNotes, chordColor, chordTonality, voiceLeading, openness, butter) {
+            // (PLACEHOLDER) butter
             // remove the third index from the array
             // if (butter == 0) {
             //     array.splice(2, 1)
@@ -738,11 +753,17 @@
 
             // voice leading
             if (voiceLeading < 12 && lastFourChordNotes.length > 0) {
-                console.log("voiceLeading: " + voiceLeading);
-                chordNotes = voiceLeadChord(lastFourChordNotes[lastFourChordNotes.length - 1].identity, chordNotes, voiceLeading);
+                chordNotes = VoiceLeadChord(lastFourChordNotes[lastFourChordNotes.length - 1].identity, chordNotes, voiceLeading);
             }
 
-            // audio
+            // (PLACEHOLDER) voice openness
+            // "open both inter-chord intervals back up" strategy won't work unless I can retroactively change the first
+            // can just permanently make sure at least one of the middle intervals goes up an octave before it checks for voice leading...or after?
+
+            return chordNotes;
+        }
+
+        function AudioHandle(chordNotes, chordName, d){
             for (var i = 0; i < chordNotes.length; i++) {
                 // Create an oscillator for each note
                 let oscillator = audioContext.createOscillator();
@@ -764,25 +785,40 @@
                 oscillator.start();
                 oscillator.stop(audioContext.currentTime + 1);
             }
+        }
 
-            chordClicked(chordName, color(d.group), chordNotes);
-
-            // visual effect
-            d3.select(node._groups[0][d.index])
-            .transition()
-            .duration(attack * 1000)
-            .attr("r", 100)
-            .style("fill", "#511")
-            .transition()  // Add another transition
-            .duration(attack * 20000)
-            .attr("r", 50)  // Reset the radius
-            .style("fill", function(d) { return color(d.group); });  // Reset the color
-
-            propagateEffect(d);
+        function HandleNodeClick(d) { 
+            let [chordTonality, chordNotes, chordName] = ConstructBaseChord(d, key, chordColor);
+            chordNotes = ModifyBaseChord(chordNotes, chordColor, chordTonality, voiceLeading, openness, butter);
+            DebugConsoleLog(d, key, chordTonality, chordColor);
+            AudioHandle(chordNotes, chordName, d);
+            PushChordBoxStack(chordName, color(d.group), chordNotes);
+            TriggerNodeLinkVisuals(d);
         };
 
-        node.on("click", handleClick);
-        labels.on("click", handleClick);
+        // handle chord box clicking
+        d3.selectAll("#box1, #box2, #box3, #box4").on("click", function() {
+            console.log(this.id + " clicked");
+            console.log(this.textContent);
+            console.log(lastFourChordNotes[this.id[this.id.length - 1] - 1].identity);
+            AudioHandle(lastFourChordNotes[this.id[this.id.length - 1] - 1].identity, this.textContent);
+            
+            
+
+            // Trigger box visuals
+            d3.select(this)
+            .transition()
+            .duration(attack * 1000)
+            .style("background-color", "#511")
+            .transition()
+            .duration(attack * 20000)
+            .style("background-color", lastFourChordNames[this.id[this.id.length - 1] - 1].color);
+            // modify chord notes for this box by taking the last note up an octave
+            // lastFourChordNotes[this.id[this.id.length - 1] - 1].identity[3] += 12;
+        });
+
+        node.on("click", HandleNodeClick);
+        labels.on("click", HandleNodeClick);
 
         simulation
             .nodes(graph.nodes)
@@ -809,28 +845,26 @@
         });
 
         function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
+            if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
         }
 
         function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
         }
 
         function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
         }
 
         function dragended(d) {
-        if (!d3.event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
+            if (!d3.event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
         }
-
-
     </script>
     
 </body>
