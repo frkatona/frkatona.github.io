@@ -1,0 +1,80 @@
+@keyframes oscillate {
+    0% {
+        background-image: linear-gradient(to right, rgb(25, 44, 27), #1a3121);
+        box-shadow: 0 0 20px rgb(119, 207, 207), 0 0 25px rgb(255, 118, 118), 0 0 30px rgb(198, 219, 79), 0 0 40px rgb(146, 190, 190);
+    }
+    50% {
+        background-image: linear-gradient(to right, rgb(45, 59, 46), #1a4b29);
+        box-shadow: 0 0 20px rgb(238, 414, 414), 0 0 40px rgb(200, 236, 236), 0 0 60px rgb(396, 438, 158), 0 0 80px rgb(292, 380, 380);
+    }
+    100% {
+        background-image: linear-gradient(to right, rgb(25, 44, 27), #1a3121);
+        box-shadow: 0 0 20px rgb(119, 207, 207), 0 0 25px rgb(255, 118, 118), 0 0 30px rgb(198, 219, 79), 0 0 40px rgb(146, 190, 190);
+    }
+}
+
+#piano {
+    display: flex;
+    height: 200px;
+    width: 80%;
+    animation: oscillate 5s infinite;
+    padding: 10px;    padding: 10px;
+    z-index: 0;
+}
+
+body {
+    background-color: #030311;
+}
+
+.key {
+    width: 55px;
+    height: 100%;
+    border: 1px solid black;
+    /* box-sizing: border-box; */
+}
+
+.white {
+    background-color: white;
+}
+
+.black {
+    background-color: black;
+    width: 30px;
+    margin-left: -15px;
+    margin-right: -15px;
+    z-index: 1;
+    height: 60%;
+    position: relative;
+}
+
+.chordkey {
+    background-color: rgb(83, 27, 74);
+    box-shadow: 0 0 10px rgb(226, 187, 221), 0 0 20px rgb(217, 183, 233), 0 0 30px rgb(33, 8, 37), 0 0 40px rgb(236, 186, 234);
+}
+
+.chordkey:hover {
+    background-color: rgb(233, 138, 138);
+}
+
+.chordkey.active {
+    background-color: rgb(226, 58, 58);
+}
+
+.leftarrow { 
+    position: absolute;
+    top: 10px;
+    right: 50px;
+}
+
+.rightarrow { 
+    position: absolute;
+    top: 10px;
+    /* left: 10px; */
+}
+
+.x-button { 
+    position: absolute;
+    top: 10px;
+    right: 15px;
+
+}

@@ -3,7 +3,8 @@ window.onload = function() {
 }
 
 document.getElementById('welcome-overlay').onclick = function() {
-this.style.display = 'none';
+    this.style.display = 'none';
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
 }
 
 const handlers = {
@@ -23,6 +24,35 @@ document.getElementById('parameters').addEventListener('change', function(e) {
         handler(e.target.value);
     }
 });
+
+function midiNoteToFrequency(midiNote) {
+    const A4 = 440;
+    return A4 * Math.pow(2, (midiNote - 69) / 12);
+}
+
+function AudioHandle(chordNotes){
+    for (var i = 0; i < chordNotes.length; i++) {
+        // Create an oscillator for each note
+        let oscillator = audioContext.createOscillator();
+        let gainNode = audioContext.createGain();
+        let filter = audioContext.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = lowpassCutoff;  
+        oscillator.type = waveShape; 
+        var now = audioContext.currentTime;
+        gainNode.gain.setValueAtTime(0, now);
+        gainNode.gain.linearRampToValueAtTime(volume, now + attack); // Attack
+        // gainNode.gain.linearRampToValueAtTime(0.5, now + 0.2); // Decay
+        // gainNode.gain.setValueAtTime(0.5, now + 0.7); // Sustain
+        gainNode.gain.linearRampToValueAtTime(0, now + 1); // Release
+        oscillator.frequency.value = midiNoteToFrequency(chordNotes[i]);
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 1);
+    }
+}
 
 function copyToClipboard() {
     navigator.clipboard.writeText(clipboardText)
@@ -48,7 +78,19 @@ function toggleMenu() {
     }
 }
 
-var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+//random next toggle function
+function toggleRandomNext() {
+    var button = document.getElementById("randomNext");
+    if (repeatTest == false) {
+        repeatTest = true;
+        button.style.backgroundColor = "green";
+        button.innerText = "Click Any Chord";
+    } else {
+        repeatTest = false;
+        button.style.backgroundColor = "#666666";
+        button.innerText = "Random Next";
+    }
+}
 
 var linkColors = ["#ff4a4a", "#6fc66c", "#78b0ff"];
 var svg = d3.select("body").append("svg")
@@ -175,9 +217,6 @@ function TriggerNodeLinkVisuals(d) {
     }
 }
 
-var lastFourChordNames = [];
-var lastFourChordNotes = [];
-
 function PushChordBoxStack(chordName, color, chordNotes) {
     // If there are already four chords, remove the first one
     if (lastFourChordNames.length === 4) {
@@ -196,7 +235,7 @@ function PushChordBoxStack(chordName, color, chordNotes) {
         box.style.backgroundColor = lastFourChordNames[i].color;
     }
 
-    // Update the clipboard text with chordNotes
+    // Update the clipboard-copyable text with chordNotes
     clipboardText = lastFourChordNotes.map(function(chord) {
         return chord.identity;
     }).join(' ');
@@ -300,11 +339,6 @@ function VoiceLeadChord(firstChord, secondChord, voiceLeading) {
     return voiceLedChord;
 }
 
-function midiNoteToFrequency(midiNote) {
-    const A4 = 440;
-    return A4 * Math.pow(2, (midiNote - 69) / 12);
-}
-
 function ConstructBaseChord(d, key, chordColor) {
     let chordTonality;
     if (d.notes[1] - d.notes[0] == 3){
@@ -347,6 +381,7 @@ function DebugConsoleLog(d, key, chordTonality, chordColor) {
     console.log("chord color: " + extensions[chordColor]);
 }
 
+
 function ModifyBaseChord(chordNotes, chordColor, chordTonality, voiceLeading, openness, butter) {
     // (PLACEHOLDER) butter
     // remove the third index from the array
@@ -366,35 +401,11 @@ function ModifyBaseChord(chordNotes, chordColor, chordTonality, voiceLeading, op
     return chordNotes;
 }
 
-function AudioHandle(chordNotes, chordName, d){
-    for (var i = 0; i < chordNotes.length; i++) {
-        // Create an oscillator for each note
-        let oscillator = audioContext.createOscillator();
-        let gainNode = audioContext.createGain();
-        let filter = audioContext.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = lowpassCutoff;  
-        oscillator.type = waveShape; 
-        var now = audioContext.currentTime;
-        gainNode.gain.setValueAtTime(0, now);
-        gainNode.gain.linearRampToValueAtTime(volume, now + attack); // Attack
-        // gainNode.gain.linearRampToValueAtTime(0.5, now + 0.2); // Decay
-        // gainNode.gain.setValueAtTime(0.5, now + 0.7); // Sustain
-        gainNode.gain.linearRampToValueAtTime(0, now + 1); // Release
-        oscillator.frequency.value = midiNoteToFrequency(chordNotes[i]);
-        oscillator.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        oscillator.start();
-        oscillator.stop(audioContext.currentTime + 1);
-    }
-}
-
 function HandleNodeClick(d) { 
     let [chordTonality, chordNotes, chordName] = ConstructBaseChord(d, key, chordColor);
     chordNotes = ModifyBaseChord(chordNotes, chordColor, chordTonality, voiceLeading, openness, butter);
     DebugConsoleLog(d, key, chordTonality, chordColor);
-    AudioHandle(chordNotes, chordName, d);
+    AudioHandle(chordNotes);
     PushChordBoxStack(chordName, color(d.group), chordNotes);
     TriggerNodeLinkVisuals(d);
 };
@@ -404,20 +415,17 @@ d3.selectAll("#box1, #box2, #box3, #box4").on("click", function() {
     console.log(this.id + " clicked");
     console.log(this.textContent);
     console.log(lastFourChordNotes[this.id[this.id.length - 1] - 1].identity);
-    AudioHandle(lastFourChordNotes[this.id[this.id.length - 1] - 1].identity, this.textContent);
+    AudioHandle(lastFourChordNotes[this.id[this.id.length - 1] - 1].identity);
     
-    
-
-    // Trigger box visuals
-    d3.select(this)
+// Trigger box visuals
+d3.select(this)
     .transition()
     .duration(attack * 1000)
     .style("background-color", "#511")
     .transition()
     .duration(attack * 20000)
     .style("background-color", lastFourChordNames[this.id[this.id.length - 1] - 1].color);
-    // modify chord notes for this box by taking the last note up an octave
-    // lastFourChordNotes[this.id[this.id.length - 1] - 1].identity[3] += 12;
+    CreateKeyboardGUI(lastFourChordNotes[this.id[this.id.length - 1] - 1].identity, this.id);
 });
 
 node.on("click", HandleNodeClick);
@@ -468,3 +476,147 @@ function dragended(d) {
     d.fx = null;
     d.fy = null;
 }
+
+// Keyboard GUI
+function CreateKeyboardGUI(coloredKeys, boxID) {
+    if (document.querySelector('.keyboardContainer')) {
+        document.querySelector('.keyboardContainer').remove();
+    }
+
+    if (document.querySelector('.controls')) {
+        document.querySelector('.controls').remove();
+    }
+
+    const keyboardLength = 36;
+    const keyboardContainer = document.createElement('piano');
+    let octaveChange = 0;
+    keyboardContainer.classList.add('keyboardContainer');
+    document.body.appendChild(keyboardContainer);
+
+    // keep subtracting 12 from each element of colored keys until the lowest is less than 12
+    while (Math.min(...coloredKeys) > 24) {
+        console.log("coloredKeys: " + coloredKeys);
+        coloredKeys = coloredKeys.map(value => value - 12);
+        octaveChange += 1;
+    }
+
+    console.log("coloredKeys: " + coloredKeys);
+
+    // Function to create a key
+    function createKey(color, index) {
+        const key = document.createElement('div');
+        key.classList.add('key', color);
+        if (coloredKeys.includes(index)) {
+            key.classList.add('chordkey');
+        }
+    
+        key.addEventListener('click', () => {
+            // Remove the 'active' class from the previously active key, if there is one
+            const activeKey = document.querySelector('.chordkey.active');
+            if (activeKey) {
+                activeKey.classList.remove('active');
+            }
+    
+            // Remove existing controls, if there are any
+            const existingControls = document.querySelector('.controls');
+            if (existingControls) {
+                existingControls.remove();
+            }
+    
+            // Add the 'active' class to the clicked key
+            key.classList.add('active');
+    
+            // Create and add the controls
+            if (coloredKeys.includes(index)){
+                const controls = createControls(index);
+                document.body.appendChild(controls);
+            }
+    
+            console.log(`Key ${index} was clicked`);
+        });
+    
+        return key;
+    }
+    
+    function createControls(index) {
+        const controls = document.createElement('div');
+        controls.classList.add('controls');
+    
+        const xButton = document.createElement('button');
+        xButton.textContent = 'x';
+        xButton.classList.add('x-button');
+        xButton.addEventListener('click', () => {
+            console.log(`X button for key ${index} was clicked`);
+            keyboardContainer.remove();
+            document.querySelector('.controls').remove();
+        });
+
+        function handleArrowClick(index, direction) {
+            console.log(`Arrow for key ${index} was clicked`);
+
+            const activeKeyIndex = coloredKeys.indexOf(index);
+            let newPosition = index + 12 * direction;
+
+            if (newPosition < keyboardLength && newPosition > 0) {
+                coloredKeys[activeKeyIndex] += 12 * direction;
+                const key = document.querySelector(`.key:nth-child(${index})`);
+                const newKey = document.querySelector(`.key:nth-child(${newPosition})`);
+                key.classList.remove('chordkey');
+                key.classList.remove('active');
+                newKey.classList.add('chordkey');
+                newKey.classList.add('active');
+        
+                // update the controls position
+                newKey.click();
+
+                // return to original octave and update the lastFourChordNotes array
+                octaveChange_temp = octaveChange;
+                for (let i = 0; i < octaveChange_temp; i++){
+                    coloredKeys = coloredKeys.map(value => value + 12);
+                    octaveChange -= 1;
+                }
+
+                console.log("octaveChange: " + octaveChange);  
+
+                lastFourChordNotes[boxID[boxID.length - 1] - 1].identity = coloredKeys;
+                console.log("lastFourChordNotes " + lastFourChordNotes[boxID[boxID.length - 1] - 1].identity);
+                AudioHandle(coloredKeys);
+
+            } else { 
+                console.log("can't go that way");
+            }
+        }
+        
+        const leftArrow = document.createElement('button');
+        leftArrow.textContent = '<';
+        leftArrow.classList.add('leftarrow');
+        leftArrow.addEventListener('click', () => handleArrowClick(index, -1));
+        
+        const rightArrow = document.createElement('button');
+        rightArrow.textContent = '>';
+        rightArrow.classList.add('rightarrow');
+        rightArrow.addEventListener('click', () => handleArrowClick(index, 1));
+    
+        controls.appendChild(leftArrow);
+        controls.appendChild(xButton);
+        controls.appendChild(rightArrow);
+    
+        // Position the controls under the key
+        const key = document.querySelector(`.key:nth-child(${index + 1})`);
+        const keyRect = key.getBoundingClientRect();
+        controls.style.position = 'absolute';
+        controls.style.left = `${keyRect.left}px`;
+        controls.style.top = `${keyRect.bottom}px`;
+    
+        return controls;
+    }
+    
+    // Add keys to the piano
+    for (let i = 1; i <= keyboardLength; i++) {
+        let keyColor = 'white';
+        if ([2, 4, 7, 9, 11, 14, 16, 19, 21, 23, 26, 28, 31, 33, 35].includes(i)) {
+            keyColor = 'black';
+        }
+        keyboardContainer.appendChild(createKey(keyColor, i));
+    }
+};

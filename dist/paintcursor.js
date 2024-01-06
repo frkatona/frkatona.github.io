@@ -70,7 +70,7 @@ function update(t) {
     });
 
     ctx.lineCap = "round";
-   ctx.beginPath();
+    ctx.beginPath();
     ctx.moveTo(trail[0].x, trail[0].y);
 
     for (let i = 1; i < trail.length - 1; i++) {
