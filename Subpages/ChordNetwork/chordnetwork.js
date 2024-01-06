@@ -482,6 +482,14 @@ function dragended(d) {
 
 // Keyboard GUI
 function CreateKeyboardGUI(chordNotes_real, boxID) {
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            console.log('Escape key was pressed!');
+            keyboardContainer.remove();
+            document.querySelector('.controls').remove();
+        }
+    });
+
     if (document.querySelector('.keyboardContainer')) {
         document.querySelector('.keyboardContainer').remove();
     }
@@ -498,7 +506,7 @@ function CreateKeyboardGUI(chordNotes_real, boxID) {
     document.body.appendChild(keyboardContainer);
 
     // keep subtracting 12 from each element of colored keys until the lowest is less than 12
-    chordNotes_colored = chordNotes_real;
+    chordNotes_colored = chordNotes_real.map(value => value + 1);
     while (Math.min(...chordNotes_colored) > 24) {
         console.log("chordNotes_colored: " + chordNotes_colored);
         chordNotes_colored = chordNotes_colored.map(value => value - 12);
