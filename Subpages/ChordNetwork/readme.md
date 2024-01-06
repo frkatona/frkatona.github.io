@@ -8,15 +8,11 @@
 
 ## FEATURES
 
-- [ ] show and use absolute chord information
-
-- [ ] color legend for chord functions
-
-- [ ] rethink how "closed" or "open" a voicing is...maybe actually do math on the average distance?  ask GPT
+- [ ] provide a list of example songs that set the key and populate the chordboxes with the chords of the song
 
 - [ ] create 'x' bars chord progression randomize button that plays the progression
 
-  - [ ] continue for 4 bars after note press
+  - [x] continue for 3 bars after note press
 
   - [ ] start with random chord and continue for n bars where n = number of boxes (which should be a user parameter)
 
@@ -24,15 +20,21 @@
 
   - [ ] 'play' button for to play the chord array
 
-    - [ ] arrows above the box to change voicing and extension to hear again on playback or copy to clipboard (will need to organize lastFourChords as objects probably)
+    - [x] arrows above the box to change voicing and extension to hear again on playback or copy to clipboard (will need to organize lastFourChords as objects probably)
+
+- [x] show and use absolute chord information
+
+- [x] color legend for chord functions
+
+- [x] rethink how "closed" or "open" a voicing is...maybe actually do math on the average distance?
 
 - [ ] add missing chord types
 
-  - [ ] seventh scale degree (currently only have 2 dominants)
+  - [x] seventh scale degree (currently only have 2 dominants)
 
   - [ ] suspensions, extensions, etc.
   
-- [ ] css piano keyboard to visualize notes played for voicing
+- [x] css piano keyboard to visualize notes played for voicing
 
 - [x] assemble absolute chord information for a single chord (root, extensions, octave, voicing)
 
@@ -64,17 +66,15 @@
 
 ## USER EXPERIENCE
 
-- [ ] top and bottom bars with transparent backgrounds and that don't take up the center of the screen or push the content away
+- [x] top and bottom bars with transparent backgrounds and that don't take up the center of the screen or push the content away
 
-- [ ] distinct click and drag spot for changing the force center
+- [ ] distinct click and drag spot for changing the force center (or at least be sure the nodes are never inconvenient to click)
 
 - [ ] "?" icon next to settings that aren't obvious (a la overwatch website)
 
-
-
 - [ ] fancier graphical fx
   
-  - [ ] bloom that moves along the line to show the various connections and maybe flash their node ids at the top for a moment\
+  - [ ] bloom that moves along the line to show the various connections and maybe flash their node ids at the top for a moment (can make boxshadow but maybe a better way)
 
 - [ ] better iconography/UI
 
@@ -98,4 +98,4 @@
 
 - [x] get chord names to appear as text
 
-- [x] fine tune the force and size so everything is readable and things don't move so far away from each other
+- [x] fine tune the force and size so everything is readable and things don't move so far away from eachother

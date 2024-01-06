@@ -402,6 +402,9 @@ function ModifyBaseChord(chordNotes, chordColor, chordTonality, voiceLeading, op
 }
 
 function HandleNodeClick(d) { 
+    if (keyboardContainer = document.querySelector('.keyboardContainer')) {
+        keyboardContainer.remove();
+    }
     let [chordTonality, chordNotes, chordName] = ConstructBaseChord(d, key, chordColor);
     chordNotes = ModifyBaseChord(chordNotes, chordColor, chordTonality, voiceLeading, openness, butter);
     DebugConsoleLog(d, key, chordTonality, chordColor);
@@ -488,8 +491,9 @@ function CreateKeyboardGUI(coloredKeys, boxID) {
     }
 
     const keyboardLength = 36;
-    const keyboardContainer = document.createElement('piano');
+    const keyboardContainer = document.createElement('keyboardContainer');
     let octaveChange = 0;
+
     keyboardContainer.classList.add('keyboardContainer');
     document.body.appendChild(keyboardContainer);
 
@@ -580,7 +584,7 @@ function CreateKeyboardGUI(coloredKeys, boxID) {
 
                 lastFourChordNotes[boxID[boxID.length - 1] - 1].identity = coloredKeys;
                 console.log("lastFourChordNotes " + lastFourChordNotes[boxID[boxID.length - 1] - 1].identity);
-                AudioHandle(coloredKeys);
+                AudioHandle(lastFourChordNotes[boxID[boxID.length - 1] - 1].identity);
 
             } else { 
                 console.log("can't go that way");
