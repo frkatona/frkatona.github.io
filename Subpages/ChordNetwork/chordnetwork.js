@@ -481,7 +481,7 @@ function dragended(d) {
 }
 
 // Keyboard GUI
-function CreateKeyboardGUI(coloredKeys, boxID) {
+function CreateKeyboardGUI(chordNotes_real, boxID) {
     if (document.querySelector('.keyboardContainer')) {
         document.querySelector('.keyboardContainer').remove();
     }
@@ -490,7 +490,7 @@ function CreateKeyboardGUI(coloredKeys, boxID) {
         document.querySelector('.controls').remove();
     }
 
-    const keyboardLength = 36;
+    const keyboardLength = 48;
     const keyboardContainer = document.createElement('keyboardContainer');
     let octaveChange = 0;
 
@@ -498,19 +498,20 @@ function CreateKeyboardGUI(coloredKeys, boxID) {
     document.body.appendChild(keyboardContainer);
 
     // keep subtracting 12 from each element of colored keys until the lowest is less than 12
-    while (Math.min(...coloredKeys) > 24) {
-        console.log("coloredKeys: " + coloredKeys);
-        coloredKeys = coloredKeys.map(value => value - 12);
+    chordNotes_colored = chordNotes_real;
+    while (Math.min(...chordNotes_colored) > 24) {
+        console.log("chordNotes_colored: " + chordNotes_colored);
+        chordNotes_colored = chordNotes_colored.map(value => value - 12);
         octaveChange += 1;
     }
 
-    console.log("coloredKeys: " + coloredKeys);
+    console.log("chordNotes_colored: " + chordNotes_colored);
 
     // Function to create a key
     function createKey(color, index) {
         const key = document.createElement('div');
         key.classList.add('key', color);
-        if (coloredKeys.includes(index)) {
+        if (chordNotes_colored.includes(index)) {
             key.classList.add('chordkey');
         }
     
@@ -531,7 +532,7 @@ function CreateKeyboardGUI(coloredKeys, boxID) {
             key.classList.add('active');
     
             // Create and add the controls
-            if (coloredKeys.includes(index)){
+            if (chordNotes_colored.includes(index)){
                 const controls = createControls(index);
                 document.body.appendChild(controls);
             }
@@ -558,11 +559,12 @@ function CreateKeyboardGUI(coloredKeys, boxID) {
         function handleArrowClick(index, direction) {
             console.log(`Arrow for key ${index} was clicked`);
 
-            const activeKeyIndex = coloredKeys.indexOf(index);
+            const activeKeyIndex = chordNotes_colored.indexOf(index);
             let newPosition = index + 12 * direction;
 
             if (newPosition < keyboardLength && newPosition > 0) {
-                coloredKeys[activeKeyIndex] += 12 * direction;
+                chordNotes_colored[activeKeyIndex] += 12 * direction;
+                chordNotes_real[activeKeyIndex] += 12 * direction;
                 const key = document.querySelector(`.key:nth-child(${index})`);
                 const newKey = document.querySelector(`.key:nth-child(${newPosition})`);
                 key.classList.remove('chordkey');
@@ -573,16 +575,7 @@ function CreateKeyboardGUI(coloredKeys, boxID) {
                 // update the controls position
                 newKey.click();
 
-                // return to original octave and update the lastFourChordNotes array
-                octaveChange_temp = octaveChange;
-                for (let i = 0; i < octaveChange_temp; i++){
-                    coloredKeys = coloredKeys.map(value => value + 12);
-                    octaveChange -= 1;
-                }
-
-                console.log("octaveChange: " + octaveChange);  
-
-                lastFourChordNotes[boxID[boxID.length - 1] - 1].identity = coloredKeys;
+                lastFourChordNotes[boxID[boxID.length - 1] - 1].identity = chordNotes_real;
                 console.log("lastFourChordNotes " + lastFourChordNotes[boxID[boxID.length - 1] - 1].identity);
                 AudioHandle(lastFourChordNotes[boxID[boxID.length - 1] - 1].identity);
 
@@ -618,7 +611,7 @@ function CreateKeyboardGUI(coloredKeys, boxID) {
     // Add keys to the piano
     for (let i = 1; i <= keyboardLength; i++) {
         let keyColor = 'white';
-        if ([2, 4, 7, 9, 11, 14, 16, 19, 21, 23, 26, 28, 31, 33, 35].includes(i)) {
+        if ([2, 4, 7, 9, 11, 14, 16, 19, 21, 23, 26, 28, 31, 33, 35, 38, 40, 43, 45, 47, 50, 52, 55, 57, 59, 62].includes(i)) {
             keyColor = 'black';
         }
         keyboardContainer.appendChild(createKey(keyColor, i));
