@@ -16,7 +16,8 @@ def transform_data(input_file):
     return output
 
 def write_output(output, input_file):
-    output_file = os.path.splitext(input_file)[0] + "-D3.json"
+    # use the output file path head and new string to create output file path without the previous tail
+    output_file = 'Subpages\ChordNetwork\data\chordFlow-D3-copyboard.json'
     with open(output_file, 'w') as f:
         json.dump(output, f, indent=1)
 
@@ -38,6 +39,6 @@ def write_output(output, input_file):
     with open(output_file, 'w') as f:
         f.write(file_content)
 
-input_file = 'Subpages\ChordNetwork\data\chord-flow.json'
+input_file = 'Subpages\ChordNetwork\data\chordFlow-pythonSeed.json'
 output = transform_data(input_file)
 write_output(output, input_file)

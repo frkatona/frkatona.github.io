@@ -10,6 +10,12 @@
 
 - [ ] provide a list of example songs that set the key and populate the chordboxes with the chords of the song
 
+- [ ] flesh out theory underpinning links and eventual user-parameterized link probability weights
+
+  - [ ] rewrite the seed json (or python script to automate child json or the js to crunch it each time)
+
+  - [ ] "tonal ambiguity" in strength of approach intervals (e.g., darkness weights tonal approach preferentially with motion by thirds)
+
 - [ ] create 'x' bars chord progression randomize button that plays the progression
 
   - [x] continue for 3 bars after note press

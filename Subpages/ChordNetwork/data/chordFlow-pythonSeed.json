@@ -7,7 +7,7 @@
             {
                 "natural": ["ii", "iii", "IV", "V", "vi", "viio"],
                 "driven": [],
-                "delicate": ["bIII", "III", "iv", "v", "bVI", "bVII"]
+                "delicate": ["bIII", "III", "iv", "v", "bVI", "bVII", "II"]
             }
         ]
     },
@@ -19,7 +19,7 @@
             {
                 "natural": ["iii", "IV"],
                 "driven": ["V", "viio"],
-                "delicate": ["I", "bIII", "III", "vi", "bVII"]
+                "delicate": ["I", "bIII", "III", "vi", "bVII", "II"]
             }
         ]
     },
@@ -30,7 +30,7 @@
         "next": [
             {
                 "natural": ["I", "ii"],
-                "driven": ["IV", "viio"],
+                "driven": ["IV", "viio", "II"],
                 "delicate": ["bIII", "III", "iv"]
             }
         ]
@@ -41,7 +41,7 @@
         "notes": [5, 9, 12, 16],
         "next": [
             {
-                "natural": ["iii", "bIII", "ii", "vi"],
+                "natural": ["iii", "bIII", "ii", "vi", "II"],
                 "driven": ["V", "viio"],
                 "delicate": ["iv", "IV", "v"]
             }
@@ -54,7 +54,7 @@
         "next": [
             {
                 "natural": ["I", "IV", "vi", "viio", "III"],
-                "driven": ["bVI"],
+                "driven": ["bVI", "II"],
                 "delicate": ["iv", "iii"]
             }
         ]
@@ -75,6 +75,18 @@
         "chord": "viio",
         "function": "dominant",
         "notes": [11, 14, 17, 20],
+        "next": [
+            {
+                "natural": ["iii", "bIII", "bVII", "vi", "IV"],
+                "driven": ["I", "ii", "v"],
+                "delicate": ["IV", "V", "iv"]
+            }
+        ]
+    },
+    {
+        "chord": "II",
+        "function": "dominant",
+        "notes": [2, 6, 9, 13],
         "next": [
             {
                 "natural": ["iii", "bIII", "bVII", "vi", "IV"],

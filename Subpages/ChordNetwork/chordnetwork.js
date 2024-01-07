@@ -220,18 +220,20 @@ function TriggerNodeLinkVisuals(d) {
     let linksFrom = graph.links.filter(function(link) {
         return link.source === d;
     });
+    
     // Create a transition for each link
     linksFrom.forEach(function(link) {
         d3.select("#link-" + link.id)
             .transition()
             .duration(attack * 2000)
             .style("stroke", function(d) { return linkColor(d.type); })  // Change the color
-            .style("stroke-width", 8)  // Increase the stroke width
+            .attr("stroke-width", 8)  // Increase the stroke width
             .transition()  // Add another transition
             .duration(1000)  // Set the duration for the second transition
             .style("stroke", function(d) { return linkColor(d.type); })  // Reset the color
-            .style("stroke-width", function(d) { return Math.sqrt(d.value); });  // Reset the stroke width
+            .attr("stroke-width", function(d) { return Math.sqrt(d.value); });  // Reset the stroke width
     });
+
     // pick a random node that is connected to the node as a target
     let linksTo = graph.links.filter(function(link) {
         return link.target === d;
