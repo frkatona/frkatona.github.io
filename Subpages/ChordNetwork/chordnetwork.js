@@ -11,17 +11,32 @@ document.getElementById('welcome-overlay').onclick = function() {
 document.addEventListener('keydown', function(event) {
     if (event.key === 'x') {
         toggleRandomNext()
-    }
-    if (event.key === 'c') {
+    } else if (event.key === 'c') {
         copyToClipboard()
-    }
-    if (event.key === 'Escape') {
+    } else if (event.key === 'Escape') {
         if (keyboardContainer = document.querySelector('.keyboardContainer')) {
             keyboardContainer.remove();
         }
-    }
-    if (event.key === 'q') {
+    } else if (event.key === 'q') {
         document.getElementById('welcome-overlay').style.display = "block";
+    } else if (event.key === 'z') {
+        toggleMenu()
+    } else if (event.key === 'ArrowUp') {
+        octaveSelect++;
+    } else if (event.key === 'ArrowDown') {
+        octaveSelect--;
+    } else if (event.key === 'ArrowLeft') {
+        leftArrow.click();
+    } else if (event.key === 'ArrowRight') {
+        rightArrow.click();
+    } else if (event.key === '1') {
+        document.getElementById('box1').click();
+    } else if (event.key === '2') {
+        document.getElementById('box2').click();
+    } else if (event.key === '3') {
+        document.getElementById('box3').click();
+    } else if (event.key === '4') {
+        document.getElementById('box4').click();
     }
 });
 
