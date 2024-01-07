@@ -586,6 +586,9 @@ function CreateKeyboardGUI(chordNotes_real, boxID) {
                 lastFourChordNotes[boxID[boxID.length - 1] - 1].identity = chordNotes_real;
                 console.log("lastFourChordNotes " + lastFourChordNotes[boxID[boxID.length - 1] - 1].identity);
                 AudioHandle(lastFourChordNotes[boxID[boxID.length - 1] - 1].identity);
+                clipboardText = lastFourChordNotes.map(function(chord) {
+                    return chord.identity;
+                }).join(' ');
 
             } else { 
                 console.log("can't go that way");
@@ -609,9 +612,6 @@ function CreateKeyboardGUI(chordNotes_real, boxID) {
         // Position the controls under the key
         const key = document.querySelector(`.key:nth-child(${index + 1})`);
         const keyRect = key.getBoundingClientRect();
-        controls.style.position = 'absolute';
-        controls.style.left = `${keyRect.left}px`;
-        controls.style.top = `${keyRect.bottom}px`;
     
         return controls;
     }

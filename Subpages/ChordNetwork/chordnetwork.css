@@ -278,18 +278,24 @@ body {
 
 .leftarrow { 
     position: absolute;
-    top: 10px;
-    right: 50px;
+    bottom: 160px;
+    left: 45%;
+    transform: translateX(-50%);
+    scale: 2.5;  
 }
 
 .rightarrow { 
     position: absolute;
-    top: 10px;
-    /* left: 10px; */
+    bottom: 160px;
+    left: 55%;
+    transform: translateX(-50%);
+    scale: 2.5;  
 }
 
-.x-button { 
+.x-button {
     position: absolute;
-    top: 10px;
-    right: 15px;
+    bottom: 160px;
+    left: 50%;
+    transform: translateX(-50%);
+    scale: 2.5;
 }
