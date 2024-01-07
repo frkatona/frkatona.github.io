@@ -60,9 +60,9 @@
 
 ## SPEED / OPTIMIZATIONS
 
-- [ ] don't re-calculate the pitch array each click event
+- [x] don't re-calculate the pitch array each click event
 
-- [ ] maintain note information strictly as midi until frequencies are needed then calculate them (although how expensive is the power function compared to the array lookup I wonder?...either way, there's a better way)
+- [x] maintain note information strictly as midi until frequencies are needed then calculate them (although how expensive is the power function compared to the array lookup I wonder?...either way, there's a better way)
 
 ## USER EXPERIENCE
 
@@ -70,7 +70,7 @@
 
 - [ ] distinct click and drag spot for changing the force center (or at least be sure the nodes are never inconvenient to click)
 
-- [ ] "?" icon next to settings that aren't obvious (a la overwatch website)
+- [ ] "?" icon next to settings that aren't obvious for non-intrusive hover tips, a la overwatch fan wiki
 
 - [ ] fancier graphical fx
   
@@ -88,7 +88,7 @@
 
   - [x] create overlay with "click anywhere to continue" and basic feature notes
 
-  - [ ] hotkeys for opening menu or changing settings and show on overlay
+  - [x] hotkeys for opening menu or changing settings and show on overlay
 
   - [ ] arrows that point to the various features (maybe an option for "take me on a tour" with "next" button that moves arrow)
 

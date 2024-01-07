@@ -82,6 +82,9 @@ body {
     cursor: pointer;
     top: 10px;
     left: 10px;
+    color: #ffffff;
+    background-color: #666666;
+
 }
 
 .menu {
