@@ -7,6 +7,24 @@ document.getElementById('welcome-overlay').onclick = function() {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
 }
 
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'x') {
+        toggleRandomNext()
+    }
+    if (event.key === 'c') {
+        copyToClipboard()
+    }
+    if (event.key === 'Escape') {
+        if (keyboardContainer = document.querySelector('.keyboardContainer')) {
+            keyboardContainer.remove();
+        }
+    }
+    if (event.key === 'q') {
+        document.getElementById('welcome-overlay').style.display = "block";
+    }
+});
+
 const handlers = {
     'key': (value) => key = parseInt(value),
     'volume': (value) => volume = parseFloat(value),
@@ -482,14 +500,6 @@ function dragended(d) {
 
 // Keyboard GUI
 function CreateKeyboardGUI(chordNotes_real, boxID) {
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            console.log('Escape key was pressed!');
-            keyboardContainer.remove();
-            document.querySelector('.controls').remove();
-        }
-    });
-
     if (document.querySelector('.keyboardContainer')) {
         document.querySelector('.keyboardContainer').remove();
     }
