@@ -1,5 +1,4 @@
 import json
-import os
 
 def transform_data(input_file):
     with open(input_file, 'r') as f:
@@ -39,6 +38,6 @@ def write_output(output, input_file):
     with open(output_file, 'w') as f:
         f.write(file_content)
 
-input_file = 'Subpages\ChordNetwork\data\chordFlow-pythonSeed.json'
+input_file = r'Subpages\ChordNetwork\data\updated_chordFlow.json'
 output = transform_data(input_file)
 write_output(output, input_file)

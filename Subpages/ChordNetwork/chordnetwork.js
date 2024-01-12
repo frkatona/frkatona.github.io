@@ -151,7 +151,7 @@ d3.json("chord-flow-D3.json", function(error, graph) {
     }
 
 var linkColor = d3.scaleOrdinal()
-    .domain(["natural", "driven", "delicate"])  // Add all possible types here
+    .domain(["tense", "static", "dynamic"])  // Add all possible types here
     .range([linkColors[0], linkColors[1], linkColors[2]]);  // Add the corresponding colors here
 
 svg.append("defs").selectAll("marker")
@@ -236,10 +236,10 @@ function TriggerNodeLinkVisuals(d) {
 
     // pick a random node that is connected to the node as a target
     let linksTo = graph.links.filter(function(link) {
-        return link.target === d;
+        return link.source === d;
     });
     let randomLink = linksTo[Math.floor(Math.random() * linksTo.length)];
-    let randomNode = randomLink.source;
+    let randomNode = randomLink.target;
     
     if (repeatTest == true && repeatCounter < chordBars - 1) {
         setTimeout(function() { HandleNodeClick(randomNode); }, randomDelay);
@@ -439,6 +439,9 @@ function ModifyBaseChord(chordNotes, chordColor, chordTonality, voiceLeading, op
 function HandleNodeClick(d) { 
     if (keyboardContainer = document.querySelector('.keyboardContainer')) {
         keyboardContainer.remove();
+    }
+    if (document.querySelector('.controls')) {
+        document.querySelector('.controls').remove();
     }
     let [chordTonality, chordNotes, chordName] = ConstructBaseChord(d, key, chordColor);
     chordNotes = ModifyBaseChord(chordNotes, chordColor, chordTonality, voiceLeading, openness, butter);

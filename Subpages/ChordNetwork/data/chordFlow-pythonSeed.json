@@ -5,9 +5,9 @@
         "notes": [0, 4, 7, 11],
         "next": [
             {
-                "natural": ["ii", "iii", "IV", "V", "vi", "viio"],
-                "driven": [],
-                "delicate": ["bIII", "III", "iv", "v", "bVI", "bVII", "II"]
+                "second": ["ii", "II", "bVII", "viio"],
+                "third": [ "bIII","iii", "III", "vi"],
+                "fourth": ["IV",  "iv", "v", "bVI"]
             }
         ]
     },
@@ -17,9 +17,9 @@
         "notes": [2, 5, 9, 12],
         "next": [
             {
-                "natural": ["iii", "IV"],
-                "driven": ["V", "viio"],
-                "delicate": ["I", "bIII", "III", "vi", "bVII", "II"]
+                "second": ["bIII","iii", "III", "I"],
+                "third": ["IV",  "iv", "viio", "bVII"],
+                "fourth": ["I", "bIII", "III", "vi", "bVII", "II"]
             }
         ]
     },
@@ -29,9 +29,9 @@
         "notes": [4, 7, 11, 14],
         "next": [
             {
-                "natural": ["I", "ii"],
-                "driven": ["IV", "viio", "II"],
-                "delicate": ["bIII", "III", "iv"]
+                "second": ["I", "ii"],
+                "third": ["IV", "viio", "II"],
+                "fourth": ["bIII", "III", "iv"]
             }
         ]
     },
@@ -41,9 +41,9 @@
         "notes": [5, 9, 12, 16],
         "next": [
             {
-                "natural": ["iii", "bIII", "ii", "vi", "II"],
-                "driven": ["V", "viio"],
-                "delicate": ["iv", "IV", "v"]
+                "second": ["iii", "bIII", "ii", "vi", "II"],
+                "third": ["V", "viio"],
+                "fourth": ["iv", "IV", "v"]
             }
         ]
     },
@@ -53,9 +53,9 @@
         "notes": [7, 11, 14, 17],
         "next": [
             {
-                "natural": ["I", "IV", "vi", "viio", "III"],
-                "driven": ["bVI", "II"],
-                "delicate": ["iv", "iii"]
+                "second": ["I", "IV", "vi", "viio", "III"],
+                "third": ["bVI", "II"],
+                "fourth": ["iv", "iii"]
             }
         ]
     },
@@ -65,9 +65,9 @@
         "notes": [9, 12, 16, 19],
         "next": [
             {
-                "natural": ["I", "bVII", "bIII", "viio"],
-                "driven": ["ii"],
-                "delicate": ["bVI", "IV"]
+                "second": ["I", "bVII", "bIII", "viio"],
+                "third": ["ii"],
+                "fourth": ["bVI", "IV"]
             }
         ]
     },
@@ -77,9 +77,9 @@
         "notes": [11, 14, 17, 20],
         "next": [
             {
-                "natural": ["iii", "bIII", "bVII", "vi", "IV"],
-                "driven": ["I", "ii", "v"],
-                "delicate": ["IV", "V", "iv"]
+                "second": ["iii", "bIII", "bVII", "vi", "IV"],
+                "third": ["I", "ii", "v"],
+                "fourth": ["IV", "V", "iv"]
             }
         ]
     },
@@ -89,9 +89,9 @@
         "notes": [2, 6, 9, 13],
         "next": [
             {
-                "natural": ["iii", "bIII", "bVII", "vi", "IV"],
-                "driven": ["I", "ii", "v"],
-                "delicate": ["IV", "V", "iv"]
+                "second": ["iii", "bIII", "bVII", "vi", "IV"],
+                "third": ["I", "ii", "v"],
+                "fourth": ["IV", "V", "iv"]
             }
         ]
     },
@@ -101,9 +101,9 @@
         "notes": [3, 7, 10, 14],
         "next": [
             {
-                "natural": ["IV", "bVI"],
-                "driven": ["V", "v"],
-                "delicate": ["I", "bVII", "iv"]
+                "second": ["IV", "bVI"],
+                "third": ["V", "v"],
+                "fourth": ["I", "bVII", "iv"]
             }
         ]
     },
@@ -113,9 +113,9 @@
         "notes": [4, 8, 11, 15],
         "next": [
             {
-                "natural": ["bVII", "v", "bVII"],
-                "driven": ["iv", "IV", "vi", "V"],
-                "delicate": ["I", "iii", "bIII"]
+                "second": ["bVII", "v", "bVII"],
+                "third": ["iv", "IV", "vi", "V"],
+                "fourth": ["I", "iii", "bIII"]
             }
         ]
     },
@@ -125,9 +125,9 @@
         "notes": [5, 8, 12, 15],
         "next": [
             {
-                "natural": ["bIII", "v"],
-                "driven": ["I", "V", "bVI", "bVII", "viio"],
-                "delicate": ["iii", "III", "vi"]
+                "second": ["bIII", "v"],
+                "third": ["I", "V", "bVI", "bVII", "viio"],
+                "fourth": ["iii", "III", "vi"]
             }
         ]
     },
@@ -137,9 +137,9 @@
         "notes": [7, 10, 14, 17],
         "next": [
             {
-                "natural": ["IV", "ii", "bVI", "vi"],
-                "driven": ["bIII"],
-                "delicate": ["iii", "III", "iv"]
+                "second": ["IV", "ii", "bVI", "vi"],
+                "third": ["bIII"],
+                "fourth": ["iii", "III", "iv"]
             }
         ]
     },
@@ -149,9 +149,9 @@
         "notes": [8, 12, 15, 19],
         "next": [
             {
-                "natural": ["I", "III", "v"],
-                "driven": ["bIII", "bVII", "iv", "viio"],
-                "delicate": ["IV", "V"]
+                "second": ["I", "III", "v"],
+                "third": ["bIII", "bVII", "iv", "viio"],
+                "fourth": ["IV", "V"]
             }
         ]
     },
@@ -161,9 +161,9 @@
         "notes": [10, 14, 17, 20],
         "next": [
             {
-                "natural": ["ii", "bVI"],
-                "driven": ["I", "IV", "bIII", "viio"],
-                "delicate": ["V", "v", "III"]
+                "second": ["ii", "bVI"],
+                "third": ["I", "IV", "bIII", "viio"],
+                "fourth": ["V", "v", "III"]
             }
         ]
     }
