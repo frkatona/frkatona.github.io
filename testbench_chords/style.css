@@ -1,0 +1,26 @@
+/* style.css */
+#editor {
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#output {
+    white-space: pre-wrap; /* Keep the line breaks */
+}
+
+.chord {
+    font-weight: bold;
+    position: relative;
+    top: -15px; /* Adjust based on your font size */
+    background-color: #f0f0f0; /* Light grey background */
+    padding: 0 2px;
+}
+
+.lyric {
+    position: relative;
+    top: 10px;
+}
