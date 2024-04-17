@@ -8,12 +8,9 @@
 </head>
 <body>
     <div id="controls">
-        <label for="scaleSlider">Scale: <input type="number" id="scaleValue" min="10" max="100" value="50"></label>
-        <input type="range" id="scaleSlider" min="10" max="100" value="50">
-        <label for="amplitudeSlider">Amplitude: <input type="number" id="amplitudeValue" min="1" max="10" value="2"></label>
-        <input type="range" id="amplitudeSlider" min="1" max="10" value="2">
-        <label for="frequencySlider">Frequency: <input type="number" id="frequencyValue" min="1" max="10" value="2"></label>
-        <input type="range" id="frequencySlider" min="1" max="10" value="2">
+        <label for="scaleValue">Scale: <input type="number" id="scaleValue" min="10" max="100" value="50"></label>
+        <label for="amplitudeValue">Amplitude: <input type="number" id="amplitudeValue" min="0.001" max="10" value="0.1"></label>
+        <label for="frequencyValue">Frequency: <input type="number" id="frequencyValue" min="0.001" max="10" value="0.1"></label>
         <button onclick="applyChanges()">Apply Changes</button>
     </div>
     <canvas id="terrainCanvas"></canvas>
