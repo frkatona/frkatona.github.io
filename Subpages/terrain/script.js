@@ -35,12 +35,12 @@ function draw() {
 }
 
 function applyChanges() {
-    scale = 10.0//parseFloat(document.getElementById('scaleInput').value);
+    scale = parseFloat(document.getElementById('scale').value);
     amplitudeUser = parseFloat(document.getElementById('amplitudeInput').value);
     frequencyUser = parseFloat(document.getElementById('frequencyInput').value);
-    document.getElementById('scaleValue').innerText = scale;
-    document.getElementById('amplitudeValue').innerText = amplitudeUser;
-    document.getElementById('frequencyValue').innerText = frequencyUser;
+    document.getElementById('scale').innerText = scale;
+    document.getElementById('amplitudeInput').innerText = amplitudeUser;
+    document.getElementById('frequencyInput').innerText = frequencyUser;
     draw();
 }
 
@@ -50,6 +50,7 @@ draw();
 document.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         applyChanges();
+        console.log("Enter key pressed");
     }
 });
 
