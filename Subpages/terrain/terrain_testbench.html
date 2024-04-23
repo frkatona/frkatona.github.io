@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perlin Noise Generator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    text-align: center;
+  }
+  #output {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <input id="seedInput" type="number" placeholder="Enter seed" />
+  <button onclick="generateNoise()">Generate</button>
+  <canvas id="output" width="512" height="512"></canvas>
+</div>
+
+<script>
+  function generateNoise() {
+    const seed = parseInt(document.getElementById('seedInput').value);
+    const perlin = new Perlin(seed); // Instance of Perlin noise generator
+
+    const canvas = document.getElementById('output');
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.createImageData(canvas.width, canvas.height);
+    const data = imageData.data;
+
+    for (let x = 0; x < canvas.width; x++) {
+      for (let y = 0; y < canvas.height; y++) {
+        const scale = 0.1; // Adjust scale for more/less detail
+        const value = perlin.noise(x * scale, y * scale, 0);
+
+        const color = Math.floor((value + 1) * 0.5 * 255); // Normalize and scale
+        const index = (x + y * canvas.width) * 4;
+        data[index] = color;
+        data[index + 1] = color;
+        data[index + 2] = color;
+        data[index + 3] = 255; // Alpha
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+  }
+
+  // Simple Perlin Noise JavaScript Implementation
+  class Perlin {
+    constructor(seed) {
+      this.perm = new Array(512);
+      this.grad3 = [[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],[1,0,1],[-1,0,1],[1,0,-1],[-1,0,-1],[0,1,1],[0,-1,1],[0,1,-1],[0,-1,-1]];
+      Math.seedrandom(seed);
+      let p = new Array(256);
+      for (let i=0; i<256; i++) {
+        p[i] = Math.floor(Math.random()*256);
+      }
+      // To remove the need for index wrapping, double the permutation table length
+      for(let i=0; i<512; i++) {
+        this.perm[i] = p[i & 255];
+      }
+    }
+
+    fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+    lerp(t, a, b) { return a + t * (b - a); }
+    grad(hash, x, y, z) {
+      let h = hash & 15;
+      let u = h<8 ? x : y, 
+          v = h<4 ? y : h==12||h==14 ? x : z;
+      return ((h&1) === 0 ? u : -u) + ((h&2) === 0 ? v : -v);
+    }
+    noise(x, y, z) {
+      let floorX = Math.floor(x), floorY = Math.floor(y), floorZ = Math.floor(z);
+      let X = floorX & 255, Y = floorY & 255, Z = floorZ & 255;
+      x -= floorX; y -= floorY; z -= floorZ;
+      let xMinus1 = x-1, yMinus1 = y-1, zMinus1 = z-1;
+      let u = this.fade(x), v = this.fade(y), w = this.fade(z);
+      let A = this
+
+.perm[X]+Y, AA = this.perm[A]+Z, AB = this.perm[A+1]+Z,
+          B = this.perm[X+1]+Y, BA = this.perm[B]+Z, BB = this.perm[B+1]+Z;
+      
+      return this.lerp(w, this.lerp(v, this.lerp(u, this.grad(this.perm[AA  ], x  , y  , z   ),
+                                                     this.grad(this.perm[BA  ], xMinus1, y  , z   )),
+                                      this.lerp(u, this.grad(this.perm[AB  ], x  , yMinus1, z   ),
+                                                     this.grad(this.perm[BB  ], xMinus1, yMinus1, z   ))),
+                         this.lerp(v, this.lerp(u, this.grad(this.perm[AA+1], x  , y  , zMinus1),
+                                                     this.grad(this.perm[BA+1], xMinus1, y  , zMinus1)),
+                                      this.lerp(u, this.grad(this.perm[AB+1], x  , yMinus1, zMinus1),
+                                                     this.grad(this.perm[BB+1], xMinus1, yMinus1, zMinus1))));
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+</body>
+</html>

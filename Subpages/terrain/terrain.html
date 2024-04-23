@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Height Map Generator</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #1a1e20;
+            font-family: 'Arial', sans-serif;
+            font-size: 35px;
+        }
+
+        #controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
+
+        #controls label,
+        #controls button {
+            color: #000000;
+            margin-right: 10px;
+        }
+
+        #heightMapCanvas, #terrainCanvas {
+            display: block;
+            position: absolute;
+            height: 100%;
+            top: 0;
+        }
+
+        #heightMapCanvas {
+            left: 0;
+            width: 50%; /* Left half of the screen */
+        }
+
+        #terrainCanvas {
+            right: 0;
+            width: 50%; /* Right half of the screen */
+        }
+
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <label for="scale">Scale: <input type="number" id="scale" min="10" max="100" value="50"></label>
+        <label for="amplitudeInput">Amplitude: <input type="number" id="amplitudeInput" min="0.001" max="10" value="1"></label>
+        <label for="frequencyInput">Frequency: <input type="number" id="frequencyInput" min="0.001" max="10" value="0.1"></label>
+        <button onclick="applyChanges()">Apply Changes</button>
+    </div>
+    <canvas id="heightMapCanvas"></canvas>
+    <canvas id="terrainCanvas"></canvas>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <!-- <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script> -->
+    <!-- <script src="script.js"></script> -->
+    <script type="module">
+        import { OrbitControls } from 'https://unpkg.com/three@0.110.0/examples/jsm/controls/OrbitControls.js';
+        import { Noise } from 'https://cdn.jsdelivr.net/npm/noisejs@2.1.0/index.min.js';
+        const perlNoise = new Noise(Math.random());
+
+        // import * as THREE from 'https://unpkg.com/three@0.110.0/build/three.module.js';
+
+        const heightMapCanvas = document.getElementById('heightMapCanvas');
+        const terrainCanvas = document.getElementById('terrainCanvas');
+        
+        function resizeCanvases() {
+            heightMapCanvas.width = window.innerWidth / 2;
+            heightMapCanvas.height = window.innerHeight;
+            terrainCanvas.width = window.innerWidth / 2;
+            terrainCanvas.height = window.innerHeight;
+
+        }
+
+        // Initial resizing
+        resizeCanvases();
+
+        // window.addEventListener('resize', resizeCanvases);
+
+        const ctx = heightMapCanvas.getContext('2d');
+
+        const noise = new SimplexNoise();
+        let scale = 50;
+        let amplitudeUser = 1;
+        let frequencyUser = 0.1;
+        let resolution = 512;
+
+        ctx.width = window.innerWidth;
+        ctx.height = window.innerHeight; 
+
+        function generateHeightMap(width, height, scale, amplitudeUser, frequencyUser) {
+            const data = new Uint8ClampedArray(width * height * 4);
+            const numOctaves = 4;
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    let v = 0;
+                    let amplitude = amplitudeUser;
+                    let frequency = frequencyUser;
+                    for (let i = 0; i < numOctaves; i++) {
+                        v += (1 + noise.noise2D(x / scale * frequency, y / scale * frequency)) / 2 * amplitude;
+                        amplitude *= 0.5;
+                        frequency *= 2;
+                    }
+                    // v = Math.pow(v, 1.2) * 255; // adjusted non-linearity to improve contrast
+                    const i = (x + y * width) * 4;
+                    data[i] = data[i + 1] = data[i + 2] = v;
+                    data[i + 3] = 255;
+                }
+            }
+            return new ImageData(data, width, height);
+        }
+
+        function applyChanges() {
+            scale = parseFloat(document.getElementById('scale').value);
+            amplitudeUser = parseFloat(document.getElementById('amplitudeInput').value);
+            frequencyUser = parseFloat(document.getElementById('frequencyInput').value);
+            document.getElementById('scale').innerText = scale;
+            document.getElementById('amplitudeInput').innerText = amplitudeUser;
+            document.getElementById('frequencyInput').innerText = frequencyUser;
+            draw();
+        }
+
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                applyChanges();
+                console.log("Enter key pressed");
+                draw();
+            }
+        });
+
+        window.addEventListener('resize', function () {
+            ctx.width = window.innerWidth;
+            ctx.height = window.innerHeight ;
+        });
+
+
+
+        function draw() {
+            const imageData = generateHeightMap(resolution, resolution, scale, amplitudeUser, frequencyUser);
+            ctx.putImageData(imageData, 0, 0);
+            updateTerrainMesh(imageData); 
+        }
+
+        // // <--- 3D Terrain with Three.js --->
+
+        // // scene setup
+        // const scene = new THREE.Scene();
+        // const camera = new THREE.PerspectiveCamera(75, terrainCanvas.width / terrainCanvas.height, 0.1, 1000);
+        // const renderer = new THREE.WebGLRenderer({ canvas: terrainCanvas });
+        // renderer.setSize(terrainCanvas.width, terrainCanvas.height);
+
+        // // plane geometry
+        // const geometry = new THREE.PlaneGeometry(10, 10, terrainCanvas.width - 1, terrainCanvas.height - 1);
+        // const material = new THREE.MeshBasicMaterial({ color: 0xA01090, wireframe: true });
+        // const terrain = new THREE.Mesh(geometry, material);
+        // scene.add(terrain);
+
+        // terrain.rotateX(-Math.PI / 4);
+
+        // camera.position.z = 10;
+
+
+        // function updateTerrainMesh(imageData) {
+        //     const data = imageData.data;
+        //     const vertices = terrain.geometry.attributes.position.array;
+        //     let index = 0;
+        //     for (let i = 0, l = vertices.length; i < l; i += 3) {
+        //         // Assuming heightMap and terrain mesh have the same resolution
+        //         const x = (i / 3) % terrainCanvas.width;
+        //         const y = Math.floor((i / 3) / terrainCanvas.width);
+        //         const pixelIndex = (x + y * terrainCanvas.width) * 4;
+        //         const height = data[pixelIndex] * 0.1; // Scale height to your liking
+        //         vertices[i + 2] = height; // Update Z vertex based on height data
+        //     }
+        //     terrain.geometry.attributes.position.needsUpdate = true; // Required to update the mesh
+        //     terrain.geometry.computeVertexNormals(); // Optional, for better lighting effects
+        // }
+
+        // // OrbitControls setup
+        // const controls = new OrbitControls(camera, renderer.domElement);
+        // controls.enableZoom = true; // Allow zoom
+        // controls.zoomSpeed = 1.0; // Adjust zoom speed if necessary
+        // controls.enableRotate = true; // Allow rotation
+        // controls.enablePan = false; // Disable panning
+        // controls.minDistance = 5; // Minimum distance to zoom in
+        // controls.maxDistance = 50; // Maximum distance to zoom out
+
+        // // Only allow horizontal rotation by setting the same polar angles
+        // controls.minPolarAngle = Math.PI / 2; // Rotate only horizontally
+        // controls.maxPolarAngle = Math.PI / 2;
+
+        // function animate() {
+        //     requestAnimationFrame(animate);
+        //     controls.update(); // Required if controls.enableDamping or controls.autoRotate are set to true
+        //     renderer.render(scene, camera);
+        // }
+
+        // animate();
+
+    </script>
+</body>
+</html>
