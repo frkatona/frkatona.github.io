@@ -41,7 +41,7 @@
 
     for (let x = 0; x < canvas.width; x++) {
       for (let y = 0; y < canvas.height; y++) {
-        const scale = 0.1; // Adjust scale for more/less detail
+        const scale = 0.01; // Adjust scale for more/less detail
         const value = perlin.noise(x * scale, y * scale, 0);
 
         const color = Math.floor((value + 1) * 0.5 * 255); // Normalize and scale
