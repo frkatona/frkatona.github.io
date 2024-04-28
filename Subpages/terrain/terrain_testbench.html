@@ -95,13 +95,13 @@
           B = this.perm[X+1]+Y, BA = this.perm[B]+Z, BB = this.perm[B+1]+Z;
       
       return this.lerp(w, this.lerp(v, this.lerp(u, this.grad(this.perm[AA  ], x  , y  , z   ),
-                                                     this.grad(this.perm[BA  ], xMinus1, y  , z   )),
-                                      this.lerp(u, this.grad(this.perm[AB  ], x  , yMinus1, z   ),
-                                                     this.grad(this.perm[BB  ], xMinus1, yMinus1, z   ))),
-                         this.lerp(v, this.lerp(u, this.grad(this.perm[AA+1], x  , y  , zMinus1),
-                                                     this.grad(this.perm[BA+1], xMinus1, y  , zMinus1)),
-                                      this.lerp(u, this.grad(this.perm[AB+1], x  , yMinus1, zMinus1),
-                                                     this.grad(this.perm[BB+1], xMinus1, yMinus1, zMinus1))));
+                                                    this.grad(this.perm[BA  ], xMinus1, y  , z   )),
+                                       this.lerp(u, this.grad(this.perm[AB  ], x  , yMinus1, z   ),
+                                                    this.grad(this.perm[BB  ], xMinus1, yMinus1, z   ))),
+                          this.lerp(v, this.lerp(u, this.grad(this.perm[AA+1], x  , y  , zMinus1),
+                                                    this.grad(this.perm[BA+1], xMinus1, y  , zMinus1)),
+                                       this.lerp(u, this.grad(this.perm[AB+1], x  , yMinus1, zMinus1),
+                                                    this.grad(this.perm[BB+1], xMinus1, yMinus1, zMinus1))));
     }
   }
 </script>
