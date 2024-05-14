@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shader Project</title>
+    <style>
+        /* Add any custom styles for your shader project here */
+    </style>
+</head>
+<body>
+    <h1>Shader Project</h1>
+    <canvas id="shaderCanvas"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script> <!-- Add the import statement for the gl-matrix library -->
+
+    <script>
+        // Add your shader code and logic here
+    </script>
+</body>
+</html>
+<script>
+    // Example shader code
+    const vertexShaderSource = `
+        // Vertex shader code goes here
+        `;
+
+    const fragmentShaderSource = `
+        // Fragment shader code goes here
+    `;
+
+    // Get the shader canvas element
+    const canvas = document.getElementById("shaderCanvas");
+    const gl = canvas.getContext("webgl");
+
+    // Create the vertex shader
+    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vertexShader, vertexShaderSource);
+    gl.compileShader(vertexShader);
+
+    // Create the fragment shader
+    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(fragmentShader, fragmentShaderSource);
+    gl.compileShader(fragmentShader);
+
+    // Create the shader program
+    const shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    gl.linkProgram(shaderProgram);
+    gl.useProgram(shaderProgram);
+
+    // Set up the shader attributes and uniforms
+    // ...
+
+    // Initialize the mat4 variable
+    const glMatrix = glMatrix || {}; // Initialize glMatrix variable
+    const mat4 = glMatrix.mat4.create();
+
+    // Render the shader
+    // ...
+</script>
