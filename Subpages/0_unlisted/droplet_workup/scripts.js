@@ -12,72 +12,9 @@ function setMode(newMode) {
     mode = newMode;
 }
 
-function resetZoom() {
-    mainImage.style.objectFit = "contain";
-    mainImage.style.width = "auto";
-    mainImage.style.height = "auto";
-    clearCanvas();
-}
-
 mainImage.onload = function() {
     canvas.width = mainImage.width;
     canvas.height = mainImage.height;
-}
-
-mainImage.addEventListener('mousedown', function(e) {
-    if (mode === 'box') {
-        isDrawing = true;
-        startX = e.offsetX;
-        startY = e.offsetY;
-        clearCanvas();
-    }
-});
-
-mainImage.addEventListener('mousemove', function(e) {
-    if (mode === 'box' && isDrawing) {
-        clearCanvas();
-        endX = e.offsetX;
-        endY = e.offsetY;
-        drawRect(startX, startY, endX - startX, endY - startY);
-    }
-});
-
-mainImage.addEventListener('mouseup', function(e) {
-    if (mode === 'box') {
-        isDrawing = false;
-        applyZoom();
-    }
-});
-
-function drawRect(x, y, width, height) {
-    ctx.beginPath();
-    ctx.rect(x, y, width, height);
-    ctx.fillStyle = "rgba(0, 150, 255, 0.5)";
-    ctx.fill();
-}
-
-function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-function applyZoom() {
-    const zoomWidth = endX - startX;
-    const zoomHeight = endY - startY;
-
-    mainImage.style.objectFit = "none";
-    mainImage.style.width = mainImage.naturalWidth + "px";
-    mainImage.style.height = mainImage.naturalHeight + "px";
-    
-    const scaleWidth = mainImage.naturalWidth / zoomWidth;
-    const scaleHeight = mainImage.naturalHeight / zoomHeight;
-
-    const offsetX = startX * (scaleWidth - 1);
-    const offsetY = startY * (scaleHeight - 1);
-
-    mainImage.style.transformOrigin = "top left";
-    mainImage.style.transform = `scale(${scaleWidth}, ${scaleHeight}) translate(-${offsetX}px, -${offsetY}px)`;
-
-    clearCanvas();
 }
 
 function loadImages(event) {
@@ -106,12 +43,11 @@ function populateTable() {
     tableBody.innerHTML = ''; // Clear old table rows
 
     images.forEach((image, index) => {
-        // Add a row for the image in the table
         const tr = document.createElement("tr");
         const tdImage = document.createElement("td");
         tdImage.textContent = `${index + 1}`;
         const tdPositions = document.createElement("td");
-        tdPositions.textContent = "No clicks yet";
+        tdPositions.textContent = "click start";
         tdPositions.id = `positions-${index}`;
         tr.appendChild(tdImage);
         tr.appendChild(tdPositions);
@@ -143,23 +79,81 @@ function displayImages() {
         if (index === currentIndex) {
             img.classList.add("active");
         }
-        img.onclick = function() {
-            currentIndex = index;
-            displayImages();
-        };
         thumbnailsContainer.appendChild(img);
     });
+}
+
+
+function fitEllipse(points) {
+    // points is an array of [x, y] pairs
+    if (points.length < 6) {
+        throw new Error('At least 6 points are required to fit an ellipse');
+    }
+
+    // Build the overdetermined system of equations
+    const A_matrix = points.map(([x, y]) => [x*x, x*y, y*y, x, y, 1]);
+    const b_matrix = new Array(points.length).fill(0);
+
+    // Solve the system using least squares method
+    const result = math.lusolve(A_matrix, b);
+
+    // Extract ellipse parameters from the result
+    const [A, B, C, D, E, F] = result;
+
+    // Calculate the center of the ellipse
+    const cx = (2*C*D - B*E) / (B*B - 4*A*C);
+    const cy = (2*A*E - B*D) / (B*B - 4*A*C);
+
+    // Calculate the semi-major and semi-minor axes
+    const term = Math.sqrt((A-C)*(A-C) + B*B);
+    const a = Math.sqrt(2 * (A*E*E + C*D*D + F*B*B - 2*B*D*E - A*C*F) / ((B*B - 4*A*C) * (term - (A+C))));
+    const b = Math.sqrt(2 * (A*E*E + C*D*D + F*B*B - 2*B*D*E - A*C*F) / ((B*B - 4*A*C) * (-term - (A+C))));
+
+    return {a, b_matrix, cx, cy};
+}
+
+function drawEllipse(ctx, cx, cy, a, b) {
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, a, b, 0, 0, 2 * Math.PI);
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    console.log(`Ellipse: cx=${cx}, cy=${cy}, a=${a}, b=${b}`);
 }
 
 function recordPosition(event) {
     if (mode !== 'point') return;
 
-    const x = event.offsetX;
-    const y = event.offsetY;
     const positionsCell = document.getElementById(`positions-${currentIndex}`);
-    if (positionsCell.textContent === "No clicks yet") {
-        positionsCell.textContent = `(${x}, ${y})`;
+    const positions = positionsCell.textContent.split(', ');
+
+    if (event.ctrlKey) {
+        // ctrl + LC => remove the last position
+        if (positions.length > 1) {
+            positions.pop();
+            positions.pop();
+            positionsCell.textContent = positions.join(', ');
+        }
     } else {
-        positionsCell.textContent += `, (${x}, ${y})`;
+        // LC => add a new position
+        const x = event.offsetX;
+        const y = event.offsetY;
+        positions.push(`(${x}, ${y})`);
+        positionsCell.textContent = positions.join(', ');
+
+        // and add a red dot
+        const dotSize = 10;
+        ctx.beginPath();
+        ctx.arc(x, y, dotSize, 0, 2 * Math.PI);
+        ctx.fillStyle = "red";
+        ctx.fill();
+
+        console.log(positions.length)
+        if (positions.length >= 10) {
+            // fit an ellipse to the points
+            const [x1, y1, x2, y2, x3, y3] = positions.map(pos => pos.match(/\d+/g));
+            const {a, b, cx, cy} = fitEllipse(x1, y1, x2, y2, x3, y3);
+            drawEllipse(ctx, cx, cy, a, b);
+        }
     }
 }
