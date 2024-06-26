@@ -23,7 +23,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Word Network Graph</h1>
+        <h1>Word Association Graph</h1>
+        <h5 style="color: rgb(197, 206, 218);">uses the Datamuse API to visualize related words with D3JS physics</h2>
         <input type="text" id="wordInput" placeholder="Enter a word" onkeydown="if (event.keyCode === 13) generateGraph()" />
         <button onclick="generateGraph()">Generate Graph</button>
         <div id="graph" class="graph"></div>
@@ -41,6 +42,15 @@
                 const words = data.map(d => d.word);
                 drawGraph(word, words);
             });
+            const container = document.querySelector('.container');
+            const existingH5 = document.getElementById('dynamicH5');
+            if (!existingH5) { // Check if the element already exists to avoid duplicates
+                const h5 = document.createElement('h5');
+                h5.id = 'dynamicH5'; // Assign an ID for future reference
+                h5.style.color = 'rgb(197, 206, 218)';
+                h5.textContent = 'scroll to zoom, click-and-drag to pan view or to move the nodes';
+                container.appendChild(h5); // Append the new <h5> to the container
+            }
         }
 
         function drawGraph(rootWord, words) {
@@ -134,6 +144,7 @@
                 d.fy = null;
             }
         }
+
     </script>
 </body>
 </html>
