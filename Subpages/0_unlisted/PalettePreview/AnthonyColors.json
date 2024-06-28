@@ -1,0 +1,424 @@
+{
+    "palettes": [
+        {
+            "name": "Gold Nanoparticles (Wikipedia Extraction)",
+            "colors": [
+                {
+                    "name": "Chestnut Red",
+                    "hex": "#BB444C",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Hippie Pink",
+                    "hex": "#B3435B",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Lotus Red",
+                    "hex": "#853B43",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Matterhorn Pink",
+                    "hex": "#523D4C",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Logan Blue",
+                    "hex": "#A99EC6",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Sunday Afternoon (Muted Extraction)",
+            "colors": [
+                {
+                    "name": "Waikawa Gray",
+                    "hex": "#5D5F8C", 
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Axolotl Green",
+                    "hex": "#4D734F", 
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Tacha Yellow",
+                    "hex": "#D5C55D", 
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Apache Orange ",
+                    "hex": "#D9C077", 
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Copperfield Red",
+                    "hex": "#5D5F8C", 
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Tanjiro (Muted Extraction)",
+            "colors": [
+                {
+                    "name": "Cerise Red",
+                    "hex": "#D93654", 
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Contessa Pink",
+                    "hex": "#C2707D", 
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Silvertree Green",
+                    "hex": "#65BF9E", 
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Tacao Orange",
+                    "hex": "#ECB583", 
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "CrownOfThorns Red ",
+                    "hex": "#732424", 
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Joseph Joestar (Deep Extraction)",
+            "colors": [
+                {
+                    "name": "LuckyPoint Blue",
+                    "hex": "#191E73",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Limeade Yellow",
+                    "hex": "#93A603",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "CornHarvest Orange",
+                    "hex": "#8C770B",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "TotemPole Red",
+                    "hex": "#A60A0A",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Cod Black",
+                    "hex": "#0D0D0D",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Analagous Harmony Greens",
+            "colors": [
+                {
+                    "name": "Apple Green",
+                    "hex": "#60C738",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Emerald Green 1",
+                    "hex": "#36C275",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Emerald Green 2",
+                    "hex": "#4EC25A",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "LightCelery Green",
+                    "hex": "#A8C760",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Downy Blue",
+                    "hex": "#6DC7B4",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Monochromatic Harmony Pinks",
+            "colors": [
+                {
+                    "name": "Mulberry Pink",
+                    "hex": "#B64A97",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Cannon Pink",
+                    "hex": "#8B507B",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Cerise Pink",
+                    "hex": "#E136B1",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Eggplant Pink",
+                    "hex": "#61485A",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Thunder Gray",
+                    "hex": "#363135",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Monochromatic Harmony Oranges",
+            "colors": [
+                {
+                    "name": "Driftwood Orange",
+                    "hex": "#B5854A",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Shadow Orange",
+                    "hex": "#8B7150",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Firebush Orange",
+                    "hex": "#E09436",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Soyabean Orange",
+                    "hex": "#615648",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Merlin Gray",
+                    "hex": "#38332D",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Monochromatic Harmony Greens",
+            "colors": [
+                {
+                    "name": "Mallard Green",
+                    "hex": "#254724",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "SprintLeaves Green",
+                    "hex": "#609469",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "DeYork Green",
+                    "hex": "#94C791",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Mantis Green",
+                    "hex": "#6FBF6B",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Apple Green",
+                    "hex": "#4CB046",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Triad Harmony (Paladin)",
+            "colors": [
+                {
+                    "name": "CapePalliser Orange",
+                    "hex": "#B07246",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Blue Violet",
+                    "hex": "#5546B0",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Asparagus Gray",
+                    "hex": "#445B43",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Dune Gray",
+                    "hex": "#33302E",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Apple Green",
+                    "hex": "#4CB046",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Complementary Harmony (Rust)",
+            "colors": [
+                {
+                    "name": "LightRust Brown",
+                    "hex": "#B35F42",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "CuttySark Cyan",
+                    "hex": "#47736F",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Kabul Brown",
+                    "hex": "#5E4B42",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "OuterSpace Gray",
+                    "hex": "#2C3332",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Keppel Blue",
+                    "hex": "#42B3AA",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Split Complementary Harmony (Humanity)",
+            "colors": [
+                {
+                    "name": "CapePalliser Orange",
+                    "hex": "#B07246",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "AppleBlossom Red",
+                    "hex": "#B35342",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "OuterSpace Gray",
+                    "hex": "#2C3332",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "PineCone Orange",
+                    "hex": "#726256",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Keppel Blue",
+                    "hex": "#42B3AA",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Square Harmony (Sartre)",
+            "colors": [
+                {
+                    "name": "Roti Yellow",
+                    "hex": "#B3AE42",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "LightRust Brown",
+                    "hex": "#B35F42",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Studio Purple",
+                    "hex": "#6E42B3",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Mineral Green",
+                    "hex": "#425E58",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Keppel Blue",
+                    "hex": "#42B3AA",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Compound Harmony (Autumn)",
+            "colors": [
+                {
+                    "name": "ChelseaCucumber Green",
+                    "hex": "#74B35B",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "SantaFe Orange",
+                    "hex": "#B36E4F",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Matrix Red",
+                    "hex": "#B3514F",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Nandor Gray",
+                    "hex": "#536158",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Ocean Green",
+                    "hex": "#4EB370",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Shades Harmony (Arctic)",
+            "colors": [
+                {
+                    "name": "Kashmir Blue",
+                    "hex": "#506D8F",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Fjord Blue",
+                    "hex": "#394E66",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "EbonyClay Blue",
+                    "hex": "#222F3D",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Cornflower Blue",
+                    "hex": "#7EACE0",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Hippie Blue",
+                    "hex": "#6489B2",
+                    "purpose": "placeholder"
+                }
+            ]
+        }
+    ]
+}
