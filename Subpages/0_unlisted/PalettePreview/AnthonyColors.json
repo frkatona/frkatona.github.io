@@ -1,16 +1,113 @@
 {
     "palettes": [
         {
-            "name": "Gold Nanoparticles (Wikipedia Extraction)",
+            "name": "Ben's Custom Palette",
             "colors": [
                 {
-                    "name": "Chestnut Red",
-                    "hex": "#BB444C",
+                    "name": "Rouge Purple",
+                    "hex": "#A23768",
                     "purpose": "placeholder"
                 },
                 {
-                    "name": "Hippie Pink",
-                    "hex": "#B3435B",
+                    "name": "Piper Orange",
+                    "hex": "#D36027",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Fire-Bush Orange",
+                    "hex": "#E79F27",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Japanese-Laurel Green",
+                    "hex": "#1D5700",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Deep-Curulean Blue",
+                    "hex": "#0773B1",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Cold Purple",
+                    "hex": "#9BA0D8",
+                    "purpose": "placeholder"
+                }
+                
+            ]
+        },
+        {
+            "name": "Emma's Thesis Palette",
+            "colors": [
+                
+                {
+                    "name": "Ruby Red",
+                    "hex": "#E91E63",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Pomegranate Red",
+                    "hex": "#F44336",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Orange-Peel Orange",
+                    "hex": "#FF9800",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Fruit-Salad Green",
+                    "hex": "#4CAF50",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Pine Green",
+                    "hex": "#00796B",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Smalt Blue",
+                    "hex": "#4F8F84",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Keppel Blue",
+                    "hex": "#42AEA5",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Pixie Green",
+                    "hex": "#BAD9B2",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Curious Blue",
+                    "hex": "#1E88E5",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Sceance Purple",
+                    "hex": "#9C27B0",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Spice-Mix Brown",
+                    "hex": "#815C43",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Boulder Gray",
+                    "hex": "#757575",
+                    "purpose": "placeholder"
+                }
+            ]
+        },
+        {
+            "name": "Gold Nanoparticles (Wikipedia Extraction)",
+            "colors": [
+                {
+                    "name": "Matterhorn Pink",
+                    "hex": "#523D4C",
                     "purpose": "placeholder"
                 },
                 {
@@ -19,8 +116,13 @@
                     "purpose": "placeholder"
                 },
                 {
-                    "name": "Matterhorn Pink",
-                    "hex": "#523D4C",
+                    "name": "Chestnut Red",
+                    "hex": "#BB444C",
+                    "purpose": "placeholder"
+                },
+                {
+                    "name": "Hippie Pink",
+                    "hex": "#B3435B",
                     "purpose": "placeholder"
                 },
                 {
