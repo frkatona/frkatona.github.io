@@ -3,6 +3,7 @@
  - [ ] update favicon (this shade of green is ugly)
  - [ ] take better pictures of myself
  - [ ] investigate optimal image sizes/filetypes and standardize border types and color schemes
+ - [ ] Get 
 [ ] Above the fold
  - [ ] get toothmuseum image properly sized and oriented (no top/side bars or stretching)
  - [ ] get resume to open scaled properly for an average display and to overlay with the ATF content instead of pushing it up
