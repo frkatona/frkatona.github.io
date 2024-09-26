@@ -137,8 +137,8 @@ body.dark-mode .box {
 }
 
 #hamburger {
-  width: 15vh;
-  height: 15vh;
+  width: 100px;
+  height: 100px;
   position: fixed;
   top: 1vw;
   right: 5vw;
@@ -204,7 +204,7 @@ button {
   right: 10px;
   width: 45vw;
   height: 10vh;
-  font-size: 2vw;
+  font-size: 50px;
 }
 
 button.active {
