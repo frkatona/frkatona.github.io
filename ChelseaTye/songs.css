@@ -129,22 +129,22 @@ body.dark-mode .box {
 }
 
 #startIcon {
-  width: 200px;
+  width: 20vh;
 }
 
 #stopIcon {
-  width: 50px;
+  width: 3vw;
 }
 
 #hamburger {
-  width: 100px;
-  height: 100px;
+  width: 15vh;
+  height: 15vh;
   position: fixed;
-  top: 4vh;
-  right: 1vh;
+  top: 1vw;
+  right: 5vw;
   z-index: 1001;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.445);
+  background: rgba(145, 157, 234, 0.445);
 }
   
 #scroll {
@@ -156,8 +156,8 @@ body.dark-mode .box {
   color: #fff;
   padding: 0;
   border-radius: 50%;
-  width: 350px;
-  height: 350px;
+  width: 25vh;
+  height: 25vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -168,8 +168,8 @@ body.dark-mode .box {
 
 #scroll.scrolling {
   bottom: 1vh;
-  width:  250px;
-  height: 250px;
+  width:  15vh;
+  height: 15vh;
   background-color: #943a26c8;
 }
 
@@ -178,12 +178,16 @@ body.dark-mode .box {
   position: fixed;
   display: flex;
   flex-direction: row;
-  right: 5vw;
   align-items: center;
+  
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #scrollButtonsContainer {
   bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #sizeButtonsContainer {
@@ -200,7 +204,7 @@ button {
   right: 10px;
   width: 45vw;
   height: 10vh;
-  font-size: 75px;
+  font-size: 2vw;
 }
 
 button.active {
@@ -224,7 +228,7 @@ button.active {
 
 #songList {
   list-style-type: none;
-  padding: 0;
+  padding: 100px 0;
 }
 
 #songList li {
