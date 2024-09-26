@@ -19,6 +19,7 @@ body {
   align-items: center;
   font-family: 'Fira Sans', sans-serif;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 nav ul li a {
