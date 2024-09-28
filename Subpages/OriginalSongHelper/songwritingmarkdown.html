@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Song Formatter</title>
+    <style>
+        /* CSS styles for dark mode and styling */
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .left-panel, .right-panel {
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .left-panel {
+            width: 50%;
+            border-right: 1px solid #333;
+        }
+
+        .right-panel {
+            width: 50%;
+        }
+
+        .left-panel.hidden {
+            width: 0;
+            padding: 0;
+            overflow: hidden;
+            border: none;
+        }
+
+        .right-panel.full-width {
+            width: 100%;
+        }
+
+        textarea {
+            width: 100%;
+            height: calc(100% - 80px); /* Adjusted to accommodate new buttons */
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border: none;
+            resize: none;
+            font-family: monospace;
+            font-size: 16px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .help-button, .toggle-button, .font-size-button, .download-button, .upload-button {
+            position: absolute;
+            top: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .help-button {
+            right: 10px;
+        }
+
+        .toggle-button {
+            top: 10px;
+            left: 10px;
+            z-index: 2; /* Ensure it's on top */
+        }
+
+        .font-size-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+
+        .font-size-button {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+            line-height: 30px;
+        }
+
+        .download-button {
+            top: 50px;
+            right: 10px;
+        }
+
+        .upload-button {
+            top: 90px;
+            right: 10px;
+        }
+
+        .help-popup {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: #1e1e1e;
+            color: #fff;
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 1;
+        }
+
+        .formatted-song {
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            font-size: 16px;
+        }
+
+        .section-header {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .chord-line {
+            color: #ffeb3b;
+            margin-bottom: 2px; /* Reduced space between chord and lyric lines */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-panel" id="leftPanel">
+            <textarea id="songInput" placeholder="Type your song here..."></textarea>
+            <button class="help-button" id="helpButton">?</button>
+            <button class="download-button" id="downloadButton">↓</button>
+            <button class="upload-button" id="uploadButton">↑</button>
+            <input type="file" id="fileInput" style="display: none;" accept=".txt">
+            <div class="help-popup" id="helpPopup">
+                <h3>Formatting Help</h3>
+                <p>To format your song, use the following rules:</p>
+                <ul>
+                    <li>Write your lyrics as normal text.</li>
+                    <li>To include chords, place the chord names in square brackets within the lyrics, like this: <code>[C]</code>, <code>[G]</code>, <code>[Am]</code>, etc.</li>
+                    <li>To define sections, start a line with the section name followed by a colon, like <code>Verse:</code>, <code>Chorus:</code>, <code>Bridge:</code>, etc.</li>
+                    <li>The chords will be displayed above the corresponding lyrics.</li>
+                </ul>
+            </div>
+            <div class="font-size-controls">
+                <button class="font-size-button" id="decreaseFont">A-</button>
+                <button class="font-size-button" id="increaseFont">A+</button>
+            </div>
+        </div>
+        <button class="toggle-button" id="toggleButton">«</button>
+        <div class="right-panel" id="rightPanel">
+            <div class="formatted-song" id="formattedSong"></div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code to process the input and update the formatted song
+
+        const songInput = document.getElementById('songInput');
+        const formattedSong = document.getElementById('formattedSong');
+        const helpButton = document.getElementById('helpButton');
+        const helpPopup = document.getElementById('helpPopup');
+        const toggleButton = document.getElementById('toggleButton');
+        const leftPanel = document.getElementById('leftPanel');
+        const rightPanel = document.getElementById('rightPanel');
+        const increaseFont = document.getElementById('increaseFont');
+        const decreaseFont = document.getElementById('decreaseFont');
+        const downloadButton = document.getElementById('downloadButton');
+        const uploadButton = document.getElementById('uploadButton');
+        const fileInput = document.getElementById('fileInput');
+
+        let fontSize = 16;
+
+        songInput.addEventListener('input', updateFormattedSong);
+
+        function updateFormattedSong() {
+            const inputText = songInput.value;
+            const lines = inputText.split('\n');
+            let outputHtml = '';
+            lines.forEach(line => {
+                if (line.trim() === '') {
+                    outputHtml += '<br>';
+                } else if (isSectionHeader(line)) {
+                    outputHtml += `<div class="section-header">${line}</div>\n`;
+                } else {
+                    const { chordLine, lyricLine } = processLine(line);
+                    if (chordLine.trim() !== '') {
+                        outputHtml += `<div class="chord-line">${chordLine}</div>\n`;
+                    } else {
+                        outputHtml += `<div class="chord-line">&nbsp;</div>\n`; // Empty line to maintain spacing
+                    }
+                    outputHtml += `<div>${lyricLine}</div>\n`;
+                }
+            });
+            formattedSong.innerHTML = outputHtml;
+        }
+
+        function isSectionHeader(line) {
+            return /^(\w+):/.test(line.trim());
+        }
+
+        function processLine(line) {
+            let chordLine = '';
+            let lyricLine = '';
+            let chordPositions = [];
+            let lyrics = line;
+            let match;
+            const chordRegex = /\[([^\]]+)\]/g;
+            while ((match = chordRegex.exec(line)) !== null) {
+                chordPositions.push({ position: match.index, chord: match[1] });
+                // Remove chords from lyrics
+                lyrics = lyrics.substring(0, match.index) + ' '.repeat(match[0].length) + lyrics.substring(match.index + match[0].length);
+            }
+            // Build chord line
+            chordLine = ' '.repeat(lyrics.length);
+            chordPositions.forEach(pos => {
+                chordLine = replaceAt(chordLine, pos.position, pos.chord);
+            });
+            return { chordLine, lyricLine: lyrics };
+        }
+
+        function replaceAt(str, index, replacement) {
+            return str.substring(0, index) + replacement + str.substring(index + replacement.length);
+        }
+
+        helpButton.addEventListener('click', () => {
+            helpPopup.style.display = helpPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        toggleButton.addEventListener('click', () => {
+            leftPanel.classList.toggle('hidden');
+            rightPanel.classList.toggle('full-width');
+            toggleButton.textContent = leftPanel.classList.contains('hidden') ? '»' : '«';
+        });
+
+        increaseFont.addEventListener('click', () => {
+            fontSize += 2;
+            formattedSong.style.fontSize = fontSize + 'px';
+        });
+
+        decreaseFont.addEventListener('click', () => {
+            if (fontSize > 8) {
+                fontSize -= 2;
+                formattedSong.style.fontSize = fontSize + 'px';
+            }
+        });
+
+        downloadButton.addEventListener('click', () => {
+            const text = songInput.value;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'song.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        uploadButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', handleFileUpload);
+
+        function handleFileUpload() {
+            const file = fileInput.files[0];
+            if (file && file.type === 'text/plain') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    songInput.value += e.target.result;
+                    updateFormattedSong();
+                };
+                reader.readAsText(file);
+            } else {
+                alert('Please upload a valid .txt file.');
+            }
+        }
+
+        // Drag and Drop
+        songInput.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            songInput.style.border = '2px dashed #fff';
+        });
+
+        songInput.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            songInput.style.border = 'none';
+        });
+
+        songInput.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            songInput.style.border = 'none';
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === 'text/plain') {
+                const file = files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    songInput.value += e.target.result;
+                    updateFormattedSong();
+                };
+                reader.readAsText(file);
+            } else {
+                alert('Please drop a valid .txt file.');
+            }
+        });
+
+        // Initial call to display any pre-filled text
+        updateFormattedSong();
+
+    </script>
+
+</body>
+</html>
