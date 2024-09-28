@@ -35,6 +35,7 @@
 
         .right-panel {
             width: 50%;
+            position: relative;
         }
 
         .left-panel.hidden {
@@ -61,7 +62,7 @@
             box-sizing: border-box;
         }
 
-        .help-button, .toggle-button, .font-size-button, .download-button, .upload-button, .song-selector-button {
+        .help-button, .toggle-button, .download-button, .upload-button, .song-selector-button {
             position: absolute;
             top: 10px;
             background-color: #333;
@@ -101,20 +102,7 @@
             z-index: 2; /* Ensure it's on top */
         }
 
-        .font-size-controls {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-        }
-
-        .font-size-button {
-            width: 30px;
-            height: 30px;
-            margin-right: 5px;
-            line-height: 30px;
-        }
-
-        .help-popup, .song-list-popup {
+        .help-popup, .song-list-popup, .menu-popup {
             display: none;
             position: absolute;
             top: 50px;
@@ -135,6 +123,7 @@
             font-family: 'Courier New', monospace;
             white-space: pre;
             font-size: 16px;
+            text-align: left; /* Default alignment */
         }
 
         .section-header {
@@ -157,6 +146,48 @@
 
         .song-item:hover {
             background-color: #333;
+        }
+
+        /* Hamburger menu styles */
+        .menu-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+            z-index: 2;
+        }
+
+        .menu-popup button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .menu-popup button:hover {
+            background-color: #444;
+        }
+
+        /* Song title style */
+        .song-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
     </style>
@@ -185,13 +216,15 @@
                 <h3>Select a Song</h3>
                 <div id="songList"></div>
             </div>
-            <div class="font-size-controls">
-                <button class="font-size-button" id="decreaseFont">A-</button>
-                <button class="font-size-button" id="increaseFont">A+</button>
-            </div>
         </div>
         <button class="toggle-button" id="toggleButton">«</button>
         <div class="right-panel" id="rightPanel">
+            <button class="menu-button" id="menuButton">☰</button>
+            <div class="menu-popup" id="menuPopup">
+                <button id="increaseFont">Increase Font Size</button>
+                <button id="decreaseFont">Decrease Font Size</button>
+                <button id="toggleAlignment">Toggle Alignment</button>
+            </div>
             <div class="formatted-song" id="formattedSong"></div>
         </div>
     </div>
@@ -208,14 +241,18 @@
         const rightPanel = document.getElementById('rightPanel');
         const increaseFont = document.getElementById('increaseFont');
         const decreaseFont = document.getElementById('decreaseFont');
+        const toggleAlignment = document.getElementById('toggleAlignment');
         const downloadButton = document.getElementById('downloadButton');
         const uploadButton = document.getElementById('uploadButton');
         const songSelectorButton = document.getElementById('songSelectorButton');
         const fileInput = document.getElementById('fileInput');
         const songListPopup = document.getElementById('songListPopup');
         const songList = document.getElementById('songList');
+        const menuButton = document.getElementById('menuButton');
+        const menuPopup = document.getElementById('menuPopup');
 
         let fontSize = 16;
+        let alignment = 'left'; // Default alignment
 
         songInput.addEventListener('input', updateFormattedSong);
 
@@ -223,6 +260,12 @@
             const inputText = songInput.value;
             const lines = inputText.split('\n');
             let outputHtml = '';
+            if (lines.length > 0) {
+                // First line is the song title
+                const title = lines[0];
+                outputHtml += `<div class="song-title">${title}</div>\n`;
+                lines.shift(); // Remove the title line
+            }
             lines.forEach(line => {
                 if (line.trim() === '') {
                     outputHtml += '<br>';
@@ -281,6 +324,10 @@
             toggleButton.textContent = leftPanel.classList.contains('hidden') ? '»' : '«';
         });
 
+        menuButton.addEventListener('click', () => {
+            menuPopup.style.display = menuPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
         increaseFont.addEventListener('click', () => {
             fontSize += 2;
             formattedSong.style.fontSize = fontSize + 'px';
@@ -293,6 +340,11 @@
                 formattedSong.style.fontSize = fontSize + 'px';
                 songInput.style.fontSize = fontSize + 'px';
             }
+        });
+
+        toggleAlignment.addEventListener('click', () => {
+            alignment = alignment === 'left' ? 'center' : 'left';
+            formattedSong.style.textAlign = alignment;
         });
 
         downloadButton.addEventListener('click', () => {
