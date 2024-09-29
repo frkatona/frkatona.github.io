@@ -12,7 +12,7 @@ Verse1:
 Bridge:
 [B]Set apart by the screen
 [Bm]In the dark, you’re a dream
-[A]Every scene, live [C#m] in between
+[A]Every scene, stuck [C#m] in between
 [F#m]the frames, and [E7] all the world’s a
 
 Verse2:
@@ -41,13 +41,13 @@ Be [Amaj7/6-0] free [C#m] -ee   [Bm] -ee
 Bridge:
 [Bm]Set apart by the screen
 [A]In the dark, you’re a dream
-[Bm]Every scene, live [C#m] in between
+[Bm]Every scene, stuck [C#m] in between
 [A]the frames, and [E7] all the world’s a
 
 Verse3:
 [A] Game, A heartfelt masquerade
 [E] A losing tug of war
-[A] Between my fear and hers
+[A] Between my fear and her
 [E] The credits fade away
 
 PreChorus:
