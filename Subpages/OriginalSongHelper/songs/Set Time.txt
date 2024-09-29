@@ -5,15 +5,15 @@ Intro:
 
 Verse1:
 [A] Take time by the spotlight and come out [C#m - D] more 
-[A] Take my bitter sweet time to look out [C#m - D, D - C#m - Bm] for
+[A] Take my bitter sweet time to look out [C#m - D - C#m - Bm] for
 [A] Old times, baby blue eyes that hit like [C#m - D] cannon balls
 [A] But it's time to say goodbye, I gotta give the [F#m - F#7] curtain call
 
 Bridge:
-[Bm]Set apart by the screen
-[A]In the dark, you’re a dream
-[Bm]Every scene, live in between
-[D]the frames, and [E7] all the world’s a
+[B]Set apart by the screen
+[Bm]In the dark, you’re a dream
+[A]Every scene, live [C#m] in between
+[F#m]the frames, and [E7] all the world’s a
 
 Verse2:
 [A] Stage, A makeshift matinee
@@ -29,25 +29,26 @@ A [F#m] glimpse of what you [E7] mean to me
 
 Chorus:
 [A] I don’t know
-How every [F#m] flower grows, how every song’s [E7] composed, and
+How every [C#m] flower grows, how every song’s [D] composed, and
 [A] I can’t leave
-So maybe [F#m] it’s naive to ask that [E7] you believe, but if 
+So maybe [C#m] it’s naive to ask that [D] you believe, but [E7] if 
 [A/5-3] you    [A/5-2] stay    [A/5-1] here  [C#m] with [D] me
 Then maybe I don’t wanna be     [Amaj7/6-0]      free   [C#m] -ee   [Bm] -ee
-Be free
-Be free
+Be [Amaj7/6-0] free [C#m] -ee   [D6] -ee
+Be [Amaj7/6-0] free [C#m] -ee   [Bm] -ee
+[F#m] -ee   [F#7] -ee
 
 Bridge:
 [Bm]Set apart by the screen
 [A]In the dark, you’re a dream
-[Bm]Every scene, live in between
-[D]the frames, and [E7] all the world’s a
+[Bm]Every scene, live [C#m] in between
+[A]the frames, and [E7] all the world’s a
 
 Verse3:
 [A] Game, A heartfelt masquerade
 [E] A losing tug of war
 [A] Between my fear and hers
-[E] (instrumental?)
+[E] The credits fade away
 
 PreChorus:
 [Bm] When all I want is all used up
@@ -57,10 +58,11 @@ A [F#m] glimpse of what you [E7] mean to me
 
 Chorus:
 [A] I don’t know
-How every [F#m] flower grows, how every song’s [E7] composed, and
+How every [C#m] flower grows, how every song’s [D] composed, and
 [A] I can’t leave
-So maybe [F#m] it’s naive to ask that [E7] you believe, but if 
+So maybe [C#m] it’s naive to ask that [D] you believe, but [E7] if 
 [A/5-3] you    [A/5-2] stay    [A/5-1] here  [C#m] with [D] me
 Then maybe I don’t wanna be     [Amaj7/6-0]      free   [C#m] -ee   [Bm] -ee
-Be free
-Be free
+Be [Amaj7/6-0] free [C#m] -ee   [D6] -ee
+Be [Amaj7/6-0] free [C#m] -ee   [Bm] -ee
+[F#m] -ee   [E7] -ee     [A]
