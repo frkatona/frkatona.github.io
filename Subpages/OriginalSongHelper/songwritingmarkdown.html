@@ -203,13 +203,16 @@
             <button class="song-selector-button" id="songSelectorButton">♪</button>
             <input type="file" id="fileInput" style="display: none;" accept=".txt">
             <div class="help-popup" id="helpPopup">
-                <h3>Formatting Help</h3>
-                <p>To format your song, use the following rules:</p>
+                <h3>Formatting and Button Help</h3>
                 <ul>
-                    <li>Write your lyrics as normal text.</li>
-                    <li>To include chords, place the chord names in square brackets within the lyrics, like this: <code>[C]</code>, <code>[G]</code>, <code>[Am]</code>, etc.</li>
-                    <li>To define sections, start a line with the section name followed by a colon, like <code>Verse:</code>, <code>Chorus:</code>, <code>Bridge:</code>, etc.</li>
-                    <li>The chords will be displayed above the corresponding lyrics.</li>
+                    <li>Write your lyrics as normal text in the left window</li>
+                    <li>The first line will be treated as the song title</li>
+                    <li>Include chords by placing the chord names in square brackets within the lyrics, like this: <code>[C]</code>, <code>[G]</code>, <code>[Am]</code>, etc.</li>
+                    <li>Define sections headers with a colon, like this: <code>Verse:</code>, <code>Chorus:</code>, <code>Bridge:</code>, etc.</li>
+                    <li>Download the file as a .txt with the "↓" button</li>
+                    <li>Upload a .txt file with the "↑" button</li>
+                    <li>See example songs with the "♪" button</li>
+                    <li>Minimize the plaintext window with "«" button</li>
                 </ul>
             </div>
             <div class="song-list-popup" id="songListPopup">
@@ -448,7 +451,7 @@
                     return response.text();
                 })
                 .then(text => {
-                    songInput.value += text;
+                    songInput.value = text;
                     updateFormattedSong();
                 })
                 .catch(error => {
