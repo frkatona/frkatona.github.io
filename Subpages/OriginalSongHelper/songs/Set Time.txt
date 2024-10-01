@@ -1,4 +1,4 @@
-Set Time (A major, 120 BPM)
+Set Time (A major, 120 BPM, Dream (Spacious Chords))
 
 Intro:
 [A Bm E7] (instrumental)
@@ -10,10 +10,10 @@ Verse1:
 [A] But it's time to say goodbye, I gotta give the [F#m - F#7] curtain call
 
 Bridge:
-[B]Set apart by the screen
-[Bm]In the dark, you’re a dream
-[A]Every scene, stuck [C#m] in between
-[F#m]the frames, and [E7] all the world’s a
+[Bm]Set apart (by the screen)
+[A]In the dark (you’re a dream)
+[Bm]Every scene, stuck [C#m] in between
+[D]the frames, and [Bm]all the [E7]world’s a
 
 Verse2:
 [A] Stage, A makeshift matinee
@@ -25,7 +25,7 @@ PreChorus:
 [Bm] When all I want is all used up
 [A] And all I have won’t be enough, I
 [Bm] dim the lights so you might see
-A [F#m] glimpse of what you [E7] mean to me
+A [D] glimpse of what you [E7] mean to me
 
 Chorus:
 [A] I don’t know
@@ -34,15 +34,15 @@ How every [C#m] flower grows, how every song’s [D] composed, and
 So maybe [C#m] it’s naive to ask that [D] you believe, but [E7] if 
 [A/5-3] you    [A/5-2] stay    [A/5-1] here  [C#m] with [D] me
 Then maybe I don’t wanna be     [Amaj7/6-0]      free   [C#m] -ee   [Bm] -ee
-Be [Amaj7/6-0] free [C#m] -ee   [D6] -ee
+Be [Amaj7/6-0] free [C#m] -ee   [D] -ee
 Be [Amaj7/6-0] free [C#m] -ee   [Bm] -ee
-[F#m] -ee   [F#7] -ee
+-ee   [E7] -ee
 
 Bridge:
-[Bm]Set apart by the screen
-[A]In the dark, you’re a dream
+[Bm]Set apart (by the screen)
+[A]In the dark (you’re a dream)
 [Bm]Every scene, stuck [C#m] in between
-[A]the frames, and [E7] all the world’s a
+[D]the frames, and [Bm]all the [E7]world’s a
 
 Verse3:
 [A] Game, A heartfelt masquerade
@@ -54,7 +54,7 @@ PreChorus:
 [Bm] When all I want is all used up
 [A] And all I have won’t be enough, I
 [Bm] dim the lights so you might see
-A [F#m] glimpse of what you [E7] mean to me
+A [Bm6] glimpse of what you [E7] mean to me
 
 Chorus:
 [A] I don’t know
@@ -63,6 +63,6 @@ How every [C#m] flower grows, how every song’s [D] composed, and
 So maybe [C#m] it’s naive to ask that [D] you believe, but [E7] if 
 [A/5-3] you    [A/5-2] stay    [A/5-1] here  [C#m] with [D] me
 Then maybe I don’t wanna be     [Amaj7/6-0]      free   [C#m] -ee   [Bm] -ee
-Be [Amaj7/6-0] free [C#m] -ee   [D6] -ee
+Be [Amaj7/6-0] free [C#m] -ee   [D] -ee
 Be [Amaj7/6-0] free [C#m] -ee   [Bm] -ee
-[F#m] -ee   [E7] -ee     [A]
+-ee   [E7] -ee     [A]
