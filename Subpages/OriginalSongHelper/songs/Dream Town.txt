@@ -17,7 +17,7 @@ Chorus:
 
 [C#m]It’s pay town, free town
 [B]Every silver line a cloud in
-[C#m]Fake town, dream town
+[C#m]Fake town, dream town[B]
 
 Solo:
 (instrumental)
@@ -31,8 +31,8 @@ You [B]say don’t bother with another
 [E]Steal the candles from their maker
 [D#m]All the candles [E]I make out of [F#]clay[E]
 
-You say don’t bother with another
-Every perfect sons a father 
+[B]You say don’t bother with another
+[E]Every perfect sons a father 
 [D#m]And every perfect [E]father goes [F#]away[E]
 
 [B]Tell another story of a fish you never caught because of
@@ -45,10 +45,14 @@ Chorus:
 
 [C#m]It’s pay town, free town
 [B]Every silver line a cloud in
-[C#m]Fake town, dream town
+[C#m]Fake town, dream town[B]
 
 Outro:
-[B]What stays it up to me
-To [F#]push and find out [D#m]how it could have [E]been
-And [E]some may find the [C#m]people most ap[D#m]pealing
-And some will fly a[B]way
+[B]What’s left here up to 
+me to [F#]find out 
+[D#m]where it could have [E]led  
+And [E]some may find the 
+[C#m]reasons that they
+[D#m]needed
+
+While some will find a[B]way
