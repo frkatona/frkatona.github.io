@@ -1,4 +1,4 @@
-Dream Town (B, [tempo], [tone])
+Dream Town (B, 120 BPM, Basic Clean)
 
 Intro:
 [B]How about to[G#m]day
@@ -22,17 +22,17 @@ Chorus:
 Solo:
 (instrumental)
 
-Verse1:
+Verse:
 You [B]say don’t bother with another
 [E]Every perfect son’s a father
 [D#m]May you have an[E]other perfect [F#]day[E]
 
-[B]Tell the barber and the baker 
-[E]Steal the candles from their maker
-[D#m]All the candles [E]I make out of [F#]clay[E]
+[B]Find the butcher and the baker 
+[E]Steal the candles from their maker, but
+[D#m]all the candles [E]are made out of [F#]clay[E]
 
 [B]You say don’t bother with another
-[E]Every perfect sons a father 
+[E]Every perfect son's a father
 [D#m]And every perfect [E]father goes [F#]away[E]
 
 [B]Tell another story of a fish you never caught because of
@@ -49,8 +49,8 @@ Chorus:
 
 Outro:
 [B]What’s left here up to 
-me to [E]find out 
-[D#m]where it could have [E]led  
+[D#m]me to find out 
+[C#m]where it could have [E]led  
 And [E]some may find the 
 [C#m]reasons that they
 [D#m]needed
