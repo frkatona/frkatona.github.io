@@ -18,6 +18,43 @@
             position: relative;
         }
 
+        .scroll-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #1e1e1e;
+            padding: 7px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .scroll-controls button {
+            padding: 5px 20px; 
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 54px;
+        }
+
+        .scroll-controls input[type="range"] {
+            cursor: pointer;
+            height: 30px; /* Tripled height */
+        }
+
+        .scroll-controls button:hover {
+            background-color: #444;
+        }
+
+        .scroll-controls input[type="range"] {
+            cursor: pointer;
+        }
+
         .left-panel, .right-panel {
             padding: 20px;
             box-sizing: border-box;
@@ -121,7 +158,7 @@
             font-family: 'Courier New', monospace;
             white-space: pre;
             font-size: 16px;
-            text-align: left; /* Default alignment */
+            text-align: center; /* Default alignment */
         }
 
         .song-title {
@@ -177,7 +214,7 @@
             background-color: #333;
             color: #fff;
             border: none;
-            text-align: left;
+            text-align: center;
             cursor: pointer;
         }
 
@@ -186,15 +223,16 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
         <div class="left-panel" id="leftPanel">
             <textarea id="songInput" placeholder="Type your song here..."></textarea>
-            <button class="help-button" id="helpButton">?</button>
-            <button class="download-button" id="downloadButton">↓</button>
-            <button class="upload-button" id="uploadButton">↑</button>
-            <button class="song-selector-button" id="songSelectorButton">♪</button>
+            <button class="help-button" id="helpButton" title="help">?</button>
+            <button class="download-button" id="downloadButton" title="download text as a .txt file">↓</button>
+            <button class="upload-button" id="uploadButton" title="upload local .txt file">↑</button>
+            <button class="song-selector-button" id="songSelectorButton" title="select a song">♪</button>
             <input type="file" id="fileInput" style="display: none;" accept=".txt">
             <div class="help-popup" id="helpPopup">
                 <h3>Formatting and Button Help</h3>
@@ -214,20 +252,24 @@
                 <div id="songList"></div>
             </div>
         </div>
-        <button class="toggle-button" id="toggleButton">«</button>
+        <button class="toggle-button" id="toggleButton" title="minimize editor">«</button>
         <div class="right-panel" id="rightPanel">
-            <button class="menu-button" id="menuButton">☰</button>
+            <button class="menu-button" id="menuButton" title="settings">☰</button>
+            <div class="scroll-controls">
+                <button id="toggleScroll">scroll</button>
+            </div>
             <div class="menu-popup" id="menuPopup">
-                <button id="increaseFont">Increase Font Size</button>
-                <button id="decreaseFont">Decrease Font Size</button>
-                <button id="toggleAlignment">Toggle Alignment</button>
+                <button id="increaseFont">Font ↑</button>
+                <button id="decreaseFont">Font ↓</button>
+                <button id="toggleAlignment">Alignment Toggle</button>
+                <label for="scrollSpeed">Auto-scroll Speed</label>
+                <input id="scrollSpeed" type="range" min="1" max="20" value="5">
             </div>
             <div class="formatted-song" id="formattedSong"></div>
         </div>
     </div>
 
-    <script>
-        // JavaScript code to process the input and update the formatted song
+    <script> // process the input and update the formatted song
 
         const songInput = document.getElementById('songInput');
         const formattedSong = document.getElementById('formattedSong');
@@ -249,7 +291,7 @@
         const menuPopup = document.getElementById('menuPopup');
 
         let fontSize = 16;
-        let alignment = 'left'; // Default alignment
+        let alignment = 'center'; // Default alignment
 
         songInput.addEventListener('input', updateFormattedSong);
 
@@ -454,10 +496,42 @@
                 });
         }
 
-        // Initial call to display any pre-filled text
-        updateFormattedSong();
+    // Initial call to display any pre-filled text
+    updateFormattedSong();
 
+    // scrolling //
+    let scrollInterval = null;
+    let scrollSpeed = 5; // Default speed
+
+    const toggleScrollButton = document.getElementById('toggleScroll');
+    const scrollSpeedInput = document.getElementById('scrollSpeed');
+    const rightPanelDiv = document.getElementById('rightPanel');
+
+    let isScrolling = false; // Track scroll state
+
+    toggleScrollButton.addEventListener('click', () => {
+        if (isScrolling) {
+            // Pause scrolling
+            clearInterval(scrollInterval);
+            scrollInterval = null;
+            toggleScrollButton.textContent = 'scroll';
+            toggleScrollButton.style.backgroundColor = '#333'; // Default color
+        } else {
+            // Start scrolling
+            scrollInterval = setInterval(() => {
+                rightPanelDiv.scrollTop += scrollSpeed;
+            }, 100); // Adjust scrolling frequency
+            toggleScrollButton.textContent = 'pause';
+            toggleScrollButton.style.backgroundColor = '#444'; // Active color
+        }
+        isScrolling = !isScrolling; // Toggle scroll state
+    });
+    // Adjust scroll speed
+    scrollSpeedInput.addEventListener('input', (event) => {
+        scrollSpeed = parseInt(event.target.value, 10);
+    });
     </script>
 
+    
 </body>
 </html>
