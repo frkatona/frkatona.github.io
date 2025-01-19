@@ -39,12 +39,12 @@
             border: none;
             border-radius: 3px;
             cursor: pointer;
-            font-size: 54px;
+            font-size: 100px;
         }
 
         .scroll-controls input[type="range"] {
             cursor: pointer;
-            height: 30px; /* Tripled height */
+            height: 30px;
         }
 
         .scroll-controls button:hover {
@@ -139,7 +139,7 @@
 
         .help-popup, .song-list-popup, .menu-popup {
             display: none;
-            position: absolute;
+            position: fixed;
             top: 50px;
             right: 20px;
             background-color: #1e1e1e;
@@ -157,13 +157,13 @@
         .formatted-song {
             font-family: 'Courier New', monospace;
             white-space: pre;
-            font-size: 16px;
+            font-size: 25px;
             text-align: center; /* Default alignment */
         }
 
         .song-title {
             text-align: center;
-            font-size: 24px;
+            font-size: 35px;
             font-weight: bold;
         }
         
@@ -188,18 +188,17 @@
             background-color: #333;
         }
 
-        /* Hamburger menu styles */
         .menu-button {
-            position: absolute;
+            position: fixed;
             top: 10px;
             right: 10px;
             background-color: #333;
             color: #fff;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 75px;
+            height: 75px;
             border-radius: 5px;
-            font-size: 24px;
+            font-size: 60px;
             cursor: pointer;
             text-align: center;
             line-height: 40px;
