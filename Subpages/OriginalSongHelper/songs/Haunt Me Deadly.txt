@@ -1,5 +1,9 @@
 Haunt Me to Death
-Seana Wood - v24.11 - G - 110 BPM
+Seana Wood - v24.11 - G - 120 BPM
+
+Instrumental:
+[G - Em - C - D]
+
 Verse_1:
 Your passing in[G]
 I’m passing out[Em]
@@ -7,15 +11,15 @@ Are we still [C]living
 As we float a[D]bout
 You’re circum[G]venting
 My rounda[Em]bout
-We/I need some rel[C]ief
-We/I just want [D]out
+I need some rel[C]ief
+I just want [D]out
 
 Chorus:
 You haunt me [C]deadly
 It’s the way I feel in[Em]side
-[G]And I [C]notice
+And I [C]notice
 In each room you [Em]hide
-[G]The universe seems fuller[C]
+The universe seems fuller[C]
 When you're [D]near
 Please haunt me [C]deadly
 I miss you [D]here
@@ -30,6 +34,16 @@ Between these [Em]walls
 Am I still [C]breathing?
 I don’t feel at [D]all
 
+Chorus:
+You haunt me [C]deadly
+It’s the way I feel in[Em]side
+And I [C]notice
+In each room you [Em]hide
+The universe seems fuller[C]
+When you're [D]near
+Please haunt me [C]deadly
+I miss you [D]here
+
 Bridge:
 [Cmaj7]Am I the shell of the person I used to [G]be?
 [Cmaj7]Trying every day to unearth the person that is [G]me [D]
@@ -39,9 +53,34 @@ Bridge:
 Chorus:
 You haunt me [C]deadly
 It’s the way I feel in[Em]side
-[G]And I [C]notice
+And I [C]notice
 In each room you [Em]hide
-[G]The universe seems fuller[C]
+The universe seems fuller[C]
 When you're [D]near
 Please haunt me [C]deadly
 I miss you [D]here
+
+Verse_3:
+So you ground [G]me
+ASDF [Em]
+ASDF [C]
+ASDF [D]
+ASDF [G]
+ASDF [Em]
+ASDF [C]
+ASDF [D]
+
+Chorus:
+You haunt me [C]deadly
+It’s the way I feel in[Em]side
+And I [C]notice
+In each room you [Em]hide
+{pp}The universe seems [C]fuller
+{pp}When you're [D]near
+{pp}Please haunt me [C]deadly
+{pp}I miss you [D]here
+
+Outro:
+I miss you [C]here
+I miss you [D]here
+I miss you [C]here

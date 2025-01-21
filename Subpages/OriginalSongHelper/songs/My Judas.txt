@@ -1,15 +1,19 @@
-Judas
+My Judas
 Seana Wood - v24.02 - Dm (written as Am for capo 5) - 140 BPM
+
+Intro:
+[Am - Am - C - G]
+[Am - Am - C - G]
 
 Verse_1:
 [Am]   Your nice words are [C]barbs in my [G]back
 [Am]   Your kindness is a [C]stone on my [G]grave
-[Am]   I see you it’s e[C]nough to make me [G]crack
-[Am]   You act like it was me you came to save
+[Am]   When I see you it’s e[C]nough to make me [G]crack
+[Am]   You act like it was [C]me you came to [G]save
 
 Chorus:
-[F]   Promises, kisses, and [C]lies
-You pushed me out[G] when I was at a [Am]loss  [F - G]
+[F]   Promises, [C]kisses, and [G]lies
+You pushed me out[F] when I was at a [G]loss  [Am - G]
 [F]   Sweet nothings wrapped in a dis[G]guise
 Your kind of love[F] will nail me to a [G]cross
 Your kind of love[F] will nail me to a [G]cross
@@ -21,8 +25,8 @@ Verse_2:
 [Am]   Now I know this [C]is my final [G]sentence
 
 Chorus:
-[F]   Promises, kisses, and [C]lies
-You pushed me out[G] when I was at a [Am]loss  [F - G]
+[F]   Promises, [C]kisses, and [G]lies
+You pushed me out[F] when I was at a [G]loss  [Am - G]
 [F]   Sweet nothings wrapped in a dis[G]guise
 Your kind of love[F] will nail me to a [G]cross
 Your kind of love[F] will nail me to a [G]cross
@@ -40,16 +44,16 @@ Verse_3:
 [Am]   I resurrect myself with [C]all my [G]strength
 
 Chorus:
-[F]   Promises, kisses, and [C]lies
-You pushed me out[G] when I was at a [Am]loss  [F - G]
+[F]   Promises, [C]kisses, and [G]lies
+You pushed me out[F] when I was at a [G]loss  [Am - G]
 [F]   Sweet nothings wrapped in a dis[G]guise
 Your kind of love[F] will nail me to a [G]cross
 Your kind of love[F] will nail me to a [G]cross
 
 Outro:
-And [Am]Judas was a better lover being [G]hung on a tree
-And [Am]you love yourself more than you pre[G]tended to love me
-And [Am]Judas was a better lover being [G]hung on a tree
-And [Am]you love yourself more than you pre[G]tended to love me
-And [Am]Judas was a better lover being [G]hung on a tree
-And [Am]you love yourself more than you pre[G]tended to love me
+{pp}And [Am]Judas was a better lover being [G]hung on a tree
+{pp}And [Am]you love yourself more than you pre[G]tended to love me
+{pp}And [Am]Judas was a better lover being [G]hung on a tree
+{pp}And [Am]you love yourself more than you pre[G]tended to love me
+{pp}And [Am]Judas was a better lover being [G]hung on a tree
+{pp}And [Am]you love yourself more than you pre[G]tended to love me

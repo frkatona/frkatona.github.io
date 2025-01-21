@@ -27,24 +27,28 @@
             align-items: center;
             gap: 10px;
             background-color: #1e1e1e;
-            padding: 7px;
+            padding: 14px; /* Increased padding */
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            opacity: 0.75; /* 75% opaque */
         }
 
         .scroll-controls button {
-            padding: 5px 20px; 
+            padding: 10px 20px; /* Increased padding */
             background-color: #333;
             color: white;
             border: none;
             border-radius: 3px;
             cursor: pointer;
-            font-size: 100px;
+            font-size: 100px; /* Increased font size */
+            opacity: 0.75; /* 75% opaque */
+            background-color: rgb(20, 80, 33);
         }
 
         .scroll-controls input[type="range"] {
             cursor: pointer;
-            height: 30px;
+            height: 60px; /* Increased height */
+            opacity: 0.75; /* 75% opaque */
         }
 
         .scroll-controls button:hover {
@@ -56,7 +60,7 @@
         }
 
         .left-panel, .right-panel {
-            padding: 20px;
+            padding: 10px; /* Increased padding */
             box-sizing: border-box;
             overflow-y: auto;
             position: relative;
@@ -86,91 +90,97 @@
 
         textarea {
             width: 100%;
-            height: calc(100% - 120px); /* Adjusted to accommodate new buttons */
+            height: calc(100% - 10px); /* Adjusted to accommodate new buttons */
             background-color: #1e1e1e;
             color: #ffffff;
             border: none;
             resize: none;
             font-family: monospace;
-            font-size: 16px;
-            padding: 10px;
+            font-size: 32px; 
+            padding: 20px;
             box-sizing: border-box;
         }
 
         .help-button, .toggle-button, .download-button, .upload-button, .song-selector-button {
             position: absolute;
-            top: 10px;
+            top: 20px; /* Increased top position */
             background-color: #333;
             color: #fff;
             border: none;
-            width: 30px;
-            height: 30px;
+            width: 60px; /* Increased width */
+            height: 60px; /* Increased height */
             border-radius: 50%;
-            font-size: 18px;
+            font-size: 50px; /* Increased font size */
             cursor: pointer;
             text-align: center;
-            line-height: 30px;
+            line-height: 60px; /* Increased line height */
         }
 
         .help-button {
-            right: 10px;
+            right: 20px; /* Increased right position */
         }
 
         .download-button {
-            top: 50px;
-            right: 10px;
+            top: 100px; /* Increased top position */
+            right: 20px; /* Increased right position */
         }
 
         .upload-button {
-            top: 90px;
-            right: 10px;
+            top: 180px; /* Increased top position */
+            right: 20px; /* Increased right position */
         }
 
         .song-selector-button {
-            top: 130px;
-            right: 10px;
+            top: 260px; /* Increased top position */
+            right: 20px; /* Increased right position */
         }
 
         .toggle-button {
-            top: 10px;
-            left: 10px;
-            z-index: 2; /* Ensure it's on top */
+            top: 20px; /* Increased top position */
+            left: 20px; /* Increased left position */
+            z-index: 2;
         }
 
         .help-popup, .song-list-popup, .menu-popup {
             display: none;
             position: fixed;
-            top: 50px;
-            right: 20px;
+            top: 100px; /* Increased top position */
+            right: 40px; /* Increased right position */
             background-color: #1e1e1e;
             color: #fff;
-            padding: 15px;
+            padding: 30px; /* Increased padding */
             border: 1px solid #333;
             border-radius: 5px;
-            width: 300px;
+            width: 500px; /* Increased width */
             max-height: 70%;
             overflow-y: auto;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             z-index: 1;
+            font-size: 35px;
+        }
+
+        #increaseFont, #decreaseFont, #toggleAlignment {
+            font-size: 35px;
         }
 
         .formatted-song {
-            font-family: 'Courier New', monospace;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
             white-space: pre;
-            font-size: 25px;
-            text-align: center; /* Default alignment */
+            font-size: 30px; /* Increased font size */
+            text-align: center;
         }
 
         .song-title {
             text-align: center;
-            font-size: 35px;
+            font-size: 45px; /* Increased font size */
             font-weight: bold;
         }
         
         .section-header {
             font-weight: bold;
-            margin-top: 10px;
-            font-size: 24px;
+            margin-top: 10px; /* Increased margin */
+            font-size: 45px; /* Increased font size */
         }
 
         .chord-line {
@@ -179,7 +189,7 @@
         }
 
         .song-item {
-            padding: 5px;
+            padding: 10px; /* Increased padding */
             cursor: pointer;
             border-bottom: 1px solid #333;
         }
@@ -190,26 +200,26 @@
 
         .menu-button {
             position: fixed;
-            top: 10px;
-            right: 10px;
+            top: 20px; /* Increased top position */
+            right: 20px; /* Increased right position */
             background-color: #333;
             color: #fff;
             border: none;
-            width: 75px;
-            height: 75px;
+            width: 150px; /* Increased width */
+            height: 150px; /* Increased height */
             border-radius: 5px;
-            font-size: 60px;
+            font-size: 120px; /* Increased font size */
             cursor: pointer;
             text-align: center;
-            line-height: 40px;
+            line-height: 80px; /* Increased line height */
             z-index: 2;
         }
 
         .menu-popup button {
             display: block;
             width: 100%;
-            padding: 10px;
-            margin-bottom: 5px;
+            padding: 20px; /* Increased padding */
+            margin-bottom: 10px; /* Increased margin */
             background-color: #333;
             color: #fff;
             border: none;
@@ -260,9 +270,9 @@
             <div class="menu-popup" id="menuPopup">
                 <button id="increaseFont">Font ↑</button>
                 <button id="decreaseFont">Font ↓</button>
-                <button id="toggleAlignment">Alignment Toggle</button>
-                <label for="scrollSpeed">Auto-scroll Speed</label>
-                <input id="scrollSpeed" type="range" min="1" max="20" value="5">
+                <button id="toggleAlignment">toggle alignment</button>
+                <label for="scrollSpeed">scroll speed</label>
+                <input id="scrollSpeed" type="range" min="1" max="10" value="3">
             </div>
             <div class="formatted-song" id="formattedSong"></div>
         </div>
@@ -288,8 +298,9 @@
         const songList = document.getElementById('songList');
         const menuButton = document.getElementById('menuButton');
         const menuPopup = document.getElementById('menuPopup');
+        // const scrollControls = document.getElementById('scroll-controls');
 
-        let fontSize = 16;
+        let fontSize = 30;
         let alignment = 'center'; // Default alignment
 
         songInput.addEventListener('input', updateFormattedSong);
@@ -370,15 +381,24 @@
             fontSize += 2;
             formattedSong.style.fontSize = fontSize + 'px';
             songInput.style.fontSize = fontSize + 'px';
+            updateChordLineMargin();
         });
 
         decreaseFont.addEventListener('click', () => {
             if (fontSize > 8) {
-                fontSize -= 2;
-                formattedSong.style.fontSize = fontSize + 'px';
-                songInput.style.fontSize = fontSize + 'px';
+            fontSize -= 2;
+            formattedSong.style.fontSize = fontSize + 'px';
+            songInput.style.fontSize = fontSize + 'px';
+            updateChordLineMargin();
             }
         });
+
+        function updateChordLineMargin() {
+            const chordLines = document.querySelectorAll('.chord-line');
+            chordLines.forEach(chordLine => {
+            chordLine.style.marginBottom = `-${fontSize / 2}px`;
+            });
+        }
 
         toggleAlignment.addEventListener('click', () => {
             alignment = alignment === 'left' ? 'center' : 'left';
@@ -500,7 +520,7 @@
 
     // scrolling //
     let scrollInterval = null;
-    let scrollSpeed = 5; // Default speed
+    let scrollSpeed = 3; // Default speed
 
     const toggleScrollButton = document.getElementById('toggleScroll');
     const scrollSpeedInput = document.getElementById('scrollSpeed');
@@ -514,14 +534,16 @@
             clearInterval(scrollInterval);
             scrollInterval = null;
             toggleScrollButton.textContent = 'scroll';
-            toggleScrollButton.style.backgroundColor = '#333'; // Default color
+            toggleScrollButton.style.backgroundColor = 'rgb(20, 80, 33)'; // Default color
+            toggleScrollButton.style.opacity = '1'; // 100% opacity
         } else {
             // Start scrolling
             scrollInterval = setInterval(() => {
                 rightPanelDiv.scrollTop += scrollSpeed;
             }, 100); // Adjust scrolling frequency
             toggleScrollButton.textContent = 'pause';
-            toggleScrollButton.style.backgroundColor = '#444'; // Active color
+            toggleScrollButton.style.backgroundColor = 'rgb(60, 5, 15)';
+            toggleScrollButton.style.opacity = '0.8'; // 80% opacity
         }
         isScrolling = !isScrolling; // Toggle scroll state
     });
