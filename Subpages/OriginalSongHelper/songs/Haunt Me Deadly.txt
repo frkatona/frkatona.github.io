@@ -1,18 +1,13 @@
 Haunt Me to Death
 Seana Wood - v24.11 - G - 120 BPM
-
 Instrumental:
 [G - Em - C - D]
 
 Verse_1:
-Your passing in[G]
-I’m passing out[Em]
-Are we still [C]living
-As we float a[D]bout
-You’re circum[G]venting
-My rounda[Em]bout
-I need some rel[C]ief
-I just want [D]out
+You're passing in[G], I’m passing out[Em]
+Are we still [C]living, as we float a[D]bout
+You’re circum[G]venting, my rounda[Em]bout
+I need some rel[C]ief, I just want [D]out
 
 Chorus:
 You haunt me [C]deadly
@@ -25,14 +20,10 @@ Please haunt me [C]deadly
 I miss you [D]here
 
 Verse_2:
-Falling [G]plaster
-Creaking [Em]floors
-Soft dusty [C]coatings
-Popping [D]doors
-Still, it feels [G]quiet
-Between these [Em]walls
-Am I still [C]breathing?
-I don’t feel at [D]all
+Falling [G]plaster, creaking [Em]floors
+Soft dusty [C]coatings, popping [D]doors
+Still, it feels [G]quiet, between these [Em]walls
+Am I still [C]breathing? I don’t feel at [D]all
 
 Chorus:
 You haunt me [C]deadly
@@ -61,14 +52,10 @@ Please haunt me [C]deadly
 I miss you [D]here
 
 Verse_3:
-So you ground [G]me
-ASDF [Em]
-ASDF [C]
-ASDF [D]
-ASDF [G]
-ASDF [Em]
-ASDF [C]
-ASDF [D]
+So you ground [G]me, now I can [Em]feel
+What it [C]was, was very real[D]
+I can't cont[G]rol, what we can [Em]be
+I can hope [C], that you can still see [D]me
 
 Chorus:
 You haunt me [C]deadly

@@ -185,7 +185,7 @@
 
         .chord-line {
             color: #ffeb3b;
-            margin-bottom: -20px; /* Reduced space between chord and lyric lines */
+            margin-bottom: -40px; /* Reduced space between chord and lyric lines */
         }
 
         .song-item {
@@ -268,8 +268,8 @@
                 <button id="toggleScroll">scroll</button>
             </div>
             <div class="menu-popup" id="menuPopup">
-                <button id="increaseFont">Font ↑</button>
-                <button id="decreaseFont">Font ↓</button>
+                <button id="increaseFont">font ↑</button>
+                <button id="decreaseFont">font ↓</button>
                 <button id="toggleAlignment">toggle alignment</button>
                 <label for="scrollSpeed">scroll speed</label>
                 <input id="scrollSpeed" type="range" min="1" max="10" value="3">
@@ -396,7 +396,7 @@
         function updateChordLineMargin() {
             const chordLines = document.querySelectorAll('.chord-line');
             chordLines.forEach(chordLine => {
-            chordLine.style.marginBottom = `-${fontSize / 2}px`;
+            chordLine.style.marginBottom = `-${fontSize * 1.3}px`;
             });
         }
 
