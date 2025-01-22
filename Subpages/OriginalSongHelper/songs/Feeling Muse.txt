@@ -7,29 +7,25 @@ Verse_1:
 [G]    The things I feel surr[E]ound you
 [G]    You are my twin galax[E]y
 
-Chorus_1:
-[Am]   When I’m with you I can hardly speak a 
-[C]word when I’m near you 
-I might expl[G]ode
+Chorus:
+[Am]   When I’m with you I can hardly speak a [C]word
+when I’m near you I might expl[G]ode
 but I [D]don’t
 {rest}
 
 Verse_2:
-(p->f)
 [G]   I see that you could be[E]long to me
 [G]   Let’s not speak of [E]destiny
 [G]   Your heart is not my [E]enemy  
 [G]   I want your heartbeat in[E]side of me
 
-Chorus_2:
-[Am]   When I’m with you I can hardly speak a 
-[C]word when I’m near you 
-I might expl[G]ode
-but I don’t [D]
+Chorus:
+[Am]   When I’m with you I can hardly speak a [C]word
+when I’m near you I might expl[G]ode
+but I [D]don’t
 {rest}
 
 Bridge:
-(sensual)
 [Am]   I want your body touching mine
 [C]   A thousand kisses all the time
 [Am]   I want your body touching mine
@@ -39,38 +35,37 @@ Bridge:
 
 Verse_4:
 [G]   I’m unhappy. I [E]feel you see through all the cracks
-[G]   This other thing is falling apart 
-and there [E]is no turning back
+[G]   This other thing is falling apart and there [E]is no turning back
 
-Chorus_3:
-[Am]   When I’m with you I can hardly speak a 
-[C]word when I’m near you 
-I might expl[G]ode
-but I don’t [D]
+Chorus:
+[Am]   When I’m with you I can hardly speak a [C]word
+when I’m near you I might expl[G]ode
+but I [D]don’t
 {rest}
 
-Verse_5:			
-[G]   Let’s just leave here
-[E]   leave these fools behind 
-[G]   let our dreams surf [E]in each other’s wake
-[G]   My life is a shit show
-and I [E]want your give and take
+Verse_5:
+[G]   Let’s just leave here, [E]leave these fools behind 
+[G]   let our dreams surf, [E]in each other’s wake
+[G]   My life is a shit show, and I [E]want your give and take
 
-Chorus_4:
-[Am]   When I’m with you I can hardly speak a 
-[C]word when I’m near you 
-I might expl[G]ode
-but I don’t [D]
+Chorus:
+[Am]   When I’m with you I can hardly speak a [C]word
+when I’m near you I might expl[G]ode
+but I [D]don’t
 {rest}
 
 Verse_6:
-[G]   How can I [E]dispel you?
-[G]   You’ve worked your[E] magic on me. 
+[G]   How can I dis[E]pel you?
+[G]   You’ve worked your magic on [E]me. 
 [G]   There is nowhere else to [E]go now
 [G]   But there is one thing that I [E]know now
 
 Outro:
-[Am]I feel, [C]I feel, [Em]I feel, [G]I feel again
-[Am]I feel, [C]I feel, [Em]I feel, [G]I feel again
-[Am]I feel, [C]I feel, [Em]I feel, [G]I feel again
+[Am]I feel, I feel, [C]I feel, I feel, 
+[Em]I feel, I feel, I [G]feel again
 
+[Am]I feel, I feel, [C]I feel, I feel, 
+[Em]I feel, I feel, I [G]feel again
+
+[Am]I feel, I feel, [C]I feel, I feel, 
+[Em]I feel, I feel, I [G]feel again

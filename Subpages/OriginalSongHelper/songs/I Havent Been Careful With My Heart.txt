@@ -13,7 +13,7 @@ All proper formalit[G]ies
 [Dm]   We start to talk about our [Am]cares 
 [F]   It’s about to get mess[G]y
 
-Chorus_1:
+Chorus:
 [C]   I haven’t been careful with my [F]heart 
 [C]   Now what ever shall we [F]do?
 [G]   Are we all just fools in this [F]game?
@@ -21,17 +21,17 @@ Chorus_1:
 
 Verse_3:
 [Dm]   Now whatever shall we [Am]do?
-It’s not  nothing any[G]more [Dm]
+It’s not nothing any[G]more [Dm]
 [Dm]   I see that it’s affecting [Am]you
-[F]    I hesitate to walk out that door  [G]
+[F]  I hesitate to walk out that door  [G]
 
-Verse_4:	
-[Dm]   Are we all just fools   in this [Am]game?
+Verse_4:
+[Dm]   Are we all just fools in this [Am]game?
 Caught in it's [G]magnetic embr[Dm]ace
 [Dm]   Cupid's arrow has hit the [Am]aim
 [F]    But we're too close… for the [G]chase
 
-Chorus_2:
+Chorus:
 [C]   I haven’t been careful with my [F]heart 
 [C]   Now what ever shall we [F]do?
 [G]   Are we all just fools in this [F]game?
@@ -49,7 +49,7 @@ Verse_5:
 [Dm]   find me in a[Am]lone cafe 
 [F]   For our own time table for [G]two
 
-Chorus_3:
+Chorus:
 [C]   I haven’t been careful with my [F]heart 
 [C]   Now what ever shall we [F]do?
 [G]   Are we all just fools in this [F]game?

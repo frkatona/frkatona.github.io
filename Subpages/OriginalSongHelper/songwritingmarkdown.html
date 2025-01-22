@@ -26,19 +26,16 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background-color: #1e1e1e;
-            padding: 14px; /* Increased padding */
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            opacity: 0.75; /* 75% opaque */
+            padding: 3px;
+            border-radius: 10px;
+            opacity: 0.75;
         }
 
         .scroll-controls button {
             padding: 10px 20px; /* Increased padding */
-            background-color: #333;
             color: white;
             border: none;
-            border-radius: 3px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 100px; /* Increased font size */
             opacity: 0.75; /* 75% opaque */
@@ -164,7 +161,7 @@
         }
 
         .formatted-song {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Consolas', monospace;
             font-weight: bold;
             white-space: pre;
             font-size: 30px; /* Increased font size */
@@ -536,14 +533,16 @@
             toggleScrollButton.textContent = 'scroll';
             toggleScrollButton.style.backgroundColor = 'rgb(20, 80, 33)'; // Default color
             toggleScrollButton.style.opacity = '1'; // 100% opacity
+            toggleScrollButton.style.transform = 'scale(1)'; // Reset size
         } else {
             // Start scrolling
             scrollInterval = setInterval(() => {
-                rightPanelDiv.scrollTop += scrollSpeed;
+            rightPanelDiv.scrollTop += scrollSpeed;
             }, 100); // Adjust scrolling frequency
             toggleScrollButton.textContent = 'pause';
             toggleScrollButton.style.backgroundColor = 'rgb(60, 5, 15)';
             toggleScrollButton.style.opacity = '0.8'; // 80% opacity
+            toggleScrollButton.style.transform = 'scale(0.5)'; // Reduce size to 1/2
         }
         isScrolling = !isScrolling; // Toggle scroll state
     });
