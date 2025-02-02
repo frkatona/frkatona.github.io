@@ -1,5 +1,5 @@
 Feeling Muse
-Seana Wood - v24.02 - G - 110 BPM
+Seana Wood - v24.02 - G - 140 BPM
 
 Verse_1:
 [G]    My muse is right in [E]front of me
@@ -19,12 +19,6 @@ Verse_2:
 [G]   Your heart is not my [E]enemy  
 [G]   I want your heartbeat in[E]side of me
 
-Chorus:
-[Am]   When I’m with you I can hardly speak a [C]word
-when I’m near you I might expl[G]ode
-but I [D]don’t
-{rest}
-
 Bridge:
 [Am]   I want your body touching mine
 [C]   A thousand kisses all the time
@@ -33,7 +27,13 @@ Bridge:
 [G]   I want it now [D]
 {rest}
 
-Verse_4:
+Chorus:
+[Am]   When I’m with you I can hardly speak a [C]word
+when I’m near you I might expl[G]ode
+but I [D]don’t
+{rest}
+
+Verse_3:
 [G]   I’m unhappy. I [E]feel you see through all the cracks
 [G]   This other thing is falling apart and there [E]is no turning back
 
@@ -43,7 +43,7 @@ when I’m near you I might expl[G]ode
 but I [D]don’t
 {rest}
 
-Verse_5:
+Verse_4:
 [G]   Let’s just leave here, [E]leave these fools behind 
 [G]   let our dreams surf, [E]in each other’s wake
 [G]   My life is a shit show, and I [E]want your give and take
@@ -54,18 +54,15 @@ when I’m near you I might expl[G]ode
 but I [D]don’t
 {rest}
 
-Verse_6:
+Verse_5:
 [G]   How can I dis[E]pel you?
 [G]   You’ve worked your magic on [E]me. 
 [G]   There is nowhere else to [E]go now
 [G]   But there is one thing that I [E]know now
 
 Outro:
-[Am]I feel, I feel, [C]I feel, I feel, 
-[Em]I feel, I feel, I [G]feel again
-
-[Am]I feel, I feel, [C]I feel, I feel, 
-[Em]I feel, I feel, I [G]feel again
-
-[Am]I feel, I feel, [C]I feel, I feel, 
-[Em]I feel, I feel, I [G]feel again
+[Am]I feel, I feel, I feel, I feel,
+[C]I feel, I feel, I feel, I feel,
+[Em]I feel, I feel, I feel, I feel,
+I [G]feel again
+(repeat outro x3)
