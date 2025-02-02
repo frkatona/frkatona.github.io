@@ -111,6 +111,7 @@
             cursor: pointer;
             text-align: center;
             line-height: 60px; /* Increased line height */
+            opacity: 0.75;
         }
 
         .help-button {
@@ -269,7 +270,7 @@
                 <button id="decreaseFont">font ↓</button>
                 <button id="toggleAlignment">toggle alignment</button>
                 <label for="scrollSpeed">scroll speed</label>
-                <input id="scrollSpeed" type="range" min="1" max="10" value="3">
+                <input id="scrollSpeed" type="range" min="1.0" max="5.0" step="0.25" value="3.0">
             </div>
             <div class="formatted-song" id="formattedSong"></div>
         </div>
@@ -372,6 +373,19 @@
 
         menuButton.addEventListener('click', () => {
             menuPopup.style.display = menuPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // close menus if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!menuPopup.contains(event.target) && !menuButton.contains(event.target)) {
+                menuPopup.style.display = 'none';
+            }
+            if (!helpPopup.contains(event.target) && !helpButton.contains(event.target)) {
+                helpPopup.style.display = 'none';
+            }
+            if (!songListPopup.contains(event.target) && !songSelectorButton.contains(event.target)) {
+                songListPopup.style.display = 'none';
+            }
         });
 
         increaseFont.addEventListener('click', () => {
@@ -548,7 +562,7 @@
     });
     // Adjust scroll speed
     scrollSpeedInput.addEventListener('input', (event) => {
-        scrollSpeed = parseInt(event.target.value, 10);
+        scrollSpeed = parseFloat(event.target.value);
     });
     </script>
 
