@@ -569,12 +569,29 @@
 
     // Adjust scroll speed with arrow keys
     document.addEventListener('keydown', (event) => {
+        // Adjust scroll speed with left/right arrow keys
         if (event.key === 'ArrowRight') {
             scrollSpeed = Math.min(scrollSpeed + 0.25, 5.0); // Increase speed, max 5.0
+            scrollSpeedInput.value = scrollSpeed; // Update range input value
         } else if (event.key === 'ArrowLeft') {
             scrollSpeed = Math.max(scrollSpeed - 0.25, 1.0); // Decrease speed, min 1.0
+            scrollSpeedInput.value = scrollSpeed; // Update range input value
         }
-        scrollSpeedInput.value = scrollSpeed; // Update range input value
+        
+        // Adjust font size with up/down arrow keys
+        if (event.key === 'ArrowUp') {
+            fontSize += 2;
+            formattedSong.style.fontSize = fontSize + 'px';
+            songInput.style.fontSize = fontSize + 'px';
+            updateChordLineMargin();
+        } else if (event.key === 'ArrowDown') {
+            if (fontSize > 8) {
+                fontSize -= 2;
+                formattedSong.style.fontSize = fontSize + 'px';
+                songInput.style.fontSize = fontSize + 'px';
+                updateChordLineMargin();
+            }
+        }
     });
     
     </script>
