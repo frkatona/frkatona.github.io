@@ -277,10 +277,9 @@
     </div>
 
     <script> // process the input and update the formatted song
-
         const songInput = document.getElementById('songInput');
         const formattedSong = document.getElementById('formattedSong');
-        const helpButton = document.getElementById('helpButton');
+        const helpButton = document.getElementById('helpButton');   
         const helpPopup = document.getElementById('helpPopup');
         const toggleButton = document.getElementById('toggleButton');
         const leftPanel = document.getElementById('leftPanel');
@@ -360,6 +359,8 @@
         function replaceAt(str, index, replacement) {
             return str.substring(0, index) + replacement + str.substring(index + replacement.length);
         }
+
+
 
         helpButton.addEventListener('click', () => {
             helpPopup.style.display = helpPopup.style.display === 'block' ? 'none' : 'block';
@@ -557,13 +558,25 @@
             toggleScrollButton.style.backgroundColor = 'rgb(60, 5, 15)';
             toggleScrollButton.style.opacity = '0.8'; // 80% opacity
             toggleScrollButton.style.transform = 'scale(0.5)'; // Reduce size to 1/2
-        }
-        isScrolling = !isScrolling; // Toggle scroll state
+            }
+            isScrolling = !isScrolling; // Toggle scroll state
     });
+
     // Adjust scroll speed
     scrollSpeedInput.addEventListener('input', (event) => {
         scrollSpeed = parseFloat(event.target.value);
     });
+
+    // Adjust scroll speed with arrow keys
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight') {
+            scrollSpeed = Math.min(scrollSpeed + 0.25, 5.0); // Increase speed, max 5.0
+        } else if (event.key === 'ArrowLeft') {
+            scrollSpeed = Math.max(scrollSpeed - 0.25, 1.0); // Decrease speed, min 1.0
+        }
+        scrollSpeedInput.value = scrollSpeed; // Update range input value
+    });
+    
     </script>
 
     
