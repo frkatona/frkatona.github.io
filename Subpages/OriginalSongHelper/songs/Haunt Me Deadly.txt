@@ -1,7 +1,9 @@
 Haunt Me to Death
 Seana Wood - v24.11 - G - 120 BPM
-Instrumental:
+
+Intro:
 [G - Em - C - D]
+(instrumental)
 
 Verse_1:
 You're passing in[G], I’m passing out[Em]
@@ -14,7 +16,7 @@ You haunt me [C]deadly
 It’s the way I feel in[Em]side
 And I [C]notice
 In each room you [Em]hide
-The universe seems fuller[C]
+The universe seems [C]fuller
 When you're [D]near
 Please haunt me [C]deadly
 I miss you [D]here
@@ -36,10 +38,10 @@ Please haunt me [C]deadly
 I miss you [D]here
 
 Bridge:
-[Cmaj7]Am I the shell of the person I used to [G]be?
-[Cmaj7]Trying every day to unearth the person that is [G]me [D]
-[Cmaj7]With you, tiny moments of authentici[G]ty
-[Cmaj7]I remember who I am, and I know the person I want to [G]be  [D]
+Am I the [Cmaj7]shell of the person I used to [G]be?
+[Cmaj7]Trying every day to unearth the [G]person that is [D]me
+With [Cmaj7]you, tiny moments of [G]authenticity
+I re[Cmaj7]member who I am, and I know the [G]person I want to [D]be
 
 Chorus:
 You haunt me [C]deadly
@@ -52,10 +54,10 @@ Please haunt me [C]deadly
 I miss you [D]here
 
 Verse_3:
-So you ground [G]me, now I can [Em]feel
-What it [C]was, was very real[D]
+So you [G]ground me, now I can [Em]feel
+What it [C]was, was very [D]real
 I can't cont[G]rol, what we can [Em]be
-I can hope [C], that you can still see [D]me
+I can [C]hope, that you can still see [D]me
 
 Chorus:
 You haunt me [C]deadly
