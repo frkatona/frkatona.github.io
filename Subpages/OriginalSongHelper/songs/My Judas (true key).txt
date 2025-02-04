@@ -2,8 +2,8 @@ My Judas (true key)
 Seana Wood - v24.02 - Dm - 140 BPM
 
 Intro:
-[Dm - Am - C - C]
-[Dm - Am - C - C]
+[Dm - Dm - F - C]
+[Dm - Dm - F - C]
 
 Verse_1:
 [Dm]   Your nice words are [F]barbs in my [C]back
@@ -51,8 +51,6 @@ Your kind of love[Bb] will nail me to a [C]cross
 Your kind of love[Bb] will nail me to a [C]cross
 
 Outro:
-{pp}And [Dm]Judas was a better lover being [C]hung on a tree
-{pp}And [Dm]you love yourself more than you pre[C]tended to love me
 {pp}And [Dm]Judas was a better lover being [C]hung on a tree
 {pp}And [Dm]you love yourself more than you pre[C]tended to love me
 {pp}And [Dm]Judas was a better lover being [C]hung on a tree
