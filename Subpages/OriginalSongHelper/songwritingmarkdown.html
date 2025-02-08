@@ -57,7 +57,7 @@
         }
 
         .left-panel, .right-panel {
-            padding: 10px; /* Increased padding */
+            padding: 10px;
             box-sizing: border-box;
             overflow-y: auto;
             position: relative;
@@ -87,7 +87,7 @@
 
         textarea {
             width: 100%;
-            height: calc(100% - 10px); /* Adjusted to accommodate new buttons */
+            height: calc(100% - 10px); 
             background-color: #1e1e1e;
             color: #ffffff;
             border: none;
@@ -134,19 +134,19 @@
         }
 
         .toggle-button {
-            top: 20px; /* Increased top position */
-            left: 20px; /* Increased left position */
+            top: 50%; /* Move up */
+            left: 20px;
             z-index: 2;
         }
 
         .help-popup, .song-list-popup, .menu-popup {
             display: none;
             position: fixed;
-            top: 100px; /* Increased top position */
-            right: 40px; /* Increased right position */
+            top: 100px;
+            right: 40px;
             background-color: #1e1e1e;
             color: #fff;
-            padding: 30px; /* Increased padding */
+            padding: 30px;
             border: 1px solid #333;
             border-radius: 5px;
             width: 500px; /* Increased width */
@@ -165,7 +165,7 @@
             font-family: 'Consolas', monospace;
             font-weight: bold;
             white-space: pre;
-            font-size: 30px; /* Increased font size */
+            font-size: 30px;
             text-align: center;
         }
 
@@ -177,13 +177,14 @@
         
         .section-header {
             font-weight: bold;
-            margin-top: 10px; /* Increased margin */
-            font-size: 45px; /* Increased font size */
+            margin-top: -40px;
+            font-size: 50px; /* Increased font size */
         }
 
         .chord-line {
             color: #ffeb3b;
             margin-bottom: -40px; /* Reduced space between chord and lyric lines */
+            margin-top: -25px; /* Reduced space between chord and lyric lines */
         }
 
         .song-item {
@@ -591,6 +592,12 @@
                 songInput.style.fontSize = fontSize + 'px';
                 updateChordLineMargin();
             }
+        }
+
+        if (event.key === '`') {
+            leftPanel.classList.toggle('hidden');
+            rightPanel.classList.toggle('full-width');
+            toggleButton.textContent = leftPanel.classList.contains('hidden') ? '»' : '«';
         }
     });
     
