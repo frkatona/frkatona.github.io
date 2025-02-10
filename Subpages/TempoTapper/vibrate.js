@@ -1,6 +1,9 @@
+let vibrationInterval;
+
 // Stops vibration
 function stopVibrate() {
     navigator.vibrate(0);
+    clearInterval(vibrationInterval);
 }
 
 // Vibrates once, duration determined by user.
@@ -17,18 +20,15 @@ function singleVibrate() {
 // Start persistent vibration at given duration and interval
 // Assumes a number value is given
 function multipleVibrate() {
-    let vibArray = [];
     let duration = document.getElementById("viblen").value;
-    let amountOfVibs = document.getElementById("vibinterval").value;
-    let pauseLength = document.getElementById("pauselen").value;
+    let bpm = document.getElementById("pauselen").value;
 
-    if ((!duration.match(/^\d+$/)) || (!amountOfVibs.match(/^\d+$/))) {
-        document.getElementById("results").innerText = "Error, please input a number in both fields.";
+    if ((!duration.match(/^\d+$/)) || (!bpm.match(/^\d+$/))) {
+        document.getElementById("results").innerText = "Error, please input a number in all fields.";
     } else {
-        for (let i = 0; i < amountOfVibs; i++) {
-            vibArray.push(duration);
-            vibArray.push(pauseLength);
-        }
-        navigator.vibrate(vibArray);
+        let pauseLength = (60 / bpm) * 1000; // Convert BPM to milliseconds
+        vibrationInterval = setInterval(() => {
+            navigator.vibrate(duration);
+        }, pauseLength + parseInt(duration));
     }
 }
