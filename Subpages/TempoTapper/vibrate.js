@@ -30,13 +30,13 @@ function multipleVibrate() {
     let bpm = document.getElementById("tempo").value;
 
     if ((!duration.match(/^\d+$/)) || (!bpm.match(/^\d+$/))) {
-        // document.getElementById("results").innerText = "Error, please input a number in all fields.";
+        document.getElementById("results").innerText = "Error, please input a number in all fields.";
     } else {
-        let pauseLength = (60 / bpm) * 1000; // Convert BPM to milliseconds
+        let pauseLength = (60 / bpm) * 1000 - parseInt(duration); // Convert BPM to milliseconds and subtract duration
         vibrationInterval = setInterval(() => {
             if (vibrationCount >= MAX_VIBRATIONS) {
                 stopVibrate();
-                // document.getElementById("results").innerText = "Maximum number of vibrations reached.";
+                document.getElementById("results").innerText = "Maximum number of vibrations reached.";
                 return;
             }
             let currentTime = Date.now();
