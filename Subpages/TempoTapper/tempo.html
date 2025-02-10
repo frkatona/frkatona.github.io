@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>HTML 5 Vibration Test</title>
+	<meta name="author" content="Steve B">
+	<meta name="description" content="HTML 5 Vibration API test page.">
+	<meta name="keywords" content="HTML5, Mobile, Vibration">
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	
+	<script src="vibrate.js"></script>
+
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>	
+	<div class="main-container">
+		<h1>HTML 5 Vibration Demo</h1>
+        <h2> Original page author: Steve Bedell (sbedell)</h2>
+
+		<div>
+			<label for="viblen">Vibration Duration (ms):</label>
+			<input id="viblen" class="input-box" type="number" value="500" min="0" required />	
+		</div>
+		
+		<p><strong>Multiple Vibration Options:</strong></p>
+		
+		<div>
+			<label for="vibinterval">Number of Vibrations:</label>
+			<input id="vibinterval" class="input-box" type="number" value="5" min="0" required />
+		</div>
+		
+		<div>
+			<label for="pauselen">Time Between Vibrations (ms):</label>
+			<input id="pauselen" class="input-box" type="number" value="200" min="0" required />
+			<button class="my-btn btn-lrg gradient-green" type="button" onclick="singleVibrate()">Single Vibrate</button>
+			<button class="my-btn btn-lrg gradient-green" type="button" onclick="multipleVibrate()">Multiple Vibrations</button>
+			<button class="my-btn btn-lrg gradient-red" type="button" onclick="stopVibrate()">Stop Vibration(s)</button>
+		</div>
+
+		<hr />
+		<p>Mozilla Developer Network or at the W3. <br />
+			<a href="//developer.mozilla.org/en-US/docs/Web/Guide/API/Vibration">MDN - Vibration API</a><br />
+			<a href="//www.w3.org/TR/vibration/">W3 Vibration API Spec</a>
+		</p>
+			
+		<footer class="main-footer">
+			<hr />
+			<p>Steve Bedell 2014-2021.</p>
+		</footer>
+	</div>
+</body>
+</html>
