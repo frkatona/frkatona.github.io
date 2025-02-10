@@ -21,7 +21,7 @@ function singleVibrate() {
 // Assumes a number value is given
 function multipleVibrate() {
     let duration = document.getElementById("viblen").value;
-    let bpm = document.getElementById("pauselen").value;
+    let bpm = document.getElementById("tempo").value;
 
     if ((!duration.match(/^\d+$/)) || (!bpm.match(/^\d+$/))) {
         document.getElementById("results").innerText = "Error, please input a number in all fields.";
