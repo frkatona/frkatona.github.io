@@ -80,7 +80,6 @@ function getValidPositions() {
     }
 }
 
-
 // Function to get valid capo positions and the new chord shapes for each
 function getValidPositions() {
     var selectedChords = Array.from(document.querySelectorAll('.chord.selected')).map(function(chord) {
