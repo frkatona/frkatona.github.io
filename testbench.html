@@ -286,6 +286,30 @@
           <td id="scale-11">-</td>
         </tr>
 
+        <!-- 3. Scale Degree Row (Key-dependent) -->
+        <tr>
+          <th class="layer-header">
+            missing parts
+            <span class="tooltip">?
+              <span class="tooltip-text">
+                asdf
+              </span>
+            </span>
+          </th>
+          <td id="missing-0">-</td>
+          <td id="missing-1">-</td>
+          <td id="missing-2">-</td>
+          <td id="missing-3">-</td>
+          <td id="missing-4">-</td>
+          <td id="missing-5">-</td>
+          <td id="missing-6">-</td>
+          <td id="missing-7">-</td>
+          <td id="missing-8">-</td>
+          <td id="missing-9">-</td>
+          <td id="missing-10">-</td>
+          <td id="missing-11">-</td>
+        </tr>
+
         <!-- 4. Chords Row (Key-dependent) -->
         <tr>
           <th class="layer-header">
@@ -392,6 +416,7 @@
     const majorRoman = ["I", "ii", "iii", "IV", "V", "vi", "vii°"];
     const chordSuffix = ["", "m", "m", "", "", "m", "dim"];
     const funcHarmony = ["tonic", "pre-dominant", "tonic", "pre-dominant", "dominant", "tonic", "dominant"];
+    const missingParts = ["b2", "b3", "b5", "b6", "b7"]
 
     // Default key: C (index 0)
     let selectedKeyIndex = 0;
@@ -409,6 +434,7 @@
       }
       for (let i = 0; i < 12; i++) {
         const cellScale = document.getElementById("scale-" + i);
+        const cellMissing = document.getElementById("missing-" + i);
         const cellChord = document.getElementById("chord-" + i);
         const cellFunc = document.getElementById("func-" + i);
         let scaleObj = scale.find(obj => obj.noteIndex === i);
@@ -416,10 +442,12 @@
           cellScale.textContent = scaleObj.roman;
           cellChord.textContent = scaleObj.chord;
           cellFunc.textContent = scaleObj.func;
+          // cellMissing.textContent = ""; return here
         } else {
           cellScale.textContent = "-";
           cellChord.textContent = "-";
           cellFunc.textContent = "-";
+          cellMissing.textContent = "-";
         }
       }
     }
