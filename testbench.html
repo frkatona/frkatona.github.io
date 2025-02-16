@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- reference -->
+  <!-- 'chord theory, functional harmony, and mode mixture' infographic -->
+  <!-- https://docs.google.com/spreadsheets/d/1KxCgvSO3CSbso_q9yg9N0y8YUQS8v2ZIltA8H1A1sME/edit?gid=0#gid=0 -->
   <meta charset="UTF-8">
-  <title>APK Functional Harmony</title>
+  <title>Chord Progressions 101</title>
   <style>
     /* === Basic Reset & Page Styles === */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: Arial, sans-serif;
-      background: #f7f7f7;
+      background: #242424;
       padding: 2rem;
       line-height: 1.5;
     }
-    h1 { text-align: center; margin-bottom: 1rem; }
-    p { text-align: center; margin-bottom: 1rem; }
+    h1 { font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; text-align: center; margin-bottom: 1rem; color: white; }
+    p { text-align: center; margin-bottom: 1rem; color: white; }
 
     /* === Container & Table Setup === */
     #table-container {
@@ -24,19 +27,20 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #fff;
+      background: var(--bg-color);
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       table-layout: fixed;  /* force fixed column widths */
     }
-    /* The first column (the layer header) is auto-sized; the rest are fixed. */
+    /* auto-size column 0 and fix the rest */
     th, td {
-      border: 1px solid #ccc;
+      border: 1px solid var(--border-color);
       padding: 0.75rem;
       text-align: center;
       vertical-align: middle;
+      color: rgb(219, 219, 219);
     }
     th.layer-header {
-      background: #eee;
+      background: var(--header-bg-color);
       text-align: left;
       position: relative;
     }
@@ -50,15 +54,15 @@
     .tooltip {
       font-size: 0.8em;
       margin-left: 0.3em;
-      color: #555;
+      color: var(--tooltip-color);
       cursor: pointer;
       position: relative;
     }
     .tooltip .tooltip-text {
       visibility: hidden;
       width: 200px;
-      background-color: #333;
-      color: #fff;
+      background-color: var(--tooltip-bg-color);
+      color: var(--tooltip-text-color);
       text-align: left;
       border-radius: 5px;
       padding: 5px;
@@ -72,59 +76,63 @@
     .tooltip:hover .tooltip-text { visibility: visible; }
 
     /* === Frequency Cell (Clickable) & Flash Animation === */
-    td.frequency-cell {
+    td.pitchclass-cell {
       cursor: pointer;
       position: relative;
       transition: background-color 0.3s;
     }
-    td.frequency-cell.selected { background: #ffeb3b; }
+    td.pitchclass-cell.selected { background: var(--selected-bg-color); }
     @keyframes flash {
-      0% { background-color: #ffeb3b; }
-      50% { background-color: #fff; }
-      100% { background-color: #ffeb3b; }
+      0% { background-color: var(--selected-bg-color); }
+      50% { background-color: var(--bg-color); }
+      100% { background-color: var(--selected-bg-color); }
     }
     .flash { animation: flash 0.5s ease-in-out 3; }
 
     /* === SVG Overlay for Arrows === */
     #arrow-overlay {
-      position: absolute;
+      position: absolute;      
       top: 0;
       left: 0;
       pointer-events: none; /* allow clicks through the SVG */
     }
 
     /* === Zebra Striping for Rows === */
-    tbody tr:nth-child(even) { background: #f9f9f9; }
+    tbody tr:nth-child(even) { background: var(--zebra-bg-color); }
 
-  /* === Mode Mixture Chart === */
-    #mode-mixture {
-        margin-top: 2rem;
-        padding: 1rem;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    /* === Mode Mixture Chart === */
+    #mode-mixture, #secondary-dominants, #extensions {
+      margin-top: 2rem;
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-color);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      color: white;
     }
 
     /* === Secondary Dominants === */
-    #secondary-dominants {
-        margin-top: 2rem;
-        padding: 1rem;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+    /* #secondary-dominants {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: var(--bg-color);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      color: white;
+    } */
 
     /* === Extensions === */
-    #extensions {
-        margin-top: 2rem;
-        padding: 1rem;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+    /* #extensions {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: var(--bg-color);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      color: white; 
+    }*/
 
     /* === Responsive Styles === */
     @media (max-width: 600px) {
       th:not(.layer-header), td:not(:first-child) {
-        width: 60px;
-        min-width: 60px;
+      width: 60px;
+      min-width: 60px;
       }
       th.layer-header { font-size: 0.8em; }
       .tooltip .tooltip-text { width: 150px; }
@@ -132,49 +140,65 @@
 
     @media (max-width: 400px) {
       th:not(.layer-header), td:not(:first-child) {
-        width: 50px;
-        min-width: 50px;
+      width: 50px;
+      min-width: 50px;
       }
       th.layer-header { font-size: 0.7em; }
       .tooltip .tooltip-text { width: 120px; }
     }
 
-  </style>
+    /* === Dark Mode Variables === */
+    :root {
+      --bg-color: #333;
+      --border-color: #555;
+      --header-bg-color: #444;
+      --tooltip-color: #bbb;
+      --tooltip-bg-color: #222;
+      --tooltip-text-color: #fff;
+      --selected-bg-color: #5a5316;
+      --zebra-bg-color: #3a3a3a;
+    }
+
+    /* === Light Mode Variables === */
+    :root.light-mode {
+      --bg-color: #fff;
+      --border-color: #ccc;
+      --header-bg-color: #eee;
+      --tooltip-color: #555;
+      --tooltip-bg-color: #333;
+      --tooltip-text-color: #fff;
+      --selected-bg-color: #fff174;
+      --zebra-bg-color: #f9f9f9;
+    }
+    </style>
+
+    <!-- <script>
+    // Toggle dark mode
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('light-mode');
+    }
+    </script>
+    <button onclick="toggleDarkMode()">Toggle Dark Mode</button> -->
 </head>
 <body>
 
-  <h1>Functional Harmony</h1>
+  <h1>Part I: Introduction to Building Chords and Chord Functions</h1>
   <p>Click a frequency cell to select the key. Hover on the “?” for definitions.</p>
 
   <div id="table-container">
     <table>
-      <thead>
-        <tr>
-          <th class="layer-header"></th>
-          <th data-note-index="0">C</th>
-          <th data-note-index="1">C♯/D♭</th>
-          <th data-note-index="2">D</th>
-          <th data-note-index="3">D♯/E♭</th>
-          <th data-note-index="4">E</th>
-          <th data-note-index="5">F</th>
-          <th data-note-index="6">F♯/G♭</th>
-          <th data-note-index="7">G</th>
-          <th data-note-index="8">G♯/A♭</th>
-          <th data-note-index="9">A</th>
-          <th data-note-index="10">A♯/B♭</th>
-          <th data-note-index="11">B</th>
-        </tr>
-      </thead>
+
       <tbody>
+
         <!-- 1. frequency (Hz) -->
         <tr>
           <th class="layer-header">
-            frequency (Hz)
-            <span class="tooltip">?
-              <span class="tooltip-text">
+        frequency (Hz)
+          <span class="tooltip">?
+            <span class="tooltip-text">
                 Approximate frequencies corresponding to modern pitch definitions. These are defined around "A4" being defined (arbitrarily) as 440 Hz.  Doubling or halving this (or any frequency) yields the "octave" of that frequency's pitch (A3 = 220 Hz, A4 = 440 Hz, A5 = 880 Hz, etc.).  The "distance" between any two adjacent notes is called a "half-step", a "semi-tone", or "100 cents" and  is  frequency by 2^(1/12).  This system, known as "12-tone equal temperament", is the most common tuning system in Western music.  To delve further into why, I recommend the video "Why it's impossible to tune a piano" by MinutePhysics and perhaps the first half of "Music and Measure Theory" by 3Blue1Brown.
-              </span>
             </span>
+          </span>
           </th>
           <td class="frequency-cell" data-frequency="261.63">262</td>
           <td class="frequency-cell" data-frequency="277.18">277</td>
@@ -189,6 +213,7 @@
           <td class="frequency-cell" data-frequency="466.16">466</td>
           <td class="frequency-cell" data-frequency="493.88">494</td>
         </tr>
+
         <!-- 2.0 Pitch Row -->
         <tr>
           <th class="layer-header">
@@ -212,29 +237,31 @@
           <td>A♯4/B♭4</td>
           <td>B4</td>
         </tr>
+
         <!-- 2.1 Pitch Class Row -->
         <tr>
           <th class="layer-header">
             pitch class
             <span class="tooltip">?
               <span class="tooltip-text">
-                The note name (C, C♯/D♭, D, etc.).
+                The note name, independent of octave.  Remember that chords are built from pitch classes rather than pitches — i.e., any C, E, and G note(s) across the keyboard will form a C major chord, regardless of their octave.
               </span>
             </span>
           </th>
-          <td>C</td>
-          <td>C♯/D♭</td>
-          <td>D</td>
-          <td>D♯/E♭</td>
-          <td>E</td>
-          <td>F</td>
-          <td>F♯/G♭</td>
-          <td>G</td>
-          <td>G♯/A♭</td>
-          <td>A</td>
-          <td>A♯/B♭</td>
-          <td>B</td>
+          <td class="pitchclass-cell" data-pitchclass="C">C</td>
+          <td class="pitchclass-cell" data-pitchclass="C-sharp">C♯/D♭</td>
+          <td class="pitchclass-cell" data-pitchclass="D">D</td>
+          <td class="pitchclass-cell" data-pitchclass="D-sharp">D♯/E♭</td>
+          <td class="pitchclass-cell" data-pitchclass="E">E</td>
+          <td class="pitchclass-cell" data-pitchclass="F">F</td>
+          <td class="pitchclass-cell" data-pitchclass="F-sharp">F♯/G♭</td>
+          <td class="pitchclass-cell" data-pitchclass="G">G</td>
+          <td class="pitchclass-cell" data-pitchclass="G-sharp">G♯/A♭</td>
+          <td class="pitchclass-cell" data-pitchclass="A">A</td>
+          <td class="pitchclass-cell" data-pitchclass="A-sharp">A♯/B♭</td>
+          <td class="pitchclass-cell" data-pitchclass="B">B</td>
         </tr>
+
         <!-- 3. Scale Degree Row (Key-dependent) -->
         <tr>
           <th class="layer-header">
@@ -258,6 +285,7 @@
           <td id="scale-10">-</td>
           <td id="scale-11">-</td>
         </tr>
+
         <!-- 4. Chords Row (Key-dependent) -->
         <tr>
           <th class="layer-header">
@@ -281,6 +309,7 @@
           <td id="chord-10">-</td>
           <td id="chord-11">-</td>
         </tr>
+
         <!-- 5. Functional Harmony Row (Key-dependent) -->
         <tr>
           <th class="layer-header">
@@ -304,6 +333,7 @@
           <td id="func-10">-</td>
           <td id="func-11">-</td>
         </tr>
+
         <!-- 6. Primary Mode / Borrowed Chords -->
         <tr>
           <th class="layer-header">
@@ -316,6 +346,7 @@
           </th>
           <td colspan="12">I / ii / ♭III, etc. (context dependent)</td>
         </tr>
+
         <!-- 7. Example Progressions -->
         <tr>
           <th class="layer-header">
@@ -343,15 +374,15 @@
   </div>
 
   <div id="mode-mixture">
-    <h2> Mode Mixture Chart </h2>
+    <h1> Mode Mixture Chart </h1>
   </div>
 
   <div id="secondary-dominants">
-    <h2> Secondary Dominants </h2>
+    <h1> Secondary Dominants </h1>
   </div>
 
   <div id="extensions">
-    <h2> extensions </h2>
+    <h1> extensions </h1>
   </div>
 
   <script>
@@ -394,7 +425,7 @@
     }
 
     /* === Frequency Cell Click Handler === */
-    const freqCells = document.querySelectorAll("td.frequency-cell");
+    const freqCells = document.querySelectorAll("td.pitchclass-cell");
     freqCells.forEach((cell, index) => {
       cell.addEventListener("click", function() {
         freqCells.forEach(c => c.classList.remove("selected"));
@@ -406,7 +437,7 @@
 
     /* === On Load: Flash default cell & update rows === */
     window.addEventListener("load", function() {
-      const defaultCell = document.querySelector("td.frequency-cell[data-frequency='261.63']");
+      const defaultCell = document.querySelector("td.pitchclass-cell[data-pitchclass='C']");
       if (defaultCell) {
         defaultCell.classList.add("selected", "flash");
         setTimeout(() => { defaultCell.classList.remove("flash"); }, 1500);
@@ -421,7 +452,7 @@
       svg.innerHTML = "";  // clear any previous content
       const container = document.getElementById("table-container");
       const containerRect = container.getBoundingClientRect();
-      const cells = Array.from(document.querySelectorAll("td.frequency-cell"));
+      const cells = Array.from(document.querySelectorAll("td.pitchclass-cell"));
       if (cells.length < 2) return;
 
       // Set SVG to cover the container
