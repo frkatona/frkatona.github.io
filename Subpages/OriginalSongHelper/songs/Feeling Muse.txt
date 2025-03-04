@@ -1,5 +1,5 @@
 Feeling Muse
-Seana Wood - v24.02 - G - 140 BPM
+Seana Wood - v24.02 - G - 160 BPM
 
 Verse_1:
 [G]    My muse is right in [E]front of me
@@ -32,10 +32,6 @@ Chorus:
 when I’m near you I might expl[G]ode
 but I [D]don’t
 {rest}
-
-Verse_3:
-[G]   I’m unhappy. I [E]feel you see through all the cracks
-[G]   This other thing is falling apart and there [E]is no turning back
 
 Chorus:
 [Am]   When I’m with you I can hardly speak a [C]word

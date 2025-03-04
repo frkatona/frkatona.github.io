@@ -187,7 +187,6 @@
 
   <div id="table-container">
     <table>
-
       <tbody>
 
         <!-- 1. frequency (Hz) -->
@@ -268,7 +267,31 @@
             scale degree
             <span class="tooltip">?
               <span class="tooltip-text">
-                The Roman numeral for each note’s position in the major scale of the selected key.
+                The number for each note’s position in the major scale of the selected key.
+              </span>
+            </span>
+          </th>
+          <td id="degree-0">-</td>
+          <td id="degree-1">-</td>
+          <td id="degree-2">-</td>
+          <td id="degree-3">-</td>
+          <td id="degree-4">-</td>
+          <td id="degree-5">-</td>
+          <td id="degree-6">-</td>
+          <td id="degree-7">-</td>
+          <td id="degree-8">-</td>
+          <td id="degree-9">-</td>
+          <td id="degree-10">-</td>
+          <td id="degree-11">-</td>
+        </tr>
+
+        <!-- 3. Scale Degree Row (Key-dependent) -->
+        <tr>
+          <th class="layer-header">
+            scale triad
+            <span class="tooltip">?
+              <span class="tooltip-text">
+                The diatonic triads for the selected key. In a major key these are: I, ii, iii, IV, V, vi, vii° where uppercase Roman numerals denote major chords, lowercase Roman numerals denote minor chords, and the ° symbold denotes a diminished chord.
               </span>
             </span>
           </th>
@@ -416,7 +439,7 @@
     const majorRoman = ["I", "ii", "iii", "IV", "V", "vi", "vii°"];
     const chordSuffix = ["", "m", "m", "", "", "m", "dim"];
     const funcHarmony = ["tonic", "pre-dominant", "tonic", "pre-dominant", "dominant", "tonic", "dominant"];
-    const missingParts = ["b2", "b3", "b5", "b6", "b7"]
+    const missingParts = ["-", "b2", "-", "b3", "-", "-", "b5", "-", "b6", "-", "b7", "-"];
 
     // Default key: C (index 0)
     let selectedKeyIndex = 0;
@@ -429,25 +452,29 @@
           noteIndex: noteIndex,
           roman: majorRoman[i],
           chord: noteNames[noteIndex] + chordSuffix[i],
-          func: funcHarmony[i]
+          func: funcHarmony[i],
+          missing: "-"
         });
       }
       for (let i = 0; i < 12; i++) {
         const cellScale = document.getElementById("scale-" + i);
+        const cellDegree = document.getElementById("degree-" + i);
         const cellMissing = document.getElementById("missing-" + i);
         const cellChord = document.getElementById("chord-" + i);
         const cellFunc = document.getElementById("func-" + i);
         let scaleObj = scale.find(obj => obj.noteIndex === i);
         if (scaleObj) {
           cellScale.textContent = scaleObj.roman;
+            cellDegree.textContent = majorScaleOffsets.indexOf(i) + 1;
           cellChord.textContent = scaleObj.chord;
           cellFunc.textContent = scaleObj.func;
-          // cellMissing.textContent = ""; return here
+          cellMissing.textContent = "-";
         } else {
           cellScale.textContent = "-";
+          cellDegree.textContent = "-";
           cellChord.textContent = "-";
           cellFunc.textContent = "-";
-          cellMissing.textContent = "-";
+          cellMissing.textContent = missingParts[i];
         }
       }
     }
