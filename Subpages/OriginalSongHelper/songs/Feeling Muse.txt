@@ -1,5 +1,5 @@
 Feeling Muse
-Seana Wood - v24.02 - G - 160 BPM
+Seana Wood - v25.03 - G - 160 BPM
 
 Verse_1:
 [G]    My muse is right in [E]front of me
@@ -27,19 +27,17 @@ Bridge:
 [G]   I want it now [D]
 {rest}
 
-Chorus:
-[Am]   When I’m with you I can hardly speak a [C]word
-when I’m near you I might expl[G]ode
-but I [D]don’t
-{rest}
-
-Chorus:
-[Am]   When I’m with you I can hardly speak a [C]word
-when I’m near you I might expl[G]ode
-but I [D]don’t
-{rest}
-
 Verse_4:
+[G]   I'm unhappy and I [E]feel you see through all the cracks
+[G]   This other thing is falling apart there [E]is no turning back
+
+Chorus:
+[Am]   When I’m with you I can hardly speak a [C]word
+when I’m near you I might expl[G]ode
+but I [D]don’t
+{rest}
+
+Verse_5:
 [G]   Let’s just leave here, [E]leave these fools behind 
 [G]   let our dreams surf, [E]in each other’s wake
 [G]   My life is a shit show, and I [E]want your give and take
@@ -50,7 +48,7 @@ when I’m near you I might expl[G]ode
 but I [D]don’t
 {rest}
 
-Verse_5:
+Verse_6:
 [G]   How can I dis[E]pel you?
 [G]   You’ve worked your magic on [E]me. 
 [G]   There is nowhere else to [E]go now

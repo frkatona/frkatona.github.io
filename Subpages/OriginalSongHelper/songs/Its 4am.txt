@@ -1,8 +1,7 @@
 It's 4am
-Seana Wood - v24.02 - C - 110 BPM
+Seana Wood - v24.02 - C - 140 BPM
 
 Intro:
-[C    Am    C    Am]
 [C    Am    C    Am]
 
 Verse_1:
@@ -20,7 +19,7 @@ And hide aw[G]ay for a [D]while
 I [D]hide away from the pain
 I [A]hide behind this smile
 But it’s still [G]there just the same
-I’m gonna hide aw[A]ay for a [Am7]while
+I’m gonna hide aw[D]ay for a [A-A7]while
 
 Verse_2:
 Its [C]11am and I could come [Am]over again
@@ -37,14 +36,13 @@ And hide aw[G]ay for a [D]while
 I [D]hide from the pain
 I [A]hide behind this smile
 But it’s still [G]there just the same
-I’m gonna hide aw[A]ay for a [Am7]while
+I’m gonna hide aw[D]ay for a [A]while
 
 Instrumental:
-[F  C  G]
-[F  C  G]
-[Cm   G]
-[Cm   G]
-[Cm   G    C]
+[F  F  C  G]
+[F  F  C  G]
+[Dm  G  Dm  G]
+[Dm  G   C   C]
 
 Verse_3:
 It’s [C]11pm can't turn [Am]back this clock again
@@ -61,14 +59,14 @@ And hide aw[G]ay for a [D]while
 I [D]hide from the pain
 I [A]hide behind this smile
 But it’s still [G]there just the same
-I’m gonna hide aw[A]ay for a [Am7]while
+I’m gonna hide aw[D]ay for a [A-A7]while
 
 Outro:
 I’m not [D]sorry that I met you. 
 I’m not [C]sorry we’ve been dragged in
 These [G]lessons can’t be learned without that [D]sin   
 
-{p} And [D]what does one do, when [D]all of it is gone?
+{p} And [D]what does one do, when [C]all of it is gone?
 {p} Going to [G]make my way in this dusty old [D]town 
-{f} And [D]what does one do, when [D]all of it is gone?
+{f} And [D]what does one do, when [C]all of it is gone?
 {f} Going to [G]make my way in this dusty old [D]town 
