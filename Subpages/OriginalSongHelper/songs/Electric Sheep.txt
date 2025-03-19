@@ -1,5 +1,5 @@
 Phillip's Electric Sheep
-Seana Wood - v24.11 - Am - 110 BPM
+Seana Wood - v24.11 - Am - 130 BPM
 Intro:
 [Am - C - Am - C]
 [Am - C - Am - G]
@@ -18,7 +18,8 @@ from the [F]unhappy man[D]
 [G]Covered in sm[C]iling sketches 
 [F]something he didn’t [E]understand
 He [F]didn’t under[E]stand
-He [F]didn’t under[G]stand
+He [F]didn’t [F] 
+under[G]stand [G]
 
 Verse_2:
 [Am]   My guitar is paper [C]thin
@@ -34,7 +35,8 @@ from the [F]unhappy man[D]
 [G]Covered in sm[C]iling sketches
 [F]something he didn’t [E]understand
 He [F]didn’t under[E]stand
-He [F]didn’t under[G]stand
+He [F]didn’t [F] 
+under[G]stand [G]
 
 Instrumental:
 [Am - C - Am - C]
@@ -47,17 +49,18 @@ Bridge:
 {pp}They [F]dreamed of meadow
 {pp}[G]that they could not keep
 
-{pp}A [C]place to escape the struggles
-{pp}of [Em]which they can’t speak 
-{pp}[F]hopes of greener grass,
-{pp}clear [G]river running deep
+{p}A [C]place to escape the struggles
+{p}of [Em]which they can’t speak 
+{p}[F]hopes of greener grass,
+{p}clear [G]river running deep
  
-something they [F]didn’t under[E]stand
-they [F]didn’t under[E]stand
-they [F]didn’t under[G]stand
+{f}something they [F]didn’t under[E]stand
+{f}they [F]didn’t under[E]stand
+{f}He [F]didn’t [F] 
+{f}under[G]stand [G]
 
 Outro:
-{pp}[A]When the gate [D]closes 
-{pp}the [G]break in the fence stays [A]open
+{p}[A]When the gate [D]closes 
+{p}the [G]break in the fence stays [A]open
 [A]When the gate [D]closes 
 the [G]break in the fence stays [A]open
