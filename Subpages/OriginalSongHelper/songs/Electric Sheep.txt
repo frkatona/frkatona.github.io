@@ -1,5 +1,5 @@
 Phillip's Electric Sheep
-Seana Wood - v24.11 - Am - 130 BPM
+Seana Wood - v25.03.17 - Am - 130 BPM
 Intro:
 [Am - C - Am - C]
 [Am - C - Am - G]
@@ -54,10 +54,10 @@ Bridge:
 {p}[F]hopes of greener grass,
 {p}clear [G]river running deep
  
-{f}something they [F]didn’t under[E]stand
-{f}they [F]didn’t under[E]stand
-{f}He [F]didn’t [F] 
-{f}under[G]stand [G]
+something they [F]didn’t under[E]stand
+they [F]didn’t under[E]stand
+He [F]didn’t [F] 
+under[G]stand [G]
 
 Outro:
 {p}[A]When the gate [D]closes 
