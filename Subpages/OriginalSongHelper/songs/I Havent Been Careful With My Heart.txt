@@ -1,15 +1,20 @@
 I Haven’t Been Careful With My Heart
 Seana Wood - v23.04 - Dm - 110 BPM
 
+Instrumental:
+{2 bars each}
+[Dm  Am G  Dm]
+[Dm  Am  F  G]
+
 Verse_1:
-[Dm]   I haven't been careful with my heart[Am]
-[G]   the dream of love pulls me in[Dm]
+[Dm]   I haven't been careful with my [Am]heart
+[G]   the dream of love [Dm]pulls me in
 [Dm]   You should know this from the [Am]start	
 [F]   I fall out of it a[G]gain
 
 Verse_2:
 [Dm]   Our clean, defined, safe aff[Am]air
-All proper formalit[G]ies
+[G]  All proper formalit[Dm]ies
 [Dm]   We start to talk about our [Am]cares 
 [F]   It’s about to get mess[G]y
 
@@ -21,13 +26,13 @@ Chorus:
 
 Verse_3:
 [Dm]   Now whatever shall we [Am]do?
-It’s not nothing any[G]more [Dm]
+[G]   It’s not nothing any[Dm]more
 [Dm]   I see that it’s affecting [Am]you
-[F]  I hesitate to walk out that door  [G]
+[F]  I hesitate to walk out that [G]door
 
 Verse_4:
 [Dm]   Are we all just fools in this [Am]game?
-Caught in it's [G]magnetic embr[Dm]ace
+[G]   Caught in it's magnetic embr[Dm]ace
 [Dm]   Cupid's arrow has hit the [Am]aim
 [F]    But we're too close… for the [G]chase
 
@@ -45,8 +50,8 @@ Bridge:
 
 Verse_5:
 [Dm]   Stop letting ourselves get in the [Am]way
-[Am]   Let the world do like they [G]do  [Dm]
-[Dm]   find me in a[Am]lone cafe 
+[Am]   Let the world do like they [G]do  
+[Dm]   find me in a lone ca[Am]fe 
 [F]   For our own time table for [G]two
 
 Chorus:
