@@ -1,5 +1,5 @@
 Hoi Polloi
-Seana Wood - v24.02 - written G, played capo 2 (A) - 140 BPM
+Seana Wood - v25.04.07 - written G, played capo 2 (A) - 140 BPM
 
 Intro:
 [G - Cmaj7]
@@ -20,6 +20,9 @@ here we [C]are
 the hoi poll[G]oi, the hoi poll[C]oi 
 we are [G]strong, we’re the hoi poll[C]oi
 
+[G - Cmaj7]
+[G - Cmaj7]
+
 Verse_2:
 [G]   I haven't had a home for too [Cmaj7]long
 [G]   Being here is better than being [Cmaj7]still.  When
@@ -34,6 +37,9 @@ here we [C]are
 
 the hoi poll[G]oi, the hoi poll[C]oi 
 we are [G]strong, we’re the hoi poll[C]oi
+
+[G - Cmaj7]
+[G - Cmaj7]
 
 Verse_3:
 [G]   Singing here helps with my dreaming [Cmaj7]problem
@@ -53,11 +59,14 @@ we are [G]strong, we’re the hoi poll[C]oi
 Coda:
 You’re never al[G]one, with the hoi poll[C]oi
 
+[G - Cmaj7]
+[G - Cmaj7]
+
 Verse_4:
 To[G]morrow we’ll go back to happiness pre[Cmaj7]tending.  When
 [G]   getting out of bed will be just [Cmaj7]tough.  Some-
 [G]times there’s hope in no happy [Cmaj7]endings.  But
-[x]I have you {Antifragile} and that's en[Cmaj7]ough
+[x]I have you {venue} and that's en[Cmaj7]ough
 
 Chorus:
 I will [D]sing to you sadness and then
