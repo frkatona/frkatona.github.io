@@ -55,4 +55,4 @@ I fe[Am]el, I feel, I feel
 I fe[C]el, I feel, I feel
 I fe[Em]el         I feel
 I fe[G]el agaaaaaain
-(repeat outro x3)
+(repeat outro x3, {pp} on final)
