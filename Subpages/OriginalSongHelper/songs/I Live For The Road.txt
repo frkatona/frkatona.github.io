@@ -54,9 +54,9 @@ but what [C]I can fix is on the [G]road   [C-]  [G]
 
 Verse_4:
 {pp} The [G]grass is two feet high
-She [C]sleeps all day with the [G]dog   [C-]  [G]
-Frozen [G]meals, her meds,
-she won’t even [C]notice that I’m [G]gone   [C-]  [G]
+{pp} She [C]sleeps all day with the [G]dog   [C-]  [G]
+{pp} Frozen [G]meals, her meds,
+{pp} she won’t even [C]notice that I’m [G]gone   [C-]  [G]
 
 Chorus:
 I can’t [D]fix this broken home,
