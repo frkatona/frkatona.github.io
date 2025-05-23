@@ -1,573 +1,229 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- reference -->
-  <!-- 'chord theory, functional harmony, and mode mixture' infographic -->
-  <!-- https://docs.google.com/spreadsheets/d/1KxCgvSO3CSbso_q9yg9N0y8YUQS8v2ZIltA8H1A1sME/edit?gid=0#gid=0 -->
-  <meta charset="UTF-8">
-  <title>Chord Progressions 101</title>
-  <style>
-    /* === Basic Reset & Page Styles === */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: Arial, sans-serif;
-      background: #242424;
-      padding: 2rem;
-      line-height: 1.5;
-    }
-    h1 { font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; text-align: center; margin-bottom: 1rem; color: white; }
-    p { text-align: center; margin-bottom: 1rem; color: white; }
+import React, { Suspense, useRef, useEffect, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { OrbitControls, useGLTF, Environment, Html } from "@react-three/drei";
+import * as THREE from "three";
 
-    /* === Container & Table Setup === */
-    #table-container {
-      position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--bg-color);
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      table-layout: fixed;  /* force fixed column widths */
-    }
-    /* auto-size column 0 and fix the rest */
-    th, td {
-      border: 1px solid var(--border-color);
-      padding: 0.75rem;
-      text-align: center;
-      vertical-align: middle;
-      color: rgb(219, 219, 219);
-    }
-    th.layer-header {
-      background: var(--header-bg-color);
-      text-align: left;
-      position: relative;
-    }
-    /* Set fixed width for pitch columns */
-    th:not(.layer-header), td:not(:first-child) {
-      width: 80px;
-      min-width: 80px;
-    }
+// Tree collider positions
+const treeColliders = [
+  [5, 0, -3],
+  [-4, 0, 6],
+  [2, 0, 8]
+];
 
-    /* === Tooltip on Layer Headers === */
-    .tooltip {
-      font-size: 0.8em;
-      margin-left: 0.3em;
-      color: var(--tooltip-color);
-      cursor: pointer;
-      position: relative;
-    }
-    .tooltip .tooltip-text {
-      visibility: hidden;
-      width: 200px;
-      background-color: var(--tooltip-bg-color);
-      color: var(--tooltip-text-color);
-      text-align: left;
-      border-radius: 5px;
-      padding: 5px;
-      position: absolute;
-      z-index: 10;
-      bottom: 100%;
-      left: 0;
-      margin-bottom: 5px;
-      font-size: 0.8em;
-    }
-    .tooltip:hover .tooltip-text { visibility: visible; }
+function Hero({ onMove, paused }) {
+  const group = useRef();
+  const [position, setPosition] = useState([0, 0, 2]);
+  const velocity = useRef([0, 0, 0]);
+  const verticalVelocity = useRef(0);
+  const isJumping = useRef(false);
+  let model;
 
-    /* === Frequency Cell (Clickable) & Flash Animation === */
-    td.pitchclass-cell {
-      cursor: pointer;
-      position: relative;
-      transition: background-color 0.3s;
-    }
-    td.pitchclass-cell.selected { background: var(--selected-bg-color); }
-    @keyframes flash {
-      0% { background-color: var(--selected-bg-color); }
-      50% { background-color: var(--bg-color); }
-      100% { background-color: var(--selected-bg-color); }
-    }
-    .flash { animation: flash 0.5s ease-in-out 3; }
+  try {
+    const { scene } = useGLTF("/link_model.glb");
+    model = <primitive ref={group} object={scene} scale={1.5} position={position} />;
+  } catch (e) {
+    model = (
+      <mesh ref={group} position={position}>
+        <boxGeometry args={[1, 2, 1]} />
+        <meshStandardMaterial color="skyblue" />
+      </mesh>
+    );
+  }
 
-    /* === SVG Overlay for Arrows === */
-    #arrow-overlay {
-      position: absolute;      
-      top: 0;
-      left: 0;
-      pointer-events: none; /* allow clicks through the SVG */
-    }
-
-    /* === Zebra Striping for Rows === */
-    tbody tr:nth-child(even) { background: var(--zebra-bg-color); }
-
-    /* === Mode Mixture Chart === */
-    #mode-mixture, #secondary-dominants, #extensions {
-      margin-top: 2rem;
-      text-align: center;
-      padding: 1rem;
-      background: var(--bg-color);
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      color: white;
-    }
-
-    /* === Secondary Dominants === */
-    /* #secondary-dominants {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: var(--bg-color);
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      color: white;
-    } */
-
-    /* === Extensions === */
-    /* #extensions {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: var(--bg-color);
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      color: white; 
-    }*/
-
-    /* === Responsive Styles === */
-    @media (max-width: 600px) {
-      th:not(.layer-header), td:not(:first-child) {
-      width: 60px;
-      min-width: 60px;
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const speed = 0.1;
+      if (paused.current) return;
+      switch (e.key) {
+        case "ArrowUp": velocity.current[2] = -speed; break;
+        case "ArrowDown": velocity.current[2] = speed; break;
+        case "ArrowLeft": velocity.current[0] = -speed; break;
+        case "ArrowRight": velocity.current[0] = speed; break;
+        case " ":
+          if (!isJumping.current) {
+            verticalVelocity.current = 0.2;
+            isJumping.current = true;
+          }
+          break;
       }
-      th.layer-header { font-size: 0.8em; }
-      .tooltip .tooltip-text { width: 150px; }
-    }
-
-    @media (max-width: 400px) {
-      th:not(.layer-header), td:not(:first-child) {
-      width: 50px;
-      min-width: 50px;
+    };
+    const handleKeyUp = (e) => {
+      if (paused.current) return;
+      switch (e.key) {
+        case "ArrowUp":
+        case "ArrowDown": velocity.current[2] = 0; break;
+        case "ArrowLeft":
+        case "ArrowRight": velocity.current[0] = 0; break;
       }
-      th.layer-header { font-size: 0.7em; }
-      .tooltip .tooltip-text { width: 120px; }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [paused]);
+
+  useFrame(() => {
+    if (!group.current || paused.current) return;
+    const proposedX = position[0] + velocity.current[0];
+    const proposedZ = position[2] + velocity.current[2];
+    let proposedY = position[1] + verticalVelocity.current;
+
+    if (isJumping.current) verticalVelocity.current -= 0.01;
+    if (proposedY <= 0) {
+      proposedY = 0;
+      verticalVelocity.current = 0;
+      isJumping.current = false;
     }
 
-    /* === Dark Mode Variables === */
-    :root {
-      --bg-color: #333;
-      --border-color: #555;
-      --header-bg-color: #444;
-      --tooltip-color: #bbb;
-      --tooltip-bg-color: #222;
-      --tooltip-text-color: #fff;
-      --selected-bg-color: #5a5316;
-      --zebra-bg-color: #3a3a3a;
-    }
+    const testX = treeColliders.some(([x, _, z]) => Math.hypot(proposedX - x, position[2] - z) < 1.0);
+    const testZ = treeColliders.some(([x, _, z]) => Math.hypot(position[0] - x, proposedZ - z) < 1.0);
+    const testBoth = treeColliders.some(([x, _, z]) => Math.hypot(proposedX - x, proposedZ - z) < 1.0);
 
-    /* === Light Mode Variables === */
-    :root.light-mode {
-      --bg-color: #fff;
-      --border-color: #ccc;
-      --header-bg-color: #eee;
-      --tooltip-color: #555;
-      --tooltip-bg-color: #333;
-      --tooltip-text-color: #fff;
-      --selected-bg-color: #fff174;
-      --zebra-bg-color: #f9f9f9;
-    }
-    </style>
+    let newPos = [...position];
+    if (!testBoth) newPos = [proposedX, proposedY, proposedZ];
+    else if (!testX) newPos = [proposedX, proposedY, position[2]];
+    else if (!testZ) newPos = [position[0], proposedY, proposedZ];
+    else newPos = [position[0], proposedY, position[2]];
 
-    <!-- <script>
-    // Toggle dark mode
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('light-mode');
-    }
-    </script>
-    <button onclick="toggleDarkMode()">Toggle Dark Mode</button> -->
-</head>
-<body>
+    setPosition(newPos);
+    group.current.position.set(...newPos);
+    onMove(newPos);
+  });
 
-  <h1>Part I: Introduction to Building Chords and Chord Functions</h1>
-  <p>Click a frequency cell to select the key. Hover on the “?” for definitions.</p>
+  return model;
+}
 
-  <div id="table-container">
-    <table>
-      <tbody>
+function Diagnostics({ heroPosition, visible }) {
+  return visible ? (
+    <Html>
+      <div style={{ position: "absolute", top: 10, left: 10, color: "white", fontSize: 12 }}>
+        <div>X: {heroPosition[0].toFixed(2)}</div>
+        <div>Y: {heroPosition[1].toFixed(2)}</div>
+        <div>Z: {heroPosition[2].toFixed(2)}</div>
+      </div>
+    </Html>
+  ) : null;
+}
 
-        <!-- 1. frequency (Hz) -->
-        <tr>
-          <th class="layer-header">
-        frequency (Hz)
-          <span class="tooltip">?
-            <span class="tooltip-text">
-                Approximate frequencies corresponding to modern pitch definitions. These are defined around "A4" being defined (arbitrarily) as 440 Hz.  Doubling or halving this (or any frequency) yields the "octave" of that frequency's pitch (A3 = 220 Hz, A4 = 440 Hz, A5 = 880 Hz, etc.).  The "distance" between any two adjacent notes is called a "half-step", a "semi-tone", or "100 cents" and  is  frequency by 2^(1/12).  This system, known as "12-tone equal temperament", is the most common tuning system in Western music.  To delve further into why, I recommend the video "Why it's impossible to tune a piano" by MinutePhysics and perhaps the first half of "Music and Measure Theory" by 3Blue1Brown.
-            </span>
-          </span>
-          </th>
-          <td class="frequency-cell" data-frequency="261.63">262</td>
-          <td class="frequency-cell" data-frequency="277.18">277</td>
-          <td class="frequency-cell" data-frequency="293.66">294</td>
-          <td class="frequency-cell" data-frequency="311.13">311</td>
-          <td class="frequency-cell" data-frequency="329.63">330</td>
-          <td class="frequency-cell" data-frequency="349.23">349</td>
-          <td class="frequency-cell" data-frequency="369.99">370</td>
-          <td class="frequency-cell" data-frequency="392.00">392</td>
-          <td class="frequency-cell" data-frequency="415.30">415</td>
-          <td class="frequency-cell" data-frequency="440.00">440</td>
-          <td class="frequency-cell" data-frequency="466.16">466</td>
-          <td class="frequency-cell" data-frequency="493.88">494</td>
-        </tr>
+function CameraController({ target }) {
+  const { camera } = useThree();
+  useFrame(() => {
+    const lerpFactor = 0.1;
+    const dx = target[0] - camera.position.x;
+    const dy = target[1] + 20 - camera.position.y;
+    const dz = target[2] + 10 - camera.position.z;
+    camera.position.x += dx * lerpFactor;
+    camera.position.y += dy * lerpFactor;
+    camera.position.z += dz * lerpFactor;
+    camera.lookAt(target[0], target[1], target[2]);
+  });
+  return null;
+}
 
-        <!-- 2.0 Pitch Row -->
-        <tr>
-          <th class="layer-header">
-            pitch
-            <span class="tooltip">?
-              <span class="tooltip-text">
-                The note name.  Note that the "sharp" and "flat" notes are equivalent — i.e., they refer to the exact same key on a piano ("enharmonic equivalence").  The distinction becomes useful when discussing key signatures, but it is not critical and everyone will understand your meaning in the meantime.
-              </span>
-            </span>
-          </th>
-          <td>C4</td>
-          <td>C♯4/D♭4</td>
-          <td>D4</td>
-          <td>D♯4/E♭4</td>
-          <td>E4</td>
-          <td>F4</td>
-          <td>F♯4/G♭4</td>
-          <td>G4</td>
-          <td>G♯4/A♭4</td>
-          <td>A4</td>
-          <td>A♯4/B♭4</td>
-          <td>B4</td>
-        </tr>
+function Ground() {
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 512;
+  const ctx = canvas.getContext('2d');
+  const gradient = ctx.createRadialGradient(256, 256, 100, 256, 256, 256);
+  gradient.addColorStop(0, '#2e8b3c');
+  gradient.addColorStop(1, '#23552d');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 512, 512);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(10, 100);
 
-        <!-- 2.1 Pitch Class Row -->
-        <tr>
-          <th class="layer-header">
-            pitch class
-            <span class="tooltip">?
-              <span class="tooltip-text">
-                The note name, independent of octave.  Remember that chords are built from pitch classes rather than pitches — i.e., any C, E, and G note(s) across the keyboard will form a C major chord, regardless of their octave.
-              </span>
-            </span>
-          </th>
-          <td class="pitchclass-cell" data-pitchclass="C">C</td>
-          <td class="pitchclass-cell" data-pitchclass="C-sharp">C♯/D♭</td>
-          <td class="pitchclass-cell" data-pitchclass="D">D</td>
-          <td class="pitchclass-cell" data-pitchclass="D-sharp">D♯/E♭</td>
-          <td class="pitchclass-cell" data-pitchclass="E">E</td>
-          <td class="pitchclass-cell" data-pitchclass="F">F</td>
-          <td class="pitchclass-cell" data-pitchclass="F-sharp">F♯/G♭</td>
-          <td class="pitchclass-cell" data-pitchclass="G">G</td>
-          <td class="pitchclass-cell" data-pitchclass="G-sharp">G♯/A♭</td>
-          <td class="pitchclass-cell" data-pitchclass="A">A</td>
-          <td class="pitchclass-cell" data-pitchclass="A-sharp">A♯/B♭</td>
-          <td class="pitchclass-cell" data-pitchclass="B">B</td>
-        </tr>
+  return (
+    <mesh rotation-x={-Math.PI / 2} receiveShadow>
+      <planeGeometry args={[100, 100]} />
+      <meshStandardMaterial map={texture} />
+    </mesh>
+  );
+}
 
-        <!-- 3. Scale Degree Row (Key-dependent) -->
-        <tr>
-          <th class="layer-header">
-            scale degree
-            <span class="tooltip">?
-              <span class="tooltip-text">
-                The number for each note’s position in the major scale of the selected key.
-              </span>
-            </span>
-          </th>
-          <td id="degree-0">-</td>
-          <td id="degree-1">-</td>
-          <td id="degree-2">-</td>
-          <td id="degree-3">-</td>
-          <td id="degree-4">-</td>
-          <td id="degree-5">-</td>
-          <td id="degree-6">-</td>
-          <td id="degree-7">-</td>
-          <td id="degree-8">-</td>
-          <td id="degree-9">-</td>
-          <td id="degree-10">-</td>
-          <td id="degree-11">-</td>
-        </tr>
+function Skybox() {
+  const { scene } = useThree();
+  useEffect(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 256);
+    gradient.addColorStop(0, '#1e3c72');
+    gradient.addColorStop(1, '#f3904f');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 1, 256);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.magFilter = THREE.LinearFilter;
+    scene.background = texture;
+  }, [scene]);
+  return null;
+}
 
-        <!-- 3. Scale Degree Row (Key-dependent) -->
-        <tr>
-          <th class="layer-header">
-            scale triad
-            <span class="tooltip">?
-              <span class="tooltip-text">
-                The diatonic triads for the selected key. In a major key these are: I, ii, iii, IV, V, vi, vii° where uppercase Roman numerals denote major chords, lowercase Roman numerals denote minor chords, and the ° symbold denotes a diminished chord.
-              </span>
-            </span>
-          </th>
-          <td id="scale-0">-</td>
-          <td id="scale-1">-</td>
-          <td id="scale-2">-</td>
-          <td id="scale-3">-</td>
-          <td id="scale-4">-</td>
-          <td id="scale-5">-</td>
-          <td id="scale-6">-</td>
-          <td id="scale-7">-</td>
-          <td id="scale-8">-</td>
-          <td id="scale-9">-</td>
-          <td id="scale-10">-</td>
-          <td id="scale-11">-</td>
-        </tr>
+function Tree({ position }) {
+  return (
+    <group position={position}>
+      <mesh position={[0, 1, 0]}>
+        <cylinderGeometry args={[0.2, 0.2, 2]} />
+        <meshStandardMaterial color="sienna" />
+      </mesh>
+      <mesh position={[0, 2.5, 0]}>
+        <sphereGeometry args={[1]} />
+        <meshStandardMaterial color="green" />
+      </mesh>
+    </group>
+  );
+}
 
-        <!-- 3. Scale Degree Row (Key-dependent) -->
-        <tr>
-          <th class="layer-header">
-            missing parts
-            <span class="tooltip">?
-              <span class="tooltip-text">
-                asdf
-              </span>
-            </span>
-          </th>
-          <td id="missing-0">-</td>
-          <td id="missing-1">-</td>
-          <td id="missing-2">-</td>
-          <td id="missing-3">-</td>
-          <td id="missing-4">-</td>
-          <td id="missing-5">-</td>
-          <td id="missing-6">-</td>
-          <td id="missing-7">-</td>
-          <td id="missing-8">-</td>
-          <td id="missing-9">-</td>
-          <td id="missing-10">-</td>
-          <td id="missing-11">-</td>
-        </tr>
+function Scene({ paused }) {
+  const [heroPosition, setHeroPosition] = useState([0, 0, 2]);
+  const [showDiagnostics, setShowDiagnostics] = useState(true);
 
-        <!-- 4. Chords Row (Key-dependent) -->
-        <tr>
-          <th class="layer-header">
-            chords
-            <span class="tooltip">?
-              <span class="tooltip-text">
-                Diatonic chords for the selected key. In a major key these are: I, ii, iii, IV, V, vi, vii°.
-              </span>
-            </span>
-          </th>
-          <td id="chord-0">-</td>
-          <td id="chord-1">-</td>
-          <td id="chord-2">-</td>
-          <td id="chord-3">-</td>
-          <td id="chord-4">-</td>
-          <td id="chord-5">-</td>
-          <td id="chord-6">-</td>
-          <td id="chord-7">-</td>
-          <td id="chord-8">-</td>
-          <td id="chord-9">-</td>
-          <td id="chord-10">-</td>
-          <td id="chord-11">-</td>
-        </tr>
+  useEffect(() => {
+    const toggle = (e) => e.key === '`' && setShowDiagnostics((s) => !s);
+    window.addEventListener('keydown', toggle);
+    return () => window.removeEventListener('keydown', toggle);
+  }, []);
 
-        <!-- 5. Functional Harmony Row (Key-dependent) -->
-        <tr>
-          <th class="layer-header">
-            functional harmony
-            <span class="tooltip">?
-              <span class="tooltip-text">
-                The harmonic function (e.g., Tonic, Dominant) of each chord in the selected key.
-              </span>
-            </span>
-          </th>
-          <td id="func-0">-</td>
-          <td id="func-1">-</td>
-          <td id="func-2">-</td>
-          <td id="func-3">-</td>
-          <td id="func-4">-</td>
-          <td id="func-5">-</td>
-          <td id="func-6">-</td>
-          <td id="func-7">-</td>
-          <td id="func-8">-</td>
-          <td id="func-9">-</td>
-          <td id="func-10">-</td>
-          <td id="func-11">-</td>
-        </tr>
+  return (
+    <>
+      <Skybox />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[10, 10, 5]} intensity={1.2} castShadow />
+      <Ground />
+      <Hero onMove={setHeroPosition} paused={paused} />
+      <CameraController target={heroPosition} />
+      <Tree position={[5, 0, -3]} />
+      <Tree position={[-4, 0, 6]} />
+      <Tree position={[2, 0, 8]} />
+      <Environment preset="sunset" />
+      <Diagnostics heroPosition={heroPosition} visible={showDiagnostics} />
+    </>
+  );
+}
 
-        <!-- 6. Primary Mode / Borrowed Chords -->
-        <tr>
-          <th class="layer-header">
-            primary mode
-            <span class="tooltip">?
-              <span class="tooltip-text">
-                Common borrowed chords or modal interchange options.
-              </span>
-            </span>
-          </th>
-          <td colspan="12">I / ii / ♭III, etc. (context dependent)</td>
-        </tr>
+export default function Zelda3D() {
+  const [paused, setPaused] = useState(true);
 
-        <!-- 7. Example Progressions -->
-        <tr>
-          <th class="layer-header">
-            example progressions
-            <span class="tooltip">?
-              <span class="tooltip-text">
-                Real-world song progressions that use these harmonic functions.
-              </span>
-            </span>
-          </th>
-          <td colspan="12" style="text-align: left;">
-            <ul style="list-style: disc; padding-left: 1.5rem;">
-              <li><strong>Yes – “Owner of a Lonely Heart”</strong>: I → IV → …</li>
-              <li><strong>The Beatles – “Blackbird”</strong>: Shifts between major &amp; minor</li>
-              <li><strong>The Animals – “House of the Rising Sun”</strong>: i → III → IV → V → …</li>
-              <li><strong>The Eagles – “Hotel California”</strong>: i → VII → VI → …</li>
-              <li><strong>Billie Eilish – “Happier Than Ever”</strong>: I → IV → i → …</li>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- SVG overlay (positioned absolutely over the table) for curved arrows -->
-    <svg id="arrow-overlay"></svg>
-  </div>
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Enter') setPaused(false);
+      if (e.key === 'Escape') setPaused(true);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
 
-  <div id="mode-mixture">
-    <h1> Part II: Mode Mixture </h1>
-  </div>
-
-  <div id="secondary-dominants">
-    <h1> Part III: Secondary Dominants </h1>
-  </div>
-
-  <!-- <div id="extensions">
-   <h1> extensions </h1>
-  </div> -->
-
-  <script>
-    /* === Data & Key-Dependent Row Updates === */
-    const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-    const majorScaleOffsets = [0, 2, 4, 5, 7, 9, 11];
-    const majorRoman = ["I", "ii", "iii", "IV", "V", "vi", "vii°"];
-    const chordSuffix = ["", "m", "m", "", "", "m", "dim"];
-    const funcHarmony = ["tonic", "pre-dominant", "tonic", "pre-dominant", "dominant", "tonic", "dominant"];
-    const missingParts = ["b2", "b3", "b5", "b6", "b7"];
-
-    // Default key: C (index 0)
-    let selectedKeyIndex = 0;
-
-    function updateKeyDependentRows() {
-      let scale = [];
-      for (let i = 0; i < majorScaleOffsets.length; i++) {
-        let noteIndex = (selectedKeyIndex + majorScaleOffsets[i]) % 12;
-        scale.push({
-          noteIndex: noteIndex,
-          roman: majorRoman[i],
-          chord: noteNames[noteIndex] + chordSuffix[i],
-          func: funcHarmony[i],
-          missing: "-"
-        });
-      }
-      for (let i = 0; i < 12; i++) {
-        const cellScale = document.getElementById("scale-" + i);
-        const cellDegree = document.getElementById("degree-" + i);
-        const cellMissing = document.getElementById("missing-" + i);
-        const cellChord = document.getElementById("chord-" + i);
-        const cellFunc = document.getElementById("func-" + i);
-        let scaleObj = scale.find(obj => obj.noteIndex === i);
-        if (scaleObj) {
-          cellScale.textContent = scaleObj.roman;
-            cellDegree.textContent = majorScaleOffsets.indexOf(i) + 1;
-          cellChord.textContent = scaleObj.chord;
-          cellFunc.textContent = scaleObj.func;
-          cellMissing.textContent = "-";
-        } else {
-          cellScale.textContent = "-";
-          cellDegree.textContent = "-";
-          cellChord.textContent = "-";
-          cellFunc.textContent = "-";
-          cellMissing.textContent = missingParts[i];
-        }
-      }
-    }
-
-    /* === Frequency Cell Click Handler === */
-    const freqCells = document.querySelectorAll("td.pitchclass-cell");
-    freqCells.forEach((cell, index) => {
-      cell.addEventListener("click", function() {
-        freqCells.forEach(c => c.classList.remove("selected"));
-        this.classList.add("selected");
-        selectedKeyIndex = index; // first frequency cell (C) = index 0
-        updateKeyDependentRows();
-      });
-    });
-
-    /* === On Load: Flash default cell & update rows === */
-    window.addEventListener("load", function() {
-      const defaultCell = document.querySelector("td.pitchclass-cell[data-pitchclass='C']");
-      if (defaultCell) {
-        defaultCell.classList.add("selected", "flash");
-        setTimeout(() => { defaultCell.classList.remove("flash"); }, 1500);
-      }
-      updateKeyDependentRows();
-      drawArrows();
-    });
-
-    /* === Draw Curved Arrows via SVG Overlay === */
-    function drawArrows() {
-      const svg = document.getElementById("arrow-overlay");
-      svg.innerHTML = "";  // clear any previous content
-      const container = document.getElementById("table-container");
-      const containerRect = container.getBoundingClientRect();
-      const cells = Array.from(document.querySelectorAll("td.pitchclass-cell"));
-      if (cells.length < 2) return;
-
-      // Set SVG to cover the container
-      svg.setAttribute("width", container.offsetWidth);
-      svg.setAttribute("height", container.offsetHeight);
-
-      // Define an arrowhead marker
-      const svgns = "http://www.w3.org/2000/svg";
-      const defs = document.createElementNS(svgns, "defs");
-      const marker = document.createElementNS(svgns, "marker");
-      marker.setAttribute("id", "arrowhead");
-      marker.setAttribute("markerWidth", "10");
-      marker.setAttribute("markerHeight", "7");
-      marker.setAttribute("refX", "0");
-      marker.setAttribute("refY", "3.5");
-      marker.setAttribute("orient", "auto");
-      const markerPath = document.createElementNS(svgns, "path");
-      markerPath.setAttribute("d", "M0,0 L0,7 L10,3.5 z");
-      markerPath.setAttribute("fill", "#333");
-      marker.appendChild(markerPath);
-      defs.appendChild(marker);
-      svg.appendChild(defs);
-
-      // For each adjacent pair of frequency cells, draw a curved arrow
-      for (let i = 0; i < cells.length - 1; i++) {
-        const cellA = cells[i];
-        const cellB = cells[i + 1];
-        const rectA = cellA.getBoundingClientRect();
-        const rectB = cellB.getBoundingClientRect();
-        // Calculate start & end points relative to the container
-        const startX = rectA.right - containerRect.left;
-        const startY = rectA.bottom - containerRect.top;
-        const endX = rectB.left - containerRect.left;
-        const endY = rectB.bottom - containerRect.top;
-        const midX = (startX + endX) / 2;
-        const controlY = startY + 20; // curve 20px downward
-        const pathData = `M ${startX} ${startY} C ${midX} ${controlY}, ${midX} ${controlY}, ${endX} ${endY}`;
-        const path = document.createElementNS(svgns, "path");
-        path.setAttribute("d", pathData);
-        path.setAttribute("fill", "none");
-        path.setAttribute("stroke", "#333");
-        path.setAttribute("stroke-width", "2");
-        path.setAttribute("marker-end", "url(#arrowhead)");
-        svg.appendChild(path);
-
-        // Place multiplier label at the curve's midpoint.
-        const text = document.createElementNS(svgns, "text");
-        text.setAttribute("x", midX);
-        text.setAttribute("y", controlY + 15);
-        text.setAttribute("fill", "#333");
-        text.setAttribute("font-size", "12");
-        text.setAttribute("text-anchor", "middle");
-        // Using Unicode superscripts: "×2¹⁄¹²" (×2^(1/12))
-        text.textContent = "×2¹⁄¹²";
-        svg.appendChild(text);
-      }
-    }
-
-    window.addEventListener("resize", drawArrows);
-  </script>
-
-</body>
-</html>
+  return (
+    <div style={{ width: "100vw", height: "100vh", margin: 0, padding: 0, overflow: "hidden", position: "relative" }}>
+      {paused && <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.85)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, zIndex: 10 }}>Press Enter to Start</div>}
+      <Canvas shadows camera={{ position: [0, 5, 10], fov: 50 }}>
+        <Suspense fallback={null}>
+          <Scene paused={{ current: paused }} />
+        </Suspense>
+      </Canvas>
+    </div>
+  );
+}
