@@ -67,12 +67,12 @@
       transform: translateX(-50%);
       top: 8em; /* timeline line level */
       transition: box-shadow 0.2s;
+      opacity: 0.95;
       }
 
     .timeline-horizontal-container {
       margin-top: 10em;
     }
-
     
     .timeline-horizontal {
       display: flex;
@@ -131,11 +131,12 @@
     .event-desc.memoir { background: rgb(118, 62, 139); }
     .event-connector {
       width: 2px;
-      background: #6366f1cc;
+      background:rgba(122, 175, 240, 0.8);
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 2;
+      z-index: -1;
+      opacity: 0.3;
       /* height and direction set inline */
     }
 
@@ -242,15 +243,15 @@
     ];
 
   const controversyEvents = [
-    { year: 1799, desc: "Adams publishes <em>Summary History of New-England</em>", verticalOffset: 5 },
-    { year: 1804, desc: "Morse & Parish publish <em>Compendious History of New-England</em><br>— Adams approaches Morse at his Thursday sermon", verticalOffset: 8 },
-    { year: 1805, desc: "Morse publishes <em>True Reasons for the Election of Henry Ware</em><br>— Adams discovers Morse & Parish plan to publish an abridgment<br>— Adams meets Stephen Higginson<br>— Higginson confronts Morse, Morse agrees to delay<br>— Adams publishes <em>An Abridgment of the History of New-England</em>", verticalOffset: 12 },
-    { year: 1806, desc: "Orthodox Eliphalet Pearson resigns as Harvard acting president, replaced by liberal Samuel Webber", verticalOffset: 5 },
-    { year: 1807, desc: "Adams publishes <em>An Abridgment of the History of New-England</em>, 2nd edition", verticalOffset: 8 },
-    { year: 1808, desc: "Adams discovers Morse & Parish are moving forward with their abridgment<br>— Morse offers to bring dispute before referees", verticalOffset: 12 },
-    { year: 1809, desc: "Dispute brought before referees, who decide in Adams’s favor<br>— Abridgment of <em>Compendious History</em> published<br>— Morse attempts to meet Adams, she declines", verticalOffset: 5 },
-    { year: 1814, desc: "Morse discovers William Shaw has been circulating Adams's plagiarism accusations since 1805<br>— Morse publishes his account in the Centinel; Adams responds", verticalOffset: 8 },
-    { year: 1815, desc: "Morse publishes <em>An Appeal to the Public</em><br>— Adams publishes <em>Narrative of the Controversy</em>", verticalOffset: 12 }
+    // { year: 1799, desc: "Adams publishes <em>Summary History of New-England</em>", verticalOffset: 5 },
+    { year: 1804, desc: "Morse & Parish publish <em>Compendious History of New-England</em><br>— Adams approaches Morse at his Thursday sermon", verticalOffset: 20 },
+    { year: 1805, desc: "Morse publishes <em>True Reasons for the Election of Henry Ware</em><br>— Adams discovers Morse & Parish plan to publish an abridgment<br>— Adams meets Stephen Higginson<br>— Higginson confronts Morse, Morse agrees to delay<br>— Adams publishes <em>An Abridgment of the History of New-England</em>", verticalOffset: 35 },
+    { year: 1806, desc: "Orthodox Eliphalet Pearson resigns as Harvard acting president, replaced by liberal Samuel Webber", verticalOffset: 65 },
+    // { year: 1807, desc: "Adams publishes <em>An Abridgment of the History of New-England</em>, 2nd edition", verticalOffset: 8 },
+    { year: 1808, desc: "Adams discovers Morse & Parish are moving forward with their abridgment<br>— Morse offers to bring dispute before referees", verticalOffset: 20 },
+    { year: 1809, desc: "Dispute brought before referees, who decide in Adams’s favor<br>— Abridgment of <em>Compendious History</em> published<br>— Morse attempts to meet Adams, she declines", verticalOffset: 33 },
+    { year: 1814, desc: "Morse discovers William Shaw has been circulating Adams's plagiarism accusations since 1805<br>— Morse publishes his account in the Centinel; Adams responds", verticalOffset: 20 },
+    { year: 1815, desc: "Morse publishes <em>An Appeal to the Public</em><br>— Adams publishes <em>Narrative of the Controversy</em>", verticalOffset: 38 }
   ];
 
   //  controversy events to main timeline as well (but flagged)
@@ -259,7 +260,8 @@
       year: e.year,
       desc: e.desc,
       cat: "controversy",
-      controversy: true
+      controversy: true,
+      verticalOffset: e.verticalOffset // Copy verticalOffset
     }))
   );
 
@@ -327,63 +329,104 @@
       }
 
       // Year and description box, offset vertically
+      const contentDiv = document.createElement('div');
+      contentDiv.style.position = 'absolute';
+      contentDiv.style.left = '50%';
+      contentDiv.style.transform = 'translateX(-50%)';
+      contentDiv.style.top = (8 + ev.verticalOffset) + 'em';
+      contentDiv.style.display = 'flex';
+      contentDiv.style.flexDirection = 'column';
+      contentDiv.style.alignItems = 'center';
+      contentDiv.style.zIndex = 10;
+
       const yearDiv = document.createElement('div');
       yearDiv.className = 'event-year';
-      yearDiv.style.position = 'absolute';
-      yearDiv.style.left = '50%';
-      yearDiv.style.transform = 'translateX(-50%)';
-      yearDiv.style.top = (8 + ev.verticalOffset) + 'em';
-      yearDiv.style.zIndex = 10;
       yearDiv.innerHTML = ev.year;
-      eventDiv.appendChild(yearDiv);
 
       const descDiv = document.createElement('div');
       descDiv.className = `event-desc ${ev.cat}`;
-      descDiv.style.position = 'absolute';
-      descDiv.style.top = (8 + ev.verticalOffset + 1.8) + 'em';
-      descDiv.style.zIndex = 10;
       descDiv.innerHTML = ev.desc;
-      eventDiv.appendChild(descDiv);
+      descDiv.style.marginTop = '0.5em';
+
+      contentDiv.appendChild(yearDiv);
+      contentDiv.appendChild(descDiv);
+      eventDiv.appendChild(contentDiv);
 
       timelineEl.appendChild(eventDiv);
     });
 
     // --- Controversy timeline logic ---
-    // Used for staggering events so they don't overlap
-    const usedSlots = {};
-    function getSlot(leftPercent, range=6) {
-      // Find nearest available slot up to 'range' positions up/down
-      for (let i = -range; i <= range; i++) {
-        const slot = (i % 2 === 0) ? i : -i; // alternate above/below for neatness
-        const check = (leftPercent*1000|0) + slot*80;
-        if (!usedSlots[check]) {
-          usedSlots[check] = true;
-          return slot;
-        }
+    // Create offset for controversy events
+    const controversyOffsets = {};
+    function getControversyOffset(year) {
+      if (!controversyOffsets[year]) {
+        controversyOffsets[year] = Object.keys(controversyOffsets).length * 2.2;
       }
-      return 0;
+      return controversyOffsets[year];
     }
 
     // Render controversy events (hidden by default)
     timelineWithControversy.sort((a,b) => a.year-b.year || (a.cat==="controversy"?1:-1));
     timelineWithControversy.forEach((ev, idx) => {
       if (ev.cat !== "controversy") return; // Only render controversy events here
-      const leftFrac = (ev.year - minYear) / totalYears;
-      const left = (leftFrac * 100).toFixed(3) + "%";
-      let slot = 4; // place below timeline, hidden initially
-      const center = 8.3;
-      let top = center + slot*2.2;
-      const div = document.createElement('div');
-      div.className = 'event-horizontal controversy';
-      div.style.left = left;
-      div.style.top = top + "em";
-      div.style.display = "none";
-      div.innerHTML = `
-        <span class="dot controversy"></span>
-        <div class="event-year">${ev.year}</div>
-        <div class="event-desc controversy">${ev.desc}</div>
-      `;
-      timelineEl.appendChild(div);
+      const left = ((ev.year - minYear) / totalYears * 100).toFixed(3) + "%";
+      const eventDiv = document.createElement('div');
+      eventDiv.className = 'event-horizontal controversy';
+      eventDiv.style.left = left;
+      eventDiv.style.width = '6.5em';
+      eventDiv.style.display = "none";
+
+      // Dot is always at 8em (timeline line)
+      const dot = document.createElement('span');
+      dot.className = 'dot controversy';
+      dot.style.top = '8em';
+      dot.style.left = '50%';
+      dot.style.zIndex = 9;
+      eventDiv.appendChild(dot);
+
+      // If needed, add connector line
+      if(ev.verticalOffset && ev.verticalOffset !== 0) {
+        const connector = document.createElement('div');
+        connector.className = 'event-connector';
+        if (ev.verticalOffset > 0) {
+          connector.style.top = '8em';
+        } else {
+          connector.style.top = (8 + ev.verticalOffset + 1.3) + 'em';
+        }
+        connector.style.height = Math.abs(ev.verticalOffset) + 'em';
+        connector.style.zIndex = 0; // Ensure controversy connectors are always behind
+        eventDiv.appendChild(connector);
+      }
+      // Year and description box, offset vertically
+      const contentDiv = document.createElement('div');
+      contentDiv.style.position = 'absolute';
+      contentDiv.style.left = '50%';
+      contentDiv.style.transform = 'translateX(-50%)';
+      contentDiv.style.top = (8 + (ev.verticalOffset || 0)) + 'em';
+      contentDiv.style.display = 'flex';
+      contentDiv.style.flexDirection = 'column';
+      contentDiv.style.alignItems = 'center';
+      contentDiv.style.zIndex = 10;
+
+      const yearDiv = document.createElement('div');
+      yearDiv.className = 'event-year';
+      yearDiv.innerHTML = ev.year;
+
+      const descDiv = document.createElement('div');
+      descDiv.className = 'event-desc controversy';
+      descDiv.innerHTML = ev.desc;
+      descDiv.style.marginTop = '0.5em';
+
+      contentDiv.appendChild(yearDiv);
+      contentDiv.appendChild(descDiv);
+      eventDiv.appendChild(contentDiv);
+      descDiv.style.position = 'absolute';
+      descDiv.style.top = (8 + (ev.verticalOffset || 0) + 1.8) + 'em';
+      descDiv.style.zIndex = 10;
+      descDiv.innerHTML = ev.desc;
+      eventDiv.appendChild(descDiv);
+
+      timelineEl.appendChild(eventDiv);
     });
 
     // Toggle function for controversy events
