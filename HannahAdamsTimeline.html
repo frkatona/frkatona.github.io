@@ -242,28 +242,28 @@
       { year: 1832, desc: "<em>A Memoir of Miss Hannah Adams</em>", cat: "memoir", verticalOffset: -7 }
     ];
 
-  const controversyEvents = [
-    // { year: 1799, desc: "Adams publishes <em>Summary History of New-England</em>", verticalOffset: 5 },
-    { year: 1804, desc: "Morse & Parish publish <em>Compendious History of New-England</em><br>— Adams approaches Morse at his Thursday sermon", verticalOffset: 20 },
-    { year: 1805, desc: "Morse publishes <em>True Reasons for the Election of Henry Ware</em><br>— Adams discovers Morse & Parish plan to publish an abridgment<br>— Adams meets Stephen Higginson<br>— Higginson confronts Morse, Morse agrees to delay<br>— Adams publishes <em>An Abridgment of the History of New-England</em>", verticalOffset: 35 },
-    { year: 1806, desc: "Orthodox Eliphalet Pearson resigns as Harvard acting president, replaced by liberal Samuel Webber", verticalOffset: 65 },
-    // { year: 1807, desc: "Adams publishes <em>An Abridgment of the History of New-England</em>, 2nd edition", verticalOffset: 8 },
-    { year: 1808, desc: "Adams discovers Morse & Parish are moving forward with their abridgment<br>— Morse offers to bring dispute before referees", verticalOffset: 20 },
-    { year: 1809, desc: "Dispute brought before referees, who decide in Adams’s favor<br>— Abridgment of <em>Compendious History</em> published<br>— Morse attempts to meet Adams, she declines", verticalOffset: 33 },
-    { year: 1814, desc: "Morse discovers William Shaw has been circulating Adams's plagiarism accusations since 1805<br>— Morse publishes his account in the Centinel; Adams responds", verticalOffset: 20 },
-    { year: 1815, desc: "Morse publishes <em>An Appeal to the Public</em><br>— Adams publishes <em>Narrative of the Controversy</em>", verticalOffset: 38 }
-  ];
+    const controversyEvents = [
+      // { year: 1799, desc: "Adams publishes <em>Summary History of New-England</em>", verticalOffset: 5 },
+      { year: 1804, desc: "Morse & Parish publish <em>Compendious History of New-England</em><br>— Adams approaches Morse at his Thursday sermon", verticalOffset: 20 },
+      { year: 1805, desc: "Morse publishes <em>True Reasons for the Election of Henry Ware</em><br>— Adams discovers Morse & Parish plan to publish an abridgment<br>— Adams meets Stephen Higginson<br>— Higginson confronts Morse, Morse agrees to delay<br>— Adams publishes <em>An Abridgment of the History of New-England</em>", verticalOffset: 35 },
+      { year: 1806, desc: "Orthodox Eliphalet Pearson resigns as Harvard acting president, replaced by liberal Samuel Webber", verticalOffset: 65 },
+      // { year: 1807, desc: "Adams publishes <em>An Abridgment of the History of New-England</em>, 2nd edition", verticalOffset: 8 },
+      { year: 1808, desc: "Adams discovers Morse & Parish are moving forward with their abridgment<br>— Morse offers to bring dispute before referees", verticalOffset: 20 },
+      { year: 1809, desc: "Dispute brought before referees, who decide in Adams’s favor<br>— Abridgment of <em>Compendious History</em> published<br>— Morse attempts to meet Adams, she declines", verticalOffset: 33 },
+      { year: 1814, desc: "Morse discovers William Shaw has been circulating Adams's plagiarism accusations since 1805<br>— Morse publishes his account in the Centinel; Adams responds", verticalOffset: 20 },
+      { year: 1815, desc: "Morse publishes <em>An Appeal to the Public</em><br>— Adams publishes <em>Narrative of the Controversy</em>", verticalOffset: 38 }
+    ];
 
-  //  controversy events to main timeline as well (but flagged)
-  const timelineWithControversy = timelineEvents.concat(
-    controversyEvents.map(e => ({
-      year: e.year,
-      desc: e.desc,
-      cat: "controversy",
-      controversy: true,
-      verticalOffset: e.verticalOffset // Copy verticalOffset
-    }))
-  );
+    //  controversy events to main timeline as well (but flagged)
+    const timelineWithControversy = timelineEvents.concat(
+      controversyEvents.map(e => ({
+        year: e.year,
+        desc: e.desc,
+        cat: "controversy",
+        controversy: true,
+        verticalOffset: e.verticalOffset // Copy verticalOffset
+      }))
+    );
 
     // Year range for proportional spacing
     const minYear = 1748, maxYear = 1840;
@@ -271,163 +271,192 @@
 
     // For main timeline
     const timelineEl = document.getElementById('timeline-main');
-    // Add major and minor ticks
-    const majorInterval = 10;
-    const minorInterval = 1;
-    for(let y = Math.ceil(minYear/majorInterval)*majorInterval; y <= maxYear; y += majorInterval) {
-      const left = ((y - minYear) / totalYears * 100).toFixed(3) + "%";
-      let tick = document.createElement('div');
-      tick.className = 'tick major';
-      tick.style.left = left;
-      tick.style.zIndex = 8;
-      timelineEl.appendChild(tick);
-      let label = document.createElement('div');
-      label.className = 'tick-label';
-      label.textContent = y;
-      label.style.left = left;
-      label.style.zIndex = 11;
-      timelineEl.appendChild(label);
-    }
-    for(let y = minYear; y <= maxYear; y += minorInterval) {
-      if (y % majorInterval !== 0) {
-        const left = ((y - minYear) / totalYears * 100).toFixed(3) + "%";
+
+    // --- ZOOM LOGIC ---
+    let zoom = 1.0;
+    const minZoom = 0.5;
+    const maxZoom = 3.0;
+
+    function renderTimeline() {
+      // Remove all children except the .line
+      Array.from(timelineEl.children).forEach(child => {
+        if (!child.classList.contains('line')) timelineEl.removeChild(child);
+      });
+
+      // Add major and minor ticks
+      const majorInterval = 10;
+      const minorInterval = 1;
+      for(let y = Math.ceil(minYear/majorInterval)*majorInterval; y <= maxYear; y += majorInterval) {
+        const left = ((y - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
         let tick = document.createElement('div');
-        tick.className = 'tick minor';
+        tick.className = 'tick major';
         tick.style.left = left;
+        tick.style.zIndex = 8;
         timelineEl.appendChild(tick);
+        let label = document.createElement('div');
+        label.className = 'tick-label';
+        label.textContent = y;
+        label.style.left = left;
+        label.style.zIndex = 11;
+        timelineEl.appendChild(label);
+      }
+      for(let y = minYear; y <= maxYear; y += minorInterval) {
+        if (y % majorInterval !== 0) {
+          const left = ((y - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+          let tick = document.createElement('div');
+          tick.className = 'tick minor';
+          tick.style.left = left;
+          timelineEl.appendChild(tick);
+        }
+      }
+
+      // Render events with dot at timeline and desc/year offset vertically by verticalOffset
+      timelineEvents.forEach(ev => {
+        const left = ((ev.year - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'event-horizontal';
+        eventDiv.style.left = left;
+        eventDiv.style.width = '6.5em';
+
+        // Dot is always at 8em (timeline line)
+        const dot = document.createElement('span');
+        dot.className = `dot ${ev.cat}`;
+        dot.style.top = '8em';
+        dot.style.left = '50%';
+        dot.style.zIndex = 9;
+        eventDiv.appendChild(dot);
+
+        // If needed, add connector line
+        if(ev.verticalOffset && ev.verticalOffset !== 0) {
+          const connector = document.createElement('div');
+          connector.className = 'event-connector';
+          if (ev.verticalOffset > 0) {
+            connector.style.top = '8em';
+          } else {
+            // Start a little lower (e.g., 0.5em below the line)
+            connector.style.top = (8 + ev.verticalOffset + 1.3) + 'em';
+          }
+          connector.style.height = Math.abs(ev.verticalOffset) + 'em';
+          eventDiv.appendChild(connector);
+        }
+
+        // Year and description box, offset vertically
+        const contentDiv = document.createElement('div');
+        contentDiv.style.position = 'absolute';
+        contentDiv.style.left = '50%';
+        contentDiv.style.transform = 'translateX(-50%)';
+        contentDiv.style.top = (8 + ev.verticalOffset) + 'em';
+        contentDiv.style.display = 'flex';
+        contentDiv.style.flexDirection = 'column';
+        contentDiv.style.alignItems = 'center';
+        contentDiv.style.zIndex = 10;
+
+        const yearDiv = document.createElement('div');
+        yearDiv.className = 'event-year';
+        yearDiv.innerHTML = ev.year;
+
+        const descDiv = document.createElement('div');
+        descDiv.className = `event-desc ${ev.cat}`;
+        descDiv.innerHTML = ev.desc;
+        descDiv.style.marginTop = '0.5em';
+
+        contentDiv.appendChild(yearDiv);
+        contentDiv.appendChild(descDiv);
+        eventDiv.appendChild(contentDiv);
+
+        timelineEl.appendChild(eventDiv);
+      });
+
+      // --- Controversy timeline logic ---
+      // Render controversy events (hidden by default)
+      timelineWithControversy.sort((a,b) => a.year-b.year || (a.cat==="controversy"?1:-1));
+      timelineWithControversy.forEach((ev, idx) => {
+        if (ev.cat !== "controversy") return; // Only render controversy events here
+        const left = ((ev.year - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'event-horizontal controversy';
+        eventDiv.style.left = left;
+        eventDiv.style.width = '6.5em';
+        eventDiv.style.display = "none";
+
+        // Dot is always at 8em (timeline line)
+        const dot = document.createElement('span');
+        dot.className = 'dot controversy';
+        dot.style.top = '8em';
+        dot.style.left = '50%';
+        dot.style.zIndex = 9;
+        eventDiv.appendChild(dot);
+
+        // If needed, add connector line
+        if(ev.verticalOffset && ev.verticalOffset !== 0) {
+          const connector = document.createElement('div');
+          connector.className = 'event-connector';
+          if (ev.verticalOffset > 0) {
+            connector.style.top = '8em';
+          } else {
+            connector.style.top = (8 + ev.verticalOffset + 1.3) + 'em';
+          }
+          connector.style.height = Math.abs(ev.verticalOffset) + 'em';
+          connector.style.zIndex = 0; // Ensure controversy connectors are always behind
+          eventDiv.appendChild(connector);
+        }
+        // Year and description box, offset vertically
+        const contentDiv = document.createElement('div');
+        contentDiv.style.position = 'absolute';
+        contentDiv.style.left = '50%';
+        contentDiv.style.transform = 'translateX(-50%)';
+        contentDiv.style.top = (8 + (ev.verticalOffset || 0)) + 'em';
+        contentDiv.style.display = 'flex';
+        contentDiv.style.flexDirection = 'column';
+        contentDiv.style.alignItems = 'center';
+        contentDiv.style.zIndex = 10;
+
+        const yearDiv = document.createElement('div');
+        yearDiv.className = 'event-year';
+        yearDiv.innerHTML = ev.year;
+
+        const descDiv = document.createElement('div');
+        descDiv.className = 'event-desc controversy';
+        descDiv.innerHTML = ev.desc;
+        descDiv.style.marginTop = '0.5em';
+
+        contentDiv.appendChild(yearDiv);
+        contentDiv.appendChild(descDiv);
+        eventDiv.appendChild(contentDiv);
+        descDiv.style.position = 'absolute';
+        descDiv.style.top = (8 + (ev.verticalOffset || 0) + 1.8) + 'em';
+        descDiv.style.zIndex = 10;
+        descDiv.innerHTML = ev.desc;
+        eventDiv.appendChild(descDiv);
+
+        timelineEl.appendChild(eventDiv);
+      });
+
+      // Set timeline width for zoom
+      timelineEl.style.width = (100 * zoom) + "%";
+      // Also set the .line width to match the zoomed width
+      const lineEl = timelineEl.querySelector('.line');
+      if (lineEl) {
+        lineEl.style.width = (100 * zoom) + "%";
       }
     }
 
-    // Render events with dot at timeline and desc/year offset vertically by verticalOffset
-    timelineEvents.forEach(ev => {
-      const left = ((ev.year - minYear) / totalYears * 100).toFixed(3) + "%";
-      const eventDiv = document.createElement('div');
-      eventDiv.className = 'event-horizontal';
-      eventDiv.style.left = left;
-      eventDiv.style.width = '6.5em';
+    // Initial render
+    renderTimeline();
 
-      // Dot is always at 8em (timeline line)
-      const dot = document.createElement('span');
-      dot.className = `dot ${ev.cat}`;
-      dot.style.top = '8em';
-      dot.style.left = '50%';
-      dot.style.zIndex = 9;
-      eventDiv.appendChild(dot);
-
-      // If needed, add connector line
-      if(ev.verticalOffset && ev.verticalOffset !== 0) {
-        const connector = document.createElement('div');
-        connector.className = 'event-connector';
-        if (ev.verticalOffset > 0) {
-          connector.style.top = '8em';
-        } else {
-          // Start a little lower (e.g., 0.5em below the line)
-          connector.style.top = (8 + ev.verticalOffset + 1.3) + 'em';
-        }
-        connector.style.height = Math.abs(ev.verticalOffset) + 'em';
-        eventDiv.appendChild(connector);
+    // Scroll to zoom
+    timelineEl.addEventListener('wheel', function(e) {
+      if (e.ctrlKey || e.metaKey) return; // allow browser zoom
+      e.preventDefault();
+      const delta = e.deltaY || e.detail || e.wheelDelta;
+      const zoomStep = 1.05; // Finer zoom increments
+      if (delta < 0) {
+        zoom = Math.min(maxZoom, zoom * zoomStep);
+      } else {
+        zoom = Math.max(minZoom, zoom / zoomStep);
       }
-
-      // Year and description box, offset vertically
-      const contentDiv = document.createElement('div');
-      contentDiv.style.position = 'absolute';
-      contentDiv.style.left = '50%';
-      contentDiv.style.transform = 'translateX(-50%)';
-      contentDiv.style.top = (8 + ev.verticalOffset) + 'em';
-      contentDiv.style.display = 'flex';
-      contentDiv.style.flexDirection = 'column';
-      contentDiv.style.alignItems = 'center';
-      contentDiv.style.zIndex = 10;
-
-      const yearDiv = document.createElement('div');
-      yearDiv.className = 'event-year';
-      yearDiv.innerHTML = ev.year;
-
-      const descDiv = document.createElement('div');
-      descDiv.className = `event-desc ${ev.cat}`;
-      descDiv.innerHTML = ev.desc;
-      descDiv.style.marginTop = '0.5em';
-
-      contentDiv.appendChild(yearDiv);
-      contentDiv.appendChild(descDiv);
-      eventDiv.appendChild(contentDiv);
-
-      timelineEl.appendChild(eventDiv);
-    });
-
-    // --- Controversy timeline logic ---
-    // Create offset for controversy events
-    const controversyOffsets = {};
-    function getControversyOffset(year) {
-      if (!controversyOffsets[year]) {
-        controversyOffsets[year] = Object.keys(controversyOffsets).length * 2.2;
-      }
-      return controversyOffsets[year];
-    }
-
-    // Render controversy events (hidden by default)
-    timelineWithControversy.sort((a,b) => a.year-b.year || (a.cat==="controversy"?1:-1));
-    timelineWithControversy.forEach((ev, idx) => {
-      if (ev.cat !== "controversy") return; // Only render controversy events here
-      const left = ((ev.year - minYear) / totalYears * 100).toFixed(3) + "%";
-      const eventDiv = document.createElement('div');
-      eventDiv.className = 'event-horizontal controversy';
-      eventDiv.style.left = left;
-      eventDiv.style.width = '6.5em';
-      eventDiv.style.display = "none";
-
-      // Dot is always at 8em (timeline line)
-      const dot = document.createElement('span');
-      dot.className = 'dot controversy';
-      dot.style.top = '8em';
-      dot.style.left = '50%';
-      dot.style.zIndex = 9;
-      eventDiv.appendChild(dot);
-
-      // If needed, add connector line
-      if(ev.verticalOffset && ev.verticalOffset !== 0) {
-        const connector = document.createElement('div');
-        connector.className = 'event-connector';
-        if (ev.verticalOffset > 0) {
-          connector.style.top = '8em';
-        } else {
-          connector.style.top = (8 + ev.verticalOffset + 1.3) + 'em';
-        }
-        connector.style.height = Math.abs(ev.verticalOffset) + 'em';
-        connector.style.zIndex = 0; // Ensure controversy connectors are always behind
-        eventDiv.appendChild(connector);
-      }
-      // Year and description box, offset vertically
-      const contentDiv = document.createElement('div');
-      contentDiv.style.position = 'absolute';
-      contentDiv.style.left = '50%';
-      contentDiv.style.transform = 'translateX(-50%)';
-      contentDiv.style.top = (8 + (ev.verticalOffset || 0)) + 'em';
-      contentDiv.style.display = 'flex';
-      contentDiv.style.flexDirection = 'column';
-      contentDiv.style.alignItems = 'center';
-      contentDiv.style.zIndex = 10;
-
-      const yearDiv = document.createElement('div');
-      yearDiv.className = 'event-year';
-      yearDiv.innerHTML = ev.year;
-
-      const descDiv = document.createElement('div');
-      descDiv.className = 'event-desc controversy';
-      descDiv.innerHTML = ev.desc;
-      descDiv.style.marginTop = '0.5em';
-
-      contentDiv.appendChild(yearDiv);
-      contentDiv.appendChild(descDiv);
-      eventDiv.appendChild(contentDiv);
-      descDiv.style.position = 'absolute';
-      descDiv.style.top = (8 + (ev.verticalOffset || 0) + 1.8) + 'em';
-      descDiv.style.zIndex = 10;
-      descDiv.innerHTML = ev.desc;
-      eventDiv.appendChild(descDiv);
-
-      timelineEl.appendChild(eventDiv);
-    });
+      renderTimeline();
+    }, { passive: false });
 
     // Toggle function for controversy events
     function toggleControversy() {
