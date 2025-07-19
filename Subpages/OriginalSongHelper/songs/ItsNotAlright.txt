@@ -1,13 +1,13 @@
 It's Not Alright
 (F#, 120 bpm)
-
+(emphasize shuffle rhythm, esp. in verses)
 
 Intro:
-| [F#]- - [A]- - | | [E]- - [D]- - | (x2)
+| [F#]- - [A]- - | | [E]- - [D]- - | (x4)
 
 
 Verse1:
-[F#] There's a [A]hollow where the [E]cold wind bl[D]ows
+[F#] There's a [A]hollow where the [E]cold wind [D]blows
 Where the [F#]whir of ma[A]chinery and the [E]mocking bird [D]slurs
 A [F#]town where the [A]people walk [E]to and [D]fro
 At the [F#]center of the [A]Earth beneath the [E]lightning [D]glow
@@ -19,8 +19,7 @@ Chorus:
 [G] Have we [D]built on this here [A]life  [A]
 [G] Hang up your [D]friends, teach them to [B]fight  [B]
 
-
-| - - - - | | - - - - | (x2)
+| [F#]- - [A]- - | | [E]- - [D]- - | (x2)
 
 
 Verse2:
@@ -51,9 +50,7 @@ Chorus:
 [G] Call up your [D]friends, teach them to [B]fight  [B]
 
 
-PostChorus:
-asdf
-
-
 Outro:
-asdf
+| [E]- - - - | | [E]- - - [G]- | (x3)
+| [E]- - - - | | [E]- - - [B]- |
+[E](one-note ring out)
