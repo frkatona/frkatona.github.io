@@ -11,24 +11,24 @@ Intro:
 
 
 Verse1:
-|[F#]xxxx| |[A#]xxxx| x 4
-[F#]  Have you [A#]seen the [F#]vision [A#]out the [F#]
+|[A#]xxxx| |[F#]xxxx| x 4
+[A#]  Have you [F#]seen the [A#]vision [F#]out the [F#]
 re[A#]volving [F#]door  [A#]|xx|
-[F#]|xx| [A#]Who bears [F#]witness [A#]to th[A#]is 
-[F#]Please step [A#]forward
+[A#]|xx| [F#]Who bears [A#]witness [F#]to th[A#]is 
+[A#]Please step [F#]forward
 
-[F#]  Not [A#]self-sur[F#]real [A#]changes
-[F#] A [A#]proving [F#]storm [A#]
-[F#] This is [A#]all [F#]happen[A#]ing [F#]more
-than they [A#]bargained [F#]for
+[A#]  Not [F#]self-sur[A#]real [F#]changes
+[A#] A [F#]proving [A#]storm [F#]
+[A#] This is [F#]all [A#]happen[F#]ing [A#]more
+than they [F#]bargained [A#]for
 
 Chorus1:
 [F#]   Right in front of their [D]eyes (x3)
 
 Verse2:
-|[F#]xxxx| |[A#]xxxx|
-[F#] You'll [A#]soon surr[F#]ender. [A#]
-At [F#]least that's [A#]what we're [F#]told. |[A#]xx| 
+|[A#]xxxx| |[F#]xxxx|
+[A#] You'll [F#]soon surr[A#]ender. [F#]
+At [A#]least that's [F#]what we're [A#]told. |[F#]xx| (CONTINUE SWAPPING F# and A# IN VERSES)
 [F#]   And [A#]scattered [F#]dreams [A#]throw your
 [F#]hopes [A#]over[F#]board. |[A#]xx| 
 [F#] But I [A#]beg to [F#]differ, 
