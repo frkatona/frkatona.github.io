@@ -1,5 +1,5 @@
 Feeling Muse
-Seana Wood - v25.03.14 - G - 160 BPM
+Seana Wood - v25.03.14 - G - 150 BPM
 
 Verse_1:
 [G]    My muse is right in [E]front of me
@@ -26,8 +26,8 @@ Bridge:
    I want it now [D-x-D]
 
 Verse_3:
-[G]   I'm unhappy  and I [E]feel you see through all the cracks
-[G]   This other thing is falling apart there [E]is no turning back
+{p} [G]   I'm unhappy  and I [E]feel you see through all the cracks
+{p} [G]   This other thing is falling apart there [E]is no turning back
 
 Chorus:
 [Am]   When I’m with you I can hardly speak a [C]word
