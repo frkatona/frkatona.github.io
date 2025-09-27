@@ -18,7 +18,7 @@
         .wrap{max-width:1200px;margin:0 auto;padding:20px}
         header{position:sticky;top:0;z-index:10;backdrop-filter:blur(8px);background:linear-gradient(to bottom, rgba(11,11,12,.8), rgba(11,11,12,.3));border-bottom:1px solid var(--line)}
         header .bar{display:flex;align-items:center;gap:12px;padding:12px 20px}
-        .logo{width:34px;height:34px;border-radius:12px;background:conic-gradient(from 210deg, #a0f, #5df, #3f7,#a0f);box-shadow:inset 0 0 20px rgba(255,255,255,.2)}
+        .logo{width:34px;height:34px;border-radius:20px;background:conic-gradient(from 180deg, rgba(213, 85, 11, 1),  rgba(78, 76, 32, 1),#a0f);box-shadow:inset 0 0 20px rgba(57, 229, 255, 0.7)}
         .spacer{flex:1}
         button, .btn{appearance:none;border:1px solid var(--line);background:#151519;color:var(--fg);padding:8px 12px;border-radius:999px;cursor:pointer}
         button:hover,.btn:hover{background:#1b1b21}
@@ -72,9 +72,9 @@
     <header>
         <div class="bar wrap">
             <div class="logo" aria-hidden="true"></div>
-            <div style="font-weight:700">Eric Markievich · Demo Portfolio</div>
+            <div style="font-weight:700; color:#777;">Eric Markievich · Demo Portfolio</div>
             <div class="spacer"></div>
-            <div class="muted" style="font-size:13px">Loading songs from <code>./songs/</code></div>
+            <div class="muted" style="font-size:10px">Loading songs from <code>frkatona.github.io</code></div>
         </div>
     </header>
 
@@ -88,8 +88,8 @@
                     <button id="toggleLoop" class="btn" style="padding:6px 10px">Toggle L</button>
                     <span class="chip">Shuffle: <span id="shuffleState">Off</span></span>
                     <button id="toggleShuffle" class="btn" style="padding:6px 10px">Toggle S</button>
-                </div> -->
-                <div id="drop" class="drop disabled" style="margin-top:12px">placeholder text 1</div>
+                </div> 
+                <div id="drop" class="drop disabled" style="margin-top:12px">placeholder text 1</div>-->
             </div>
 
             <div class="card pad">
@@ -100,7 +100,7 @@
                 <div class="list">
                     <table>
                         <thead>
-                            <tr><th>#</th><th>Title</th><th>Artist</th><th>Len</th></tr>
+                            <tr><th>#</th><th>Title</th><th>Artist</th><th>Lenth</th></tr>
                         </thead>
                         <tbody id="tbody"></tbody>
                     </table>
@@ -157,7 +157,7 @@
 
             <div class="card pad" style="margin-top:16px">
                 <div class="title" style="margin-bottom:6px">Dev Notes</div>
-                <p class="about">This build loads songs from the <code>./songs/</code> folder according to the <code>./songs/manifest.json</code> metadata file.</p>
+                <p class="about">This build loads songs from the <code>./songs/</code> folder according to the <code>./songs/manifest.json</code> metadata file.  To-do: click through song progress, solve simplfied waveform to use as progress bar, fix key and tempo not appearing</p>
             </div>
         </section>
     </main>
