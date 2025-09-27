@@ -73,8 +73,8 @@
         <div class="bar wrap">
             <div class="logo" aria-hidden="true"></div>
             <div style="font-weight:700; color:#777;">Eric Markievich · Demo Portfolio</div>
-            <div class="spacer"></div>
-            <div class="muted" style="font-size:10px">Loading songs from <code>frkatona.github.io</code></div>
+            <!-- <div class="spacer"></div>
+            <div class="muted" style="font-size:10px">Loading songs from <code>frkatona.github.io</code></div>-->
         </div>
     </header>
 
@@ -254,8 +254,16 @@
             els.audio.src = t.src;
             els.title.textContent = t.title || '—';
             els.subtitle.textContent = `${t.artist||'—'} · ${t.album||''} ${t.year? '· '+t.year: ''}`;
-            els.cover.src = '';
-            els.cover.style.background = coverBg(t);
+            if (t.cover){
+                els.cover.src = t.cover;
+                // clear background while image loads
+                els.cover.style.background = 'transparent';
+                els.cover.onerror = () => { els.cover.src = ''; els.cover.style.background = coverBg(t); };
+                els.cover.onload = () => { els.cover.style.background = 'transparent'; };
+            } else {
+                els.cover.src = '';
+                els.cover.style.background = coverBg(t);
+            }
             els.tags.innerHTML = (t.tags||[]).map(tag=>`<span class="chip">${escapeHtml(tag)}</span>`).join('');
             els.metaBpm.textContent = t.bpm ?? '—';
             els.metaKey.textContent = t.key ?? '—';
@@ -321,6 +329,44 @@
         // Search
         els.search.addEventListener('input', filter);
 
+        // Progress bar: click or drag/touch to seek
+        let _isScrubbing = false;
+        function clientXFromEvent(e){
+            if (e.touches && e.touches.length) return e.touches[0].clientX;
+            if (e.changedTouches && e.changedTouches.length) return e.changedTouches[0].clientX;
+            return e.clientX;
+        }
+        function scrubForClientX(clientX){
+            const rect = els.progress.getBoundingClientRect();
+            const x = clientX - rect.left;
+            const pct = Math.max(0, Math.min(1, rect.width? x/rect.width : 0));
+            const dur = els.audio.duration || 0;
+            const target = dur * pct;
+            // update UI while scrubbing
+            els.bar.style.width = (pct*100) + '%';
+            els.knob.style.left = (pct*100) + '%';
+            els.timeCur.textContent = fmt(target);
+            els.timeLeft.textContent = '-' + fmt(Math.max(0, dur - target));
+            return target;
+        }
+
+        // Click to seek
+        els.progress.addEventListener('click', (e)=>{
+            const clientX = clientXFromEvent(e);
+            const target = scrubForClientX(clientX);
+            seekTo(target);
+        });
+
+        // Mouse drag to scrub
+        function onMouseMove(e){ if (!_isScrubbing) return; const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); }
+        function onMouseUp(e){ if (!_isScrubbing) return; _isScrubbing = false; window.removeEventListener('mousemove', onMouseMove); window.removeEventListener('mouseup', onMouseUp); const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); }
+        els.progress.addEventListener('mousedown', (e)=>{ _isScrubbing = true; const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); window.addEventListener('mousemove', onMouseMove); window.addEventListener('mouseup', onMouseUp); e.preventDefault(); });
+
+        // Touch scrub
+        function onTouchMove(e){ if (!_isScrubbing) return; e.preventDefault(); const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); }
+        function onTouchEnd(e){ if (!_isScrubbing) return; _isScrubbing = false; window.removeEventListener('touchmove', onTouchMove); window.removeEventListener('touchend', onTouchEnd); const clientX = clientXFromEvent(e); const target = scrubForClientX(clientX); seekTo(target); }
+        els.progress.addEventListener('touchstart', (e)=>{ _isScrubbing = true; const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); window.addEventListener('touchmove', onTouchMove, { passive: false }); window.addEventListener('touchend', onTouchEnd); });
+
     // --- New: load songs from page-relative ./songs/ folder ---
         async function loadSongsFromFolder(){
             const base = './songs/';
@@ -331,12 +377,19 @@
                     const manifest = await mResp.json();
                     const items = manifest.map((entry, idx)=> {
                         const fname = entry.file || entry.filename || entry.path;
+                        // Resolve cover: if it's an absolute URL or root-relative path, use as-is, otherwise resolve against base
+                        let coverSrc = undefined;
+                        if (entry.cover){
+                            if (entry.cover.startsWith('http') || entry.cover.startsWith('/')) coverSrc = entry.cover;
+                            else coverSrc = base + entry.cover;
+                        }
                         return {
                             id: 'remote-'+(entry.id||fname||idx),
                             title: entry.title || (fname? fname.replace(/\.[^.]+$/,'') : 'track'),
                             artist: entry.artist || '',
                             album: entry.album || '',
                             src: base + fname,
+                            cover: coverSrc,
                             tags: entry.tags || ['remote'],
                             year: entry.year
                         };
@@ -376,9 +429,8 @@
                 // nothing else to do
             }
 
-            // If we get here, no songs found
             console.warn(`No songs found in ${base}. Provide ${base}manifest.json or enable directory listing for ${base}.`);
-            els.subtitle.textContent = `No songs found in ${base}`;
+            // els.subtitle.textContent = `No songs found in ${base}`; // seems to appear erroneously on mobile (but not on desktop...maybe just the aspect ratio)
         }
 
         // Optional: prefetch metadata (duration) for listing display
