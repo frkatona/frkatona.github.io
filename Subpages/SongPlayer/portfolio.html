@@ -72,9 +72,9 @@
     <header>
         <div class="bar wrap">
             <div class="logo" aria-hidden="true"></div>
-            <div style="font-weight:700">Your Name · Music Portfolio</div>
+            <div style="font-weight:700">Eric Markievich · Demo Portfolio</div>
             <div class="spacer"></div>
-            <div class="muted" style="font-size:13px">Loading songs from <code>/songs/</code></div>
+            <div class="muted" style="font-size:13px">Loading songs from <code>./songs/</code></div>
         </div>
     </header>
 
@@ -82,14 +82,14 @@
         <aside>
             <div class="card pad" style="margin-bottom:16px">
                 <div class="title" style="margin-bottom:8px">Search</div>
-                <input id="search" class="search" type="text" placeholder="Title, artist, tag… (Ctrl/Cmd+F)" />
-                <div class="chips" style="margin-top:12px">
+                <input id="search" class="search" type="text" placeholder="Title, artist, tag…" />
+                <!-- <div class="chips" style="margin-top:12px">
                     <span class="chip">Loop: <span id="loopState">Off</span></span>
                     <button id="toggleLoop" class="btn" style="padding:6px 10px">Toggle L</button>
                     <span class="chip">Shuffle: <span id="shuffleState">Off</span></span>
                     <button id="toggleShuffle" class="btn" style="padding:6px 10px">Toggle S</button>
-                </div>
-                <div id="drop" class="drop disabled" style="margin-top:12px">Songs are loaded from the site's /songs/ folder (place files there or add a manifest.json)</div>
+                </div> -->
+                <div id="drop" class="drop disabled" style="margin-top:12px">placeholder text 1</div>
             </div>
 
             <div class="card pad">
@@ -148,16 +148,16 @@
                             <div class="tile"><div class="k">Key</div><div class="v" id="metaKey">—</div></div>
                             <div class="tile"><div class="k">Length</div><div class="v" id="metaLen">—</div></div>
                             <div class="tile"><div class="k">Index</div><div class="v" id="metaIdx">0/0</div></div>
-                            <div class="tile"><div class="k">Rate</div><div class="v" id="metaRate">0%</div></div>
-                            <div class="tile"><div class="k">Theme</div><div class="v">dark</div></div>
+                            <!-- <div class="tile"><div class="k">Rate</div><div class="v" id="metaRate">0%</div></div> 
+                            <div class="tile"><div class="k">Theme</div><div class="v">dark</div></div> -->
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="card pad" style="margin-top:16px">
-                <div class="title" style="margin-bottom:6px">About</div>
-                <p class="about">This build loads songs from the /songs/ folder on the same server. For best results add a /songs/manifest.json listing files and metadata, otherwise the directory listing will be scanned for audio files.</p>
+                <div class="title" style="margin-bottom:6px">Dev Notes</div>
+                <p class="about">This build loads songs from the <code>./songs/</code> folder according to the <code>./songs/manifest.json</code> metadata file.</p>
             </div>
         </section>
     </main>
@@ -321,9 +321,9 @@
         // Search
         els.search.addEventListener('input', filter);
 
-        // --- New: load songs from server-side /songs/ folder ---
+    // --- New: load songs from page-relative ./songs/ folder ---
         async function loadSongsFromFolder(){
-            const base = '/songs/';
+            const base = './songs/';
             try {
                 // Try manifest first (recommended). manifest.json should be an array of objects: { file: "track.mp3", title?: "...", artist?: "...", album?: "..."}
                 const mResp = await fetch(base + 'manifest.json', { cache: 'no-cache' });
@@ -377,8 +377,8 @@
             }
 
             // If we get here, no songs found
-            console.warn('No songs found in /songs/. Provide /songs/manifest.json or enable directory listing for /songs/.');
-            els.subtitle.textContent = 'No songs found in /songs/';
+            console.warn(`No songs found in ${base}. Provide ${base}manifest.json or enable directory listing for ${base}.`);
+            els.subtitle.textContent = `No songs found in ${base}`;
         }
 
         // Optional: prefetch metadata (duration) for listing display
@@ -399,11 +399,11 @@
             });
         }
 
-        // Initialize: load songs from /songs/ on page load
-        loadSongsFromFolder();
+    // Initialize: load songs from page-relative ./songs/ on page load
+    loadSongsFromFolder();
 
-        // Initialize with nothing; show hints in UI
-        els.subtitle.textContent = 'Loading songs from /songs/ ...';
+    // Initialize with nothing; show hints in UI
+    els.subtitle.textContent = 'frkatona.github.io';
     })();
     // tiny util to escape text into HTML
     function escapeHtml(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
