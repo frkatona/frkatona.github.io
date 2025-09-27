@@ -157,7 +157,7 @@
 
             <div class="card pad" style="margin-top:16px">
                 <div class="title" style="margin-bottom:6px">Dev Notes</div>
-                <p class="about">This build loads songs from the <code>./songs/</code> folder according to the <code>./songs/manifest.json</code> metadata file.  To-do: click through song progress, solve simplfied waveform to use as progress bar, fix key and tempo not appearing</p>
+                <p class="about">Current build loads songs from the <code>./songs/</code> folder according to the <code>./songs/manifest.json</code> metadata file</p>
             </div>
         </section>
     </main>
@@ -247,7 +247,7 @@
             return `linear-gradient(135deg, hsl(${h1} 60% 45%), hsl(${h2} 70% 35%))`;
         }
 
-        function selectTrack(idx, autoplay){
+    function selectTrack(idx, autoplay = true){
             if (!library.length) return;
             currentIndex = ((idx%library.length)+library.length)%library.length;
             const t = library[currentIndex];
@@ -274,7 +274,7 @@
             if (autoplay){ play(); }
         }
 
-        function playByIndex(idx){ selectTrack(idx,true); }
+    function playByIndex(idx){ selectTrack(idx); }
 
         function play(){ isPlaying = true; els.playPause.textContent = 'Pause'; els.audio.play().catch(()=>{}); }
         function pause(){ isPlaying = false; els.playPause.textContent = 'Play'; els.audio.pause(); }
@@ -388,6 +388,9 @@
                             title: entry.title || (fname? fname.replace(/\.[^.]+$/,'') : 'track'),
                             artist: entry.artist || '',
                             album: entry.album || '',
+                            // include optional metadata fields from manifest
+                            bpm: entry.bpm,
+                            key: entry.key,
                             src: base + fname,
                             cover: coverSrc,
                             tags: entry.tags || ['remote'],
