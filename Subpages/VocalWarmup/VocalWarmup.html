@@ -55,11 +55,27 @@
   .row-sb{display:flex; align-items:center; justify-content:space-between}
   .h1{font-size:18px; font-weight:700}
   .muted{color:var(--text3)}
-  .btn{font-size:12px; padding:6px 10px; border-radius:8px; border:1px solid var(--muted); background:#0f172a; color:var(--text); cursor:pointer}
+  .btn{font-size:12px; padding:6px 10px; border-radius:8px; border:1px solid var(--muted); background:#0f172a; color:var(--text); cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, background-color .12s ease, border-color .12s ease; user-select:none;}
   .btn.primary{background:var(--indigo); border-color:transparent; cursor:pointer}
   .btn.solid{background:#1f2937; cursor:pointer}
+  .btn.running{ background:var(--rose); border-color:transparent; color:#fff }
   .btn:disabled{opacity:.7; cursor:not-allowed}
+  /* Hover / Focus / Active feedback for buttons */
+  .btn:hover:not(:disabled){ transform:translateY(-2px); box-shadow:0 6px 18px rgba(2,6,23,.45); }
+  .btn:active:not(:disabled){ transform:translateY(0) scale(.995); box-shadow:0 2px 6px rgba(2,6,23,.35); }
+  .btn:focus-visible{ outline:2px solid rgba(99,102,241,.35); outline-offset:3px; }
+  /* Next button pulse preserved */
   .next.pulse{animation:pulse 1.1s ease-in-out infinite}
+
+  /* Step (roadmap) button feedback */
+  .step{will-change:transform,background}
+  .step:hover{background:rgba(15,23,42,.65); transform:translateX(4px)}
+  .step:active{transform:translateX(2px) scale(.997)}
+  .step:focus-visible{ outline:2px solid rgba(99,102,241,.18); outline-offset:3px }
+
+  /* Badge hover to give emphasis */
+  .badge{transition:transform .12s ease, box-shadow .12s ease}
+  .badge:hover{ transform:translateY(-2px); box-shadow:0 6px 14px rgba(99,102,241,.12) }
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.0)}70%{box-shadow:0 0 0 6px rgba(16,185,129,.18)}100%{box-shadow:0 0 0 0 rgba(16,185,129,.0)}}
 
   /* Grid cards */
@@ -96,6 +112,10 @@
   .key.sharp{background:#050520; color:#e5e7eb; transform:translateY(-4px)}
   .key.active:not(.sharp){background:#34d399; color:#0f172a}
   .key.active.sharp{background:#065f46; color:#fff}
+  .key{transition:transform .09s ease, box-shadow .09s ease, background-color .12s ease}
+  .key:hover{ transform:translateY(-3px); box-shadow:0 8px 18px rgba(2,6,23,.5) }
+  .key:active{ transform:translateY(0) scale(.995); box-shadow:0 3px 8px rgba(2,6,23,.35) }
+  .key:focus-visible{ outline:2px solid rgba(99,102,241,.22); outline-offset:2px }
   .bars{margin-top:10px}
   .barrow{display:flex; align-items:center; gap:8px; margin:8px 0}
   .barlabel{width:96px; font-size:11px; color:var(--text2)}
@@ -144,7 +164,6 @@
               <span class="muted">Timer</span>
               <span class="mono" id="t1">02:00</span>
               <button class="btn primary" id="t1-start">Start</button>
-              <button class="btn" id="t1-pause">Pause</button>
               <button class="btn" id="t1-reset">Reset</button>
             </div>
             <button class="btn next" id="n1" disabled>Next: Arpeggios →</button>
@@ -174,7 +193,6 @@
               <span class="muted">Timer</span>
               <span class="mono" id="t2">03:00</span>
               <button class="btn primary" id="t2-start">Start</button>
-              <button class="btn" id="t2-pause">Pause</button>
               <button class="btn" id="t2-reset">Reset</button>
             </div>
             <button class="btn next" id="n2" disabled>Next: Sirens →</button>
@@ -191,7 +209,6 @@
               <span class="muted">Timer</span>
               <span class="mono" id="t3">01:00</span>
               <button class="btn primary" id="t3-start">Start</button>
-              <button class="btn" id="t3-pause">Pause</button>
               <button class="btn" id="t3-reset">Reset</button>
             </div>
             <button class="btn next" id="n3" disabled>Next: Range →</button>
@@ -262,30 +279,58 @@
   const KEYS = Array.from({length:RANGE_MAX-RANGE_MIN+1},(_,i)=>RANGE_MIN+i);
   const KEY_W = 40, KEY_H = 48, KEY_GAP = 6, VIEW_SEMITONES = 12; // 1 octave
   const PIX_PER = KEY_W + KEY_GAP;
-  const VIEWPORT_W = VIEW_SEMITONES*PIX_PER - KEY_GAP; // exact
+  // NOTE: pixel measurements (key width + gap) are computed from DOM after keys are rendered.
+  // The constants above are fallbacks but we compute actual values dynamically to match CSS.
+  const VIEWPORT_W = VIEW_SEMITONES*PIX_PER - KEY_GAP; // fallback
   const LABEL_W = 96;
   const CONTENT_W = KEYS.length * PIX_PER - KEY_GAP;
   const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
   const pretty = (m)=>NOTE_NAMES[m%12] + (Math.floor(m/12)-1);
   const freq = (m)=>440*Math.pow(2,(m-69)/12);
 
-  function centerLeftForMidi(midi, viewportW){
+  // Compute key/layout metrics from the DOM so JS aligns with CSS (margin/gap may differ from constants)
+  function computeKeyLayout(viewport){
+    const keysEl = viewport.querySelector('.keys');
+    const firstKey = keysEl && keysEl.querySelector('.key');
+    if(!firstKey) return null;
+    const keyRect = firstKey.getBoundingClientRect();
+    const style = getComputedStyle(firstKey);
+    const gap = parseFloat(style.marginRight) || 0;
+    const keyWidth = Math.round(keyRect.width);
+    const pixPer = keyWidth + gap;
+    const viewportW = Math.round(VIEW_SEMITONES * pixPer - gap);
+    const contentW = Math.round(KEYS.length * pixPer - gap);
+    return { keyWidth, gap, pixPer, viewportW, contentW };
+  }
+
+  // Center the viewport so midi note appears centered
+  function centerLeftForMidi(viewport, midi){
+    const layout = computeKeyLayout(viewport);
+    if(!layout) return 0;
     const idx = midi - RANGE_MIN;
-    const leftOfKey = idx*PIX_PER;
-    const target = leftOfKey + KEY_W/2 - viewportW/2;
-    const maxLeft = Math.max(0, CONTENT_W - viewportW);
-    return clamp(target,0,maxLeft);
+    const leftOfKey = idx * layout.pixPer;
+    const target = leftOfKey + layout.keyWidth/2 - viewport.clientWidth/2;
+    const maxLeft = Math.max(0, layout.contentW - viewport.clientWidth);
+    return clamp(Math.round(target), 0, maxLeft);
   }
-  function visibleStartFromScroll(scrollLeft){
-    return Math.floor(scrollLeft/PIX_PER) + RANGE_MIN;
+
+  function visibleStartFromViewport(viewport){
+    const layout = computeKeyLayout(viewport);
+    if(!layout) return RANGE_MIN;
+    const idx = Math.floor(viewport.scrollLeft / layout.pixPer);
+    return clamp(RANGE_MIN + idx, RANGE_MIN, RANGE_MAX);
   }
-  function segmentForRange(visibleStart, min, max){
+
+  // Return left/width for a voice range segment relative to viewport in pixels
+  function segmentForRange(viewport, visibleStart, min, max){
+    const layout = computeKeyLayout(viewport);
+    if(!layout) return null;
     const visEnd = visibleStart + VIEW_SEMITONES - 1;
     const s = Math.max(min, visibleStart);
     const e = Math.min(max, visEnd);
     if(e < s) return null;
-    const left = (s - visibleStart)*PIX_PER;
-    const width = (e - s + 1)*PIX_PER - KEY_GAP;
+    const left = (s - visibleStart) * layout.pixPer;
+    const width = (e - s + 1) * layout.pixPer - layout.gap;
     return {left, width};
   }
 
@@ -316,9 +361,7 @@
   function createPiano({rootEl, onPlay, highlightRef, initialCenter=55, onScroll}){
     const viewport = rootEl; // .piano-viewport
     const keysEl = viewport.querySelector('.keys');
-    viewport.style.width = VIEWPORT_W+'px';
-    viewport.style.minWidth = VIEWPORT_W+'px';
-    viewport.style.maxWidth = VIEWPORT_W+'px';
+    // build keys first, then compute actual layout to set viewport width
 
     // build keys
     KEYS.forEach(m=>{
@@ -332,6 +375,32 @@
       keysEl.appendChild(b);
     });
 
+    // After keys are in the DOM compute layout. If the piano viewport is hidden (e.g. the
+    // step panel is hidden), measuring will return zero; defer measuring until visible.
+    function initLayoutAndCenter(){
+      const layout = computeKeyLayout(viewport);
+      if(!layout || viewport.clientWidth === 0){
+        // Not ready yet; try again on next frame
+        requestAnimationFrame(initLayoutAndCenter);
+        return;
+      }
+      const visibleW = Math.round(layout.pixPer * VIEW_SEMITONES - layout.gap);
+      viewport.style.width = visibleW + 'px';
+      viewport.style.minWidth = visibleW + 'px';
+      viewport.style.maxWidth = visibleW + 'px';
+      // initial centering (now that we have measurements)
+      const left = centerLeftForMidi(viewport, initialCenter);
+      viewport.scrollLeft = left;
+      onScroll && onScroll(viewport.scrollLeft, visibleStartFromViewport(viewport));
+      requestAnimationFrame(()=>{
+        const left2 = centerLeftForMidi(viewport, initialCenter);
+        viewport.scrollLeft = left2;
+        onScroll && onScroll(viewport.scrollLeft, visibleStartFromViewport(viewport));
+      });
+    }
+    // kick off layout init (will retry until the element is measurable)
+    initLayoutAndCenter();
+
     // highlight management
     function setHighlight(midi){
       // remove active
@@ -340,24 +409,15 @@
       if(el) el.classList.add('active');
     }
 
-    // initial centering (pre-paint)
-    const left = centerLeftForMidi(initialCenter, VIEWPORT_W);
-    viewport.scrollLeft = left;
-    onScroll && onScroll(left);
-    requestAnimationFrame(()=>{
-      const left2 = centerLeftForMidi(initialCenter, VIEWPORT_W);
-      viewport.scrollLeft = left2;
-      onScroll && onScroll(left2);
-    });
-
+    // scrolling listener: report both raw scrollLeft and a measured visibleStart
     viewport.addEventListener('scroll', (e)=>{
-      onScroll && onScroll(viewport.scrollLeft);
+      onScroll && onScroll(viewport.scrollLeft, visibleStartFromViewport(viewport));
     });
 
     function scrollToMidi(m){
-      const L = centerLeftForMidi(m, VIEWPORT_W);
+      const L = centerLeftForMidi(viewport, m);
       viewport.scrollTo({left:L, behavior:'smooth'});
-      onScroll && onScroll(L);
+      onScroll && onScroll(L, visibleStartFromViewport(viewport));
     }
 
     // external highlight binding
@@ -378,13 +438,15 @@
     {name:'Mezzo', min:55, max:74},
     {name:'Soprano', min:60, max:79},
   ];
-  function renderVoiceBars(container, visibleStart, lastPlayed){
+  function renderVoiceBars(container, viewport, visibleStart, lastPlayed){
     container.innerHTML = '';
     VOICES.forEach(v=>{
       const row = document.createElement('div'); row.className='barrow';
       const label = document.createElement('div'); label.className='barlabel'; label.textContent=v.name;
-      const track = document.createElement('div'); track.className='bartrack'; track.style.width = VIEWPORT_W+'px';
-      const seg = segmentForRange(visibleStart, v.min, v.max);
+      const track = document.createElement('div'); track.className='bartrack';
+      // width based on viewport clientWidth so it lines up visually
+      track.style.width = viewport.clientWidth + 'px';
+      const seg = segmentForRange(viewport, visibleStart, v.min, v.max);
       if(seg){
         const s = document.createElement('div'); s.className='barseg'; s.style.left=seg.left+'px'; s.style.width=seg.width+'px';
         if(lastPlayed!=null && lastPlayed>=v.min && lastPlayed<=v.max) s.classList.add('active');
@@ -395,16 +457,17 @@
   }
 
   // ==== Timers ====
-  function makeTimer({elTime, btnStart, btnPause, btnReset, seconds, onDone}){
+  // makeTimer now uses a single primary button that toggles between Start and Pause
+  function makeTimer({elTime, btnStart, btnReset, seconds, onDone}){
     let s = seconds, running=false, id=null;
     function fmt(){ const m=String(Math.floor(s/60)).padStart(2,'0'); const sec=String(s%60).padStart(2,'0'); elTime.textContent=`${m}:${sec}`; }
     function tick(){ s--; fmt(); if(s<=0){ stop(); s=0; fmt(); onDone && onDone(); } }
-    function start(){ if(running) return; if(s<=0) s=seconds; running=true; id=setInterval(tick,1000); }
-    function pause(){ running=false; if(id) clearInterval(id); id=null; }
+    function start(){ if(running) return; if(s<=0) s=seconds; running=true; btnStart.textContent='Pause'; btnStart.classList.add('running'); id=setInterval(tick,1000); }
+    function pause(){ running=false; if(id) clearInterval(id); id=null; btnStart.textContent='Start'; btnStart.classList.remove('running'); }
     function reset(){ pause(); s=seconds; fmt(); }
-    function stop(){ running=false; if(id) clearInterval(id); id=null; }
-    btnStart.addEventListener('click', start);
-    btnPause.addEventListener('click', pause);
+    function stop(){ running=false; if(id) clearInterval(id); id=null; btnStart.textContent='Start'; btnStart.classList.remove('running'); }
+    // toggle on primary button
+    btnStart.addEventListener('click', ()=>{ if(running) pause(); else start(); });
     btnReset.addEventListener('click', reset);
     fmt();
     return {start,pause,reset,stop};
@@ -460,7 +523,6 @@
   const t1 = makeTimer({
     elTime: document.getElementById('t1'),
     btnStart: document.getElementById('t1-start'),
-    btnPause: document.getElementById('t1-pause'),
     btnReset: document.getElementById('t1-reset'),
     seconds: 120,
     onDone: ()=>{ completed.add(1); const n=document.getElementById('n1'); n.disabled=false; n.classList.add('pulse'); renderRoadmap(); renderProgress(); }
@@ -473,14 +535,15 @@
   const highlightRef = {};
   const piano = createPiano({
     rootEl: document.getElementById('piano'),
-    onPlay: (m)=>{ lastPlayed=m; playTone(m, 1200, volume); highlightRef.set && highlightRef.set(m); updateBars(); },
+    onPlay: (m)=>{ lastPlayed=m; currentMidi = m; playTone(m, 1200, volume); highlightRef.set && highlightRef.set(m); updateBars(); },
     highlightRef,
     initialCenter: 55,
     onScroll: ()=>updateBars(),
   });
   function updateBars(){
-    const visibleStart = visibleStartFromScroll(document.getElementById('piano').scrollLeft);
-    renderVoiceBars(voiceBars, visibleStart, lastPlayed);
+    const pianoViewport = document.getElementById('piano');
+    const visibleStart = visibleStartFromViewport(pianoViewport);
+    renderVoiceBars(voiceBars, pianoViewport, visibleStart, lastPlayed);
   }
   updateBars();
 
@@ -512,7 +575,6 @@
   const t2 = makeTimer({
     elTime: document.getElementById('t2'),
     btnStart: document.getElementById('t2-start'),
-    btnPause: document.getElementById('t2-pause'),
     btnReset: document.getElementById('t2-reset'),
     seconds: 180,
     onDone: ()=>{ completed.add(2); const n=document.getElementById('n2'); n.disabled=false; n.classList.add('pulse'); renderRoadmap(); renderProgress(); }
@@ -523,7 +585,6 @@
   const t3 = makeTimer({
     elTime: document.getElementById('t3'),
     btnStart: document.getElementById('t3-start'),
-    btnPause: document.getElementById('t3-pause'),
     btnReset: document.getElementById('t3-reset'),
     seconds: 60,
     onDone: ()=>{ completed.add(3); const n=document.getElementById('n3'); n.disabled=false; n.classList.add('pulse'); renderRoadmap(); renderProgress(); }
