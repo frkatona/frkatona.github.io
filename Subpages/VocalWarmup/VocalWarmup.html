@@ -277,7 +277,7 @@
   const RANGE_MIN = 21; // A0
   const RANGE_MAX = 108; // C8
   const KEYS = Array.from({length:RANGE_MAX-RANGE_MIN+1},(_,i)=>RANGE_MIN+i);
-  const KEY_W = 40, KEY_H = 48, KEY_GAP = 6, VIEW_SEMITONES = 12; // 1 octave
+  const KEY_W = 40, KEY_H = 48, KEY_GAP = 6, VIEW_SEMITONES = 15; // 1 octave
   const PIX_PER = KEY_W + KEY_GAP;
   // NOTE: pixel measurements (key width + gap) are computed from DOM after keys are rendered.
   // The constants above are fallbacks but we compute actual values dynamically to match CSS.
@@ -446,11 +446,26 @@
       const track = document.createElement('div'); track.className='bartrack';
       // width based on viewport clientWidth so it lines up visually
       track.style.width = viewport.clientWidth + 'px';
-      const seg = segmentForRange(viewport, visibleStart, v.min, v.max);
-      if(seg){
-        const s = document.createElement('div'); s.className='barseg'; s.style.left=seg.left+'px'; s.style.width=seg.width+'px';
-        if(lastPlayed!=null && lastPlayed>=v.min && lastPlayed<=v.max) s.classList.add('active');
-        track.appendChild(s);
+
+      // compute left/width for the voice segment by measuring actual key elements
+      const keysEl = viewport.querySelector('.keys');
+      const visEnd = visibleStart + VIEW_SEMITONES - 1;
+      const sMidi = Math.max(v.min, visibleStart - 4);
+      const eMidi = Math.min(v.max, visEnd + 4);
+      if(eMidi >= sMidi){
+        const firstKey = keysEl.querySelector(`.key[data-midi="${sMidi}"]`);
+        const lastKey = keysEl.querySelector(`.key[data-midi="${eMidi}"]`);
+        if(firstKey && lastKey){
+          const kRect = firstKey.getBoundingClientRect();
+          const lRect = lastKey.getBoundingClientRect();
+          const vRect = viewport.getBoundingClientRect();
+          const left = Math.round(kRect.left - vRect.left);
+          const width = Math.round((lRect.left + lRect.width) - kRect.left);
+          const s = document.createElement('div'); s.className='barseg';
+          s.style.left = left + 'px'; s.style.width = width + 'px';
+          if(lastPlayed!=null && lastPlayed>=v.min && lastPlayed<=v.max) s.classList.add('active');
+          track.appendChild(s);
+        }
       }
       row.appendChild(label); row.appendChild(track); container.appendChild(row);
     });
@@ -562,14 +577,31 @@
   function shift(delta){
     currentMidi = clamp(currentMidi + delta, RANGE_MIN, RANGE_MAX);
     piano.scrollToMidi(currentMidi);
-    // Always start arpeggio on arrow press (per latest)
-    playArpeggio(currentMidi);
+    // If "Single note only" is checked, play a single note; otherwise start the arpeggio
+    if(single && single.checked){
+      scheduleNote(currentMidi);
+    } else {
+      // Always start arpeggio on arrow press (per latest)
+      playArpeggio(currentMidi);
+    }
   }
   document.getElementById('down').addEventListener('click',()=>shift(-1));
   document.getElementById('up').addEventListener('click',()=>shift(1));
   document.getElementById('repeat').addEventListener('click',()=>{
     if(single.checked){ scheduleNote(currentMidi); }
     else { playArpeggio(currentMidi); }
+  });
+
+  // Keyboard support: left/right arrows control semitone shift (unless typing in a form)
+  window.addEventListener('keydown', (e)=>{
+    if(e.altKey || e.ctrlKey || e.metaKey) return; // ignore combos
+    const tag = document.activeElement && document.activeElement.tagName;
+    if(tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement && document.activeElement.isContentEditable) return;
+    if(e.code === 'ArrowLeft'){
+      e.preventDefault(); shift(-1);
+    } else if(e.code === 'ArrowRight'){
+      e.preventDefault(); shift(1);
+    }
   });
 
   const t2 = makeTimer({
