@@ -126,6 +126,17 @@
   /* Controls */
   .controls{display:flex; align-items:center; gap:8px}
   .spacer{flex:1}
+
+  /* Mobile / narrow layout: stack roadmap above content and allow piano to be full-width */
+  @media (max-width: 720px){
+    main{flex-direction:column; padding:12px}
+    .roadmap{width:100%; flex:0 0 auto; border-right:none; border-bottom:1px solid var(--muted); padding:12px 8px}
+    .panel{width:100%}
+    .piano-wrap{margin-left:0 !important}
+    .piano-viewport{width:100% !important; min-width:0 !important; max-width:100% !important}
+    .header-inner{padding:12px}
+    .card{padding:14px}
+  }
 </style>
 </head>
 <body>
@@ -347,13 +358,32 @@
       const gain = ctx.createGain();
       osc.type = 'sine';
       osc.frequency.value = freq(midi);
-      gain.gain.value = 0.0001;
+      // slightly longer attack/release for smoother transitions and to reduce clicking
+      const now = ctx.currentTime;
+      // increase attack/release while keeping them proportional to note duration
+      const attack = Math.min(0.06, durMs/1000 * 0.25); // up to 60ms
+      const release = Math.min(0.08, durMs/1000 * 0.35); // up to 80ms
+      const minGain = 0.00001;
+      const target = Math.max(0.0002, 0.9*volume);
+
+      // ensure minimum audible duration and that envelope fits inside it
+      const durSec = Math.max(0.04, durMs/1000);
+      const a = Math.min(attack, durSec * 0.4);
+      const r = Math.min(release, durSec * 0.5);
+
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.setValueAtTime(minGain, now);
+      gain.gain.linearRampToValueAtTime(target, now + a);
+
       osc.connect(gain).connect(ctx.destination);
-      osc.start();
-      const target = Math.max(0.0002, 0.9*volume); // louder max
-      gain.gain.exponentialRampToValueAtTime(target, ctx.currentTime+0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + durMs/1000);
-      setTimeout(()=>{ try{osc.stop();}catch{} }, durMs);
+      osc.start(now);
+
+      // schedule release and a guaranteed stop at stopTime
+      const stopTime = now + durSec;
+      const releaseStart = Math.max(now + a, stopTime - r);
+      gain.gain.setValueAtTime(target, releaseStart);
+      gain.gain.linearRampToValueAtTime(minGain, stopTime);
+      try{ osc.stop(stopTime + 0.02); }catch{}
     }catch{}
   }
 
@@ -563,8 +593,10 @@
   updateBars();
 
   const single = document.getElementById('single');
-  const ARP_NOTE_DUR = 1400; // sustain (2x)
-  const ARP_STEP_GAP = 350;  // spacing (1/2)
+  // Make arpeggiated notes short and spaced so they don't overlap.
+  // Note duration (ms) should be less than or equal to the step gap.
+  const ARP_NOTE_DUR = 260; // ms note length (short)
+  const ARP_STEP_GAP = 300;  // ms spacing between steps (>= ARP_NOTE_DUR to avoid overlap)
   function scheduleNote(m){ playTone(m, ARP_NOTE_DUR, volume); highlightRef.set && highlightRef.set(m); lastPlayed=m; updateBars(); }
   let arpPlaying=false;
   async function playArpeggio(root){
