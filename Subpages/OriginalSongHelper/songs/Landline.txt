@@ -29,7 +29,16 @@ Burning [G]down, to the [F]ground
 I [G]asked my guardian [Bb]angel which way to [C]go
 But she don't [G]know, she don't [F]know
 
-| - - - - | (x8)
+
+Instrumental:
+| [G]- - - - | | [A#]- - - - |
+| [F]- - - - | | [C]- - - - |
+
+| [A]- - - - | | - - - - |
+| [A]- - - - | | - - - - |
+
+[G    A#   F   C] (x2)
+
 
 | [intro reprise]- - - - | (x8)
 
@@ -57,6 +66,8 @@ Burning [G]down, to the [F]ground
 I [G]asked my guardian [Bb]angel which way to [C]go
 But she don't [G]know, she don't [F]know
 
+
+Instrumental:
 | [G]- - - - | | [A#]- - - - |
 | [F]- - - - | | [C]- - - - |
 
@@ -64,6 +75,7 @@ But she don't [G]know, she don't [F]know
 | [A]- - - - | | - - - - |
 
 [G    A#   F   C] (x2)
+
 
 Outro:
 [D]We're going de[F]ep

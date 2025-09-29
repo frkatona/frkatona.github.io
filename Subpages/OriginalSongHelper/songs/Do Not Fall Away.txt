@@ -22,10 +22,10 @@ Prechorus:
 
 
 Chorus:
-| [F]- [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - |
+(SINGALONG)| [F]- [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - |
 
 
 | [A]- - - - |  [A]- - - - | [G]- - - - | [F]- - [E]- - |
@@ -49,10 +49,10 @@ Prechorus:
 
 
 Chorus:
-| [F]- [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - |
+(SINGALONG)| [F]- [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - |
 
 
 | [A]- - - - |  [A]- - - - | [G]- - - - | [F]- - [E]- - |
@@ -72,7 +72,7 @@ Prechorus:
 
 
 Chorus:
-| [F]- [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - |
+(SINGALONG)| [F]- [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - |

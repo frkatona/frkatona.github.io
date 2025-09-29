@@ -16,14 +16,14 @@ Prechorus:
 [C#]Newspaper reporting
 [C#]Another fine display
 [C#]Not for the pleasure of reading
-[C#]To lead our minds astray
+(SINGALONG)[C#]To lead our minds astray
 
 
 Chorus:
-They're so [E]proud to [F#]boast, they're all [C#]liars
-They're so [E]proud to [F#]boast, they're all [C#]liars
-Have we [E]found a [F#]way, to reach [C#]higher
-They're so [E]|proud - - -| |- - - -|
+(SINGALONG)They're so [E]proud to [F#]boast, they're all [C#]liars
+(SINGALONG)They're so [E]proud to [F#]boast, they're all [C#]liars
+(SINGALONG)Have we [E]found a [F#]way, to reach [C#]higher
+(SINGALONG)They're so [E]|proud - - -| |- - - -|
 to [F#]|boast - - -| |- - - -|.  They're all 
 
 |[C#]liars - - -|
@@ -41,14 +41,14 @@ Prechorus:
 [C#]Blind, dumb, and caught up in the riff-raff
 [C#]Another ho-hum day
 [C#]Among the congregation
-[C#]Another mind erased
+(SINGALONG)[C#]Another mind erased
 
 
 Chorus:
-They're so [E]proud to [F#]boast, they're all [C#]liars
-They're so [E]proud to [F#]boast, they're all [C#]liars
-Have we [E]found a [F#]way, to reach [C#]higher
-They're so [E]|proud - - -| |- - - -|
+(SINGALONG)They're so [E]proud to [F#]boast, they're all [C#]liars
+(SINGALONG)They're so [E]proud to [F#]boast, they're all [C#]liars
+(SINGALONG)Have we [E]found a [F#]way, to reach [C#]higher
+(SINGALONG)They're so [E]|proud - - -| |- - - -|
 to [F#]|boast - - -| |[- - - -|.  They're all 
 
 Instrumental:
@@ -57,7 +57,7 @@ Instrumental:
 | [B->C#]liars  -  [B->C#]-  - | | [F#]-   - [A]  -   - |
 
 Vocalizations:
-|[D#]Li - i -| |[E]i - [C#]ars -| (x3)
+(SINGALONG)|[D#]Li - i -| |[E]i - [C#]ars -| (x3)
 
 Instrumental:
 |[C#]  -   -   -   [E-B]-  | (x3)
