@@ -16,7 +16,7 @@ Verse1:
 
 
 Prechorus:
-Any[A#]more, any[D]more
+Any[A#]more | - - |,any[D]more
 Any[A#]more, any[C]more
 
 
@@ -43,7 +43,7 @@ Verse2:
 
 
 Prechorus:
-Let it [A#]go, let it [D]go
+Let it [A#]go | - - |, let it [D]go
 Let it [A#]go, let it [C]go
 
 
@@ -59,12 +59,11 @@ It was so
 [D]slow
 
 
-[2:51?]
-Instrumental_x3:
-| [F]know [D]- - - | (~8)
+Instrumental:
+| [F]know [D]- - - | (~2)
 
 
-|[A#]----||[F]----||[G]----||[G]----|(x3)
+|[A#]----||[F]----||[G]----||[G]----|(x2)
 |[A#]----||[A#]----||[C]----||[C]----|
 
 
@@ -79,7 +78,7 @@ Verse3:
 
 
 Prechorus:
-Desti[A#]ny, at [D]home
+Desti[A#]ny | - - |, at [D]home
 Destin[A#]y, at [C]home
 
 
