@@ -1,5 +1,6 @@
 Hypno-state 
-(Dm, 105 bpm)
+Eric M - Dm - v2025.09.29 - 5:30
+
 (verses = A slide, walk to D)
 
 
@@ -21,7 +22,7 @@ Any[A#]more, any[C]more
 
 Chorus:
 [D] This world's gone [F]mad   [G]
-Not gonna [A#]trust on the enemy
+Not gonna [A#]trust on the [C]enemy
 [D]Down, I'm going [F]down   [G]
 If I don't [A#]stand my ground
 
