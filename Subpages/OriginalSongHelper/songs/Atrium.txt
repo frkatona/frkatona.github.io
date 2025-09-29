@@ -1,29 +1,54 @@
 Atrium
+Eric M - v25.09.29 - 4:30
+
 
 Instrumental
+[D  G  A#  D]
+
 
 Verse1:
-found us a forest when we walk through the rain
-the sun hasn't shined but she brightens my day
-loving is pleasing, but nothing comes easy, and
-now we're losing our trail
-hey hey hey
+They [G]found us a forest when we [D]walk through the rain
+the [G]sun hasn't shined but she [D]brightens my day
+The [G]loving is pleasing, but [D]nothing comes easy, and
+[A#]now we're losing our [A]trail
 
-Verse2:
-with a whispering eyes and the shadows of time
-what's mine is hers, what's hers is mine
-once we're connected, everything's sacred, and
-holding us deep down inside
-hey hey hey
 
 Instrumental:
-asdf
+hey hey hey  [D]     [G   A#   D]
 
-Lately we're right here under hypnosis
-Where love has the strength to unheed our warnings
-Where pleasure is found as we walk through the discourse and
-that's been staring our way
-hey hey hey
+
+Verse2:
+with [G]whispering pines and the [D]shadows of time
+what's [G]mine is hers, what's [D]hers is mine
+[G]once we're connected, [D]everything's sacred, and
+[A#]holding us deep down in[A]side
+
+
+Instrumental:
+hey hey hey  [D]     [G   A#   D]
+
+
+Bridge:
+[G  D  G  A]
+[G  D  G  D]
+[D]
+[G  D  A  G]
+[G  D  G  D->E->D]
+[D]
+[G  D  G  A]
+[G  D  play around D]
+[D]
+
+
+[G]Lately we're right here under [D]hypnosis
+[G]Where love has the strength to [D]unheed our warnings
+Where [G]pleasure is found as we [D]walk through the discourse and
+[A#]that's been staring our [A]way
+
+
+Instrumental:
+hey hey hey  [D]     [G   A#   D]
 
 Outro:
-asdf
+[Walk C  B  A-B-C-D]
+[D  F  G  D]
