@@ -95,7 +95,7 @@
 
   /* Siren */
   .siren{width:80px; height:220px; border:1px solid var(--muted); background:var(--bg2); border-radius:14px; margin:0 auto; position:relative; overflow:hidden}
-  .siren .fill{position:absolute; inset:0; background:rgba(99,102,241,.5); animation:siren 6s ease-in-out infinite}
+  .siren .fill{position:absolute; inset:0; background:rgba(99,102,241,.5); animation:siren 10s ease-in-out infinite}
   @keyframes siren{0%{transform:translateY(0%)}50%{transform:translateY(-100%)}100%{transform:translateY(0%)}}
 
   /* Footer progress */
@@ -213,7 +213,7 @@
         <!-- Sirens -->
         <section data-step="3" class="step-panel" hidden>
           <div class="h1">Sirens</div>
-          <p class="muted">Glide from low to high and back with even volume and timbre. Follow the vertical bar (≈6s per cycle).</p>
+          <p class="muted">Glide on "oo" from your lowest to highest note and back following the animation's timing and keeping a steady pace, volume, and timbre.</p>
           <div class="siren"><div class="fill"></div></div>
           <div class="row-sb" style="margin-top:12px">
             <div class="row">
@@ -519,7 +519,7 @@
   }
 
   // ==== App state ====
-  const STEPS = ["Stretches","Arpeggios","Sirens","Range","Passaggio"];
+  const STEPS = ["Stretches","Arpeggios","Sirens"];//,"Range","Passaggio"];
   const roadmap = document.getElementById('roadmap-list');
   const panel = document.getElementById('panel');
   const progress = document.getElementById('progress');
