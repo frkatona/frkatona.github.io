@@ -20,8 +20,17 @@
         header .bar{display:flex;align-items:center;gap:12px;padding:12px 20px}
         .logo{width:34px;height:34px;border-radius:20px;background:conic-gradient(from 180deg, rgba(213, 85, 11, 1),  rgba(78, 76, 32, 1),#a0f);box-shadow:inset 0 0 20px rgba(57, 229, 255, 0.7)}
         .spacer{flex:1}
-        button, .btn{appearance:none;border:1px solid var(--line);background:#151519;color:var(--fg);padding:8px 12px;border-radius:999px;cursor:pointer}
-        button:hover,.btn:hover{background:#1b1b21}
+    button, .btn{appearance:none;border:1px solid var(--line);background:#151519;color:var(--fg);padding:8px 12px;border-radius:999px;cursor:pointer}
+    button:hover,.btn:hover{background:#1b1b21}
+    .player-controls{display:flex;align-items:flex-start;gap:12px}
+    .player-controls .center{display:flex;flex-direction:column;align-items:center;gap:8px}
+    .skip-row{display:flex;gap:8px}
+    #playPause.playing{ background: linear-gradient(45deg, var(--accent) 0%, var(--accent2) 100%); color: #07121a; border-color: transparent; box-shadow: 0 8px 28px rgba(63, 115, 168, 0.45); }
+    #playPause{ font-weight:700; font-size:22px; width:72px; height:72px; padding:0; border-radius:14px; display:inline-flex; align-items:center; justify-content:center; transition:transform .08s ease, box-shadow .12s ease, background-color .12s ease }
+    /* pressed-in effect for play button */
+    #playPause:active{ transform: translateY(3px) scale(.985); box-shadow: 0 4px 12px rgba(63,115,168,0.24); }
+    #prev, #next{ width:44px; height:36px; display:inline-flex; align-items:center; justify-content:center; padding:0; border-radius:10px; transition:transform .08s ease, box-shadow .12s ease }
+    #prev:active, #next:active{ transform: translateY(2px); box-shadow: 0 3px 8px rgba(0,0,0,0.28); }
 
         main{display:grid;grid-template-columns:400px 1fr;gap:20px;padding:20px} /* left column increased ~25% (320 -> 400) */
         @media (max-width: 900px){main{grid-template-columns:1fr}}
@@ -72,7 +81,7 @@
     <header>
         <div class="bar wrap">
             <div class="logo" aria-hidden="true"></div>
-            <div style="font-weight:700; color:#777;">AK Mix/Master · Demo Portfolio</div>
+            <div style="font-weight:700; color:#777;">AK Recordings · Demo Portfolio</div>
             <!-- <div class="spacer"></div>
             <div class="muted" style="font-size:10px">Loading songs from <code>frkatona.github.io</code></div>-->
         </div>
@@ -132,15 +141,23 @@
                         </div>
 
                         <div class="row" style="margin-top:12px">
-                            <button id="playPause" class="btn">Play</button>
-                            <button id="prev" class="btn">Prev</button>
-                            <button id="next" class="btn">Next</button>
-                            <div class="row" style="margin-left:6px">
-                                <span class="muted" style="font-size:12px">Vol</span>
-                                <input id="vol" type="range" min="0" max="1" step="0.01" value="0.9"/>
+                            <div class="player-controls">
+                                <div class="center">
+                                    <button id="playPause" class="btn" aria-label="Play/Pause">►</button>
+                                    <div class="skip-row">
+                                        <button id="prev" class="btn" aria-label="Previous">⏮</button>
+                                        <button id="next" class="btn" aria-label="Next">⏭</button>
+                                    </div>
+                                </div>
+                                <div style="margin-left:6px; display:flex; align-items:center; gap:12px">
+                                    <div class="row" style="align-items:center">
+                                        <span class="muted" style="font-size:12px">Vol</span>
+                                        <input id="vol" type="range" min="0" max="1" step="0.01" value="0.9"/>
+                                    </div>
+                                    <label class="row" style="font-size:14px"><input id="loop" type="checkbox"/> Loop</label>
+                                    <label class="row" style="font-size:14px"><input id="shuffle" type="checkbox"/> Shuffle</label>
+                                </div>
                             </div>
-                            <label class="row" style="margin-left:6px;font-size:14px"><input id="loop" type="checkbox"/> Loop</label>
-                            <label class="row" style="font-size:14px"><input id="shuffle" type="checkbox"/> Shuffle</label>
                         </div>
 
                         <div class="meta" style="margin-top:14px">
@@ -157,7 +174,7 @@
 
             <div class="card pad" style="margin-top:16px">
                 <div class="title" style="margin-bottom:6px">Dev Notes</div>
-                <p class="about">Current build loads songs from the <code>./songs/</code> folder according to the <code>./songs/manifest.json</code> metadata file.  To-do: download button, separate available playlists with a user argument in the URL, widen the library so text fits, improve the corner graphic and add it as a favicon</p>
+                <p class="about">Go to <a href="https://github.com/frkatona/frkatona.github.io/tree/main/Subpages/SongPlayer/songs">the repository</a> to download the songs.  <br><br><b>To-do:</b> download button, separate available playlists with a user argument in the URL, improve the corner graphic and add it as a favicon, set time from the manifest (or otherwise extract on page load), consider mobile UX a little more</p>
             </div>
         </section>
     </main>
@@ -247,7 +264,7 @@
             return `linear-gradient(135deg, hsl(${h1} 60% 45%), hsl(${h2} 70% 35%))`;
         }
 
-    function selectTrack(idx, autoplay = true){
+        function selectTrack(idx, autoplay = true){
             if (!library.length) return;
             currentIndex = ((idx%library.length)+library.length)%library.length;
             const t = library[currentIndex];
@@ -271,13 +288,31 @@
             els.metaIdx.textContent = `${currentIndex+1}/${library.length}`;
             updateProgressUI();
             renderTable();
-            if (autoplay){ play(); }
+            if (autoplay){
+                // Call play synchronously so the call remains inside the user's click gesture.
+                // This avoids autoplay blocking that can occur when play() is deferred.
+                play();
+            }
         }
 
-    function playByIndex(idx){ selectTrack(idx); }
+    function playByIndex(idx){ selectTrack(idx, true); }
 
-        function play(){ isPlaying = true; els.playPause.textContent = 'Pause'; els.audio.play().catch(()=>{}); }
-        function pause(){ isPlaying = false; els.playPause.textContent = 'Play'; els.audio.pause(); }
+        function setPlayButtonState(playing){
+            const btn = els.playPause;
+            if(playing){ btn.classList.add('playing'); btn.textContent = '❚❚'; }
+            else { btn.classList.remove('playing'); btn.textContent = '►'; }
+        }
+        function play(){
+            // attempt to play and update UI only when successful
+            const p = els.audio.play();
+            if (p && typeof p.then === 'function'){
+                p.then(()=>{ isPlaying = true; setPlayButtonState(true); }).catch(()=>{ isPlaying=false; setPlayButtonState(false); });
+            } else {
+                // older browsers may not return a promise
+                isPlaying = true; setPlayButtonState(true);
+            }
+        }
+        function pause(){ isPlaying = false; setPlayButtonState(false); els.audio.pause(); }
         function prev(){ if (shuffle) { playByIndex(randIndex()); } else { playByIndex(currentIndex-1); } }
         function next(){ if (shuffle) { playByIndex(randIndex()); } else { playByIndex(currentIndex+1); } }
         function randIndex(){ return Math.floor(Math.random()*library.length); }
@@ -286,18 +321,20 @@
         function seekBy(dt){ seekTo((els.audio.currentTime||0)+dt); }
 
         function updateProgressUI(){
-            const cur = els.audio.currentTime||0;
-            const dur = els.audio.duration||0;
+            const cur = (els.audio && els.audio.currentTime) ? els.audio.currentTime : 0;
+            const dur = (els.audio && els.audio.duration) ? els.audio.duration : 0;
             const pct = dur? (cur/dur)*100: 0;
-            els.bar.style.width = pct+'%';
-            els.knob.style.left = pct+'%';
-            els.timeCur.textContent = fmt(cur);
-            els.timeLeft.textContent = '-' + fmt(Math.max(0, dur-cur));
-            els.metaRate.textContent = Math.round(pct)+'%';
+            if(els.bar) els.bar.style.width = pct+'%';
+            if(els.knob) els.knob.style.left = pct+'%';
+            if(els.timeCur) els.timeCur.textContent = fmt(cur);
+            if(els.timeLeft) els.timeLeft.textContent = '-' + fmt(Math.max(0, dur-cur));
+            if(els.metaRate) els.metaRate.textContent = Math.round(pct)+'%';
         }
 
         // Events — audio
         els.audio.addEventListener('timeupdate', updateProgressUI);
+        els.audio.addEventListener('play', ()=>{ isPlaying = true; setPlayButtonState(true); });
+        els.audio.addEventListener('pause', ()=>{ isPlaying = false; setPlayButtonState(false); });
         els.audio.addEventListener('loadedmetadata', ()=>{
             const t = library[currentIndex];
             if (t){ calcDurationMeta(els.audio, t); els.metaLen.textContent = t.length || '—'; renderTable(); }
@@ -308,12 +345,12 @@
         });
 
         // Controls
-        els.playPause.addEventListener('click', ()=> isPlaying? pause(): play());
+    els.playPause.addEventListener('click', ()=> isPlaying? pause(): play());
         els.prev.addEventListener('click', prev);
         els.next.addEventListener('click', next);
         els.vol.addEventListener('input', ()=>{ els.audio.volume = parseFloat(els.vol.value || '0.9'); });
-        els.loop.addEventListener('change', ()=>{ loop = els.loop.checked; els.loopState.textContent = loop? 'On':'Off'; });
-        els.shuffle.addEventListener('change', ()=>{ shuffle = els.shuffle.checked; els.shuffleState.textContent = shuffle? 'On':'Off'; });
+    els.loop.addEventListener('change', ()=>{ loop = els.loop.checked; if(els.loopState) els.loopState.textContent = loop? 'On':'Off'; });
+    els.shuffle.addEventListener('change', ()=>{ shuffle = els.shuffle.checked; if(els.shuffleState) els.shuffleState.textContent = shuffle? 'On':'Off'; });
 
         // Keyboard
         window.addEventListener('keydown', (e)=>{
@@ -458,7 +495,9 @@
     loadSongsFromFolder();
 
     // Initialize with nothing; show hints in UI
-    els.subtitle.textContent = 'frkatona.github.io';
+        els.subtitle.textContent = 'frkatona.github.io';
+        // ensure play button shows initial symbol
+        setPlayButtonState(false);
     })();
     // tiny util to escape text into HTML
     function escapeHtml(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
