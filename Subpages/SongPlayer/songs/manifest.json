@@ -12,25 +12,27 @@
     "key": "Bbm"
   },
   {
-    "file": "2025-09-26_heartbeat_1.mp3",
+    "file": "53ana_HoiPolloi.mp3",
     "id": "t2",
-    "title": "Audio Test File 1",
-    "artist": "FRKatona",
-    "album": "FRKatona_test",
-    "year": 2024,
-    "tags": ["piano", "demo", "learning"],
-    "bpm": 100,
+    "title": "Hoi Polloi",
+    "artist": "53ana",
+    "cover": "Seana_MCB_1.jpg",
+    "album": "Album #1",
+    "year": 2023,
+    "tags": ["guitar", "soft rock", "singer/songwriter"],
+    "bpm": 120,
     "key": "G"
   },
   {
-    "file": "2025-09-26_heartbeat_2.mp3",
+    "file": "TimD_DucksWithBlood.mp3",
     "id": "t3",
-    "title": "Audio Test File 2",
-    "artist": "FRKatona",
-    "album": "FRKatona_test",
-    "year": 2024,
-    "tags": ["piano", "demo", "learning"],
-    "bpm": 100,
-    "key": "G"
+    "title": "Ducks With Blood",
+    "artist": "3 Chord Strummer",
+    "cover": "TimD_Arena_1.jpg",
+    "album": "Album #1",
+    "year": 2025,
+    "tags": ["hard rock", "rock"],
+    "bpm": 130,
+    "key": "Em"
   }
 ]
