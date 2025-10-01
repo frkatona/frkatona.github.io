@@ -58,29 +58,5 @@
     "tags": ["hard rock", "rock", "protest"],
     "bpm": 120,
     "key": "Em"
-  },
-  {
-    "file": "Maya_Honeycrisp.mp3",
-    "id": "t6",
-    "title": "Honeycrisp",
-    "artist": "Maya Connell",
-    "cover": "Maya_SC.png",
-    "album": "Album #1",
-    "year": 2022,
-    "tags": ["remix"],
-    "bpm": 100,
-    "key": "A"
-  },
-  {
-    "file": "Imran_Track1.mp3",
-    "id": "t7",
-    "title": "Track #1",
-    "artist": "Imran",
-    "cover": "Imran_headshot.png",
-    "album": "Album #1",
-    "year": 2024,
-    "tags": ["jazz"],
-    "bpm": 88,
-    "key": "E"
   }
 ]
