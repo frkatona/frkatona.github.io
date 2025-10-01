@@ -29,10 +29,34 @@
     "title": "Ducks With Blood",
     "artist": "3 Chord Strummer",
     "cover": "TimD_Arena_1.jpg",
-    "album": "Album #1",
+    "album": "Songs in the Key of Anger",
     "year": 2025,
     "tags": ["hard rock", "rock"],
-    "bpm": 130,
+    "bpm": 148,
+    "key": "Em"
+  },
+  {
+    "file": "TimD_HammersGonnaFall.mp3",
+    "id": "t4",
+    "title": "The Hammer's Gonna Fall",
+    "artist": "3 Chord Strummer",
+    "cover": "TimD_Arena_1.jpg",
+    "album": "Songs in the Key of Anger",
+    "year": 2025,
+    "tags": ["hard rock", "rock", "protest"],
+    "bpm": 121,
+    "key": "Em"
+  },
+  {
+    "file": "TimD_EverybodysLooking.mp3",
+    "id": "t5",
+    "title": "Everybody's Looking",
+    "artist": "3 Chord Strummer",
+    "cover": "TimD_Arena_1.jpg",
+    "album": "Songs in the Key of Anger",
+    "year": 2025,
+    "tags": ["hard rock", "rock", "protest"],
+    "bpm": 120,
     "key": "Em"
   }
 ]
