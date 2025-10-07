@@ -4,6 +4,7 @@ Eric M - v2025.09.29 - 2:30
 Intro:
 |[B]- - - - |[E]- - - -| (x3)
 |[F#]- - - - | - - - - |
+(2x)
 
 
 Verse1:
@@ -18,37 +19,38 @@ Verse1:
 
 
 Chorus:
-[G]Pain, panic, worry, and [D]woe, 
-these thoughts creep [A]in when I'm [C]alone,
-I'm ready for the sunlight to burn off my sin
+[G]Pain, [D]panic, worry, and [A]woe, 
+these thoughts creep [C]in when I'm a[G]lone,
+I'm [D]ready for the sunlight to burn [C]off my sin
 
-[G]Pain, panic, worry, and [D]woe, 
-these thoughts creep [A]in when I'm [C]alone,
-I made it through the [G]dark, it all [D]happens
-a[C]gain
+[G]Pain, [D]panic, worry, and [A]woe, 
+these thoughts creep [C]in when I'm a[G]lone,
+I [D]made it through the dark, it all [C]happens
+again
 
 
 Verse2:
 [B]Spot me a [E]sweet girl, [B]to be my [E]rider
-[B]Swallow some [E]courage, [B]wheel up be[E]side her
+[B]Swallow some [E]courage, [F#]wheel up beside her
 [B]Red lips, [E]even hips, [B]warm skin and [E]bright eyes
 [B]Bring a [E]whisper 
 [F#]can't you sit and have some fun
 
 
 Chorus:
-[G]Pain, panic, worry, and [D]woe, 
-these thoughts creep [A]in when I'm [C]alone,
-I'm ready for the sunlight to burn off my sin
+[G]Pain, [D]panic, worry, and [A]woe, 
+these thoughts creep [C]in when I'm a[G]lone,
+I'm [D]ready for the sunlight to burn [C]off my sin
 
-[G]Pain, panic, worry, and [D]woe, 
-these thoughts creep [A]in when I'm [C]alone,
-I made it through the [G]dark, it all [D]happens
-a[C]gain
+[G]Pain, [D]panic, worry, and [A]woe, 
+these thoughts creep [C]in when I'm a[G]lone,
+I [D]made it through the dark, it all [C]happens
+again 
+
+[C/G](slide up chromatically for ~1 bar)
 
 
 Bridge:
-C/G slides up chromatically:
 | [E]- - - - | [G]- - - - | [C]- - - -| [A]- - - - |
 
 
@@ -59,3 +61,4 @@ Solo:
 Outro:
 |[B]- - - - |[E]- - - -| (x3)
 |[F#]- - - - | - - - - |
+(2x)
