@@ -1,5 +1,5 @@
 Landline
-Eric M - D - 2025.09.29 - 5:30
+Eric M - Dm - 2025.10.08 - 5:30
 
 
 Intro:
@@ -21,35 +21,31 @@ Verse1:
 
 
 Chorus:
-[G] I swear, I'll [Bb]watch it all go [C]down
-Burning [G]down, to the [F]ground
-[G] I swear, I'll [Bb]watch it all go [C]down
-Burning [G]down, to the [F]ground
+[G] I swear, I'll watch it all go [A#]down
+Burning [C]down, to the [G]ground
+[G] I swear, I'll watch it all go [A#]down
+Burning [C]down, to the [G]ground
 
-I [G]asked my guardian [Bb]angel which way to [C]go
-But she don't [G]know, she don't [F]know
+I [G]asked my guardian angel which way to [A#]go
+But she don't [C]know, she don't
 
 
 Instrumental:
-| [G]- - - - | | [A#]- - - - |
-| [F]- - - - | | [C]- - - - |
+| [F]know [G]- - - | | [A#]- - - - | | [F]- - - - | | [C]- - - - | (x2)
 
 | [A]- - - - | | - - - - |
 | [A]- - - - | | - - - - |
 
-[G    A#   F   C] (x2)
-
-
-| [intro reprise]- - - - | (x8)
-
+Intro_reprise:
+| [D]- - - - | | [F]- - - - |
+| [D]- - - - | | [F]- - [G]- - |
+(x2)
 
 Verse2:
 [D]Heard and static, the [F]bustling streets
 I'd [D]rather listen to the crickets [F]in the trees
 [D]Feel the wind blowing steady, feel [F]thankful for just a moment
-Until you [D]realize we poll[F]uted the [G]breeze
-
-| [?]- - - - |
+{pp}Until you [D]realize we poll[F]uted the [G]breeze
 
 The [D]river's runnin' dry, the [F]ozone is the peak
 The [D]asdf is the [F]terrorized [G]deal
@@ -58,23 +54,26 @@ To [D]stop this world from [F]asdf [G]winning
 
 
 Chorus:
-[G] I swear, I'll [Bb]watch it all go [C]down
-Burning [G]down, to the [F]ground
-[G] I swear, I'll [Bb]watch it all go [C]down
-Burning [G]down, to the [F]ground
+[G] I swear, I'll watch it all go [A#]down
+Burning [C]down, to the [G]ground
+[G] I swear, I'll watch it all go [A#]down
+Burning [C]down, to the [G]ground
 
-I [G]asked my guardian [Bb]angel which way to [C]go
-But she don't [G]know, she don't [F]know
+I [G]asked my guardian angel which way to [A#]go
+But she don't [C]know, she don't
 
 
 Instrumental:
-| [G]- - - - | | [A#]- - - - |
-| [F]- - - - | | [C]- - - - |
+| [F]know [G]- - - | | [A#]- - - - | | [F]- - - - | | [C]- - - - | (x2)
 
 | [A]- - - - | | - - - - |
 | [A]- - - - | | - - - - |
 
-[G    A#   F   C] (x2)
+
+Intro_reprise:
+| [D]- - - - | | [F]- - - - |
+| [D]- - - - | | [F]- - [G]- - |
+(x2)
 
 
 Outro:
@@ -84,3 +83,5 @@ Outro:
 
 (playful, soft high bass)
 | - - - - | (x16)
+
+[D](ring out)

@@ -1,12 +1,10 @@
 Atrium
-Eric M - v25.09.29 - 4:30
+Eric M - v25.10.08 - (ambiguous Dm/Gm) - 4:30
 
 
 Instrumental:
-hey hey   
-| [D]hey - - - - - | | [D]- - - - - - - |     
-| [G]- - - [A#]- - - | | [A]- - - - - - - |
-(x2)
+| [D]- - - - - | | [D]- - - - - - - |     
+| [G]- - - [A#]- - - | | [A]- - - - - - - | (x2)
 
 
 Verse1:
@@ -22,6 +20,8 @@ hey hey
 | [G]- - - [A#]- - - | | [A]- - - - - - - |
 (x2)
 
+| [G]- - - [A#]- - - | | [A]- - - - - - - |
+
 
 Verse2:
 with [G]whispering pines and the [D]shadows of time
@@ -33,7 +33,7 @@ what's [G]mine is hers, what's [D]hers is mine
 Instrumental:
 hey hey   
 | [D]hey - - - - - | | [D]- - - - - - - |     
-| [G]- - - [A#]- - - | | [D]- - - - - - - |
+| [G]- - - [A#]- - - | | [A]- - - - - - - |
 (x2)
 
 
