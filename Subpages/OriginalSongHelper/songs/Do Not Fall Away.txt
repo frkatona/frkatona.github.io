@@ -1,8 +1,8 @@
 Do Not Fall Away
-Eric M - v2025.09.29 - 6:00
+Eric M - v2025.10.08 - 6:00
 
 Intro:
-|[D]- [C]- [G]- [G]-| (x4)
+| [D]- [C]- [G]- [G]- | (x4)
 
 
 Verse1:
@@ -22,14 +22,14 @@ Prechorus:
 
 
 Chorus:
-(SINGALONG)| [F]- [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - |
+(SINGALONG)| [F]- [D]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [D]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [D]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [D]- - - | [C]- - - - | [G]- - [A#]- - |
 
 
 | [A]- - - - |  [A]- - - - | [G]- - - - | [F]- - [E]- - |
-|[D]- - - - | [C]- - - - | [G]- - - - | [G]- - - - | x2
+| [D]- - - - | [C]- - - - | [G]- - - - | [G]- - - - | x2
 
 
 Verse2:
@@ -49,30 +49,30 @@ Prechorus:
 
 
 Chorus:
-(SINGALONG)| [F]- [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - |
+(SINGALONG)| [F]- [D]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [D]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [D]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [D]- - - | [C]- - - - | [G]- - [A#]- - |
 
 
-| [A]- - - - |  [A]- - - - | [G]- - - - | [F]- - [E]- - |
-|[D]- - - - | [C]- - - - | [G]- - - - | [G]- - - - | x2
+| [A]- - - - | | [A]- - - - | | [G]- - - - | | [F]- - [E]- - |
 
 Bridge:
-[E]- [G]- [D#]- [B]-
-[E]- [G]- [D#]- [B]-
-[E]- [G]- [D#]- [B]-
-[A]- [A]#- [G]- [F]- [D]-
-[D]- - - - - - - -
-[A]- - - - [A#]- [G]-
+| [E]- - - [G]- | - - - - | | [D#]- - - [B]- | - - - - |
+| [E]- - - [G]- | - - - - | | [D#]- - - [B]- | - - - - |
+| [E]- - - [G]- | - - - - | | [D#]- - - [B]- | - - - - |
+| [A]- - - - | | - - - - | | [A#]- - - - | |[G]- - [F]- - |
+| [D]- - - - | (~24)
+| [A]- - - - | | [A#]- - [G]- - |
 
-Prechorus:
-[D]If you [C]feel yourself [G]slipping, starting to 
-[D]sway [C]---- [G]---- [G]----
+| [E]- - - [G]- | - - - - | | [D#]- - - [B]- | - - - - |
+| [E]- - - [G]- | - - - - | | [D#]- - - [B]- | - - - - |
+| [E]- - - [G]- | - - - - | | [D#]- - - [B]- | - - - - |
+| [A]- - - - | | - - - - | | [A#]- - - - | | [G]- - [F]- - |
 
 
 Chorus:
-(SINGALONG)| [F]- [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
-(SINGALONG)| -[F]way [G]- - - | [C]- - - - | [G]- - [A#]- - |
+(SINGALONG)| [F]- [D]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [D]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [D]- - - | [C]- - - - | [G]- - [A#]- - | Do not fall a-
+(SINGALONG)| -[F]way [D]- - - | [C]- - - - | [G]- - [A#]- - |
