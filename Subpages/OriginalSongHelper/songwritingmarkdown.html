@@ -322,7 +322,7 @@
         }
 
         #increaseFont, #decreaseFont, #toggleAlignment, #menuSongSelect {
-            font-size: 35px;
+            font-size: 200px;
         }
 
         .formatted-song {
@@ -378,30 +378,42 @@
             z-index: 2;
         }
 
+        /* menu buttons: modern visual style with icon support and press animation */
         .menu-popup button {
             display: block;
             width: 100%;
-            padding: 20px; /* Increased padding */
-            margin-bottom: 10px; /* Increased margin */
-            background-color: #333;
+            height: 200px;
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            background-color: #822b2bff;
             color: #fff;
-            border: none;
+            border: 1px solid rgba(255,255,255,0.04);
             text-align: center;
             cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+            transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .menu-popup button:hover {
-            background-color: #444;
+            transform: translateY(-2px);
+            background-color: #a84141ff;
         }
-        /* Modern menu styles */
+
+        .menu-btn:active { transform: translateY(2px); box-shadow: inset 0 3px 8px rgba(0,0,0,0.6); }
+        .font-row{ display:flex; gap:10px }
+        .font-row .menu-btn{ flex:1; width:50%; }
         .menu-popup{ padding:18px; border-radius:12px; background:linear-gradient(180deg,#161616,#1d1d1d); box-shadow:0 10px 30px rgba(0,0,0,.6) }
-        .menu-section{ margin-bottom:8px }
-        .menu-btn{ background:#232323; color:#fff; border-radius:10px; padding:10px 14px; border:1px solid rgba(255,255,255,.04); cursor:pointer }
         .menu-btn:hover{ background:#2b2b2b }
-        .menu-label{ color:#cfcfcf; font-size:14px; display:block; margin-bottom:6px }
+        .menu-label{ color:#cfcfcf; font-size:40px; display:block; margin-bottom:20px }
         .menu-range{ width:100%; height:10px; background:#333; border-radius:6px }
         .menu-popup .transpose-value{ font-size:16px; width:42px; text-align:center }
-        .menu-button{ width:110px; height:110px; font-size:48px; border-radius:12px }
+        .menu-popup .scroll-value{ font-size:16px; width:42px; text-align:center }
+        .menu-button{ width:200px; height:200px; font-size:150px; border-radius:12px }
     </style>
 </head>
 
@@ -446,13 +458,26 @@
             </div>
             <div class="menu-popup" id="menuPopup">
                 <div class="menu-section">
-                    <button id="increaseFont" class="menu-btn">A+</button>
-                    <button id="decreaseFont" class="menu-btn">A−</button>
-                    <button id="toggleAlignment" class="menu-btn">toggle alignment</button>
+                    <div class="font-row">
+                        <button id="decreaseFont" class="menu-btn" title="decrease font size">
+                            <!--<svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 4v2h14V4H5zm3 6h2v6h2V10h2V8H8v2zM4 20h16v-2H4v2z"/></svg> -->
+                            <span>−</span>
+                        </button>
+                            <button id="increaseFont" class="menu-btn" title="increase font size">
+                            <!--<svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 4v2h14V4H5zm3 6h2v6h2V10h2V8H8v2zM4 20h16v-2H4v2z"/></svg> -->
+                            <span>+</span>
+                        </button>
+
+                    </div>
+                    <button id="toggleAlignment" class="menu-btn" title="toggle alignment">
+                        <!--<svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 4v2h14V4H5zm3 6h8v2H8v-2zM4 20h16v-2H4v2z"/></svg>
+                        <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 5h18v2H3V5zm0 6h12v2H3v-2zm0 6h18v2H3v-2z"/></svg> -->
+                        <span>⎅</span>
+                    </button>
                 </div>
 
                 <div class="menu-section" style="margin-top:12px">
-                    <button id="menuSongSelect" class="menu-btn">select song</button>
+                    <button id="menuSongSelect" title="select a song" class="menu-btn">♪</button>
                 </div>
 
                 <div class="menu-section" style="margin-top:12px">
