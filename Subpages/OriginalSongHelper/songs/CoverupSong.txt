@@ -24,10 +24,10 @@ Chorus:
 (SINGALONG)They're so [E]proud to [F#]boast, they're all [C#]liars
 (SINGALONG)Have we [E]found a [F#]way, to reach [C#]higher
 (SINGALONG)They're so [E]|proud - - -| |- - - -|
-to [F#]|boast - - -| |- - - -|.  They're all 
+to | [F#]boast - - - | | - - - - |.  They're all 
 
-|[C#]liars - - -|
-|[C#]- - - -| (x3)
+| [C#]liars - - - |
+| [C#]- - - - | (x3)
 
 
 Verse2:
@@ -49,7 +49,7 @@ Chorus:
 (SINGALONG)They're so [E]proud to [F#]boast, they're all [C#]liars
 (SINGALONG)Have we [E]found a [F#]way, to reach [C#]higher
 (SINGALONG)They're so [E]|proud - - -| |- - - -|
-to [F#]|boast - - -| |[- - - -|.  They're all 
+to | [F#]boast - - - | | - - - - |.  They're all 
 
 Instrumental:
 | [B->C#]liars  -  [B->C#]-  - | | [F#]-   - [A]  -   - |

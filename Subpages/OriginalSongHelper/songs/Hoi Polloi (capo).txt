@@ -2,8 +2,8 @@ Hoi Polloi
 Seana Wood - v25.04.07 - written G, played capo 2 (A) - 140 BPM
 
 Intro:
-[G - Cmaj7]
-[G - Cmaj7]
+| [G]- - - - | [Cmaj7]- - - - |
+| [G]- - - - | [Cmaj7]- - - - |
 
 Verse_1:
 [G]   We are all a mystery until we’re known    [Cmaj7]
@@ -20,8 +20,8 @@ here we [C]are
 the hoi poll[G]oi, the hoi poll[C]oi 
 we are [G]strong, we’re the hoi poll[C]oi
 
-[G - Cmaj7]
-[G - Cmaj7]
+| [G]- - - - | [Cmaj7]- - - - |
+| [G]- - - - | [Cmaj7]- - - - |
 
 Verse_2:
 [G]   I haven't had a home for too [Cmaj7]long
@@ -38,8 +38,8 @@ here we [C]are
 the hoi poll[G]oi, the hoi poll[C]oi 
 we are [G]strong, we’re the hoi poll[C]oi
 
-[G - Cmaj7]
-[G - Cmaj7]
+| [G]- - - - | [Cmaj7]- - - - |
+| [G]- - - - | [Cmaj7]- - - - |
 
 Verse_3:
 [G]   Singing here helps with my dreaming [Cmaj7]problem
@@ -59,8 +59,8 @@ we are [G]strong, we’re the hoi poll[C]oi
 Coda:
 You’re never al[G]one, with the hoi poll[C]oi
 
-[G - Cmaj7]
-[G - Cmaj7]
+| [G]- - - - | [Cmaj7]- - - - |
+| [G]- - - - | [Cmaj7]- - - - |
 
 Verse_4:
 {pp} To[G]morrow we’ll go back to happiness pre[Cmaj7]tending.  When

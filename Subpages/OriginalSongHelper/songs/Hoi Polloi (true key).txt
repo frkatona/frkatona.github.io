@@ -1,8 +1,8 @@
 Hoi Polloi (true chords)
 Seana Wood - v24.02 - A (true) - 140 BPM
 
-[A - Dmaj7]
-[A - Dmaj7]
+| [A]- - - - | [Dmaj7]- - - - |
+| [A]- - - - | [Dmaj7]- - - - |
 
 Verse_1:
 [A]   We are all a mystery until we’re known    [Dmaj7]
@@ -19,8 +19,8 @@ here we [D]are
 the hoi poll[A]oi, the hoi poll[D]oi 
 we are [A]strong, we’re the hoi poll[D]oi
 
-[A - Dmaj7]
-[A - Dmaj7]
+| [A]- - - - | [Dmaj7]- - - - |
+| [A]- - - - | [Dmaj7]- - - - |
  
 Verse_2:
 [A]   I haven't had a home for too [Dmaj7]long
@@ -37,8 +37,8 @@ here we [D]are
 the hoi poll[A]oi, the hoi poll[D]oi 
 we are [A]strong, we’re the hoi poll[D]oi
 
-[A - Dmaj7]
-[A - Dmaj7]
+| [A]- - - - | [Dmaj7]- - - - |
+| [A]- - - - | [Dmaj7]- - - - |
 
 Verse_3:
 [A]   Singing here helps with my dreaming [Dmaj7]problem
@@ -58,8 +58,8 @@ we are [A]strong, we’re the hoi poll[D]oi
 Coda:
 You’re never al[A]one, with the hoi poll[D]oi
 
-[A - Dmaj7]
-[A - Dmaj7]
+| [A]- - - - | [Dmaj7]- - - - |
+| [A]- - - - | [Dmaj7]- - - - |
 
 Verse_4:
 {pp} To[A]morrow we’ll go back to happiness pre[Dmaj7]tending.  When

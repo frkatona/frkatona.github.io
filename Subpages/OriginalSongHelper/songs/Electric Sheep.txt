@@ -1,8 +1,8 @@
 Phillip's Electric Sheep
 Seana Wood - v25.03.17 - Am - 130 BPM
 Intro:
-[Am - C - Am - C]
-[Am - C - Am - G]
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [C]- - - - |
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [G]- - - - |
 
 Verse_1:
 [Am]   Turning the [C]dial 
@@ -39,9 +39,9 @@ He [F]didn’t [F]
 under[G]stand [G]
 
 Instrumental:
-[Am - C - Am - C]
-[Am - C - Am - C]
-[Am - C - Am - G]
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [C]- - - - |
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [C]- - - - |
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [G]- - - - |
 
 Bridge:
 {pp}[C]The sheep tossed and turned 
