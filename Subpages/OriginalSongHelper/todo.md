@@ -1,6 +1,8 @@
  - [x] overhaul chord naming scheme to allow for transpose slider
  - make buttons better
    - [ ]stylish icons
+     - "align" is the Word-style three bars which change when left/center aligned
+     - "A+" and "A-" are Word-style letters getting bigger/smaller
    - [ ] stylish sliders and smoother slow scrolls
    - [x] on-hover effects and push effects
  - [ ]different link for different songs + instrument (+ transpose?)

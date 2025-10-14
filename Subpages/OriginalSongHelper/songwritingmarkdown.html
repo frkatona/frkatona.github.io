@@ -130,8 +130,8 @@
         /* transpose control UI */
         .transpose-control {
             position: absolute;
-            top: 340px;
-            right: 20px;
+            top: 20px;
+            left: 20px;
             width: 240px;
             padding: 10px;
             background: #262626;
@@ -321,7 +321,7 @@
             font-size: 35px;
         }
 
-        #increaseFont, #decreaseFont, #toggleAlignment {
+        #increaseFont, #decreaseFont, #toggleAlignment, #menuSongSelect {
             font-size: 35px;
         }
 
@@ -440,7 +440,7 @@
                 <button id="toggleScroll">scroll</button>
             </div>
             <div class="transpose-control" id="transposeControl">
-                <label for="transposeRange">Transpose</label>
+                <label for="transposeRange">transpose</label>
                 <input id="transposeRange" class="range purple" type="range" min="-12" max="12" value="0">
                 <div class="transpose-value" id="transposeValue">0</div>
             </div>
@@ -448,20 +448,20 @@
                 <div class="menu-section">
                     <button id="increaseFont" class="menu-btn">A+</button>
                     <button id="decreaseFont" class="menu-btn">A−</button>
-                    <button id="toggleAlignment" class="menu-btn">Align</button>
+                    <button id="toggleAlignment" class="menu-btn">toggle alignment</button>
                 </div>
 
                 <div class="menu-section" style="margin-top:12px">
-                    <button id="menuSongSelect" class="menu-btn">Select a song</button>
+                    <button id="menuSongSelect" class="menu-btn">select song</button>
                 </div>
 
                 <div class="menu-section" style="margin-top:12px">
-                    <label class="menu-label" for="scrollSpeed">Scroll speed</label>
+                    <label class="menu-label" for="scrollSpeed">scroll speed</label>
                     <input id="scrollSpeed" class="menu-range range blue" type="range" min="1.0" max="5.0" step="0.25" value="3.0">
                 </div>
 
                 <div class="menu-section" style="margin-top:12px">
-                    <label class="menu-label" for="menuTransposeRange">Transpose</label>
+                    <label class="menu-label" for="menuTransposeRange">transpose</label>
                     <div style="display:flex;align-items:center;gap:8px">
                         <input id="menuTransposeRange" class="menu-range range purple" type="range" min="-12" max="12" value="0">
                         <div id="menuTransposeValue" class="transpose-value">0</div>
