@@ -117,7 +117,56 @@
         .help-button {
             right: 20px; /* Increased right position */
         }
+        /* chord atomization for transpose support */
+        .chord { display: inline-block; white-space: nowrap; font-family: 'Consolas', monospace; }
+        .chord-root { color: #ffeb3b; font-weight: 900; margin-right: 0.08em; }
+        .chord-type { color: #fff59d; font-weight: 400; opacity: 0.95; }
 
+        /* chord-line uses inline chord spans now */
+    .chord-line { color: #ffeb3b; margin-bottom: -40px; margin-top: -25px; white-space: pre-wrap; }
+    .chord-line .chord{ display:inline-block; min-width:1ch; text-align:left }
+
+        /* transpose control UI */
+        .transpose-control {
+            position: absolute;
+            top: 340px;
+            right: 20px;
+            width: 240px;
+            padding: 10px;
+            background: #262626;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 28px;
+            text-align: center;
+            z-index: 3;
+            opacity: 0.9;
+        }
+        .transpose-control label { display:block; font-size: 26px; margin-bottom: 6px; }
+        .transpose-control input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 10px;
+            background: #444;
+            border-radius: 6px;
+            outline: none;
+        }
+        .transpose-control input[type="range"]::-webkit-slider-thumb{
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ffeb3b;
+            box-shadow: 0 0 6px rgba(0,0,0,0.6);
+        }
+        .transpose-value {
+            display: inline-block;
+            width: 48px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 6px;
+            font-size: 26px;
+        }
         .download-button {
             top: 100px; /* Increased top position */
             right: 20px; /* Increased right position */
@@ -266,6 +315,11 @@
             <div class="scroll-controls">
                 <button id="toggleScroll">scroll</button>
             </div>
+            <div class="transpose-control" id="transposeControl">
+                <label for="transposeRange">Transpose</label>
+                <input id="transposeRange" type="range" min="-12" max="12" value="0">
+                <div class="transpose-value" id="transposeValue">0</div>
+            </div>
             <div class="menu-popup" id="menuPopup">
                 <button id="increaseFont">font ↑</button>
                 <button id="decreaseFont">font ↓</button>
@@ -298,8 +352,22 @@
         const menuPopup = document.getElementById('menuPopup');
         // const scrollControls = document.getElementById('scroll-controls');
 
+        // small helper to safely escape text for HTML insertion
+        function escapeHtml(s){
+            return (s==null?'':String(s)).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+        }
+
         let fontSize = 30;
         let alignment = 'center'; // Default alignment
+        let transpose = 0;
+        const transposeRange = document.getElementById('transposeRange');
+        const transposeValue = document.getElementById('transposeValue');
+        transposeRange.addEventListener('input', (e)=>{
+            transpose = parseInt(e.target.value,10)||0;
+            transposeValue.textContent = (transpose>0? '+'+transpose: String(transpose));
+            // re-render chords with new transpose
+            updateFormattedSong();
+        });
 
         songInput.addEventListener('input', updateFormattedSong);
 
@@ -329,32 +397,73 @@
                 }
             });
             formattedSong.innerHTML = outputHtml;
+            // apply transpose to chord roots in DOM
+            if(transpose !== 0){
+                formattedSong.querySelectorAll('.chord-root').forEach(el=>{
+                    const base = el.getAttribute('data-root');
+                    const t = transposeRoot(base, transpose);
+                    el.textContent = t;
+                });
+            }
         }
 
         function isSectionHeader(line) {
             return /^(\w+):/.test(line.trim());
         }
 
+        // chord parsing that separates root and type for transposition
         function processLine(line) {
-            let chordLine = '';
+            let chordLineHtml = '';
             let lyricLine = '';
-            let chordPositions = [];
-            let lyrics = '';
-            let indexOffset = 0;
-            let match;
             const chordRegex = /\[([^\]]+)\]/g;
+            let match;
+            let plain = line.replace(chordRegex, '');
+            // Build chord-line by iterating through matches and placing spans at approximate positions
+            let lastIndex = 0;
+            let parts = [];
             while ((match = chordRegex.exec(line)) !== null) {
-                chordPositions.push({ position: match.index - indexOffset, chord: match[1] });
-                indexOffset += match[0].length;
+                const full = match[1].trim();
+                const split = splitChord(full);
+                // position in the plain lyrics (approx)
+                const pos = match.index - (line.slice(0, match.index).match(/\[[^\]]*\]/g) || []).join('').length;
+                parts.push({ pos, root: split.root, type: split.type });
             }
-            // Remove chords from lyrics
-            lyrics = line.replace(chordRegex, '');
-            // Build chord line
-            chordLine = ' '.repeat(lyrics.length);
-            chordPositions.forEach(pos => {
-                chordLine = replaceAt(chordLine, pos.position, pos.chord);
-            });
-            return { chordLine, lyricLine: lyrics };
+            // Create a visual chord-line by mapping over characters of plain and inserting chord spans when present
+            const chars = Array.from(plain);
+            let chordMap = new Map();
+            parts.forEach(p=> chordMap.set(p.pos, p));
+            // Build HTML: for each char index, if chord exists at that index, emit a chord span, otherwise emit a space
+            // We'll render chord-line as a sequence of inline-block spans to allow styling and later transposition
+            let chordSpans = [];
+            for (let i=0;i<=chars.length;i++){
+                if (chordMap.has(i)){
+                    const p = chordMap.get(i);
+                    chordSpans.push(`<span class="chord"><span class="chord-root" data-root="${escapeHtml(p.root)}">${escapeHtml(p.root)}</span><span class="chord-type">${escapeHtml(p.type)}</span></span>`);
+                } else {
+                    chordSpans.push('&nbsp;');
+                }
+            }
+            chordLineHtml = chordSpans.join('');
+            return { chordLine: chordLineHtml, lyricLine: plain };
+        }
+
+        // Split a chord like 'C#m7/G' into root 'C#' and type 'm7/G'
+        function splitChord(chord){
+            const m = chord.match(/^([A-G][b#]?)(.*)$/);
+            if(m){ return { root: m[1], type: m[2]||'' }; }
+            return { root: chord, type: '' };
+        }
+
+        // Transpose map and function
+        const NOTE_ORDER = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+        function transposeRoot(root, semitones){
+            if(!root) return root;
+            // Normalize flat to sharp (Db -> C#)
+            const r = root.replace('Db','C#').replace('Eb','D#').replace('Gb','F#').replace('Ab','G#').replace('Bb','A#');
+            const idx = NOTE_ORDER.indexOf(r);
+            if(idx === -1) return root; // unknown
+            const ni = (idx + semitones + 120) % 12;
+            return NOTE_ORDER[ni];
         }
 
         function replaceAt(str, index, replacement) {

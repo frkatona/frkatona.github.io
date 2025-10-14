@@ -1,0 +1,8 @@
+ - overhaul chord naming scheme to allow for transpose slider
+ - make buttons better
+   - stylish icons
+   - stylish sliders and smoother slow scrolls
+   - on-hover effects and push effects
+ - different link for different songs + instrument (+ transpose?)
+ - song switcher button available without opening left panel
+ - 

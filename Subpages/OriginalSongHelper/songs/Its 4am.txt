@@ -1,8 +1,8 @@
 It's 4am
-Seana Wood - v24.02 - C - 140 BPM
+Seana Wood - v25.10.13 - C - 70 BPM
 
 Intro:
-[C    Am    C    Am]
+| [C]- - - - | [Am]- - - - | (x2)
 
 Verse_1:
 It's [C]   4am and I can't [Am]sleep again
@@ -39,10 +39,11 @@ But it’s still [G]there just the same
 I’m gonna hide aw[D]ay for [A]while  [A](1-bar rest)
 
 Instrumental:
-[F  F  C  G]
-[F  F  C  G]
-[Dm  G  Dm  G]
-[Dm  G   C   C]
+| [F]- - - - | [F]- - - - | [C]- - - - | [G]- - - - | 
+| [F]- - - - | [F]- - - - | [C]- - - - | [G]- - - - | 
+| [Dm]- - - - | [G]- - - - | [Dm]- - - - | [G]- - - - | 
+| [Dm]- - - - | [G]- - - - | [C]- - - - | [C]- - - - | 
+
 
 Verse_3:
 It’s [C]11pm can't turn [Am]back this clock again
