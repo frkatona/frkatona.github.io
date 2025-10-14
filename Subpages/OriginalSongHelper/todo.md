@@ -1,8 +1,11 @@
- - overhaul chord naming scheme to allow for transpose slider
+ - [x] overhaul chord naming scheme to allow for transpose slider
  - make buttons better
-   - stylish icons
-   - stylish sliders and smoother slow scrolls
-   - on-hover effects and push effects
- - different link for different songs + instrument (+ transpose?)
- - song switcher button available without opening left panel
- - 
+   - [ ]stylish icons
+   - [ ] stylish sliders and smoother slow scrolls
+   - [x] on-hover effects and push effects
+ - [ ]different link for different songs + instrument (+ transpose?)
+ - [ ]song switcher button available without opening left panel (button is in hambuger, but doesn't work yet)
+ - [ ]convert the title/author/version etc. to an object to be interpreted like a latex bibtex entry
+ - [ ]simpler option for scroll stop/go (double tap?)
+ - [ ]scroll speed show value on right like transpose
+ - [ ]make sliders bigger and make UI adapt to screens size or mobile aspect ratio
