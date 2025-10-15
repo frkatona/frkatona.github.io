@@ -240,8 +240,6 @@
         transition: border 1000ms ease;
         }
 
-
-
         .range.blue::-webkit-slider-thumb {
         border-color: rgb(59,173,227);
         }
@@ -298,7 +296,7 @@
         }
 
         .toggle-button {
-            top: 50%; /* Move up */
+            top: 50%;
             left: 20px;
             z-index: 2;
         }
@@ -328,10 +326,15 @@
         .formatted-song {
             font-family: 'Consolas', monospace;
             font-weight: bold;
-            white-space: pre;
+            /* allow wrapping but preserve multiple spaces/newlines */
+            white-space: pre-wrap;
             font-size: 30px;
             text-align: center;
         }
+
+        /* ensure each rendered line is a block so lines don't run together */
+        .lyric-line { display: block; white-space: pre-wrap; margin: 6px 0 12px 0; color: #ffffff }
+        .chord-line { display: block; color: #ffeb3b; margin-bottom: -0.6em; margin-top: 0; white-space: pre-wrap; }
 
         .song-title {
             text-align: center;
@@ -352,7 +355,7 @@
         }
 
         .song-item {
-            padding: 10px; /* Increased padding */
+            padding: 10px;
             cursor: pointer;
             border-bottom: 1px solid #333;
         }
@@ -363,18 +366,18 @@
 
         .menu-button {
             position: fixed;
-            top: 20px; /* Increased top position */
-            right: 20px; /* Increased right position */
+            top: 20px; 
+            right: 20px; 
             background-color: #333;
             color: #fff;
             border: none;
-            width: 150px; /* Increased width */
-            height: 150px; /* Increased height */
+            width: 200px; 
+            height: 200px;
             border-radius: 5px;
-            font-size: 120px; /* Increased font size */
+            font-size: 150px; 
             cursor: pointer;
             text-align: center;
-            line-height: 80px; /* Increased line height */
+            line-height: 80px; 
             z-index: 2;
         }
 
@@ -409,16 +412,14 @@
         .font-row .menu-btn{ flex:1; width:50%; }
         .menu-popup{ padding:18px; border-radius:12px; background:linear-gradient(180deg,#161616,#1d1d1d); box-shadow:0 10px 30px rgba(0,0,0,.6) }
         .menu-btn:hover{ background:#2b2b2b }
-        .menu-label{ color:#cfcfcf; font-size:40px; display:block; margin-bottom:20px }
+        .menu-label{ color:#cfcfcf; font-size:50px; display:block; margin-bottom:20px }
         .menu-range{ width:100%; height:10px; background:#333; border-radius:6px }
         .menu-popup .transpose-value{ font-size:16px; width:42px; text-align:center }
         .menu-popup .scroll-value{ font-size:16px; width:42px; text-align:center }
-        .menu-button{ width:200px; height:200px; font-size:150px; border-radius:12px }
     </style>
 </head>
 
 <body>
-
     <div class="container">
         <div class="left-panel" id="leftPanel">
             <textarea id="songInput" placeholder="Type your song here..."></textarea>
@@ -537,33 +538,67 @@
 
         songInput.addEventListener('input', updateFormattedSong);
 
+        // ChordPro-aware renderer
+        // Supports directives like {title: ...}, {artist: ...}, {start_of_chorus}, {end_of_chorus}, {comment: ...}
         function updateFormattedSong() {
-            const inputText = songInput.value;
+            const inputText = songInput.value.replace(/\r/g,'');
             const lines = inputText.split('\n');
             let outputHtml = '';
-            if (lines.length > 0) {
-                // First line is the song title
-                const title = lines[0];
-                outputHtml += `<div class="song-title">${title}</div>\n`;
-                lines.shift(); // Remove the title line
+            let inChorus = false;
+            let meta = {};
+
+            // First pass: collect top-level metadata lines in ChordPro format if present
+            // (we'll still accept plain text title fallback)
+            for (let i=0;i<Math.min(lines.length,10);i++){
+                const d = parseDirective(lines[i]);
+                if(d && d.key){ meta[d.key] = d.value; }
             }
-            lines.forEach(line => {
-                if (line.trim() === '') {
-                    outputHtml += '<br>';
-                } else if (isSectionHeader(line)) {
-                    outputHtml += `<div class="section-header">${line}</div>\n`;
-                } else {
-                    const { chordLine, lyricLine } = processLine(line);
-                    if (chordLine.trim() !== '') {
-                        outputHtml += `<div class="chord-line">${chordLine}</div>\n`;
-                    } else {
-                        outputHtml += `<div class="chord-line">&nbsp;</div>\n`; // Empty line to maintain spacing
+
+            // Render title/artist/subtitle metadata if available
+            if(meta.title) outputHtml += `<div class="song-title">${escapeHtml(meta.title)}</div>`;
+            else if(lines.length>0 && !isDirectiveLine(lines[0])){
+                // fallback: use first non-directive line as title
+                outputHtml += `<div class="song-title">${escapeHtml(lines[0])}</div>`;
+                // drop the first line when it's used as title
+                if(!isDirectiveLine(lines[0])) lines.shift();
+            }
+            if(meta.subtitle) outputHtml += `<div class="meta">${escapeHtml(meta.subtitle)}</div>`;
+            if(meta.artist) outputHtml += `<div class="meta">${escapeHtml(meta.artist)}</div>`;
+
+            // Main rendering loop
+            for (let rawLine of lines){
+                const line = rawLine.trimRight();
+                if(line === ''){ outputHtml += '<br>'; continue; }
+
+                const dir = parseDirective(line);
+                if(dir){
+                    // handle known directives
+                    if(dir.key === 'title'){ /* already handled above */ }
+                    else if(dir.key === 'subtitle'){ outputHtml += `<div class="meta">${escapeHtml(dir.value)}</div>`; }
+                    else if(dir.key === 'artist'){ outputHtml += `<div class="meta">${escapeHtml(dir.value)}</div>`; }
+                    else if(dir.key === 'comment'){ outputHtml += `<div class="comment">${escapeHtml(dir.value)}</div>`; }
+                    else if(dir.key === 'start_of_chorus' || dir.key === 'chorus'){ inChorus = true; outputHtml += '<div class="chorus">'; }
+                    else if(dir.key === 'end_of_chorus'){ inChorus = false; outputHtml += '</div>'; }
+                    else if(dir.key === 'chorus'){
+                        /* some files use {chorus} to denote a labeled chorus; we'll open a chorus block */
+                        inChorus = true; outputHtml += `<div class="chorus"><strong>${escapeHtml(dir.value||'Chorus')}</strong>`;
                     }
-                    outputHtml += `<div>${lyricLine}</div>\n`;
+                    continue;
                 }
-            });
+
+                // not a directive: parse inline chords and lyrics
+                const { chordLineHtml, lyricHtml } = renderChordProInline(line);
+                if(chordLineHtml.trim() !== '') outputHtml += `<div class="chord-line">${chordLineHtml}</div>`;
+                else outputHtml += `<div class="chord-line">&nbsp;</div>`;
+                outputHtml += `<div class="lyric-line">${lyricHtml}</div>`;
+            }
+
+            // close open chorus
+            if(inChorus) outputHtml += '</div>';
+
             formattedSong.innerHTML = outputHtml;
-            // apply transpose to chord roots in DOM
+
+            // apply transpose to chord roots in DOM (preserve data-root)
             if(transpose !== 0){
                 formattedSong.querySelectorAll('.chord-root').forEach(el=>{
                     const base = el.getAttribute('data-root');
@@ -573,44 +608,52 @@
             }
         }
 
-        function isSectionHeader(line) {
-            return /^(\w+):/.test(line.trim());
+        function isDirectiveLine(line){
+            return /^\{[^}]+\}$/.test(line.trim());
         }
 
-        // chord parsing that separates root and type for transposition
-        function processLine(line) {
-            let chordLineHtml = '';
-            let lyricLine = '';
+        function parseDirective(line){
+            const m = line.match(/^\{\s*([^:}]+)\s*:?\s*([^}]*)\s*\}$/);
+            if(!m) return null;
+            const key = m[1].trim().toLowerCase();
+            const value = (m[2]||'').trim();
+            return { key, value };
+        }
+
+        // render a single line containing inline [C] chords and return two HTML pieces
+        function renderChordProInline(line){
+            // we want chords above lyrics. Convert the line into characters, removing [chords] from lyrics
             const chordRegex = /\[([^\]]+)\]/g;
-            let match;
             let plain = line.replace(chordRegex, '');
-            // Build chord-line by iterating through matches and placing spans at approximate positions
-            let lastIndex = 0;
             let parts = [];
-            while ((match = chordRegex.exec(line)) !== null) {
+            let match;
+            while((match = chordRegex.exec(line)) !== null){
                 const full = match[1].trim();
                 const split = splitChord(full);
-                // position in the plain lyrics (approx)
-                const pos = match.index - (line.slice(0, match.index).match(/\[[^\]]*\]/g) || []).join('').length;
+                const pos = computePlainPosition(line, match.index);
                 parts.push({ pos, root: split.root, type: split.type });
             }
-            // Create a visual chord-line by mapping over characters of plain and inserting chord spans when present
+
+            // build chord-line spans aligned to plain character indexes
             const chars = Array.from(plain);
-            let chordMap = new Map();
-            parts.forEach(p=> chordMap.set(p.pos, p));
-            // Build HTML: for each char index, if chord exists at that index, emit a chord span, otherwise emit a space
-            // We'll render chord-line as a sequence of inline-block spans to allow styling and later transposition
+            let chordMap = new Map(); parts.forEach(p=> chordMap.set(p.pos,p));
             let chordSpans = [];
-            for (let i=0;i<=chars.length;i++){
-                if (chordMap.has(i)){
+            for(let i=0;i<=chars.length;i++){
+                if(chordMap.has(i)){
                     const p = chordMap.get(i);
                     chordSpans.push(`<span class="chord"><span class="chord-root" data-root="${escapeHtml(p.root)}">${escapeHtml(p.root)}</span><span class="chord-type">${escapeHtml(p.type)}</span></span>`);
-                } else {
-                    chordSpans.push('&nbsp;');
-                }
+                } else chordSpans.push('&nbsp;');
             }
-            chordLineHtml = chordSpans.join('');
-            return { chordLine: chordLineHtml, lyricLine: plain };
+
+            return { chordLineHtml: chordSpans.join(''), lyricHtml: escapeHtml(plain) };
+        }
+
+        function computePlainPosition(line, chordIndex){
+            // compute the approximate position in the plain lyrics for a chord that appears at chordIndex
+            // subtract the total length of all bracketed chord tokens before chordIndex
+            const before = line.slice(0, chordIndex);
+            const removed = (before.match(/\[[^\]]*\]/g) || []).join('');
+            return chordIndex - removed.length;
         }
 
         // Split a chord like 'C#m7/G' into root 'C#' and type 'm7/G'
