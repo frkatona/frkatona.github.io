@@ -1,0 +1,128 @@
+body {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 90vh;
+    background-color: rgb(52, 52, 61);
+    color: rgb(255, 255, 255);
+}
+
+#positionsTable {
+    max-height: 100%; /* restrict table height to viewport height */
+    width: 500px;
+}
+
+.table-header-image {
+    width: 100px; /* or any other size */
+}
+
+.table-header-positions {
+    width: 250px; 
+}
+
+#positionsTable, #positionsTable th, #positionsTable td {
+    border: 1px solid rgb(255, 255, 255);
+    padding: 8px;
+    text-align: center;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding: 16px;
+    font-size: 24px;
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+    z-index: 10;
+}
+
+.left-arrow {
+    left: 0;
+}
+
+.right-arrow {
+    right: 0;
+}
+
+.thumbnails {
+    display: flex;
+    overflow-x: auto;
+    gap: 5px;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    border: 3px solid transparent;
+    object-fit: cover; /* This will maintain the aspect ratio */
+    display: block;
+    overflow: hidden;
+}
+
+.thumbnail.active {
+    border-color: blue;
+}
+
+.image-name {
+    position: absolute;
+    top: 10px;
+    left: 75px;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.container {
+    display: flex;
+    height: 95%; /* occupy full viewport height */
+    overflow-y: auto; /* allow scroll inside the container */
+}
+
+.image-container {
+    position: absolute;
+    max-width: 500px;
+    top: 0;
+    left: 30px;
+}
+
+#selectionCanvas {
+    position: absolute;
+    top: 0;
+    left: 50px;
+    z-index: 20;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+#mainImage, #selectionCanvas {
+    /* position: absolute; */
+    width: 500px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.control-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.gallery {
+    width: 75%;
+    position: relative;
+    overflow-y: auto;
+}
+
+.gallery-controls/*, .control-buttons*/ {
+    position:absolute;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+    /* padding: 10px 20px; */
+}

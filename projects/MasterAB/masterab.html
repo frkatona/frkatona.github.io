@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Waveform and LUFS Meter</title>
+    <style>
+        /* CSS styles */
+        #drop-zone {
+            width: 80%;
+            margin: 20px auto;
+            padding: 50px;
+            border: 2px dashed #ccc;
+            text-align: center;
+            font-size: 18px;
+            color: #999;
+        }
+
+        #drop-zone.dragover {
+            border-color: #000;
+            color: #000;
+        }
+
+        #waveform-container {
+            position: relative;
+            width: 80%;
+            margin: 20px auto;
+            height: 200px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        #waveform {
+            width: 100%;
+            height: 100%;
+        }
+
+        #position-bar {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: red;
+            pointer-events: none;
+        }
+
+        #controls {
+            text-align: center;
+            margin: 20px;
+        }
+
+        #play-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        #volume-slider {
+            width: 150px;
+            margin-left: 20px;
+            vertical-align: middle;
+        }
+
+        #current-time {
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        #lufs-value {
+            text-align: center;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="drop-zone">
+        <p>Drag and drop an audio file here</p>
+    </div>
+    <div id="waveform-container">
+        <canvas id="waveform"></canvas>
+        <div id="position-bar"></div>
+    </div>
+    <div id="controls">
+        <button id="play-button">Play</button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+        <label for="volume-slider">Volume</label>
+        <span id="current-time">00:00 / 00:00</span>
+    </div>
+    <p id="lufs-value">LUFS Loudness Value: </p>
+    <script>
+        // JavaScript code
+        document.addEventListener('DOMContentLoaded', function() {
+            var dropZone = document.getElementById('drop-zone');
+            var playButton = document.getElementById('play-button');
+            var volumeSlider = document.getElementById('volume-slider');
+            var currentTimeElement = document.getElementById('current-time');
+            var canvas = document.getElementById('waveform');
+            var positionBar = document.getElementById('position-bar');
+            var waveformContainer = document.getElementById('waveform-container');
+            var ctx = canvas.getContext('2d');
+            var audioContext;
+            var audioBuffer;
+            var sourceNode;
+            var gainNode;
+            var isPlaying = false;
+            var animationFrameId;
+            var duration = 0;
+            var startTime = 0;
+            var pausedAt = 0;
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+
+                var files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    var file = files[0];
+                    processFile(file);
+                }
+            });
+
+            playButton.addEventListener('click', function() {
+                if (isPlaying) {
+                    pauseAudio();
+                } else {
+                    playAudio();
+                }
+            });
+
+            volumeSlider.addEventListener('input', function() {
+                if (gainNode) {
+                    gainNode.gain.value = this.value;
+                }
+            });
+
+            waveformContainer.addEventListener('click', function(e) {
+                if (audioBuffer) {
+                    var rect = waveformContainer.getBoundingClientRect();
+                    var x = e.clientX - rect.left;
+                    var percent = x / waveformContainer.clientWidth;
+                    var seekTime = percent * audioBuffer.duration;
+                    stopAudio();
+                    playAudio(seekTime);
+                }
+            });
+
+            function processFile(file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var arrayBuffer = e.target.result;
+                    decodeAudioData(arrayBuffer);
+                };
+                reader.readAsArrayBuffer(file);
+            }
+
+            function decodeAudioData(arrayBuffer) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                audioContext.decodeAudioData(arrayBuffer, function(buffer) {
+                    audioBuffer = buffer;
+                    duration = audioBuffer.duration;
+                    drawWaveform(audioBuffer);
+                    computeLUFS(audioBuffer);
+                }, function(e) {
+                    console.error("Error decoding audio data", e);
+                });
+            }
+
+            function drawWaveform(buffer) {
+                var width = waveformContainer.clientWidth;
+                var height = waveformContainer.clientHeight;
+                canvas.width = width;
+                canvas.height = height;
+                var channelData = buffer.getChannelData(0);
+                var samplesPerPixel = Math.floor(channelData.length / width);
+                var maxValues = new Float32Array(width);
+
+                for (var i = 0; i < width; i++) {
+                    var start = i * samplesPerPixel;
+                    var end = start + samplesPerPixel;
+                    var max = 0;
+                    for (var j = start; j < end; j++) {
+                        if (Math.abs(channelData[j]) > max) {
+                            max = Math.abs(channelData[j]);
+                        }
+                    }
+                    maxValues[i] = max;
+                }
+
+                ctx.clearRect(0, 0, width, height);
+                ctx.fillStyle = '#f0f0f0';
+                ctx.fillRect(0, 0, width, height);
+                ctx.fillStyle = '#000';
+
+                for (var i = 0; i < width; i++) {
+                    var value = maxValues[i];
+                    var y = (1 - value) * height / 2;
+                    var barHeight = value * height;
+                    ctx.fillRect(i, y, 1, barHeight);
+                }
+            }
+
+            function playAudio(seekTime = 0) {
+                sourceNode = audioContext.createBufferSource();
+                gainNode = audioContext.createGain();
+                sourceNode.buffer = audioBuffer;
+                sourceNode.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                gainNode.gain.value = volumeSlider.value;
+                startTime = audioContext.currentTime - seekTime;
+                sourceNode.start(0, seekTime);
+                isPlaying = true;
+                playButton.textContent = 'Pause';
+                updatePositionBar();
+            }
+
+            function pauseAudio() {
+                if (sourceNode) {
+                    sourceNode.stop();
+                    pausedAt = audioContext.currentTime - startTime;
+                    sourceNode.disconnect();
+                    gainNode.disconnect();
+                    sourceNode = null;
+                    gainNode = null;
+                }
+                isPlaying = false;
+                playButton.textContent = 'Play';
+                cancelAnimationFrame(animationFrameId);
+            }
+
+            function stopAudio() {
+                if (sourceNode) {
+                    sourceNode.stop();
+                    sourceNode.disconnect();
+                    gainNode.disconnect();
+                    sourceNode = null;
+                    gainNode = null;
+                }
+                isPlaying = false;
+                playButton.textContent = 'Play';
+                cancelAnimationFrame(animationFrameId);
+            }
+
+            function updatePositionBar() {
+                var currentTime = audioContext.currentTime - startTime;
+                if (currentTime >= duration) {
+                    stopAudio();
+                    currentTime = duration;
+                }
+
+                var percent = currentTime / duration;
+                positionBar.style.left = (percent * waveformContainer.clientWidth) + 'px';
+
+                var currentMinutes = Math.floor(currentTime / 60);
+                var currentSeconds = Math.floor(currentTime % 60);
+                var totalMinutes = Math.floor(duration / 60);
+                var totalSeconds = Math.floor(duration % 60);
+                currentTimeElement.textContent =
+                    pad(currentMinutes) + ':' + pad(currentSeconds) + ' / ' +
+                    pad(totalMinutes) + ':' + pad(totalSeconds);
+
+                if (isPlaying) {
+                    animationFrameId = requestAnimationFrame(updatePositionBar);
+                }
+            }
+
+            function pad(num) {
+                return ('00' + num).slice(-2);
+            }
+
+            function computeLUFS(buffer) {
+                // Accurate LUFS calculation following ITU-R BS.1770
+                var sampleRate = buffer.sampleRate;
+                var channelData = buffer.getChannelData(0); // Use first channel for mono
+                var filteredSignal = applyKWeightingFilter(channelData, sampleRate);
+                var integratedLoudness = calculateIntegratedLoudness(filteredSignal, sampleRate);
+
+                var lufsElement = document.getElementById('lufs-value');
+                lufsElement.textContent = 'Integrated LUFS Loudness Value: ' + integratedLoudness.toFixed(2) + ' LUFS';
+            }
+
+            function applyKWeightingFilter(signal, sampleRate) {
+                // Implement the K-weighting filter using biquad filters
+                var audioCtx = new OfflineAudioContext(1, signal.length, sampleRate);
+                var buffer = audioCtx.createBuffer(1, signal.length, sampleRate);
+                buffer.copyToChannel(signal, 0);
+
+                var source = audioCtx.createBufferSource();
+                source.buffer = buffer;
+
+                // High-pass filter at 100 Hz
+                var highpass = audioCtx.createBiquadFilter();
+                highpass.type = 'highpass';
+                highpass.frequency.value = 100;
+
+                // High-frequency shelving filter at 4 kHz
+                var highShelf = audioCtx.createBiquadFilter();
+                highShelf.type = 'highshelf';
+                highShelf.frequency.value = 4000;
+                highShelf.gain.value = 4;
+
+                source.connect(highpass);
+                highpass.connect(highShelf);
+                highShelf.connect(audioCtx.destination);
+
+                source.start();
+
+                return audioCtx.startRendering().then(function(renderedBuffer) {
+                    return renderedBuffer.getChannelData(0);
+                });
+            }
+
+            function calculateIntegratedLoudness(filteredSignalPromise, sampleRate) {
+                return filteredSignalPromise.then(function(filteredSignal) {
+                    // Block size of 400 ms with 75% overlap
+                    var blockSize = Math.floor(0.4 * sampleRate);
+                    var stepSize = Math.floor(blockSize / 4);
+                    var loudnessValues = [];
+
+                    for (var i = 0; i < filteredSignal.length - blockSize; i += stepSize) {
+                        var block = filteredSignal.slice(i, i + blockSize);
+                        var sumSquares = 0;
+                        for (var j = 0; j < block.length; j++) {
+                            sumSquares += block[j] * block[j];
+                        }
+                        var rms = Math.sqrt(sumSquares / block.length);
+                        var lufs = 10 * Math.log10(rms * rms);
+                        loudnessValues.push(lufs);
+                    }
+
+                    // Calculate relative threshold
+                    var sum = loudnessValues.reduce(function(a, b) {
+                        return a + Math.pow(10, b / 10);
+                    }, 0);
+                    var absoluteThreshold = 10 * Math.log10(sum / loudnessValues.length);
+                    var relativeThreshold = absoluteThreshold - 10;
+
+                    // Apply gating
+                    var gatedValues = loudnessValues.filter(function(loudness) {
+                        return loudness >= relativeThreshold;
+                    });
+
+                    var gatedSum = gatedValues.reduce(function(a, b) {
+                        return a + Math.pow(10, b / 10);
+                    }, 0);
+
+                    var integratedLoudness = 10 * Math.log10(gatedSum / gatedValues.length);
+
+                    return integratedLoudness;
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

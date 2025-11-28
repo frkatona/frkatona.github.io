@@ -1,0 +1,478 @@
+[
+    {
+        "chord": "I",
+        "function": "tonic",
+        "notes": [
+            0,
+            4,
+            7,
+            11
+        ],
+        "next": [
+            {
+                "second": [
+                    "ii",
+                    "v",
+                    "iii",
+                    "iv"
+                ],
+                "third": [
+                    "I",
+                    "I",
+                    "IV",
+                    "III",
+                    "V",
+                    "bIII"
+                ],
+                "fourth": [
+                    "vi",
+                    "II",
+                    "viio",
+                    "viio"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "ii",
+        "function": "pre-dominant",
+        "notes": [
+            2,
+            5,
+            9,
+            12
+        ],
+        "next": [
+            {
+                "second": [
+                    "IV",
+                    "ii",
+                    "V",
+                    "I"
+                ],
+                "third": [
+                    "iii",
+                    "iii",
+                    "vi",
+                    "v",
+                    "viio",
+                    "iv"
+                ],
+                "fourth": [
+                    "II",
+                    "III",
+                    "bIII",
+                    "bIII"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "iii",
+        "function": "tonic",
+        "notes": [
+            4,
+            7,
+            11,
+            14
+        ],
+        "next": [
+            {
+                "second": [
+                    "vi",
+                    "IV",
+                    "viio",
+                    "iii"
+                ],
+                "third": [
+                    "V",
+                    "V",
+                    "II",
+                    "ii",
+                    "bIII",
+                    "I"
+                ],
+                "fourth": [
+                    "III",
+                    "v",
+                    "iv",
+                    "iv"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "IV",
+        "function": "pre-dominant",
+        "notes": [
+            5,
+            9,
+            12,
+            16
+        ],
+        "next": [
+            {
+                "second": [
+                    "viio",
+                    "V",
+                    "II",
+                    "IV"
+                ],
+                "third": [
+                    "vi",
+                    "vi",
+                    "bIII",
+                    "iii",
+                    "III",
+                    "ii"
+                ],
+                "fourth": [
+                    "iv",
+                    "I",
+                    "v",
+                    "v"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "V",
+        "function": "dominant",
+        "notes": [
+            7,
+            11,
+            14,
+            17
+        ],
+        "next": [
+            {
+                "second": [
+                    "bIII",
+                    "viio",
+                    "III",
+                    "vi"
+                ],
+                "third": [
+                    "II",
+                    "II",
+                    "iv",
+                    "V",
+                    "v",
+                    "IV"
+                ],
+                "fourth": [
+                    "I",
+                    "iii",
+                    "ii",
+                    "ii"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "vi",
+        "function": "tonic",
+        "notes": [
+            9,
+            12,
+            16,
+            19
+        ],
+        "next": [
+            {
+                "second": [
+                    "iv",
+                    "bIII",
+                    "v",
+                    "II"
+                ],
+                "third": [
+                    "III",
+                    "III",
+                    "I",
+                    "viio",
+                    "ii",
+                    "vi"
+                ],
+                "fourth": [
+                    "iii",
+                    "V",
+                    "IV",
+                    "IV"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "viio",
+        "function": "dominant",
+        "notes": [
+            11,
+            14,
+            17,
+            20
+        ],
+        "next": [
+            {
+                "second": [
+                    "I",
+                    "iv",
+                    "ii",
+                    "III"
+                ],
+                "third": [
+                    "v",
+                    "v",
+                    "iii",
+                    "bIII",
+                    "IV",
+                    "II"
+                ],
+                "fourth": [
+                    "V",
+                    "viio",
+                    "vi",
+                    "vi"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "II",
+        "function": "dominant",
+        "notes": [
+            2,
+            6,
+            9,
+            13
+        ],
+        "next": [
+            {
+                "second": [
+                    "IV",
+                    "ii",
+                    "V",
+                    "I"
+                ],
+                "third": [
+                    "iii",
+                    "iii",
+                    "vi",
+                    "v",
+                    "viio",
+                    "iv"
+                ],
+                "fourth": [
+                    "II",
+                    "III",
+                    "bIII",
+                    "bIII"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "bIII",
+        "function": "tonic",
+        "notes": [
+            3,
+            7,
+            10,
+            14
+        ],
+        "next": [
+            {
+                "second": [
+                    "V",
+                    "iii",
+                    "vi",
+                    "ii"
+                ],
+                "third": [
+                    "IV",
+                    "IV",
+                    "viio",
+                    "I",
+                    "II",
+                    "v"
+                ],
+                "fourth": [
+                    "bIII",
+                    "iv",
+                    "III",
+                    "III"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "III",
+        "function": "tonic",
+        "notes": [
+            4,
+            8,
+            11,
+            15
+        ],
+        "next": [
+            {
+                "second": [
+                    "vi",
+                    "IV",
+                    "viio",
+                    "iii"
+                ],
+                "third": [
+                    "V",
+                    "V",
+                    "II",
+                    "ii",
+                    "bIII",
+                    "I"
+                ],
+                "fourth": [
+                    "III",
+                    "v",
+                    "iv",
+                    "iv"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "iv",
+        "function": "pre-dominant",
+        "notes": [
+            5,
+            8,
+            12,
+            15
+        ],
+        "next": [
+            {
+                "second": [
+                    "viio",
+                    "V",
+                    "II",
+                    "IV"
+                ],
+                "third": [
+                    "vi",
+                    "vi",
+                    "bIII",
+                    "iii",
+                    "III",
+                    "ii"
+                ],
+                "fourth": [
+                    "iv",
+                    "I",
+                    "v",
+                    "v"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "v",
+        "function": "tonic",
+        "notes": [
+            7,
+            10,
+            14,
+            17
+        ],
+        "next": [
+            {
+                "second": [
+                    "bIII",
+                    "viio",
+                    "III",
+                    "vi"
+                ],
+                "third": [
+                    "II",
+                    "II",
+                    "iv",
+                    "V",
+                    "v",
+                    "IV"
+                ],
+                "fourth": [
+                    "I",
+                    "iii",
+                    "ii",
+                    "ii"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "bVI",
+        "function": "pre-dominant",
+        "notes": [
+            8,
+            12,
+            15,
+            19
+        ],
+        "next": [
+            {
+                "second": [
+                    "III",
+                    "II",
+                    "iv",
+                    "viio"
+                ],
+                "third": [
+                    "bIII",
+                    "bIII",
+                    "v",
+                    "vi",
+                    "I",
+                    "V"
+                ],
+                "fourth": [
+                    "ii",
+                    "IV",
+                    "iii",
+                    "iii"
+                ]
+            }
+        ]
+    },
+    {
+        "chord": "bVII",
+        "function": "dominant",
+        "notes": [
+            10,
+            14,
+            17,
+            20
+        ],
+        "next": [
+            {
+                "second": [
+                    "v",
+                    "III",
+                    "I",
+                    "bIII"
+                ],
+                "third": [
+                    "iv",
+                    "iv",
+                    "ii",
+                    "II",
+                    "iii",
+                    "viio"
+                ],
+                "fourth": [
+                    "IV",
+                    "vi",
+                    "V",
+                    "V"
+                ]
+            }
+        ]
+    }
+]

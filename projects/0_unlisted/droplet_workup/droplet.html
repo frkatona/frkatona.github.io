@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <table id="positionsTable">
+            <thead>
+                <tr>
+                    <th class="table-header-image">Image</th>
+                    <th class="table-header-positions">Clicked Positions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows added here by script -->
+            </tbody>
+        </table>
+        
+        <div class="gallery">
+            <div class="image-section">
+                <div class="image-name"></div>
+                
+                <!-- <div class="arrow left-arrow" onclick="move(-1)"><i class="fas fa-chevron-left"></i></div> -->
+                <img id="mainImage" src="" alt="No image loaded">
+                <!-- <div class="arrow right-arrow" onclick="move(1)"><i class="fas fa-chevron-right"></i></div> -->
+                
+                <canvas id="selectionCanvas"></canvas>
+            </div>
+        
+            <div class="gallery-controls">
+                <div class="taskbar">
+                    <button onclick="document.getElementById('folderInput').click()"><i class="fas fa-folder-open"></i></button>
+                </div>
+                <div class="thumbnails"></div>
+            </div>
+            
+            <div class="control-buttons">
+                <!-- <button onclick="setMode('point')"><i class="fas fa-dot-circle"></i></button> -->
+                <!-- <button onclick="setMode('box')"><i class="fas fa-vector-square"></i></button> -->
+                <!-- <button onclick="resetZoom()"><i class="fas fa-compress-arrows-alt"></i></button> -->
+            </div>
+        </div>
+        
+    <input type="file" id="folderInput" directory="" webkitdirectory="" multiple onchange="loadImages(event)" style="display: none;">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.4.0/math.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

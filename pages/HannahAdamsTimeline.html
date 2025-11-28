@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hannah Adams Timeline</title>
+  <style>
+    body {
+      background: #171923;
+      color: #e5e7eb;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 0.5em;
+      color: #f3f4f6;
+    }
+    
+    .legend {
+      display: flex;
+      gap: 1.5em;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2em;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      font-size: 1em;
+      gap: 0.3em;
+    }
+    .dot {
+      width: 1.2em;
+      height: 1.2em;
+      border-radius: 50%;
+      display: inline-block;
+      border: 1px solid #1a202c;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.57);
+      background: #fff; /* fallback, overridden by category */
+      z-index: 3;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 8em; /* timeline line level */
+      transition: box-shadow 0.2s;
+    }
+    .life { background: #3b82f6; }
+    .pub { background: #10b981; }
+    .access { background: #f59e42; }
+    .memoir { background:rgb(118, 62, 139); }
+
+    .dot.controversy { 
+      background: #ef4444; 
+      width: 1.2em;
+      height: 1.2em;
+      border-radius: 50%;
+      display: inline-block;
+      border: 1px solid #1a202c;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.57);
+      z-index: 3;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 8em; /* timeline line level */
+      transition: box-shadow 0.2s;
+      opacity: 0.95;
+      }
+
+    .timeline-horizontal-container {
+      margin-top: 10em;
+    }
+    
+    .timeline-horizontal {
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+    }
+    
+    .timeline-horizontal .line {
+      position: absolute;
+      left: 0; right: 0; top: 8em;
+      height: 4px;
+      background: #374151;
+      z-index: 1;
+      border-radius: 2px;
+    }
+    .event-horizontal {
+      position: absolute;
+      left: 0;
+      width: 6.5em; /* enough for desc box */
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: auto;
+    }
+    .event-year, .event-desc {
+      pointer-events: auto;
+    }
+    .event-year {
+      font-weight: bold;
+      font-size: 1em;
+      margin-bottom: 0.18em;
+      color: #e0e7ef;
+      white-space: nowrap;
+      background: none;
+      z-index: 4;
+    }
+    .event-desc {
+      font-size: 0.98em;
+      line-height: 1.25;
+      background: #23263a;
+      color: #fafafa;
+      border-radius: 0.5em;
+      padding: 0.2em 0.8em;
+      box-shadow: 0 2px 7px 0 #17192366;
+      margin-bottom: 0.3em;
+      min-width: 8em;
+      text-align: center;
+      border: 1px solid #283049;
+      z-index: 4;
+    }
+    
+    .event-desc.life { background: #2563eb; }
+    .event-desc.pub { background: #059669; }
+    .event-desc.access { background: #ea580c; }
+    .event-desc.memoir { background: rgb(118, 62, 139); }
+    .event-connector {
+      width: 2px;
+      background:rgba(122, 175, 240, 0.8);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: -1;
+      opacity: 0.3;
+      /* height and direction set inline */
+    }
+
+  .event-horizontal.controversy { display: none; }
+  .event-horizontal.controversy.show { display: flex; }
+
+  .event-desc.controversy { background: #ef4444; color: #fff; }
+
+  .controversy-toggle {
+    background: #ef4444;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.2em 1em;
+    border: none;
+    border-radius: 1.2em;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 2em;
+    margin-bottom: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: fixed;
+    bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+  }
+  @media (max-width: 700px) {
+    .timeline-horizontal, .timeline-horizontal-controversy { min-width: 900px; }
+    .event-desc { min-width: 6em; font-size: 0.92em;}
+  }
+
+    /* YEAR TICKS */
+    .tick {
+      position: absolute;
+      top: 8.3em;
+      width: 1px;
+      background: #444b60;
+      z-index: 0;
+    }
+    .tick.major { height: 1.5em; background: #f3f4f6; z-index: 5; }
+    .tick.minor { height: 0.7em; background: #444b60; }
+    .tick-label {
+      position: absolute;
+      top: 7em;
+      font-size: 0.85em;
+      color: #f3f4f6;
+      white-space: nowrap;
+      text-align: center;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: #171923;
+      padding: 0 0.25em;
+    }
+    @media (max-width: 700px) {
+      body { padding: 0.2em; }
+      .timeline-horizontal { min-width: 800px; }
+      .event-desc { min-width: 6em; font-size: 0.92em;}
+    }
+  </style>
+</head>
+<body>
+  <h1>Hannah Adams Timeline</h1>
+
+  <div class="legend">
+    <div class="legend-item"><span class="dot life" style="position:static;"></span>Life Events</div>
+    <div class="legend-item"><span class="dot pub" style="position:static;"></span>Publications</div>
+    <!-- <div class="legend-item"><span class="dot access" style="position:static;"></span>Correspondence & Access</div> -->
+    <div class="legend-item"><span class="dot memoir" style="position:static;"></span>Memoir/Biography</div>
+  </div>
+
+  <div class="timeline-horizontal-container">
+    <div class="timeline-horizontal" id="timeline-main">
+      <div class="line"></div>
+      <!-- Events rendered by JS -->
+    </div>
+  </div>
+  <button class="controversy-toggle" onclick="toggleControversy()">Show Adams vs. Morse Controversy</button>
+
+  <script>
+    // Main timeline events, now with custom verticalOffset (em units, positive = down from line, negative = up)
+    const timelineEvents = [
+      { year: 1755, desc: "Hannah Adams <b>born</b> in Medfield, MA", cat: "life", verticalOffset: -7 },
+      { year: 1784, desc: "Alphabetical Compendium<br><small>(later <em>View of Religions</em>)</small>", cat: "pub", verticalOffset: 5 },
+      { year: 1791, desc: "<em>View of Religions</em>, 2nd edition", cat: "pub", verticalOffset: -7 },
+      { year: 1799, desc: "<em>Summary History of New-England</em>", cat: "pub", verticalOffset: 3 },
+      { year: 1801, desc: "<em>View of Religions</em>, 3rd edition", cat: "pub", verticalOffset: -7 },
+      { year: 1804, desc: "<em>Truth and Excellence of the Christian Religion</em>", cat: "pub", verticalOffset: 10 },
+      { year: 1805, desc: "<em>An Abridgment of the History of New-England</em>", cat: "pub", verticalOffset: -15 },
+      { year: 1807, desc: "<em>An Abridgment of the History of New-England</em>, 2nd edition", cat: "pub", verticalOffset: 3 },
+      { year: 1809, desc: "<b>Annuity</b> bestowed on Adams", cat: "life", verticalOffset: -9 },
+      { year: 1810, desc: "Adams moves from Medfield to <b>Boston</b>", cat: "life", verticalOffset: 13 },
+      { year: 1812, desc: "<em>History of the Jews</em>, Vol. I", cat: "pub", verticalOffset: -15 },
+      { year: 1814, desc: "<em>History of the Jews</em>, Vol. II", cat: "pub", verticalOffset: 3 },
+      { year: 1815, desc: "<em>Narrative of the Controversy</em>", cat: "pub", verticalOffset: -10 },
+      { year: 1817, desc: "<em>Dictionary of All Religions</em><br><small>(4th ed. of <em>View of Religions</em>)</small>", cat: "pub", verticalOffset: 8 },
+      { year: 1824, desc: "<em>Letters on the Gospels</em>", cat: "pub", verticalOffset: -7 },
+      { year: 1826, desc: "<em>Letters on the Gospels</em>, 2nd edition", cat: "pub", verticalOffset: 3 },
+      { year: 1829, desc: "Adams is granted access to the <b>Boston Athenaeum</b>", cat: "life", verticalOffset: -14 },
+      { year: 1831, desc: "Adams <b>dies</b> in Brookline, MA", cat: "life", verticalOffset: 10 },
+      { year: 1832, desc: "<em>A Memoir of Miss Hannah Adams</em>", cat: "memoir", verticalOffset: -7 }
+    ];
+
+    const controversyEvents = [
+      // { year: 1799, desc: "Adams publishes <em>Summary History of New-England</em>", verticalOffset: 5 },
+      { year: 1804, desc: "Morse & Parish publish <em>Compendious History of New-England</em><br>— Adams approaches Morse at his Thursday sermon", verticalOffset: 20 },
+      { year: 1805, desc: "Morse publishes <em>True Reasons for the Election of Henry Ware</em><br>— Adams discovers Morse & Parish plan to publish an abridgment<br>— Adams meets Stephen Higginson<br>— Higginson confronts Morse, Morse agrees to delay<br>— Adams publishes <em>An Abridgment of the History of New-England</em>", verticalOffset: 35 },
+      { year: 1806, desc: "Orthodox Eliphalet Pearson resigns as Harvard acting president, replaced by liberal Samuel Webber", verticalOffset: 65 },
+      // { year: 1807, desc: "Adams publishes <em>An Abridgment of the History of New-England</em>, 2nd edition", verticalOffset: 8 },
+      { year: 1808, desc: "Adams discovers Morse & Parish are moving forward with their abridgment<br>— Morse offers to bring dispute before referees", verticalOffset: 20 },
+      { year: 1809, desc: "Dispute brought before referees, who decide in Adams’s favor<br>— Abridgment of <em>Compendious History</em> published<br>— Morse attempts to meet Adams, she declines", verticalOffset: 33 },
+      { year: 1814, desc: "Morse discovers William Shaw has been circulating Adams's plagiarism accusations since 1805<br>— Morse publishes his account in the Centinel; Adams responds", verticalOffset: 20 },
+      { year: 1815, desc: "Morse publishes <em>An Appeal to the Public</em><br>— Adams publishes <em>Narrative of the Controversy</em>", verticalOffset: 38 }
+    ];
+
+    //  controversy events to main timeline as well (but flagged)
+    const timelineWithControversy = timelineEvents.concat(
+      controversyEvents.map(e => ({
+        year: e.year,
+        desc: e.desc,
+        cat: "controversy",
+        controversy: true,
+        verticalOffset: e.verticalOffset // Copy verticalOffset
+      }))
+    );
+
+    // Year range for proportional spacing
+    const minYear = 1748, maxYear = 1840;
+    const totalYears = maxYear - minYear;
+
+    // For main timeline
+    const timelineEl = document.getElementById('timeline-main');
+
+    // --- ZOOM LOGIC ---
+    let zoom = 1.0;
+    const minZoom = 0.5;
+    const maxZoom = 3.0;
+
+    function renderTimeline() {
+      // Remove all children except the .line
+      Array.from(timelineEl.children).forEach(child => {
+        if (!child.classList.contains('line')) timelineEl.removeChild(child);
+      });
+
+      // Add major and minor ticks
+      const majorInterval = 10;
+      const minorInterval = 1;
+      for(let y = Math.ceil(minYear/majorInterval)*majorInterval; y <= maxYear; y += majorInterval) {
+        const left = ((y - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+        let tick = document.createElement('div');
+        tick.className = 'tick major';
+        tick.style.left = left;
+        tick.style.zIndex = 8;
+        timelineEl.appendChild(tick);
+        let label = document.createElement('div');
+        label.className = 'tick-label';
+        label.textContent = y;
+        label.style.left = left;
+        label.style.zIndex = 11;
+        timelineEl.appendChild(label);
+      }
+      for(let y = minYear; y <= maxYear; y += minorInterval) {
+        if (y % majorInterval !== 0) {
+          const left = ((y - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+          let tick = document.createElement('div');
+          tick.className = 'tick minor';
+          tick.style.left = left;
+          timelineEl.appendChild(tick);
+        }
+      }
+
+      // Render events with dot at timeline and desc/year offset vertically by verticalOffset
+      timelineEvents.forEach(ev => {
+        const left = ((ev.year - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'event-horizontal';
+        eventDiv.style.left = left;
+        eventDiv.style.width = '6.5em';
+
+        // Dot is always at 8em (timeline line)
+        const dot = document.createElement('span');
+        dot.className = `dot ${ev.cat}`;
+        dot.style.top = '8em';
+        dot.style.left = '50%';
+        dot.style.zIndex = 9;
+        eventDiv.appendChild(dot);
+
+        // If needed, add connector line
+        if(ev.verticalOffset && ev.verticalOffset !== 0) {
+          const connector = document.createElement('div');
+          connector.className = 'event-connector';
+          if (ev.verticalOffset > 0) {
+            connector.style.top = '8em';
+          } else {
+            // Start a little lower (e.g., 0.5em below the line)
+            connector.style.top = (8 + ev.verticalOffset + 1.3) + 'em';
+          }
+          connector.style.height = Math.abs(ev.verticalOffset) + 'em';
+          eventDiv.appendChild(connector);
+        }
+
+        // Year and description box, offset vertically
+        const contentDiv = document.createElement('div');
+        contentDiv.style.position = 'absolute';
+        contentDiv.style.left = '50%';
+        contentDiv.style.transform = 'translateX(-50%)';
+        contentDiv.style.top = (8 + ev.verticalOffset) + 'em';
+        contentDiv.style.display = 'flex';
+        contentDiv.style.flexDirection = 'column';
+        contentDiv.style.alignItems = 'center';
+        contentDiv.style.zIndex = 10;
+
+        const yearDiv = document.createElement('div');
+        yearDiv.className = 'event-year';
+        yearDiv.innerHTML = ev.year;
+
+        const descDiv = document.createElement('div');
+        descDiv.className = `event-desc ${ev.cat}`;
+        descDiv.innerHTML = ev.desc;
+        descDiv.style.marginTop = '0.5em';
+
+        contentDiv.appendChild(yearDiv);
+        contentDiv.appendChild(descDiv);
+        eventDiv.appendChild(contentDiv);
+
+        timelineEl.appendChild(eventDiv);
+      });
+
+      // --- Controversy timeline logic ---
+      // Render controversy events (hidden by default)
+      timelineWithControversy.sort((a,b) => a.year-b.year || (a.cat==="controversy"?1:-1));
+      timelineWithControversy.forEach((ev, idx) => {
+        if (ev.cat !== "controversy") return; // Only render controversy events here
+        const left = ((ev.year - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'event-horizontal controversy';
+        eventDiv.style.left = left;
+        eventDiv.style.width = '6.5em';
+        eventDiv.style.display = "none";
+
+        // Dot is always at 8em (timeline line)
+        const dot = document.createElement('span');
+        dot.className = 'dot controversy';
+        dot.style.top = '8em';
+        dot.style.left = '50%';
+        dot.style.zIndex = 9;
+        eventDiv.appendChild(dot);
+
+        // If needed, add connector line
+        if(ev.verticalOffset && ev.verticalOffset !== 0) {
+          const connector = document.createElement('div');
+          connector.className = 'event-connector';
+          if (ev.verticalOffset > 0) {
+            connector.style.top = '8em';
+          } else {
+            connector.style.top = (8 + ev.verticalOffset + 1.3) + 'em';
+          }
+          connector.style.height = Math.abs(ev.verticalOffset) + 'em';
+          connector.style.zIndex = 0; // Ensure controversy connectors are always behind
+          eventDiv.appendChild(connector);
+        }
+        // Year and description box, offset vertically
+        const contentDiv = document.createElement('div');
+        contentDiv.style.position = 'absolute';
+        contentDiv.style.left = '50%';
+        contentDiv.style.transform = 'translateX(-50%)';
+        contentDiv.style.top = (8 + (ev.verticalOffset || 0)) + 'em';
+        contentDiv.style.display = 'flex';
+        contentDiv.style.flexDirection = 'column';
+        contentDiv.style.alignItems = 'center';
+        contentDiv.style.zIndex = 10;
+
+        const yearDiv = document.createElement('div');
+        yearDiv.className = 'event-year';
+        yearDiv.innerHTML = ev.year;
+
+        const descDiv = document.createElement('div');
+        descDiv.className = 'event-desc controversy';
+        descDiv.innerHTML = ev.desc;
+        descDiv.style.marginTop = '0.5em';
+
+        contentDiv.appendChild(yearDiv);
+        contentDiv.appendChild(descDiv);
+        eventDiv.appendChild(contentDiv);
+        descDiv.style.position = 'absolute';
+        descDiv.style.top = (8 + (ev.verticalOffset || 0) + 1.8) + 'em';
+        descDiv.style.zIndex = 10;
+        descDiv.innerHTML = ev.desc;
+        eventDiv.appendChild(descDiv);
+
+        timelineEl.appendChild(eventDiv);
+      });
+
+      // Set timeline width for zoom
+      timelineEl.style.width = (100 * zoom) + "%";
+      // Also set the .line width to match the zoomed width
+      const lineEl = timelineEl.querySelector('.line');
+      if (lineEl) {
+        lineEl.style.width = (100 * zoom) + "%";
+      }
+    }
+
+    // Initial render
+    renderTimeline();
+
+    // Scroll to zoom
+    timelineEl.addEventListener('wheel', function(e) {
+      if (e.ctrlKey || e.metaKey) return; // allow browser zoom
+      e.preventDefault();
+      const delta = e.deltaY || e.detail || e.wheelDelta;
+      const zoomStep = 1.05; // Finer zoom increments
+      if (delta < 0) {
+        zoom = Math.min(maxZoom, zoom * zoomStep);
+      } else {
+        zoom = Math.max(minZoom, zoom / zoomStep);
+      }
+      renderTimeline();
+    }, { passive: false });
+
+    // Toggle function for controversy events
+    function toggleControversy() {
+      const btn = document.querySelector('.controversy-toggle');
+      const events = document.querySelectorAll('.event-horizontal.controversy');
+      let showing = false;
+      events.forEach(ev => {
+        if (ev.style.display === "none") {
+          ev.style.display = "flex";
+          showing = true;
+        } else {
+          ev.style.display = "none";
+        }
+      });
+      btn.textContent = showing ? "Hide Adams vs. Morse Controversy" : "Show Adams vs. Morse Controversy";
+    }
+  </script>
+</body>
+</html>

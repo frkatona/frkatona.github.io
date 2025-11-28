@@ -1,0 +1,58 @@
+ - chord progression constructor that suggests the next chord based on previous chord
+ - idea 1: start with random starter chord progression and update randomization based on sliders
+
+predictive changes
+ - chord number
+ - sus2/4, 6, extensions, etc
+ - voicing -> (open/closed, voice leading)
+ - mode mixture
+
+predictive factors:
+ - position
+ - voice leading
+
+calculate
+ - voicing
+   - openness (average distance between adjacent notes)
+   - mud (distance between two lowest notes)
+   - leading (distance between lowest note and previous lowest note; chromatic walk between neighbors)
+   - melody (distance between highest note and previous highest note)
+
+user input
+ - checkbox: borrowed Chords
+ - [gravity collier thing]
+ - set up key change
+   - brightness/darkness CoF direction
+ - movement vs vamp
+
+Base Progressions:
+I - V - vi - IV
+ii - V - I - VI
+I - vi - ii - V
+
+midi note middle C = 60
+
+class Chord {
+    constructor(root)
+}
+
+I
+ii
+iii
+IV
+V
+vi
+
+bIII
+iv
+v
+bVI
+bVII
+
+const I_base = [0, 4, 7]
+const ii_base = [2, 5, 9]
+const iii_base = [4, 7, 11]
+const IV_base = [5, 9, 12]
+const V_base = [7, 11, 14]
+const vi_base = [9, 12, 16]
+const vii_base = [11, 14, 17]

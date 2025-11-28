@@ -1,0 +1,3281 @@
+[
+    {
+        "title": "Better Than Nothing",
+        "key": "Cm -> Am",
+        "capo": 3,
+        "sections": [
+            {
+                "name": "Verse 1",
+                "lines": [
+                    [
+                        {
+                            "word": "I don't know if it's you",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "or it's me",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "But I can't seem",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "to feel anything",
+                            "chord": "Dm7"
+                        },
+                        {
+                            "word": "----------",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "When you say you love me",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "It goes over my head",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "----------",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "----------",
+                            "chord": "Dm7"
+                        },
+                        {
+                            "word": "----------",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "----------",
+                            "chord": "Fsus2"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus",
+                "lines": [
+                    [
+                        {
+                            "word": "To love and to lose is",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "better than nothing",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "But I lost you and",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "you never loved me",
+                            "chord": "G"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "To go and come back",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "means more than to stay",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "But you won't come back",
+                            "chord": "Dm"
+                        },
+                        {
+                            "word": "you weren't here in the first place",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I don't know if it's you",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "or it's me but",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I can't seem",
+                            "chord": "Dm"
+                        },
+                        {
+                            "word": "to feel anything",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "When you say you love me",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "it goes over my head",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "----------",
+                            "chord": "Dm"
+                        },
+                        {
+                            "word": "----------",
+                            "chord": "Cadd9"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Bridge",
+                "lines": [
+                    [
+                        {
+                            "word": "----------",
+                            "chord": "Gsus4"
+                        },
+                        {
+                            "word": "----------",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "----------",
+                            "chord": "G7"
+                        },
+                        {
+                            "word": "----------",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "----------",
+                            "chord": "F7"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Verse 2",
+                "lines": [
+                    [
+                        {
+                            "word": "I wanted you from the",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "bottom of all of me. Loved you",
+                            "chord": "G7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "from the tips",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "of my fingers down into my bones",
+                            "chord": "F7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I felt you from the center",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "of everything",
+                            "chord": "G7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "In me, in a way,",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "that I didn't know",
+                            "chord": "F7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "It was possible for anyone",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "to love anyone",
+                            "chord": "G7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "But if you felt",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "the same way",
+                            "chord": "F7"
+                        },
+                        {
+                            "word": "it didn't show",
+                            "chord": ""
+                        }
+                    ],
+                    [
+                        {
+                            "word": "You wanted me from what's",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "broken inside of you",
+                            "chord": "G7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "You're lonely from the tips",
+                            "chord": "Cadd9"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "of your fingers down into your bones",
+                            "chord": "F7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "You're empty from the center",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "of everything",
+                            "chord": "G7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "In you, in a way,",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "that you'll never fill",
+                            "chord": "F7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "And it's possible for anyone",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "to love anyone",
+                            "chord": "G7"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "That's the way you loved me",
+                            "chord": "Cadd9"
+                        },
+                        {
+                            "word": "and it showed",
+                            "chord": "F7"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus",
+                "lines": [
+                    [
+                        {
+                            "word": "To love and to lose",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "Is better than nothing",
+                            "chord": "F"
+                        },
+                        {
+                            "word": "But I lost you",
+                            "chord": "Am"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "And you never loved me",
+                            "chord": "Dm7"
+                        },
+                        {
+                            "word": "",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "To go and come back",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "Means more than to stay",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "But you won't come back",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "You weren't here in the first place",
+                            "chord": "Dm7"
+                        },
+                        {
+                            "word": "",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I don't know if it's you or it's me",
+                            "chord": "Am"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "But I can't seem to feel anything",
+                            "chord": "F"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "When you say you love me",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "It goes over my head",
+                            "chord": "F"
+                        }
+                    ]
+                ]
+            }
+        ]
+    },
+    {
+        "title": "If I Could Be Happy",
+        "key": "G (C, Capo 7)",
+        "sections": [
+            {
+                "name": "Verse 1",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "I can't think any"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "more my"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "head's gone"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "hazy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "Always comes"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "back around even"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "with all the love you"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "gave me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Why do you keep"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "betting on me when"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "you always"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "lose?"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I can see whatever's"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "killing me"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "killing you"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "too"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "Don't think it's getting better"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": "this time"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "G",
+                            "word": "Baby I don't have the strength to"
+                        },
+                        {
+                            "chord": "Gsus2",
+                            "word": "fight but"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus 1",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "If I"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "could have been"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "It would've"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "been with"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "you"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "If I"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "could be"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "G",
+                            "word": "I would've"
+                        },
+                        {
+                            "chord": "Gsus2",
+                            "word": "been happy with"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "There was"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "nothing you could've"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "done"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "You lifted"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "me up love"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "I dragged"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "you"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "down"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "When I'm"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "gone you"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "gotta know it's true"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "G",
+                            "word": "That if ever I was"
+                        },
+                        {
+                            "chord": "Gsus2",
+                            "word": "happy,"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "it was with you"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Verse 2",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "I can't write any"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "more all my"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "words have"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "left me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "They won't come"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "back I'm pen in"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "hand, cramped,"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "tired of trying"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Stop betting on"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "me I'm begging"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "you, you always"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "lose"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I don't want the"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "thing that's killing"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "me to kill"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "you too"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "Don't think it's getting better"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": "this time"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "G",
+                            "word": "Baby I don't have the strength to"
+                        },
+                        {
+                            "chord": "Gsus2",
+                            "word": "fight but"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus 2",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "If I"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "could have been"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "It would've"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "been with"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "you"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "If I"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "could be"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "G",
+                            "word": "I would've"
+                        },
+                        {
+                            "chord": "Gsus2",
+                            "word": "been happy with"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "There was"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "nothing you could've"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "done"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "You lifted"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "me up love"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "I dragged"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "you"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "down"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "When I'm"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "gone you"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "gotta know it's true"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "G",
+                            "word": "That if ever I was"
+                        },
+                        {
+                            "chord": "Gsus2",
+                            "word": "happy,"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "it was with you"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus 3",
+                "lines": [
+                    [
+                        {
+                            "chord": " ",
+                            "word": "Bridge"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "Whatever's broke inside of"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "me won't fix with time"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "Know you want me to stay"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "I just can't fight"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "But my love"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "before I go"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I need"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "you to know"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "If I"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "could have been"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "It would've"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "been with"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "you"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "If I"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "could be"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "G",
+                            "word": "I would've"
+                        },
+                        {
+                            "chord": "Gsus2",
+                            "word": "been happy with"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Doesn't matter"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "what you would've"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "done"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "You lifted"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "me up love"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "I dragged"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "you"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "down"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "When I'm"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "gone please"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "know it's true"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "G",
+                            "word": "That if ever I was"
+                        },
+                        {
+                            "chord": "Gsus2",
+                            "word": "happy,"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "I was happy because of you"
+                        }
+                    ]
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Make You Happy",
+        "key": "Eb (C, Capo 3)",
+        "sections": [
+            {
+                "name": "Verse 1",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "I can't help but think"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Csus2",
+                            "word": "Of the trouble that I bring"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Fadd9",
+                            "word": "I know how much you love me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Fsus2",
+                            "word": "Don't think I can make you happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": " "
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "At least not in the long run anyway"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Fadd9",
+                            "word": "And I wonder"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": "why you stay"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus 1",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "I"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "caught you"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "blind"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "You didn't see how I could"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "hurt you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "You didn't see that I'm not"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "kind"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "In the way that you"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "deserve"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh I"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "got you"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "good"
+                        },
+                        {
+                            "chord": "Fadd",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "Made you"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "think that I was worth it"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "Made you"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "think that I could love you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "In the way that you"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": "deserve"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Verse 2",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "I can't help but think"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Csus2",
+                            "word": "Of the havoc that I wreak"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Fadd9",
+                            "word": "I don't know why you love me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Fsus2",
+                            "word": "Don't know how I could make you happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": " "
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "At least not in a lasting sort of way"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Fadd9",
+                            "word": "And I wonder"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": "why you stay"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus 2",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "I"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "caught you"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "blind"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "You didn't see how I could"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "hurt you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "You didn't see that I'm not"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "kind"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "In the way that you"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "deserve"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh I"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "got you"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "good"
+                        },
+                        {
+                            "chord": "Fadd",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "Made you"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "think that I was worth it"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "Made you"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "think that I could love you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "In the way that you"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": "deserve"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus 3",
+                "lines": [
+                    [
+                        {
+                            "chord": " ",
+                            "word": "Bridge"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "I don't know why you love me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Fadd9",
+                            "word": "I can't make you happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "I don't know why you love me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Fadd9",
+                            "word": "I can't make you happy"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "You'll"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "figure it out"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "one of these days"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "G",
+                            "word": "And I know just"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "what you'll"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": "say"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "I"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "caught you"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "blind"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "You didn't see how I could"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "hurt you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "You didn't see that I'm not"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "kind"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "In the way that you"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "deserve"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh I"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "got you"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "good"
+                        },
+                        {
+                            "chord": "Fadd",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "I'm sorry"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "I'm not worth it"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "I'm sorry"
+                        },
+                        {
+                            "chord": "Fadd9",
+                            "word": "you thought I could love you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "In the way that you"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": "deserve"
+                        }
+                    ]
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Push You Away",
+        "key": "G (C, Capo 7)",
+        "sections": [
+            {
+                "name": "Verse 1",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "A tiger's not to blame"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "When there's no change in his stripes"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Tortoise can't complain"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "About a scorpion bite"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "So when"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "I betrayed all the"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "promises I made"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "It"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "shouldn't come as much of a"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "surprise"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "Some people just aren't"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "made to have a happy"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "life"
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus",
+                "lines": [
+                    [
+                        {
+                            "chord": " ",
+                            "word": "It was so"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "lovely"
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "To feel like you"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": " "
+                        },
+                        {
+                            "chord": "F",
+                            "word": "loved me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "But there's something so"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "ugly"
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "In"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "me that you just"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "wouldn't see"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And so I"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "pushed you away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "away and away and"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "away and"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "I"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "held you at arm's length"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "away and"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "away and"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "I kept you safe"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Verse 2",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Some molds don't break"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I've stayed true to type"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Baby I ain't trying to claim"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "That what I did was right"
+                        },
+                        {
+                            "chord": "Fsus2",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "So when"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "I betrayed all the"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "promises we made"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "I"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "hope you know it wasn't out of"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "spite"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "Some people just aren't"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "made to have a happy"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "life"
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus",
+                "lines": [
+                    [
+                        {
+                            "chord": " ",
+                            "word": "It was so"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "lovely"
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "To feel like you"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": " "
+                        },
+                        {
+                            "chord": "F",
+                            "word": "loved me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "But there's something so"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "ugly"
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "In"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "me that you just"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "wouldn't see"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And so I"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "pushed you away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "away and away and"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "away and"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "I"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "held you at arm's length"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "away and"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "away and"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "I kept you safe"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus",
+                "lines": [
+                    [
+                        {
+                            "chord": " ",
+                            "word": "Bridge"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "And when I be"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "trayed"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "every single promise that I"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "made"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "it wasn't out of spite"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "Baby I'm just not"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "made"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "to have a happy life"
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "It was so"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "lovely"
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "To feel like you"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": " "
+                        },
+                        {
+                            "chord": "F",
+                            "word": "loved me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "But there's something so"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "ugly"
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "In"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "me that you just"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "wouldn't see"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And so I"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "pushed you away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "away and away and"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "away and"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "I"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "held you at arm's length"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "away and"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "away and"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "And"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "I kept you safe"
+                        }
+                    ]
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Quiet Love",
+        "key": "Eb (C -> Capo 3)",
+        "sections": [
+            {
+                "name": "Verse 1",
+                "lines": [
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "You're not composing love poems"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "You're making sure that I get home"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "Making appointments cause you know I won't call"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "Forgiving all my flaws"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "You're not"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "composing love poems"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "I want"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "you to know"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh my"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "love"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I love your"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "quiet"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "kind of"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh my"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "love"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I love your"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "quiet"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "kind of"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh my"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "love"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I love your"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "quiet"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "kind of"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh my"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "love"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I love your"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "quiet"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "kind of"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "love"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Verse 2",
+                "lines": [
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "You're not singing love songs at my window"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "You're kissing my head and you're holding me close"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "Making dinner cause you don't mind I forgot"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "Forgiving me all my flaws"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Am",
+                            "word": "You're not singing"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "love songs at my window"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "I want"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "you to know"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh my"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "love"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I love your"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "quiet"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "kind of"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh my"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "love"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I love your"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "quiet"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "kind of"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh my"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "love"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I love your"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "quiet"
+                        },
+                        {
+                            "chord": "Dm",
+                            "word": "kind of"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Oh my"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "love"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I love your"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "quiet"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "kind of"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "love"
+                        }
+                    ]
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Slowly",
+        "key": "Bb (G, Capo 3)",
+        "sections": [
+            {
+                "name": "Verse 1",
+                "lines": [
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "I felt God's"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "hands around my"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "throat"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "They felt"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "identical to"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "yours"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "I started"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "choking"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "slowly"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": "Puncture and a"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "slow leak"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "D",
+                            "word": "The moment I met"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": "The moment I met"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "you"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Verse 2",
+                "lines": [
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "I saw"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "God burn down my"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "house"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "Watched you"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "throw your zippo"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "lighter down"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "I started"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "burning"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "slowly"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": "Turpentine and gas"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "oline"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "D",
+                            "word": "The moment I met"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": "The moment I met"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "you"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Verse 3",
+                "lines": [
+                    [
+                        {
+                            "chord": " ",
+                            "word": "Bridge"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "You invited"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "me to be"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "The"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "guest of honor at your feast"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "Everything you"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "fed to me"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": " ",
+                            "word": "Turned to"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "ash between my teeth"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "I saw"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "something"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "change"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "Something"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "twisted in your"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "face"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "Your"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "sour"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "apple game"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "Left me"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "naked and"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "ashamed"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "Oh"
+                        },
+                        {
+                            "chord": "Am",
+                            "word": "oh"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "Oh oh"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "Oh"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "oh"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "Oh"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "I heard God"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "damn me with a"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "curse"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "His voice"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "identical to"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "yours"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": "I started"
+                        },
+                        {
+                            "chord": "D",
+                            "word": "losing my mind"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "slowly"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": "Ear worm poison sounded"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "so sweet"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "D",
+                            "word": "The moment I met"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "you"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": "The moment I met"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "you"
+                        }
+                    ]
+                ]
+            }
+        ]
+    },
+    {
+        "title": "So This Is What It Is",
+        "key": "F# (C, Capo 6)",
+        "sections": [
+            {
+                "name": "Verse 1",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "The smell of coming"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "rain"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Winter"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "frost"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "melts away"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Flowers"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "blooming"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "buzzin' bees"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Seemed like the"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "cold"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "might never"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "leave"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus 1",
+                "lines": [
+                    [
+                        {
+                            "chord": "F",
+                            "word": "So this is"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "what it is to"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "breathe"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I didn't"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "know that I was"
+                        },
+                        {
+                            "chord": "C",
+                            "word": " "
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "suffocating"
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Verse 2",
+                "lines": [
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Cherry blossoms"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "lilac trees"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Sunshine's"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "heat with a"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "cool breeze"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Every"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "thing that"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "we watched die"
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "C",
+                            "word": "Breaking"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "through coming"
+                        },
+                        {
+                            "chord": "F",
+                            "word": "back to"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "life"
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus 2",
+                "lines": [
+                    [
+                        {
+                            "chord": "F",
+                            "word": "So this is"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "what it is to"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "breathe"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I didn't"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "know that I was"
+                        },
+                        {
+                            "chord": "C",
+                            "word": " "
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "suffocating"
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "Oh this is"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "what it is to"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "breathe"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "I thought"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "might never"
+                        },
+                        {
+                            "chord": "C",
+                            "word": " "
+                        },
+                        {
+                            "chord": "Em",
+                            "word": "leave"
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "So this is"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "what it is to"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "breathe"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ],
+                    [
+                        {
+                            "chord": "F",
+                            "word": "Oh this is"
+                        },
+                        {
+                            "chord": "G",
+                            "word": "what it is to"
+                        },
+                        {
+                            "chord": "C",
+                            "word": "breathe"
+                        },
+                        {
+                            "chord": "Em",
+                            "word": " "
+                        },
+                        {
+                            "chord": "F",
+                            "word": " "
+                        },
+                        {
+                            "chord": "G",
+                            "word": " "
+                        }
+                    ]
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Start Again",
+        "key": "Em",
+        "capo": 2,
+        "sections": [
+            {
+                "name": "Verse 1",
+                "lines": [
+                    [
+                        {
+                            "word": "I remember when",
+                            "chord": "Em"
+                        },
+                        {
+                            "word": "you touched me",
+                            "chord": "G"
+                        },
+                        {
+                            "word": "for the first time",
+                            "chord": "C"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Nothing compares to",
+                            "chord": "Em"
+                        },
+                        {
+                            "word": "the anticipation of",
+                            "chord": "G"
+                        },
+                        {
+                            "word": "that first night",
+                            "chord": "C"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "I didn't know then",
+                            "chord": "Em"
+                        },
+                        {
+                            "word": "I could love you",
+                            "chord": "D"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Truth be told",
+                            "chord": "G"
+                        },
+                        {
+                            "word": "it took awhile",
+                            "chord": ""
+                        }
+                    ]
+                ]
+            },
+            {
+                "name": "Chorus 1",
+                "lines": [
+                    [
+                        {
+                            "word": "I fell deep and",
+                            "chord": "G"
+                        },
+                        {
+                            "word": "I pulled you",
+                            "chord": "D"
+                        },
+                        {
+                            "word": "down with me",
+                            "chord": "Am"
+                        },
+                        {
+                            "word": "",
+                            "chord": "Em"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Wish I hadn't",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "let you in",
+                            "chord": "G"
+                        },
+                        {
+                            "word": "Then I could",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "let you go",
+                            "chord": "G"
+                        }
+                    ],
+                    [
+                        {
+                            "word": "Wish I could",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "start again",
+                            "chord": "G"
+                        },
+                        {
+                            "word": "Then I wouldn't",
+                            "chord": "C"
+                        },
+                        {
+                            "word": "let you get",
+                            "chord": "G"
+                        },
+                        {
+                            "word": "so close",
+                            "chord": ""
+                        }
+                    ]
+                ]
+            }
+        ]
+    }
+]

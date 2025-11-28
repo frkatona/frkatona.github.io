@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Circle + Dodecagon (Scroll to Rotate)</title>
+  <style>
+    :root { --size: 520px; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: #0b0b11;
+      color: #f2f2f7;
+      display: grid;
+      place-items: center;
+    }
+    .wrap {
+      position: relative;
+      width: var(--size);
+      height: var(--size);
+      user-select: none;
+      border-radius: 16px;
+      background: radial-gradient(120% 120% at 20% 20%, #14141f, #0e0e16 70%);
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+      overflow: hidden;
+    }
+    .hint {
+      position: absolute;
+      top: 10px; left: 50%; transform: translateX(-50%);
+      font-size: 14px; color: #cbd5e1; text-align: center;
+      opacity: .9;
+    }
+    .stage {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 24px 24px, 24px 24px;
+    }
+    .centered {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      width: 84%; height: 84%; /* same box for both images so they are concentric */
+      pointer-events: none; /* let wheel hit the container */
+    }
+    #dodecagon {
+      transform-origin: 50% 50%;
+      transition: transform 160ms ease-out;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.5));
+      width: 40%;
+      height: 40%;
+    }
+    #circle { filter: drop-shadow(0 1px 4px rgba(0,0,0,.4)); }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="wrap">
+    <div class="hint">
+      <div><strong>Scroll</strong> to rotate the spinner</div>
+    </div>
+    <div class="stage" aria-label="Concentric circle and dodecagon; dodecagon rotates on mouse wheel."></div>
+
+    <img id="circle" class="centered" alt="circle" src="back.png" />
+    <img id="dodecagon" class="centered" alt="spinner" src="spinner.png" />
+
+    <!-- Circle image (transparent SVG as data URL) 
+    <img id="circle" class="centered" alt="circle" 
+         src="data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>\
+  <circle cx='256' cy='256' r='200' fill='none' stroke='%23ffffff' stroke-width='8'/>\
+  <circle cx='256' cy='256' r='4' fill='%23ffffff'/>\
+</svg>" />-->
+
+    <!-- Dodecagon image (transparent SVG as data URL) 
+    <img id="dodecagon" class="centered" alt="dodecagon" 
+         src="data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>\
+  <polygon fill='none' stroke='%23ffffff' stroke-width='10' stroke-linejoin='round' points='456,256 429.205,356 356,429.205 256,456 156,429.205 82.795,356 56,256 82.795,156 156,82.795 256,56 356,82.795 429.205,156'/>\
+  <circle cx='256' cy='256' r='4' fill='%23ffffff'/>\
+</svg>" />
+  </div> -->
+
+  <script>
+    (function() {
+      const wrap = document.getElementById('wrap');
+      const d12 = document.getElementById('dodecagon');
+      const angleReadout = document.getElementById('angle');
+      const STEP = 30; // degrees per wheel tick
+      let rot = 0;
+
+      function applyRotation() {
+        d12.style.transform = `translate(-50%, -50%) rotate(${rot}deg)`; // preserve centering
+        const wrapped = ((rot % 360) + 360) % 360; // keep 0..359 for display
+        angleReadout.textContent = wrapped.toFixed(0) + '°';
+      }
+
+
+      function onWheel(e) {
+        // Most browsers: deltaY < 0 for up; > 0 for down
+        e.preventDefault();
+        const dir = e.deltaY < 0 ? 1 : -1; // up = clockwise
+        rot += dir * STEP;
+        applyRotation();
+      }
+
+      wrap.addEventListener('wheel', onWheel, { passive: false });
+    })();
+  </script>
+</body>
+</html>

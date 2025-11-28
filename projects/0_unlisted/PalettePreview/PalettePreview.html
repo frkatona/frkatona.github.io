@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Selector</title>
+    <style>
+        #paletteDisplay {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .colorBox {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select a Color Palette</h1>
+    <select id="paletteSelector">
+        <option value="">Select a palette</option>
+    </select>
+    <div id="paletteDisplay"></div>
+    <canvas id="lineChart" width="800" height="400"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('AnthonyColors.json')
+                .then(response => response.json())
+                .then(data => {
+                    const palettes = data.palettes;
+                    const paletteSelector = document.getElementById('paletteSelector');
+                    
+                    palettes.forEach((palette, index) => {
+                        const option = document.createElement('option');
+                        option.value = index;
+                        option.textContent = palette.name;
+                        paletteSelector.appendChild(option);
+                    });
+                    
+                    paletteSelector.addEventListener('change', () => {
+                        const selectedIndex = paletteSelector.value;
+                        const selectedPalette = palettes[selectedIndex];
+                        displayPalette(selectedPalette);
+                        drawChart(selectedPalette.colors);
+                    });
+                });
+        });
+
+        function displayPalette(palette) {
+            const paletteDisplay = document.getElementById('paletteDisplay');
+            paletteDisplay.innerHTML = '';
+
+            if (palette) {
+                palette.colors.forEach(color => {
+                    const colorBox = document.createElement('div');
+                    colorBox.className = 'colorBox';
+                    colorBox.style.backgroundColor = color.hex;
+                    colorBox.textContent = color.name;
+                    paletteDisplay.appendChild(colorBox);
+                });
+            }
+        }
+
+        function drawChart(colors) {
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            const colorHexes = colors.map(color => color.hex);
+            const datasets = colorHexes.map((color, index) => ({
+                label: `Line ${index + 1}`,
+                data: Array.from({length: 10}, () => Math.floor(Math.random() * 100)),
+                borderColor: color,
+                fill: false
+            }));
+
+            if (window.myLineChart) {
+                window.myLineChart.destroy();
+            }
+
+            window.myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 10}, (_, i) => `Point ${i + 1}`),
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
