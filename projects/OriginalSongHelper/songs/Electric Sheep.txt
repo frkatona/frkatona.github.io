@@ -1,0 +1,71 @@
+Phillip's Electric Sheep
+arist: Seana Wood
+version: v25.10.14
+time: ?
+key: Am
+tempo: 130 BPM
+
+Intro:
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [C]- - - - |
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [G]- - - - |
+
+Verse_1:
+[Am]   Turning the [C]dial 
+[Am]   Hair tied to a [C]chair
+[Am]   Haven’t seen you for a [C]while
+[Am]   I want out for fresh [C]air 
+[Am]   To smell the grass [C]again
+[Am]   Next to you my [C]friend
+
+Chorus:
+I rec[G]eive a greeting [C]card 
+from the [F]unhappy man[D]
+[G]Covered in sm[C]iling sketches 
+[F]something he didn’t [E]understand
+He [F]didn’t under[E]stand
+He [F]didn’t [F] 
+under[G]stand [G]
+
+Verse_2:
+[Am]   My guitar is paper [C]thin
+[Am]   The tiny cuts make me [C]shout
+[Am]   A lid of tape on my [C]chin
+[Am]   Don’t let the dark air [C]out
+[Am]   Looking into a mir[C]ror
+[Am]   Escaping the brick [C]layer 
+
+Chorus:
+I rec[G]eive a greeting [C]card
+from the [F]unhappy man[D]
+[G]Covered in sm[C]iling sketches
+[F]something he didn’t [E]understand
+He [F]didn’t under[E]stand
+He [F]didn’t [F] 
+under[G]stand [G]
+
+Instrumental:
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [C]- - - - |
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [C]- - - - |
+| [Am]- - - - | [C]- - - - | [Am]- - - - | [G]- - - - |
+
+Bridge:
+{pp}[C]The sheep tossed and turned 
+{pp}[Em]fighting to get to sleep 
+{pp}They [F]dreamed of meadow
+{pp}[G]that they could not keep
+
+{p}A [C]place to escape the struggles
+{p}of [Em]which they can’t speak 
+{p}[F]hopes of greener grass,
+{p}clear [G]river running deep
+ 
+something they [F]didn’t under[E]stand
+they [F]didn’t under[E]stand
+He [F]didn’t [F] 
+under[G]stand [G]
+
+Outro:
+{p}[A]When the gate [D]closes 
+{p}the [G]break in the fence stays [A]open
+[A]When the gate [D]closes 
+the [G]break in the fence stays [A]open

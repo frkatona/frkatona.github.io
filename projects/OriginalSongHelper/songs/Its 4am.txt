@@ -1,0 +1,77 @@
+It's 4am
+artist: Seana Wood
+version: v25.10.13
+key: C
+tempo: 70 BPM
+time: ?
+
+Intro:
+| [C]- - - - | [Am]- - - - | (x2)
+
+Verse_1:
+It's [C]   4am and I can't [Am]sleep again
+I have to [C]   slow it down can’t keep [Am]using time like this
+[C]   I’ve been running my [Am]whole damn life
+[C]   Grabbing onto everything, and yet [Am]holding onto nothing
+
+Chorus:
+[G]   While in free fall
+I don’t want to [D]   pull you down
+So I [A]hunker into place
+And hide aw[G]ay for a [D]while
+
+I [D]hide away from the pain
+I [A]hide behind this smile
+But it’s still [G]there just the same
+I’m gonna hide aw[D]ay for a [A]while  [A-7](1-bar rest)
+
+Verse_2:
+Its [C]11am and I could come [Am]over again
+cause I [C]miss you dearly, and I [Am]know you'll let me in
+If I [C]push a little, you'll [Am]budge
+you'll [C]   scream a little, but in the [Am]end you'll hold my hand
+
+Chorus:
+[G]   While in free fall
+I don’t want to [D]   pull you down
+So, I [A]hunker into place
+And hide aw[G]ay for a [D]while
+
+I [D]hide from the pain
+I [A]hide behind this smile
+But it’s still [G]there just the same
+I’m gonna hide aw[D]ay for [A]while  [A](1-bar rest)
+
+Instrumental:
+| [F]- - - - | [F]- - - - | [C]- - - - | [G]- - - - | 
+| [F]- - - - | [F]- - - - | [C]- - - - | [G]- - - - | 
+| [Dm]- - - - | [G]- - - - | [Dm]- - - - | [G]- - - - | 
+| [Dm]- - - - | [G]- - - - | [C]- - - - | [C]- - - - | 
+
+
+Verse_3:
+It’s [C]11pm can't turn [Am]back this clock again
+I have to [C]   shut this down, cause your [Am]burning up my brain 
+[C]    Can we settle this with a [Am]game or movie?
+I [C]   thought by now, we’d be [Am]acting  more truly
+
+Chorus:
+[G]   While in free fall
+I don’t want to [D]   pull you down
+So, I [A]hunker into place
+And hide aw[G]ay for a [D]while
+
+I [D]hide from the pain
+I [A]hide behind this smile
+But it’s still [G]there just the same
+I’m gonna hide aw[D]ay for a [A]while  [A-7](1-bar rest)
+
+Outro:
+I’m not [D]sorry that I met you. 
+I’m not [C]sorry we’ve been dragged in
+These [G]lessons can’t be learned without that [D]sin   
+
+{p} And [D]what does one do, when [C]all of it is gone?
+{p} Going to [G]make my way in this dusty old [D]town 
+{f} And [D]what does one do, when [C]all of it is gone?
+{f} Going to [G]make my way in this dusty old [D]town 

@@ -1,0 +1,54 @@
+Revolving Door (Right in Front of their Eyes)
+artist: Eric M
+version: v2025.09.29
+key: ~F#m
+time: 4:00
+tempo: ?
+Intro:
+{piano (creepy waltz)}
+| [A#]- - - | (x4)
+| [F#]- - - | (x4)
+(x3)
+
+{guitar free time virtuoso}
+| [A#]- - [F#]- - |
+
+
+Verse1:
+|[A#]xxxx| |[F#]xxxx| x 4
+[A#]  Have you [F#]seen the [A#]vision [F#]out the [A#]
+re[F#]volving [A#]door  [F#]|xx|
+[A#]|xx| [F#]Who bears [A#]witness [F#]to th[A#]is 
+[A#]Please step [F#]forward
+
+[A#]  Not [F#]self-sur[A#]real [F#]changes
+[A#] A [F#]proving [A#]storm [F#]
+[A#] This is [F#]all [A#]happen[F#]ing [A#]more
+than they [F#]bargained [A#]for
+
+Chorus1:
+(SINGALONG)[F#]   Right in front of our [D]eyes (x3)
+
+Verse2:
+|[A#]xxxx| |[F#]xxxx|
+[A#] You'll [F#]soon surr[A#]ender. [F#]
+At [A#]least that's [F#]what we're [A#]told. |[F#]xx| 
+[A#]   And [F#]scattered [A#]dreams [F#]throw your
+[A#]hopes [F#]over[A#]board. |[F#]xx| 
+[A#] But I [F#]beg to [A#]differ, 
+[F#]if I may sug[A#]gest a [F#]line.
+Stop [A#]wander[F#]ing [A#]aimless[F#]ly and
+[A#]start a [F#]riot
+
+Chorus2:
+(SINGALONG)[F#]Right in front of their [D]eyes (x2)
+
+Instrumental:
+|x [D]- [B]x - x - x| |x [E]- [F#]x - x - x| (x3)
+
+Chorus3:
+(SINGALONG)[F#]Right in front of their [D]eyes (x3)
+
+Instrumental:
+|x [D]- [B]x - x - x| |x [E]- [F#]x - x - x| (x2)
+|x [D]- [B]x - x - x| {HARD STOP}

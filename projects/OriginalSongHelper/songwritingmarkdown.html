@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Added viewport for mobile responsiveness -->
+    <title>SongHelper Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-header">
+        <div class="header-controls">
+            <button class="icon-btn" id="menuBtn" title="Menu">☰</button>
+            <button class="icon-btn" id="songListBtn" title="Songs">♪</button>
+        </div>
+        <div class="header-title" id="headerTitle">Untitled Song</div>
+        <div class="header-controls">
+            <button class="icon-btn" id="editToggleBtn" title="Toggle Edit Mode">✎</button>
+        </div>
+    </div>
+
+    <div class="app-main" id="appMain">
+        <div class="editor-panel hidden" id="editorPanel">
+            <textarea id="songInput" class="editor-textarea" placeholder="Type your song here...
+Title
+[C] Verse 1
+[F] Lyrics here..."></textarea>
+        </div>
+        <div class="song-view" id="songView">
+            <!-- Rendered song goes here -->
+        </div>
+    </div>
+
+    <div class="app-footer">
+        <!-- Transpose -->
+        <div class="control-group">
+            <div class="control-label">Transpose</div>
+            <div class="control-buttons">
+                <button class="control-btn" id="transDown">−</button>
+                <div class="control-value" id="transValue">0</div>
+                <button class="control-btn" id="transUp">+</button>
+            </div>
+        </div>
+
+        <!-- Play/Scroll -->
+        <button class="play-btn" id="playBtn" title="Start Scrolling">▶</button>
+
+        <!-- Speed -->
+        <div class="control-group">
+            <div class="control-label">Speed</div>
+            <div class="control-buttons">
+                <button class="control-btn" id="speedDown">−</button>
+                <div class="control-value" id="speedValue">3.0</div>
+                <button class="control-btn" id="speedUp">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Song List Modal -->
+    <div class="modal-overlay" id="songListModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Songs</div>
+                <button class="close-btn" onclick="closeModals()">×</button>
+            </div>
+            <div id="songListContainer">Loading...</div>
+        </div>
+    </div>
+
+    <!-- Menu Modal -->
+    <div class="modal-overlay" id="menuModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Settings</div>
+                <button class="close-btn" onclick="closeModals()">×</button>
+            </div>
+            <div class="menu-item">
+                <span>Font Size</span>
+                <div class="control-buttons">
+                    <button class="control-btn" id="fontDown">−</button>
+                    <div class="control-value" id="fontValue">20</div>
+                    <button class="control-btn" id="fontUp">+</button>
+                </div>
+            </div>
+            <div class="menu-item">
+                <span>Alignment</span>
+                <button class="icon-btn" id="alignToggle"
+                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">Center</button>
+            </div>
+            <div class="menu-item">
+                <span>Download .txt</span>
+                <button class="icon-btn" id="downloadBtn"
+                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">↓</button>
+            </div>
+            <div class="menu-item">
+                <span>Upload .txt</span>
+                <button class="icon-btn" id="uploadBtn"
+                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">↑</button>
+                <input type="file" id="fileInput" style="display:none" accept=".txt">
+            </div>
+            <div class="menu-item">
+                <span>Import from UG</span>
+                <button class="icon-btn" id="importMenuBtn"
+                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">🌐</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div class="modal-overlay" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Import from Ultimate Guitar</div>
+                <button class="close-btn" onclick="closeModals()">×</button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <input type="text" id="importUrlInput" placeholder="Paste URL here..."
+                    style="padding:10px; background:#333; color:white; border:1px solid #555; border-radius:4px;">
+                <button id="doImportBtn"
+                    style="padding:10px; background:var(--accent-color); color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">Import</button>
+                <div id="importStatus" style="color:#aaa; font-size:0.9em;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

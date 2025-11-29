@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="../../css/subpage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="container capo-chord-tool">
+    <nav class="top-nav">
+        <a href="../../index.html" class="home-icon" title="Home">
+            <i class="fas fa-home"></i>
+        </a>
+    </nav>
+    <div class="toggle-container">
+        <input type="checkbox" id="dark-mode-toggle" class="toggle" checked>
+        <label for="dark-mode-toggle" class="toggle-label">
+            <i class="fas fa-sun"></i>
+            <i class="fas fa-moon"></i>
+        </label>
+    </div>
+    <h1>Capo Placer Tool</h1>
+    <div class="content-container">
+        <div class="input-section">
+            <h2>Select Chords</h2>
+            <div id="chordContainer"></div>
+        </div>
+        <div class="output-section">
+            <h2>Capo Positions</h2>
+            <div id="output"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
