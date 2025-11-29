@@ -6,7 +6,8 @@ const state = {
     scrollInterval: null,
     fontSize: 20,
     alignment: 'center',
-    isEditMode: false
+    isEditMode: false,
+    currentSong: null // Track current song filename
 };
 
 // --- Elements ---
@@ -40,11 +41,32 @@ const els = {
 
 // --- Initialization ---
 function init() {
-    // Load initial song if empty
-    if (!els.songInput.value.trim()) {
-        els.songInput.value = "Amazing Grace\n\n[G]Amazing grace how [C]sweet the [G]sound\nThat [G]saved a wretch like [D]me\nI [G]once was lost but [C]now am [G]found\nWas [Em]blind but [D]now I [G]see";
+    // Parse URL params
+    const params = new URLSearchParams(window.location.search);
+    const songParam = params.get('song');
+    const speedParam = params.get('speed');
+    const transParam = params.get('transpose');
+
+    if (speedParam) {
+        state.scrollSpeed = parseFloat(speedParam);
+        els.speedValue.textContent = state.scrollSpeed.toFixed(1);
     }
-    renderSong();
+
+    if (transParam) {
+        state.transpose = parseInt(transParam, 10);
+        els.transValue.textContent = state.transpose > 0 ? `+${state.transpose}` : state.transpose;
+    }
+
+    // Load initial song
+    if (songParam) {
+        loadSongFile(songParam);
+    } else if (!els.songInput.value.trim()) {
+        els.songInput.value = "Amazing Grace\n\n[G]Amazing grace how [C]sweet the [G]sound\nThat [G]saved a wretch like [D]me\nI [G]once was lost but [C]now am [G]found\nWas [Em]blind but [D]now I [G]see";
+        renderSong();
+    } else {
+        renderSong();
+    }
+
     updateUI();
     loadSongList();
 }
@@ -299,6 +321,7 @@ function updateTranspose(amount) {
     state.transpose += amount;
     els.transValue.textContent = state.transpose > 0 ? `+${state.transpose}` : state.transpose;
     applyTranspose();
+    updateURLState();
 }
 
 function applyTranspose() {
@@ -343,6 +366,7 @@ function updateSpeed(amount) {
             els.songView.scrollTop += 1;
         }, 50 / state.scrollSpeed);
     }
+    updateURLState();
 }
 
 function toggleScroll() {
@@ -397,6 +421,8 @@ function loadSongList() {
                 div.className = 'song-list-item';
                 div.textContent = song.replace('.txt', '');
                 div.onclick = () => {
+                    state.transpose = 0;
+                    els.transValue.textContent = '0';
                     loadSongFile(song);
                     closeModals();
                 };
@@ -413,8 +439,20 @@ function loadSongFile(filename) {
         .then(r => r.text())
         .then(text => {
             els.songInput.value = text;
+            state.currentSong = filename;
             renderSong();
+            updateURLState();
         });
+}
+
+function updateURLState() {
+    const params = new URLSearchParams();
+    if (state.currentSong) params.set('song', state.currentSong);
+    if (state.scrollSpeed !== 3.0) params.set('speed', state.scrollSpeed);
+    if (state.transpose !== 0) params.set('transpose', state.transpose);
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, '', newUrl);
 }
 
 function downloadSong() {

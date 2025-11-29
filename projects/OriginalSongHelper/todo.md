@@ -8,6 +8,10 @@
 
 - [ ] add link to UG to pull chords
 
+- [ ] checkbox for a countdown?
+
+- [ ] tempo --> metronome flashing while scroller is going
+
 - [ ] have the url include the song title and have it so the song title being included in the address opens that song
 
 - [ ] convert the title/author/version etc. to an object to be interpreted like a latex bibtex entry

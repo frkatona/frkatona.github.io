@@ -1,4 +1,8 @@
-Contemplative (E, 80 BPM, [tone])
+Contemplative
+artist: Anthony Katona
+key: E
+tempo: 80 BPM
+version: 2025.01.01
 
 Verse1:
 [E riff] Stand tall
