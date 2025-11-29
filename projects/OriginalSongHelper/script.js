@@ -36,7 +36,12 @@ const els = {
     alignToggle: document.getElementById('alignToggle'),
     downloadBtn: document.getElementById('downloadBtn'),
     uploadBtn: document.getElementById('uploadBtn'),
-    fileInput: document.getElementById('fileInput')
+    fileInput: document.getElementById('fileInput'),
+    importMenuBtn: document.getElementById('importMenuBtn'),
+    importModal: document.getElementById('importModal'),
+    importUrlInput: document.getElementById('importUrlInput'),
+    doImportBtn: document.getElementById('doImportBtn'),
+    importStatus: document.getElementById('importStatus')
 };
 
 // --- Initialization ---
@@ -111,6 +116,10 @@ els.alignToggle.addEventListener('click', () => {
 els.downloadBtn.addEventListener('click', downloadSong);
 els.uploadBtn.addEventListener('click', () => els.fileInput.click());
 els.fileInput.addEventListener('change', handleFileUpload);
+
+// Import
+els.importMenuBtn.addEventListener('click', () => { closeModals(); openModal(els.importModal); });
+els.doImportBtn.addEventListener('click', importFromUG);
 
 // Global Keys
 document.addEventListener('keydown', (e) => {
@@ -494,6 +503,89 @@ function handleFileUpload(e) {
         closeModals();
     };
     reader.readAsText(file);
+}
+
+function importFromUG() {
+    const url = els.importUrlInput.value.trim();
+    if (!url) return;
+
+    els.importStatus.textContent = "Fetching...";
+
+    // Use a CORS proxy
+    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
+
+    fetch(proxyUrl)
+        .then(response => {
+            if (response.ok) return response.json();
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            const html = data.contents;
+            const parsed = parseUGHtml(html);
+            if (parsed) {
+                els.songInput.value = parsed;
+                renderSong();
+                closeModals();
+                els.importStatus.textContent = "";
+                els.importUrlInput.value = "";
+            } else {
+                els.importStatus.textContent = "Could not parse song content.";
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            els.importStatus.textContent = "Error fetching URL. Check console.";
+        });
+}
+
+function parseUGHtml(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // Try to find the JSON store first (most reliable)
+    // Look for a script tag containing window.UGAPP.store.page.data
+    const scripts = doc.querySelectorAll('script');
+    let json = null;
+    for (let s of scripts) {
+        if (s.textContent.includes('window.UGAPP.store.page.data =')) {
+            try {
+                const content = s.textContent;
+                const start = content.indexOf('window.UGAPP.store.page.data =') + 'window.UGAPP.store.page.data ='.length;
+                const end = content.indexOf(';', start);
+                const jsonStr = content.substring(start, end);
+                json = JSON.parse(jsonStr);
+                break;
+            } catch (e) {
+                console.error("JSON parse error", e);
+            }
+        }
+    }
+
+    if (json && json.tab_view && json.tab_view.wiki_tab && json.tab_view.wiki_tab.content) {
+        const tabContent = json.tab_view.wiki_tab.content;
+        const artist = json.tab.artist_name;
+        const song = json.tab.song_name;
+        const key = json.tab_view.meta ? json.tab_view.meta.tonality : '?';
+        const tempo = json.tab_view.meta ? json.tab_view.meta.tempo : '?'; // Sometimes available
+
+        // Format
+        let output = `${song}\nartist: ${artist}\nkey: ${key || '?'}\n`;
+        if (tempo) output += `tempo: ${tempo} BPM\n`;
+        output += `\n${tabContent.replace(/\r\n/g, '\n')}`;
+        return output;
+    }
+
+    // Fallback: Scrape HTML directly
+    // Look for <pre> tags or specific classes
+    const pre = doc.querySelector('pre.js-tab-content, pre._1YgOS'); // _1YgOS is a common obfuscated class, might change
+    if (pre) {
+        const content = pre.textContent;
+        // Try to get title/artist from header
+        const title = doc.querySelector('h1') ? doc.querySelector('h1').textContent : 'Imported Song';
+        return `${title}\n\n${content}`;
+    }
+
+    return null;
 }
 
 // Run
