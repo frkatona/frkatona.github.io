@@ -1,5 +1,9 @@
 Feeling Muse
-Seana Wood - v25.03.14 - G - 150 BPM
+artist:Seana Wood
+version: v25.03.14
+key: G
+tempo: 150 BPM
+time: ?
 
 Verse_1:
 [G]    My muse is right in [E]front of me

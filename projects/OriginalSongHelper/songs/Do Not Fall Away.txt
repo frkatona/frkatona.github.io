@@ -1,5 +1,9 @@
 Do Not Fall Away
-Eric M - v2025.10.08 - 6:00
+artist: Eric M
+version: v2025.10.08
+time: 6:00
+tempo: ?
+key: Dm
 
 Intro:
 | [D]- [C]- [G]- [G]- | (x4)

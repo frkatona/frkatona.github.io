@@ -1,5 +1,9 @@
 Pain, Panic, Worry, and Woe
-Eric M - v2025.10.08 - B min verse; G maj chorus - 2:30
+artist: Eric M
+version: v2025.10.08
+key: Bm (verse); G (chorus)
+tempo: ?
+time: 2:30
 
 Intro:
 |[B]- - - - |[E]- - - -| (x3)

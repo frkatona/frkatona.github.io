@@ -1,8 +1,11 @@
 Hypno-state 
-Eric M - Dm - v2025.09.29 - 5:30
+arist: Eric M
+key: Dm
+version: v2025.09.29
+time: 5:30
+tempo: ?
 
 (verses = A slide, walk to D)
-
 
 Intro:
 |[D]- - - -| (x16)

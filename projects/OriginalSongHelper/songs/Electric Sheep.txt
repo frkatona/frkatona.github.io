@@ -1,5 +1,10 @@
 Phillip's Electric Sheep
-Seana Wood - v25.10.14 - Am - 130 BPM
+arist: Seana Wood
+version: v25.10.14
+time: ?
+key: Am
+tempo: 130 BPM
+
 Intro:
 | [Am]- - - - | [C]- - - - | [Am]- - - - | [C]- - - - |
 | [Am]- - - - | [C]- - - - | [Am]- - - - | [G]- - - - |

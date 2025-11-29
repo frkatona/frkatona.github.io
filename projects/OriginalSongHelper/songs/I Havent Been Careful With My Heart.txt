@@ -1,5 +1,10 @@
 I Haven’t Been Careful With My Heart
-Seana Wood - v25.04.05 - Dm - 80/122 BPM
+artist: Seana Wood
+version: v25.04.05
+key: Dm
+tempo: 80/122 BPM
+time: ?
+
 {80 BPM - solo single strum guitar + Seana}
 
 Intro:

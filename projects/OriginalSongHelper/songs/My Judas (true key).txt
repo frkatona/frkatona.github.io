@@ -1,5 +1,9 @@
 My Judas (true key)
-Seana Wood - v24.02 - Dm - 150 BPM
+artist: Seana Wood
+version: v24.02
+key: Dm
+tempo: 150 BPM
+time: ?
 
 Intro:
 [Dm - Dm - F - C]

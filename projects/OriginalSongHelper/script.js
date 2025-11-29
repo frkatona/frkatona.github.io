@@ -135,6 +135,26 @@ function renderSong() {
         lines.shift();
     }
 
+    // Metadata Parsing
+    let metadataHtml = '<div class="song-metadata" style="color: #888; font-size: 0.9em; margin-bottom: 1rem;">';
+    while (lines.length > 0) {
+        const line = lines[0].trim();
+        // Check for "key: value" format
+        const match = line.match(/^([a-zA-Z]+):\s*(.+)$/);
+        if (match) {
+            const key = match[1].toLowerCase();
+            const value = match[2];
+            metadataHtml += `<span style="margin: 0 10px;">${escapeHtml(key.toUpperCase())}: ${escapeHtml(value)}</span>`;
+            lines.shift();
+        } else if (line === '') {
+            lines.shift(); // Skip empty lines between title/metadata and song
+        } else {
+            break; // Stop at first non-metadata line
+        }
+    }
+    metadataHtml += '</div>';
+    html += metadataHtml;
+
     lines.forEach(line => {
         const trimmed = line.trim();
         if (!trimmed) {

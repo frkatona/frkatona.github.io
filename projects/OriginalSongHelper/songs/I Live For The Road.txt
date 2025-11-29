@@ -1,5 +1,9 @@
 I Live for the Road
-Seana Wood - v25.03.20 - G - 130BPM
+artist: Seana Wood
+version: v25.03.20
+key: G
+tempo: 130 BPM
+time: ?
 
 Intro:
 [G   C   G   C-G](instrumental)

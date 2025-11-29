@@ -1,5 +1,10 @@
 Wanderlust
-(G{amb}, 140 bpm)
+artist: Eric M
+version: ?
+key: G (?)
+tempo: 140 BPM  
+time: ?
+
 (jam around)
 
 Intro:

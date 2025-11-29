@@ -1,5 +1,9 @@
 It's Not Alright
-Eric M - F# - v2025.09.29 - ?:??
+artist: Eric M
+version: v2025.09.29
+key:F#
+tempo: ?
+time: ?
 
 (emphasize shuffle rhythm, esp. in verses)
 

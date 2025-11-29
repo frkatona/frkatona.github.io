@@ -1,5 +1,9 @@
 Atrium
-Eric M - v25.10.08 - (ambiguous Dm/Gm) - 4:30
+artist: Eric M
+version: v25.10.08
+key: Dm/Gm
+time: 4:30
+tempo: ?
 
 
 Instrumental:

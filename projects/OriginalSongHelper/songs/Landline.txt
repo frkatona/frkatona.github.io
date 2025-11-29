@@ -1,6 +1,9 @@
 Landline
-Eric M - Dm - 2025.10.08 - 5:30
-
+artist: Eric M
+key: Dm
+version: 2025.10.08
+time: 5:30
+tempo: ?
 
 Intro:
 | [D]- - - - | | [F]- - - - |

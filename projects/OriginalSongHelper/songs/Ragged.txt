@@ -1,5 +1,9 @@
 Ragged
-Eric M - v2025.09.29 - 2:00
+artist: Eric M
+version: v2025.09.29
+time: 2:00
+tempo: ?
+key: ?
 
 Instrumental:
 | [G]- - [Bb] - - | [D]- - - - | (x4)

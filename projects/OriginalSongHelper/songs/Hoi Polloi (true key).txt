@@ -1,5 +1,9 @@
 Hoi Polloi (true chords)
-Seana Wood - v24.02 - A (true) - 140 BPM
+artist: Seana Wood
+version: v24.02
+key: A (true)
+tempo: 140 BPM
+time: ?
 
 | [A]- - - - | [Dmaj7]- - - - |
 | [A]- - - - | [Dmaj7]- - - - |

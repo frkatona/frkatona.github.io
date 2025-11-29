@@ -1,6 +1,9 @@
 Revolving Door (Right in Front of their Eyes)
-Eric M - v2025.09.29 - ~F#m - 4:00
-
+artist: Eric M
+version: v2025.09.29
+key: ~F#m
+time: 4:00
+tempo: ?
 Intro:
 {piano (creepy waltz)}
 | [A#]- - - | (x4)

@@ -1,5 +1,9 @@
 It's 4am
-Seana Wood - v25.10.13 - C - 70 BPM
+artist: Seana Wood
+version: v25.10.13
+key: C
+tempo: 70 BPM
+time: ?
 
 Intro:
 | [C]- - - - | [Am]- - - - | (x2)

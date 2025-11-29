@@ -1,4 +1,8 @@
-Jolly Cooperation (A, 120 BPM, Clean)
+Jolly Cooperation
+artist: Anthony Katona
+key: A
+tempo: 120 BPM
+time: ?
 
 Verse1:
 [A]Sometimes you make the morning

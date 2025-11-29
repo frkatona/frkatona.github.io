@@ -1,5 +1,9 @@
 Hoi Polloi
-Seana Wood - v25.04.07 - written G, played capo 2 (A) - 140 BPM
+arist: Seana Wood
+version: v25.04.07
+key: written G played capo 2 (A)
+tempo: 140 BPM
+time: ?
 
 Intro:
 | [G]- - - - | [Cmaj7]- - - - |

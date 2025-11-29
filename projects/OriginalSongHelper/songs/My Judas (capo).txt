@@ -1,5 +1,9 @@
 My Judas
-Seana Wood - v24.02 - Dm (written as Am for capo 5) - 150 BPM
+arist: Seana Wood
+version: v24.02
+key: Dm (written as Am for capo 5)
+tempo: 150 BPM
+time: ?
 
 Intro:
 [Am - Am - C - G]
