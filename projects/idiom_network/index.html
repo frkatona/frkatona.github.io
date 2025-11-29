@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idiom Network Graph</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="controls">
+        <h1>Idiom Network</h1>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Enter a word (e.g., 'cat')...">
+            <button id="searchBtn">Graph It</button>
+        </div>
+        <p class="instructions">Click a node to expand related idioms.</p>
+        <button id="clearBtn" class="secondary">Clear Graph</button>
+    </div>
+    <div id="network"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
