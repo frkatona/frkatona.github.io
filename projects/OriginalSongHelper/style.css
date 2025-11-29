@@ -20,6 +20,9 @@ body {
     overflow: hidden;
     /* Prevent body scroll, handle in main */
     height: 100vh;
+    /* Fallback */
+    height: 100dvh;
+    /* Dynamic viewport height */
     display: flex;
     flex-direction: column;
 }
@@ -33,6 +36,8 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
+    padding-top: env(safe-area-inset-top);
+    /* Safe area for notch */
     z-index: 10;
     flex-shrink: 0;
 }
@@ -53,6 +58,10 @@ body {
     justify-content: space-around;
     /* Distribute controls */
     padding: 0 10px;
+    padding-bottom: env(safe-area-inset-bottom);
+    /* Safe area for home indicator */
+    height: calc(80px + env(safe-area-inset-bottom));
+    /* Adjust height */
     z-index: 10;
     flex-shrink: 0;
 }
