@@ -28,22 +28,6 @@
 Title
 [C] Verse 1
 [F] Lyrics here..."></textarea>
-            <div class="menu-item">
-                <span>Download .txt</span>
-                <button class="icon-btn" id="downloadBtn"
-                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">↓</button>
-            </div>
-            <div class="menu-item">
-                <span>Upload .txt</span>
-                <button class="icon-btn" id="uploadBtn"
-                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">↑</button>
-                <input type="file" id="fileInput" style="display:none" accept=".txt">
-            </div>
-            <div class="menu-item">
-                <span>Import from UG</span>
-                <button class="icon-btn" id="importMenuBtn"
-                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">🌐</button>
-            </div>
         </div>
         <div class="song-view" id="songView"></div>
     </div>
@@ -103,6 +87,21 @@ Title
                 <button class="close-btn" onclick="closeModals()">×</button>
             </div>
             <div class="menu-item">
+                <span>Download .txt</span>
+                <button class="icon-btn" id="downloadBtn"
+                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">↓</button>
+            </div>
+            <div class="menu-item">
+                <span>Upload .txt</span>
+                <button class="icon-btn" id="uploadBtn"
+                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">↑</button>
+            </div>
+            <div class="menu-item">
+                <span>Import from UG</span>
+                <button class="icon-btn" id="importMenuBtn"
+                    style="width:auto; padding: 0 10px; border-radius: 4px; background:#333;">🌐</button>
+            </div>
+            <div class="menu-item">
                 <span>Alignment</span>
                 <button id="alignToggle" style="padding:5px 10px;">Center</button>
             </div>
@@ -127,6 +126,8 @@ Title
             <div id="songListContainer"></div>
         </div>
     </div>
+
+    <input type="file" id="fileInput" style="display:none" accept=".txt">
 
     <script src="script.js"></script>
 </body>
