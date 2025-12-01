@@ -316,7 +316,7 @@ footer {
   .card h3 {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    font-size: 1rem;
+    font-size: calc(var(--card-width) / 10);
   }
 }
 
@@ -378,7 +378,7 @@ footer {
   align-items: center;
   text-align: center;
   display: flex;
-  font-size: 1.3em;
+  font-size: calc(var(--card-width) / 10);
   color: rgb(88 199 250 / 0%);
   cursor: pointer;
   font-family: cursive;
