@@ -167,9 +167,28 @@ body {
     font-size: 1.5em;
     font-weight: 600;
     margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.song-line {
+    margin-bottom: 1.5rem;
+    position: relative;
+    line-height: 1.5;
+}
+
+.song-line.chord-only {
+    margin-bottom: 0;
+}
+
+.chord-line {
+    height: 1.5em;
+    color: var(--chord-color);
     font-family: var(--font-chord);
     font-weight: 700;
-    font-size: 1.1em;
+    font-size: 1.2em;
     margin-bottom: 0.2em;
     white-space: pre;
 }
@@ -328,6 +347,9 @@ body {
     color: #888;
     font-size: 1.5rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .song-list-item {

@@ -614,15 +614,18 @@ function parseUGHtml(html) {
         if (tempo) output += `tempo: ${tempo} BPM\n`;
 
         // Clean up UG specific tags and excessive newlines
+        // We want to preserve [ch] tags for the merge logic, so we don't strip them yet.
+        // But we do want to clean up other tags like [tab].
         let cleanContent = tabContent
-            .replace(/\[ch\]/g, '[')
-            .replace(/\[\/ch\]/g, ']')
             .replace(/\[tab\]/g, '')
             .replace(/\[\/tab\]/g, '')
             .replace(/\r\n/g, '\n')
             .replace(/\n{3,}/g, '\n\n'); // Max 2 newlines
 
-        output += `\n${cleanContent}`;
+        // Merge chords and lyrics
+        let merged = mergeChordsAndLyrics(cleanContent);
+
+        output += `\n${merged}`;
         return output;
     }
 
@@ -637,6 +640,104 @@ function parseUGHtml(html) {
     }
 
     return null;
+}
+
+function mergeChordsAndLyrics(text) {
+    const lines = text.split('\n');
+    const result = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+
+        // Check if this is a chord line (contains [ch] tags)
+        if (line.includes('[ch]')) {
+            // It's a chord line. Let's parse the chords and their positions.
+            // We need to handle the [ch] tags and spaces.
+            // Example: [ch]D[/ch]       [ch]Bm[/ch]
+
+            // We need to calculate the "visual" index of each chord.
+            // The visual index is the length of the string *without* tags up to that point.
+
+            let chordMap = [];
+            let visualIndex = 0;
+            let regex = /\[ch\](.*?)\[\/ch\]/g;
+            let lastIndex = 0;
+            let match;
+
+            // We iterate through the raw string to find tags
+            // But we need to account for spaces between tags.
+
+            // Let's strip tags to get the "visual string" of the chord line first?
+            // No, because we need to know WHICH part is a chord.
+
+            // Let's iterate manually.
+            let tempLine = line;
+            let currentPos = 0;
+
+            while ((match = regex.exec(line)) !== null) {
+                // Text before this chord
+                let before = line.substring(lastIndex, match.index);
+                // Add length of 'before' to visualIndex (it's mostly spaces)
+                visualIndex += before.length;
+
+                // The chord itself
+                let chord = match[1];
+
+                // Store chord and its visual start position
+                chordMap.push({ chord: chord, pos: visualIndex });
+
+                // Advance visual index by chord length
+                visualIndex += chord.length;
+
+                lastIndex = regex.lastIndex;
+            }
+
+            // Check next line
+            if (i + 1 < lines.length) {
+                let nextLine = lines[i + 1];
+                // If next line has NO [ch] tags, assume it's lyrics
+                if (!nextLine.includes('[ch]')) {
+                    // Merge!
+                    // We insert chords into nextLine at correct positions.
+                    // We must insert from right to left to avoid messing up indices.
+
+                    let mergedLine = nextLine;
+                    // Sort chords by pos descending
+                    chordMap.sort((a, b) => b.pos - a.pos);
+
+                    chordMap.forEach(c => {
+                        // If position is beyond end of line, append
+                        if (c.pos >= mergedLine.length) {
+                            // Pad with spaces if needed? 
+                            // Usually just appending is fine, but padding is safer for alignment.
+                            let padding = ' '.repeat(Math.max(0, c.pos - mergedLine.length));
+                            mergedLine += padding + `[${c.chord}]`;
+                        } else {
+                            // Insert at position
+                            // We need to be careful not to split words awkwardly, but UG usually aligns to start of word.
+                            // Just insert.
+                            mergedLine = mergedLine.slice(0, c.pos) + `[${c.chord}]` + mergedLine.slice(c.pos);
+                        }
+                    });
+
+                    result.push(mergedLine);
+                    i++; // Skip next line
+                    continue;
+                }
+            }
+
+            // If we didn't merge (no next line, or next line is chords), just output chords in brackets
+            // We strip [ch] tags and wrap in []
+            let cleanChordLine = line.replace(/\[ch\](.*?)\[\/ch\]/g, '[$1]');
+            result.push(cleanChordLine);
+
+        } else {
+            // Not a chord line, just add it
+            result.push(line);
+        }
+    }
+
+    return result.join('\n');
 }
 
 function tapTempo() {
