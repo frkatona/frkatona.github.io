@@ -273,9 +273,8 @@ footer {
   /* Mobile Improvements */
   .banner {
     background-attachment: scroll;
-    background-size: 200% 200%;
-    /* Scale up to allow panning and cover region */
-    animation: panBackground 20s ease-in-out infinite;
+    height: 100vh;
+    animation: panBackground 60s infinite;
   }
 
   .profile {
@@ -286,10 +285,10 @@ footer {
   .profile img {
     margin-right: 0;
     margin-bottom: 2vh;
-    height: 40vw;
-    width: 40vw;
-    object-fit: cover;
-    border-radius: 50%;
+    /* height: 30vw; */
+    /* width: 30vw; */
+    /* object-fit: cover; */
+    /* border-radius: 100%; */
   }
 
   .about-section p1 {
@@ -337,7 +336,7 @@ footer {
 }
 
 .about-section p1 {
-  font-size: 4vh;
+  font-size: 3vh;
   margin-bottom: 4vh;
 }
 
@@ -363,30 +362,6 @@ footer {
 
 /* PROJECTS SECTION */
 
-.thumbnails {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 3vw;
-  padding: 2vh 2vw;
-}
-
-.thumbnails img {
-  width: 16vw;
-  height: 16vw;
-  object-fit: cover;
-  border-radius: 1vw;
-  cursor: pointer;
-  margin-top: 5vh;
-  transition: transform 0.3s ease-in-out;
-}
-
-@property --rotate {
-  syntax: "<angle>";
-  initial-value: 132deg;
-  inherits: false;
-}
-
 :root {
   --card-height: 60vh;
   --card-width: calc(var(--card-height) / 1.5);
@@ -407,6 +382,30 @@ footer {
   color: rgb(88 199 250 / 0%);
   cursor: pointer;
   font-family: cursive;
+}
+
+.thumbnails {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3vw;
+  padding: 2vh 2vw;
+}
+
+.thumbnails img {
+  width: 30vh;
+  height: 30vh;
+  object-fit: cover;
+  border-radius: 1vw;
+  cursor: pointer;
+  margin-top: 5vh;
+  transition: transform 0.3s ease-in-out;
+}
+
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
 }
 
 .card:hover {
