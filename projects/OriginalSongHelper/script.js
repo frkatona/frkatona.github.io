@@ -7,7 +7,10 @@ const state = {
     fontSize: 20,
     alignment: 'center',
     isEditMode: false,
-    currentSong: null // Track current song filename
+    currentSong: null, // Track current song filename
+    bpm: 0,
+    tapTimes: [],
+    pulseInterval: null
 };
 
 // --- Elements ---
@@ -41,7 +44,11 @@ const els = {
     importModal: document.getElementById('importModal'),
     importUrlInput: document.getElementById('importUrlInput'),
     doImportBtn: document.getElementById('doImportBtn'),
-    importStatus: document.getElementById('importStatus')
+    doImportBtn: document.getElementById('doImportBtn'),
+    importStatus: document.getElementById('importStatus'),
+    tapBtn: document.getElementById('tapBtn'),
+    resetBpmBtn: document.getElementById('resetBpmBtn'),
+    bpmDisplay: document.getElementById('bpmDisplay')
 };
 
 // --- Initialization ---
@@ -120,6 +127,10 @@ els.fileInput.addEventListener('change', handleFileUpload);
 // Import
 els.importMenuBtn.addEventListener('click', () => { closeModals(); openModal(els.importModal); });
 els.doImportBtn.addEventListener('click', importFromUG);
+
+// Tempo Tapper
+els.tapBtn.addEventListener('click', tapTempo);
+els.resetBpmBtn.addEventListener('click', resetBpm);
 
 // Global Keys
 document.addEventListener('keydown', (e) => {
@@ -404,6 +415,7 @@ function toggleScroll() {
         state.isScrolling = false;
         els.playBtn.textContent = '▶';
         els.playBtn.classList.remove('playing');
+        els.playBtn.classList.remove('pulsing');
     } else {
         state.scrollInterval = setInterval(() => {
             els.songView.scrollTop += 1;
@@ -411,6 +423,14 @@ function toggleScroll() {
         state.isScrolling = true;
         els.playBtn.textContent = '❚❚';
         els.playBtn.classList.add('playing');
+
+        if (state.bpm > 0) {
+            els.playBtn.classList.add('pulsing');
+            // Set pulse duration based on BPM
+            // 60 BPM = 1 beat per second
+            const duration = 60 / state.bpm;
+            els.playBtn.style.setProperty('--pulse-duration', `${duration}s`);
+        }
     }
 }
 
@@ -542,36 +562,63 @@ function parseUGHtml(html) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
 
-    // Try to find the JSON store first (most reliable)
-    // Look for a script tag containing window.UGAPP.store.page.data
-    const scripts = doc.querySelectorAll('script');
-    let json = null;
-    for (let s of scripts) {
-        if (s.textContent.includes('window.UGAPP.store.page.data =')) {
+    let data = null;
+
+    // Method 1: Look for .js-store div (New structure)
+    const storeDiv = doc.querySelector('.js-store');
+    if (storeDiv) {
+        const content = storeDiv.getAttribute('data-content');
+        if (content) {
             try {
-                const content = s.textContent;
-                const start = content.indexOf('window.UGAPP.store.page.data =') + 'window.UGAPP.store.page.data ='.length;
-                const end = content.indexOf(';', start);
-                const jsonStr = content.substring(start, end);
-                json = JSON.parse(jsonStr);
-                break;
+                const json = JSON.parse(content);
+                if (json && json.store && json.store.page && json.store.page.data) {
+                    data = json.store.page.data;
+                }
             } catch (e) {
-                console.error("JSON parse error", e);
+                console.error("Error parsing .js-store data", e);
             }
         }
     }
 
-    if (json && json.tab_view && json.tab_view.wiki_tab && json.tab_view.wiki_tab.content) {
-        const tabContent = json.tab_view.wiki_tab.content;
-        const artist = json.tab.artist_name;
-        const song = json.tab.song_name;
-        const key = json.tab_view.meta ? json.tab_view.meta.tonality : '?';
-        const tempo = json.tab_view.meta ? json.tab_view.meta.tempo : '?'; // Sometimes available
+    // Method 2: Look for script tag (Old structure)
+    if (!data) {
+        const scripts = doc.querySelectorAll('script');
+        for (let s of scripts) {
+            if (s.textContent.includes('window.UGAPP.store.page.data =')) {
+                try {
+                    const content = s.textContent;
+                    const start = content.indexOf('window.UGAPP.store.page.data =') + 'window.UGAPP.store.page.data ='.length;
+                    const end = content.indexOf(';', start);
+                    const jsonStr = content.substring(start, end);
+                    data = JSON.parse(jsonStr);
+                    break;
+                } catch (e) {
+                    console.error("JSON parse error", e);
+                }
+            }
+        }
+    }
+
+    if (data && data.tab_view && data.tab_view.wiki_tab && data.tab_view.wiki_tab.content) {
+        const tabContent = data.tab_view.wiki_tab.content;
+        const artist = data.tab.artist_name;
+        const song = data.tab.song_name;
+        const key = data.tab_view.meta ? data.tab_view.meta.tonality : '?';
+        const tempo = data.tab_view.meta ? data.tab_view.meta.tempo : '?'; // Sometimes available
 
         // Format
         let output = `${song}\nartist: ${artist}\nkey: ${key || '?'}\n`;
         if (tempo) output += `tempo: ${tempo} BPM\n`;
-        output += `\n${tabContent.replace(/\r\n/g, '\n')}`;
+
+        // Clean up UG specific tags
+        let cleanContent = tabContent
+            .replace(/\[ch\]/g, '[')
+            .replace(/\[\/ch\]/g, ']')
+            .replace(/\[tab\]/g, '')
+            .replace(/\[\/tab\]/g, '')
+            .replace(/\r\n/g, '\n');
+
+        output += `\n${cleanContent}`;
         return output;
     }
 
@@ -586,6 +633,44 @@ function parseUGHtml(html) {
     }
 
     return null;
+}
+
+function tapTempo() {
+    const now = Date.now();
+
+    // Reset if too long between taps (2 seconds)
+    if (state.tapTimes.length > 0 && now - state.tapTimes[state.tapTimes.length - 1] > 2000) {
+        state.tapTimes = [];
+    }
+
+    state.tapTimes.push(now);
+
+    // Keep only last 5 taps for average
+    if (state.tapTimes.length > 5) {
+        state.tapTimes.shift();
+    }
+
+    if (state.tapTimes.length > 1) {
+        // Calculate intervals
+        let intervals = [];
+        for (let i = 1; i < state.tapTimes.length; i++) {
+            intervals.push(state.tapTimes[i] - state.tapTimes[i - 1]);
+        }
+
+        // Average interval
+        const avgInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+
+        // BPM = 60000 / ms
+        const bpm = Math.round(60000 / avgInterval);
+        state.bpm = bpm;
+        els.bpmDisplay.textContent = `BPM: ${bpm}`;
+    }
+}
+
+function resetBpm() {
+    state.bpm = 0;
+    state.tapTimes = [];
+    els.bpmDisplay.textContent = `BPM: --`;
 }
 
 // Run

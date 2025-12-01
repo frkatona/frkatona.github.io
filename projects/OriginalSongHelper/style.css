@@ -56,12 +56,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    /* Distribute controls */
     padding: 0 10px;
     padding-bottom: env(safe-area-inset-bottom);
-    /* Safe area for home indicator */
-    height: calc(80px + env(safe-area-inset-bottom));
-    /* Adjust height */
+    height: calc(90px + env(safe-area-inset-bottom));
     z-index: 10;
     flex-shrink: 0;
 }
@@ -153,10 +150,6 @@ body {
     margin-left: 0;
 }
 
-/* When editor is visible, push song view or overlay? 
-   Let's make it responsive. If editor is open, it takes 50% space.
-   We'll handle this via JS adjusting width or flex.
-*/
 .app-main.split-view .song-view {
     margin-left: 50%;
     width: 50%;
@@ -172,7 +165,6 @@ body {
 
 .section-header {
     font-size: 1.5em;
-    /* Changed to em to scale with parent font size */
     font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 0.5rem;
@@ -183,26 +175,22 @@ body {
 
 .song-line {
     margin-bottom: 1.5rem;
-    /* Space between lyric lines */
     position: relative;
     line-height: 1.5;
 }
 
 .chord-line {
     height: 1.5em;
-    /* Reserve space for chords */
     color: var(--chord-color);
     font-family: var(--font-chord);
     font-weight: 700;
     font-size: 1.1em;
     margin-bottom: 0.2em;
     white-space: pre;
-    /* Maintain spacing */
 }
 
 .lyric-line {
     font-family: var(--font-chord);
-    /* Ensure alignment with chord line */
     font-size: 1.2em;
     color: var(--text-color);
     white-space: pre-wrap;
@@ -216,7 +204,6 @@ body {
 .chord {
     position: absolute;
     bottom: 100%;
-    /* Sit on top of text */
     left: 0;
     color: var(--chord-color);
     font-weight: bold;
@@ -304,7 +291,6 @@ body {
 
 .play-btn.playing {
     background-color: #dc2626;
-    /* Red for stop/pause */
 }
 
 /* --- Modals --- */
@@ -385,4 +371,23 @@ body {
 /* Utility */
 .hidden {
     display: none !important;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+    }
+}
+
+.play-btn.pulsing {
+    animation: pulse var(--pulse-duration, 1s) infinite;
 }
