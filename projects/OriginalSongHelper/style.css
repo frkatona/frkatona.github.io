@@ -167,21 +167,6 @@ body {
     font-size: 1.5em;
     font-weight: 600;
     margin-top: 2rem;
-    margin-bottom: 0.5rem;
-    color: #aaa;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.song-line {
-    margin-bottom: 1.5rem;
-    position: relative;
-    line-height: 1.5;
-}
-
-.chord-line {
-    height: 1.5em;
-    color: var(--chord-color);
     font-family: var(--font-chord);
     font-weight: 700;
     font-size: 1.1em;

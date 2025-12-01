@@ -190,7 +190,10 @@ function renderSong() {
 
         // Lyric/Chord Line
         const processed = processLine(line);
-        html += `<div class="song-line">
+        const isChordOnly = processed.lyrics.trim().length === 0;
+        const lineClass = isChordOnly ? 'song-line chord-only' : 'song-line';
+
+        html += `<div class="${lineClass}">
                     <div class="chord-line">${processed.chords}</div>
                     <div class="lyric-line">${processed.lyrics}</div>
                  </div>`;
@@ -610,13 +613,14 @@ function parseUGHtml(html) {
         let output = `${song}\nartist: ${artist}\nkey: ${key || '?'}\n`;
         if (tempo) output += `tempo: ${tempo} BPM\n`;
 
-        // Clean up UG specific tags
+        // Clean up UG specific tags and excessive newlines
         let cleanContent = tabContent
             .replace(/\[ch\]/g, '[')
             .replace(/\[\/ch\]/g, ']')
             .replace(/\[tab\]/g, '')
             .replace(/\[\/tab\]/g, '')
-            .replace(/\r\n/g, '\n');
+            .replace(/\r\n/g, '\n')
+            .replace(/\n{3,}/g, '\n\n'); // Max 2 newlines
 
         output += `\n${cleanContent}`;
         return output;
