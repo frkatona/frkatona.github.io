@@ -1,10 +1,10 @@
 // --- State ---
 const state = {
     transpose: 0,
-    scrollSpeed: 3.0,
+    scrollSpeed: 1.0,
     isScrolling: false,
     scrollInterval: null,
-    fontSize: 20,
+    fontSize: 16,
     alignment: 'center',
     isEditMode: false,
     currentSong: null, // Track current song filename
@@ -475,8 +475,11 @@ function loadSongList() {
                 div.onclick = () => {
                     state.transpose = 0;
                     els.transValue.textContent = '0';
+                    // Pause if playing
+                    if (state.isScrolling) toggleScroll();
                     loadSongFile(song);
                     closeModals();
+
                 };
                 els.songListContainer.appendChild(div);
             });
@@ -500,7 +503,7 @@ function loadSongFile(filename) {
 function updateURLState() {
     const params = new URLSearchParams();
     if (state.currentSong) params.set('song', state.currentSong);
-    if (state.scrollSpeed !== 3.0) params.set('speed', state.scrollSpeed);
+    if (state.scrollSpeed !== 1.0) params.set('speed', state.scrollSpeed);
     if (state.transpose !== 0) params.set('transpose', state.transpose);
 
     const newUrl = `${window.location.pathname}?${params.toString()}`;
