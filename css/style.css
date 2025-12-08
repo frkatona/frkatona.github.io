@@ -303,7 +303,8 @@ footer {
     border-radius: 6px 6px 0 0;
   }
 
-  .card {
+  /* duplicated in project section */
+  /* .card {
     width: 80vw;
     height: auto;
     min-height: 40vh;
@@ -317,7 +318,7 @@ footer {
     margin-top: 1rem;
     margin-bottom: 1rem;
     font-size: calc(var(--card-width) / 10);
-  }
+  } */
 }
 
 /* BIO SECTION */
@@ -378,10 +379,15 @@ footer {
   align-items: center;
   text-align: center;
   display: flex;
-  font-size: calc(var(--card-width) / 10);
   color: rgb(88 199 250 / 0%);
   cursor: pointer;
   font-family: cursive;
+}
+
+.card h3 {
+  margin-top: -2rem;
+  margin-bottom: 3rem;
+  font-size: calc(var(--card-width) / 16);
 }
 
 .thumbnails {
