@@ -2,6 +2,7 @@
     {
         "artist": "Whitney Houston",
         "song": "I Have Nothing",
+        "youtube": "https://youtu.be/FxYw0XPEoKE?t=214",
         "section": "Final Chorus/Key Change",
         "weight_texture": [
             "belty",
@@ -24,12 +25,8 @@
             "proud/anthemic",
             "yearning/soulful"
         ],
-        "delivery": [
-            "urgent"
-        ],
-        "articulation": [
-            "precise"
-        ],
+        "delivery": "urgent",
+        "articulation": "precise",
         "register": [
             "head voice",
             "mix belt"
@@ -42,6 +39,7 @@
     {
         "artist": "Billie Eilish",
         "song": "Everything I Wanted",
+        "youtube": "https://youtu.be/EgBJmlPo8Xw?t=37",
         "section": "Opening Verse",
         "weight_texture": [
             "breathy",
@@ -78,6 +76,7 @@
     {
         "artist": "Olivia Rodrigo",
         "song": "brutal",
+        "youtube": "https://youtu.be/hM2U8cb8lhI?t=21",
         "section": "Verses",
         "weight_texture": [
             "raspy",
@@ -115,6 +114,7 @@
     {
         "artist": "Queen (Freddie Mercury)",
         "song": "Bohemian Rhapsody",
+        "youtube": "https://youtu.be/fJ9rUzIMcZQ?t=186",
         "section": "Operatic Section ('Galileo')",
         "weight_texture": [
             "bright",
@@ -153,6 +153,7 @@
     {
         "artist": "Janis Joplin",
         "song": "Piece of My Heart",
+        "youtube": "https://youtu.be/3SL0oRcD7t0?t=52",
         "section": "Chorus",
         "weight_texture": [
             "raspy",
@@ -188,6 +189,7 @@
     {
         "artist": "Daveed Diggs (Hamilton)",
         "song": "Guns and Ships",
+        "youtube": "https://youtu.be/0D3zz6byFT4?t=32",
         "section": "Lafayette's fast verse",
         "weight_texture": [
             "crisp",
@@ -222,6 +224,7 @@
     {
         "artist": "Kate Bush",
         "song": "Wuthering Heights",
+        "youtube": "https://youtu.be/-1pMMIe4hb4?t=42",
         "section": "Chorus",
         "weight_texture": [
             "silky",
@@ -258,6 +261,7 @@
     {
         "artist": "Mariah Carey",
         "song": "Emotions",
+        "youtube": "https://youtu.be/NrJEFrth27Q?t=226",
         "section": "Final high notes",
         "weight_texture": [
             "piercing",
@@ -294,6 +298,7 @@
     {
         "artist": "Louis Armstrong",
         "song": "What a Wonderful World",
+        "youtube": "https://youtu.be/rBrd_3VMC3c?t=5",
         "section": "Full Song",
         "weight_texture": [
             "raspy",
@@ -329,6 +334,7 @@
     {
         "artist": "Jeff Buckley",
         "song": "Hallelujah",
+        "youtube": "https://youtu.be/y8AWFf7EAc4?t=80",
         "section": "Verse 1 (The 'secret chord')",
         "weight_texture": [
             "breathy",
@@ -365,6 +371,7 @@
     {
         "artist": "Chester Bennington (Linkin Park)",
         "song": "Given Up",
+        "youtube": "https://youtu.be/0xyxtzD54rM?t=142",
         "section": "The 17-second scream",
         "weight_texture": [
             "raspy",
@@ -400,6 +407,7 @@
     {
         "artist": "Björk",
         "song": "It's Oh So Quiet",
+        "youtube": "https://youtu.be/htobTBlCvUU?t=66",
         "section": "Chorus explosion ('ZING BOOM!')",
         "weight_texture": [
             "belty",
@@ -434,6 +442,7 @@
     {
         "artist": "Frank Sinatra",
         "song": "Fly Me To The Moon",
+        "youtube": "https://youtu.be/JYuyWrkwpok?t=7",
         "section": "Opening Verse",
         "weight_texture": [
             "warm/rich",
@@ -468,6 +477,7 @@
     {
         "artist": "Kendrick Lamar",
         "song": "u",
+        "youtube": "https://youtu.be/xqS2di2QdhQ?t=144",
         "section": "Second half (drunken sobbing flow)",
         "weight_texture": [
             "cracking",
@@ -501,6 +511,7 @@
     {
         "artist": "Florence Welch (Florence + The Machine)",
         "song": "Dog Days Are Over",
+        "youtube": "https://youtu.be/iWOyfLBYtuU?t=170",
         "section": "Final Chorus",
         "weight_texture": [
             "belty",
@@ -522,12 +533,8 @@
             "proud/anthemic",
             "yearning/soulful"
         ],
-        "delivery": [
-            "urgent"
-        ],
-        "articulation": [
-            "precise"
-        ],
+        "delivery": "urgent",
+        "articulation": "precise",
         "register": [
             "mix belt"
         ],
@@ -538,6 +545,7 @@
     {
         "artist": "Thom Yorke (Radiohead)",
         "song": "Nude",
+        "youtube": "https://youtu.be/BbWBRnDK_AE?t=47",
         "section": "Intro vocalization",
         "weight_texture": [
             "silky",
@@ -559,22 +567,15 @@
             "yearning/soulful",
             "melancholy"
         ],
-        "delivery": [
-            "laid-back"
-        ],
-        "articulation": [
-            "ethereal/floating"
-        ],
-        "register": [
-            "falsetto"
-        ],
-        "rhythmic_phrasing": [
-            "legato"
-        ]
+        "delivery": "laid-back",
+        "articulation": "ethereal/floating",
+        "register": "falsetto",
+        "rhythmic_phrasing": "legato"
     },
     {
         "artist": "Chris Cornell (Soundgarden)",
         "song": "Black Hole Sun",
+        "youtube": "https://youtu.be/3mbBbFH9fAg?t=270",
         "section": "Final Chorus",
         "weight_texture": [
             "raspy",
@@ -595,22 +596,15 @@
             "yearning/soulful",
             "dark"
         ],
-        "delivery": [
-            "laid-back"
-        ],
-        "articulation": [
-            "slurred"
-        ],
-        "register": [
-            "mixed voice"
-        ],
-        "onset_offset": [
-            "scooping"
-        ]
+        "delivery": "laid-back",
+        "articulation": "slurred",
+        "register": "mixed voice",
+        "onset_offset": "scooping"
     },
     {
         "artist": "Tom Waits",
         "song": "God's Away on Business",
+        "youtube": "https://youtu.be/W9mhsW5aWJM?t=12",
         "section": "Verse 1",
         "weight_texture": [
             "raspy",
@@ -646,6 +640,7 @@
     {
         "artist": "Karen Carpenter",
         "song": "Superstar",
+        "youtube": "https://youtu.be/SJmmaIGiGBg?t=26",
         "section": "Opening Verse",
         "weight_texture": [
             "warm/rich",
@@ -666,23 +661,16 @@
             "yearning/soulful",
             "sad"
         ],
-        "delivery": [
-            "laid-back"
-        ],
-        "articulation": [
-            "precise"
-        ],
-        "register": [
-            "chest voice"
-        ],
-        "rhythmic_phrasing": [
-            "legato"
-        ]
+        "delivery": "laid-back",
+        "articulation": "precise",
+        "register": "chest voice",
+        "rhythmic_phrasing": "legato"
     },
     {
         "artist": "Axl Rose (Guns N' Roses)",
         "song": "Welcome to the Jungle",
-        "section": "Opening Scream/Verse",
+        "youtube": "https://youtu.be/o1tj2zJ2Wvg?t=45",
+        "section": "Verse",
         "weight_texture": [
             "piercing",
             "raspy"
@@ -703,12 +691,8 @@
             "bratty/playful",
             "aggressive"
         ],
-        "delivery": [
-            "urgent"
-        ],
-        "articulation": [
-            "sharp"
-        ],
+        "delivery": "urgent",
+        "articulation": "sharp",
         "register": [
             "pharyngeal mix"
         ],
@@ -719,6 +703,7 @@
     {
         "artist": "Johnny Cash",
         "song": "Hurt",
+        "youtube": "https://youtu.be/8AHCfZTRGiI?t=106",
         "section": "Final Verse",
         "weight_texture": [
             "frail",
@@ -738,12 +723,8 @@
             "raw/vulnerable",
             "weary"
         ],
-        "delivery": [
-            "uncertain/halting"
-        ],
-        "articulation": [
-            "sprechgesang"
-        ],
+        "delivery": "uncertain/halting",
+        "articulation": "sprechgesang",
         "onset_offset": [
             "falling off"
         ]
@@ -751,6 +732,7 @@
     {
         "artist": "Luciano Pavarotti",
         "song": "Nessun Dorma",
+        "youtube": "https://youtu.be/cWc7vYjgnTs?t=161",
         "section": "The final 'Vincero'",
         "weight_texture": [
             "belty",
@@ -790,7 +772,8 @@
     {
         "artist": "Sia",
         "song": "Chandelier",
-        "section": "Chorus ('I'm gonna swing...')",
+        "youtube": "https://youtu.be/2vjPBrBU-TM?t=42",
+        "section": "Chorus",
         "weight_texture": [
             "cracking",
             "belty"
@@ -823,6 +806,7 @@
     {
         "artist": "The Weeknd",
         "song": "Blinding Lights",
+        "youtube": "https://youtu.be/4NRXx6U8ABQ?t=82",
         "section": "Chorus",
         "weight_texture": [
             "bright",
@@ -857,7 +841,8 @@
     {
         "artist": "Aretha Franklin",
         "song": "Respect",
-        "section": "The 'R-E-S-P-E-C-T' break",
+        "youtube": "https://youtu.be/A134hShx_gw?t=109",
+        "section": "'R-E-S-P-E-C-T' break",
         "weight_texture": [
             "belty",
             "warm/rich"
@@ -870,8 +855,7 @@
             "mixed"
         ],
         "skillfulness": [
-            "runs",
-            "agility"
+            "projection"
         ],
         "expressiveness": [
             "proud/anthemic",
@@ -890,7 +874,8 @@
     {
         "artist": "Kurt Cobain (Nirvana)",
         "song": "Where Did You Sleep Last Night",
-        "section": "Final scream/shout",
+        "youtube": "https://youtu.be/CISzg6yi8YE?t=224",
+        "section": "Final screams/shouts",
         "weight_texture": [
             "raspy",
             "strained"
@@ -921,7 +906,8 @@
     {
         "artist": "Imogen Heap",
         "song": "Hide and Seek",
-        "section": "Bridge ('Ransom notes keep falling...')",
+        "youtube": "https://youtu.be/UYIAfiVGluk?t=202",
+        "section": "Bridge ('Ransom notes...')",
         "weight_texture": [
             "breathy",
             "digital"
@@ -956,6 +942,7 @@
     {
         "artist": "Ella Fitzgerald",
         "song": "Mack the Knife (Live in Berlin)",
+        "youtube": "https://youtu.be/6vXAtVbZbkI?t=182",
         "section": "The Scat Solo",
         "weight_texture": [
             "bright",
@@ -992,19 +979,11 @@
     {
         "artist": "Chino Moreno (Deftones)",
         "song": "Digital Bath",
-        "section": "Verse vs Chorus transition",
-        "weight_texture": [
-            "breathy",
-            "then raspy"
-        ],
-        "power": [
-            "intimate",
-            "then intense"
-        ],
-        "resonance_placement": [
-            "airy",
-            "then throaty"
-        ],
+        "youtube": "https://youtu.be/O_IIAYZL1R4?t=61",
+        "section": "Chorus",
+        "weight_texture": "breathy",
+        "power": "intimate",
+        "resonance_placement": "airy",
         "skillfulness": [
             "glides",
             "distortion"
@@ -1013,13 +992,8 @@
             "yearning/soulful",
             "ethereal"
         ],
-        "delivery": [
-            "laid-back",
-            "then urgent"
-        ],
-        "articulation": [
-            "ethereal/floating"
-        ],
+        "delivery": "laid-back",
+        "articulation": "ethereal/floating",
         "onset_offset": [
             "vocal fry"
         ]
@@ -1027,6 +1001,7 @@
     {
         "artist": "Julie Andrews",
         "song": "The Sound of Music",
+        "youtube": "https://youtu.be/6f0T6UV-HiI?t=23",
         "section": "The Hills Are Alive (opening)",
         "weight_texture": [
             "silky",
@@ -1047,9 +1022,7 @@
             "joyful",
             "proud/anthemic"
         ],
-        "delivery": [
-            "laid-back"
-        ],
+        "delivery": "laid-back",
         "articulation": [
             "crisp/precise/clipped",
             "theatrical"

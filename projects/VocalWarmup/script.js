@@ -612,6 +612,16 @@
         matches.forEach(item => {
             const card = document.createElement('div');
             card.className = 'sample-card';
+            card.style.cursor = 'pointer';
+            card.title = 'Click to find on YouTube';
+            card.onclick = () => {
+                if (item.youtube) {
+                    window.open(item.youtube, '_blank');
+                } else {
+                    const query = encodeURIComponent(`${item.artist} ${item.song}`);
+                    window.open(`https://www.youtube.com/results?search_query=${query}`, '_blank');
+                }
+            };
 
             // Play Button
             const playBtn = document.createElement('a');
