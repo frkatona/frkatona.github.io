@@ -4,14 +4,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vocal Warmup & Self‑Evaluation</title>
+  <title>Vocal Exercises</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <header>
     <div class="header-inner">
-      <div class="title">Vocal Warmup & Self‑Evaluation</div>
+      <div class="title">Vocal Warmups</div>
       <div class="controls">
         <label class="muted" for="vol">Vol</label>
         <input id="vol" type="range" min="0" max="100" value="60" />
@@ -21,7 +21,7 @@
 
   <main>
     <aside class="roadmap">
-      <h2>Activities</h2>
+      <h2>Exercises</h2>
       <div id="roadmap-list"></div>
     </aside>
 
@@ -114,9 +114,24 @@
 
         <!-- Samples -->
         <section data-step="4" class="step-panel" hidden>
-          <div class="h1">Sample Explorer</div>
-          <p class="muted">Discover artists with vocal characteristics you want to practice. Select tags to filter
+          <div class="h1">Character</div>
+          <p class="muted">Explore instances of vocal characteristics you want to practice. Select tags to filter
             songs.</p>
+
+          <!-- Filter Logic Toggle -->
+          <div class="row-sb" style="margin: 0 0 12px 0;">
+            <div class="filter-logic-toggle">
+              <label>
+                <input type="radio" name="filter-logic" value="and" checked>
+                <span>Match ALL</span>
+              </label>
+              <label>
+                <input type="radio" name="filter-logic" value="or">
+                <span>Match ANY</span>
+              </label>
+            </div>
+            <!-- Optional: Could put clear button here later if we want it top-aligned -->
+          </div>
 
           <!-- Filter Tags Area -->
           <div id="samples-filters"

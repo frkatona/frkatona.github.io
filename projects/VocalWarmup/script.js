@@ -437,12 +437,27 @@
         loading: false,
         loaded: false,
         filters: new Set(), // active tag filters
+        filterMode: 'and', // 'and' or 'or'
         allTags: {} // category -> set of tags
     };
     const listEl = document.getElementById('samples-grid');
     const filtersEl = document.getElementById('samples-filters');
     const matchCountEl = document.getElementById('match-count');
     const clearBtn = document.getElementById('clear-filters');
+    const filterLogicRadios = document.querySelectorAll('input[name="filter-logic"]');
+
+    // Filter Logic Toggle Listener
+    if (filterLogicRadios.length > 0) {
+        filterLogicRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    samplesState.filterMode = e.target.value;
+                    renderSamplesGrid();
+                    checkAvailability();
+                }
+            });
+        });
+    }
 
     async function loadSamples() {
         if (samplesState.loading || samplesState.loaded) return;
@@ -551,6 +566,13 @@
                 return;
             }
 
+            // In 'OR' mode, selecting another tag will naturally add MORE matches (or same), so it never reduces result set to zero.
+            // So we never disable tags in OR mode unless we want to indicate "no items have this tag at all" but we know they exist from initial load.
+            if (samplesState.filterMode === 'or') {
+                pill.classList.remove('disabled');
+                return;
+            }
+
             // Get current match set
             const currentMatches = getMatches(Array.from(samplesState.filters));
 
@@ -577,7 +599,14 @@
             Object.values(item).forEach(v => {
                 if (Array.isArray(v)) v.forEach(t => itemTags.add(t));
             });
-            return activeFilters.every(f => itemTags.has(f));
+
+            if (samplesState.filterMode === 'or') {
+                // Match ANY
+                return activeFilters.some(f => itemTags.has(f));
+            } else {
+                // Match ALL
+                return activeFilters.every(f => itemTags.has(f));
+            }
         });
     }
 

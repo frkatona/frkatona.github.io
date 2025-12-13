@@ -830,6 +830,9 @@
 
   /* Play Button */
   .play-btn {
+      /* functionality passed off to sample card clicks for now*/
+
+      visibility: hidden;
       position: absolute;
       top: 12px;
       right: 12px;
@@ -847,7 +850,6 @@
       transition: all 0.2s ease;
       font-size: 12px;
       padding-left: 2px;
-      /* optical center for play icon */
   }
 
   .play-btn:hover {
@@ -856,4 +858,49 @@
       color: #fff;
       transform: scale(1.1);
       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  }
+
+  /* Filter Logic Segmented Control */
+  .filter-logic-toggle {
+      display: inline-flex;
+      background: var(--bg0);
+      border: 1px solid var(--muted);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 2px;
+  }
+
+  .filter-logic-toggle label {
+      position: relative;
+      cursor: pointer;
+  }
+
+  .filter-logic-toggle input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+  }
+
+  .filter-logic-toggle span {
+      display: block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text3);
+      transition: all 0.15s ease;
+  }
+
+  .filter-logic-toggle input:checked+span {
+      background: var(--muted2);
+      color: var(--text);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .filter-logic-toggle:hover span {
+      color: var(--text2);
+  }
+
+  .filter-logic-toggle input:checked+span:hover {
+      color: var(--text);
   }

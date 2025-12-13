@@ -26,13 +26,13 @@
             "yearning/soulful"
         ],
         "delivery": "urgent",
-        "articulation": "precise",
+        "articulation": [
+            "precise",
+            "hard attack"
+        ],
         "register": [
             "head voice",
             "mix belt"
-        ],
-        "onset_offset": [
-            "hard attack"
         ],
         "link": "Samples/Whitney_Houston_I_Have_Nothing.mp3"
     },
@@ -63,14 +63,11 @@
             "laid-back"
         ],
         "articulation": [
-            "soft"
+            "floating",
+            "falling off"
         ],
         "register": [
-            "chest/fry mix"
-        ],
-        "onset_offset": [
-            "vocal fry",
-            "falling off"
+            "chest"
         ]
     },
     {
@@ -90,25 +87,19 @@
             "nasally",
             "twangy"
         ],
-        "skillfulness": [
-            "distortion"
-        ],
         "expressiveness": [
             "bratty/playful",
-            "whiny/pleading"
+            "whiny/pleading",
+            "distorted"
         ],
         "delivery": [
-            "urgent",
-            "frenetic"
+            "urgent"
         ],
         "articulation": [
             "sprechgesang"
         ],
         "rhythmic_phrasing": [
             "staccato"
-        ],
-        "onset_offset": [
-            "glottal attack"
         ]
     },
     {
@@ -133,7 +124,7 @@
         ],
         "expressiveness": [
             "theatrical",
-            "playful"
+            "bratty/playful"
         ],
         "delivery": [
             "urgent"
@@ -166,24 +157,22 @@
             "throaty"
         ],
         "skillfulness": [
-            "distortion",
             "runs"
         ],
         "expressiveness": [
             "raw/vulnerable",
-            "yearning/soulful"
+            "yearning/soulful",
+            "distorted"
         ],
         "delivery": [
             "urgent"
         ],
         "articulation": [
-            "slurred"
+            "slurred",
+            "scooped"
         ],
         "register": [
             "chest belt"
-        ],
-        "onset_offset": [
-            "scooping"
         ]
     },
     {
@@ -200,7 +189,6 @@
             "dynamic"
         ],
         "resonance_placement": [
-            "forward",
             "nasally"
         ],
         "skillfulness": [
@@ -248,14 +236,12 @@
             "urgent"
         ],
         "articulation": [
-            "ethereal/floating"
+            "floating",
+            "scooped"
         ],
         "register": [
             "head voice",
             "falsetto"
-        ],
-        "onset_offset": [
-            "scooping"
         ]
     },
     {
@@ -275,8 +261,7 @@
         ],
         "skillfulness": [
             "range",
-            "runs",
-            "whistle register"
+            "runs"
         ],
         "expressiveness": [
             "proud/anthemic",
@@ -290,9 +275,6 @@
         ],
         "register": [
             "whistle register"
-        ],
-        "onset_offset": [
-            "glottal attack"
         ]
     },
     {
@@ -301,9 +283,8 @@
         "youtube": "https://youtu.be/rBrd_3VMC3c?t=5",
         "section": "Full Song",
         "weight_texture": [
-            "raspy",
-            "warm/rich",
-            "gravelly"
+            "raspy, gravelly",
+            "warm/rich"
         ],
         "power": [
             "intimate"
@@ -313,12 +294,12 @@
             "chesty"
         ],
         "skillfulness": [
-            "vibrato",
-            "distortion"
+            "vibrato"
         ],
         "expressiveness": [
             "yearning/soulful",
-            "optimistic"
+            "optimistic",
+            "distorted"
         ],
         "delivery": [
             "laid-back"
@@ -327,15 +308,14 @@
             "relaxed"
         ],
         "rhythmic_phrasing": [
-            "rubato",
-            "behind the beat"
+            "rubato"
         ]
     },
     {
         "artist": "Jeff Buckley",
         "song": "Hallelujah",
         "youtube": "https://youtu.be/y8AWFf7EAc4?t=80",
-        "section": "Verse 1 (The 'secret chord')",
+        "section": "Verse 1",
         "weight_texture": [
             "breathy",
             "warm/rich"
@@ -353,19 +333,17 @@
         ],
         "expressiveness": [
             "raw/vulnerable",
-            "yearning/soulful"
+            "yearning/soulful",
+            "ethereal"
         ],
         "delivery": [
             "uncertain/halting"
         ],
         "articulation": [
-            "ethereal/floating"
+            "floating"
         ],
         "rhythmic_phrasing": [
             "legato"
-        ],
-        "onset_offset": [
-            "long decay"
         ]
     },
     {
@@ -384,23 +362,18 @@
             "throaty"
         ],
         "skillfulness": [
-            "distortion",
             "stamina"
         ],
         "expressiveness": [
             "raw/vulnerable",
-            "aggressive"
+            "aggressive",
+            "distorted"
         ],
         "delivery": [
             "urgent"
         ],
         "articulation": [
-            "raw"
-        ],
-        "register": [
-            "fry scream"
-        ],
-        "onset_offset": [
+            "raw",
             "hard attack"
         ]
     },
@@ -434,9 +407,6 @@
         ],
         "articulation": [
             "theatrical"
-        ],
-        "onset_offset": [
-            "glottal attack"
         ]
     },
     {
@@ -457,11 +427,10 @@
             "resonant"
         ],
         "skillfulness": [
-            "glides"
+            "gliding"
         ],
         "expressiveness": [
-            "proud/anthemic",
-            "romantic"
+            "proud/anthemic"
         ],
         "delivery": [
             "laid-back"
@@ -503,9 +472,6 @@
         ],
         "articulation": [
             "slurred"
-        ],
-        "onset_offset": [
-            "cracking"
         ]
     },
     {
@@ -537,9 +503,6 @@
         "articulation": "precise",
         "register": [
             "mix belt"
-        ],
-        "onset_offset": [
-            "glottal attack"
         ]
     },
     {
@@ -565,10 +528,11 @@
         ],
         "expressiveness": [
             "yearning/soulful",
-            "melancholy"
+            "melancholy",
+            "ethereal"
         ],
         "delivery": "laid-back",
-        "articulation": "ethereal/floating",
+        "articulation": "floating",
         "register": "falsetto",
         "rhythmic_phrasing": "legato"
     },
@@ -589,17 +553,19 @@
             "mixed"
         ],
         "skillfulness": [
-            "distortion",
             "range"
         ],
         "expressiveness": [
             "yearning/soulful",
-            "dark"
+            "dark",
+            "distorted"
         ],
         "delivery": "laid-back",
-        "articulation": "slurred",
-        "register": "mixed voice",
-        "onset_offset": "scooping"
+        "articulation": [
+            "slurred",
+            "scooped"
+        ],
+        "register": "mixed voice"
     },
     {
         "artist": "Tom Waits",
@@ -607,8 +573,7 @@
         "youtube": "https://youtu.be/W9mhsW5aWJM?t=12",
         "section": "Verse 1",
         "weight_texture": [
-            "raspy",
-            "gravelly"
+            "raspy, gravelly"
         ],
         "power": [
             "intense"
@@ -616,26 +581,20 @@
         "resonance_placement": [
             "throaty"
         ],
-        "skillfulness": [
-            "distortion"
-        ],
         "expressiveness": [
             "theatrical",
-            "dark"
+            "dark",
+            "distorted"
         ],
         "delivery": [
             "heavy",
             "stomping"
         ],
         "articulation": [
-            "theatrical"
-        ],
-        "register": [
-            "sub-harmonic/growl"
-        ],
-        "onset_offset": [
+            "theatrical",
             "hard attack"
-        ]
+        ],
+        "register": "sub-harmonic/growl"
     },
     {
         "artist": "Karen Carpenter",
@@ -684,21 +643,16 @@
             "heady"
         ],
         "skillfulness": [
-            "distortion",
             "range"
         ],
         "expressiveness": [
             "bratty/playful",
-            "aggressive"
+            "aggressive",
+            "distorted"
         ],
         "delivery": "urgent",
         "articulation": "sharp",
-        "register": [
-            "pharyngeal mix"
-        ],
-        "onset_offset": [
-            "scream onset"
-        ]
+        "register": "pharyngeal mix"
     },
     {
         "artist": "Johnny Cash",
@@ -706,8 +660,8 @@
         "youtube": "https://youtu.be/8AHCfZTRGiI?t=106",
         "section": "Final Verse",
         "weight_texture": [
-            "frail",
-            "dry"
+            "dry",
+            "frail"
         ],
         "power": [
             "intimate",
@@ -717,15 +671,14 @@
             "chesty"
         ],
         "skillfulness": [
-            "vibrato (tremulous)"
+            "vibrato"
         ],
         "expressiveness": [
-            "raw/vulnerable",
-            "weary"
+            "raw/vulnerable"
         ],
         "delivery": "uncertain/halting",
-        "articulation": "sprechgesang",
-        "onset_offset": [
+        "articulation": [
+            "sprechgesang",
             "falling off"
         ]
     },
@@ -749,15 +702,11 @@
         ],
         "skillfulness": [
             "vibrato",
-            "range",
-            "projection"
+            "range"
         ],
         "expressiveness": [
             "proud/anthemic",
             "triumphant"
-        ],
-        "delivery": [
-            "anticipatory"
         ],
         "articulation": [
             "operatic"
@@ -786,9 +735,6 @@
             "throaty",
             "nasally"
         ],
-        "skillfulness": [
-            "voice cracks (stylized)"
-        ],
         "expressiveness": [
             "raw/vulnerable",
             "yearning/soulful"
@@ -798,9 +744,6 @@
         ],
         "articulation": [
             "slurred"
-        ],
-        "onset_offset": [
-            "intentional cracking"
         ]
     },
     {
@@ -854,12 +797,9 @@
             "chesty",
             "mixed"
         ],
-        "skillfulness": [
-            "projection"
-        ],
         "expressiveness": [
             "proud/anthemic",
-            "sassy"
+            "bratty/playful"
         ],
         "delivery": [
             "urgent"
@@ -886,21 +826,16 @@
         "resonance_placement": [
             "throaty"
         ],
-        "skillfulness": [
-            "distortion"
-        ],
         "expressiveness": [
             "raw/vulnerable",
-            "pained"
+            "pained",
+            "distorted"
         ],
         "delivery": [
             "frenetic"
         ],
         "articulation": [
             "raw"
-        ],
-        "onset_offset": [
-            "breath gasp"
         ]
     },
     {
@@ -909,8 +844,7 @@
         "youtube": "https://youtu.be/UYIAfiVGluk?t=202",
         "section": "Bridge ('Ransom notes...')",
         "weight_texture": [
-            "breathy",
-            "digital"
+            "breathy"
         ],
         "power": [
             "flat",
@@ -924,13 +858,13 @@
         ],
         "expressiveness": [
             "melancholy",
-            "detached"
+            "ethereal"
         ],
         "delivery": [
             "laid-back"
         ],
         "articulation": [
-            "ethereal/floating"
+            "floating"
         ],
         "register": [
             "head voice"
@@ -973,7 +907,7 @@
         ],
         "rhythmic_phrasing": [
             "syncopated",
-            "swing"
+            "swung"
         ]
     },
     {
@@ -985,18 +919,15 @@
         "power": "intimate",
         "resonance_placement": "airy",
         "skillfulness": [
-            "glides",
-            "distortion"
+            "glides"
         ],
         "expressiveness": [
             "yearning/soulful",
-            "ethereal"
+            "ethereal",
+            "distorted"
         ],
         "delivery": "laid-back",
-        "articulation": "ethereal/floating",
-        "onset_offset": [
-            "vocal fry"
-        ]
+        "articulation": "floating"
     },
     {
         "artist": "Julie Andrews",
