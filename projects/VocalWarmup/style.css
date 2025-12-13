@@ -831,7 +831,6 @@
   /* Play Button */
   .play-btn {
       /* functionality passed off to sample card clicks for now*/
-
       visibility: hidden;
       position: absolute;
       top: 12px;

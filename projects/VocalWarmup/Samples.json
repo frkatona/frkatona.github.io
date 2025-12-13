@@ -76,7 +76,7 @@
         "youtube": "https://youtu.be/hM2U8cb8lhI?t=21",
         "section": "Verses",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "thin"
         ],
         "power": [
@@ -147,7 +147,7 @@
         "youtube": "https://youtu.be/3SL0oRcD7t0?t=52",
         "section": "Chorus",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "heavy"
         ],
         "power": [
@@ -225,7 +225,7 @@
             "head voice"
         ],
         "skillfulness": [
-            "glides",
+            "gliding",
             "range"
         ],
         "expressiveness": [
@@ -283,7 +283,7 @@
         "youtube": "https://youtu.be/rBrd_3VMC3c?t=5",
         "section": "Full Song",
         "weight_texture": [
-            "raspy, gravelly",
+            "raspy/gravelly",
             "warm/rich"
         ],
         "power": [
@@ -306,9 +306,6 @@
         ],
         "articulation": [
             "relaxed"
-        ],
-        "rhythmic_phrasing": [
-            "rubato"
         ]
     },
     {
@@ -329,7 +326,7 @@
         ],
         "skillfulness": [
             "vibrato",
-            "glides"
+            "gliding"
         ],
         "expressiveness": [
             "raw/vulnerable",
@@ -352,7 +349,7 @@
         "youtube": "https://youtu.be/0xyxtzD54rM?t=142",
         "section": "The 17-second scream",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "harsh"
         ],
         "power": [
@@ -384,7 +381,7 @@
         "section": "Chorus explosion ('ZING BOOM!')",
         "weight_texture": [
             "belty",
-            "raspy"
+            "raspy/gravelly"
         ],
         "power": [
             "intense",
@@ -395,7 +392,6 @@
             "nasally"
         ],
         "skillfulness": [
-            "growl",
             "range"
         ],
         "expressiveness": [
@@ -439,8 +435,7 @@
             "precise"
         ],
         "rhythmic_phrasing": [
-            "legato",
-            "rubato"
+            "legato"
         ]
     },
     {
@@ -450,7 +445,7 @@
         "section": "Second half (drunken sobbing flow)",
         "weight_texture": [
             "cracking",
-            "raspy"
+            "raspy/gravelly"
         ],
         "power": [
             "intimate",
@@ -458,9 +453,6 @@
         ],
         "resonance_placement": [
             "throaty"
-        ],
-        "skillfulness": [
-            "voice acting"
         ],
         "expressiveness": [
             "raw/vulnerable",
@@ -523,7 +515,7 @@
             "nasally"
         ],
         "skillfulness": [
-            "glides",
+            "gliding",
             "vibrato"
         ],
         "expressiveness": [
@@ -542,7 +534,7 @@
         "youtube": "https://youtu.be/3mbBbFH9fAg?t=270",
         "section": "Final Chorus",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "warm/rich"
         ],
         "power": [
@@ -573,7 +565,7 @@
         "youtube": "https://youtu.be/W9mhsW5aWJM?t=12",
         "section": "Verse 1",
         "weight_texture": [
-            "raspy, gravelly"
+            "raspy/gravelly"
         ],
         "power": [
             "intense"
@@ -594,7 +586,7 @@
             "theatrical",
             "hard attack"
         ],
-        "register": "sub-harmonic/growl"
+        "register": "sub-harmonic"
     },
     {
         "artist": "Karen Carpenter",
@@ -632,7 +624,7 @@
         "section": "Verse",
         "weight_texture": [
             "piercing",
-            "raspy"
+            "raspy/gravelly"
         ],
         "power": [
             "intense"
@@ -713,9 +705,6 @@
         ],
         "register": [
             "chest/head mix"
-        ],
-        "rhythmic_phrasing": [
-            "rubato"
         ]
     },
     {
@@ -817,7 +806,7 @@
         "youtube": "https://youtu.be/CISzg6yi8YE?t=224",
         "section": "Final screams/shouts",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "strained"
         ],
         "power": [
@@ -854,7 +843,7 @@
             "airy"
         ],
         "skillfulness": [
-            "glides"
+            "gliding"
         ],
         "expressiveness": [
             "melancholy",
@@ -891,7 +880,7 @@
         ],
         "skillfulness": [
             "runs",
-            "glides",
+            "gliding",
             "agility"
         ],
         "expressiveness": [
@@ -919,7 +908,7 @@
         "power": "intimate",
         "resonance_placement": "airy",
         "skillfulness": [
-            "glides"
+            "gliding"
         ],
         "expressiveness": [
             "yearning/soulful",
@@ -960,6 +949,364 @@
         ],
         "rhythmic_phrasing": [
             "legato"
+        ]
+    },
+    {
+        "artist": "Céline Dion",
+        "song": "It's All Coming Back to Me Now",
+        "youtube": "https://youtu.be/j8fHNdrZTSI?t=312",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "belty",
+            "warm/rich"
+        ],
+        "power": [
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "resonant"
+        ],
+        "skillfulness": [
+            "vibrato",
+            "range"
+        ],
+        "expressiveness": [
+            "proud/anthemic",
+            "yearning/soulful"
+        ],
+        "delivery": "urgent",
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "mix belt"
+        ]
+    },
+    {
+        "artist": "Beyoncé",
+        "song": "Listen",
+        "youtube": "https://youtu.be/y4gimHC7fKs?t=161",
+        "section": "Bridge and Final Chorus",
+        "weight_texture": [
+            "belty",
+            "warm/rich"
+        ],
+        "power": [
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "resonant"
+        ],
+        "skillfulness": [
+            "range",
+            "control"
+        ],
+        "expressiveness": [
+            "proud/anthemic",
+            "raw/vulnerable"
+        ],
+        "delivery": "urgent",
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "mix belt"
+        ]
+    },
+    {
+        "artist": "Lily Allen",
+        "song": "Smile",
+        "youtube": "https://youtu.be/0WxDrVUrSvI?t=22",
+        "section": "Verse",
+        "weight_texture": [
+            "thin"
+        ],
+        "power": [
+            "flat"
+        ],
+        "resonance_placement": [
+            "nasally"
+        ],
+        "expressiveness": [
+            "bratty/playful"
+        ],
+        "delivery": [
+            "laid-back"
+        ],
+        "articulation": [
+            "sprechgesang"
+        ],
+        "rhythmic_phrasing": [
+            "staccato"
+        ]
+    },
+    {
+        "artist": "Gwen Stefani",
+        "song": "Hollaback Girl",
+        "youtube": "https://youtu.be/Kgjkth6BRRY?t=48",
+        "section": "Spoken Verses",
+        "weight_texture": [
+            "thin"
+        ],
+        "power": [
+            "flat"
+        ],
+        "resonance_placement": [
+            "nasally"
+        ],
+        "expressiveness": [
+            "bratty/playful"
+        ],
+        "delivery": [
+            "urgent"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "rhythmic_phrasing": [
+            "staccato",
+            "syncopated"
+        ]
+    },
+    {
+        "artist": "Nick Cave",
+        "song": "Into My Arms",
+        "youtube": "https://youtu.be/LnHoqHscTKE?t=42",
+        "section": "Verse",
+        "weight_texture": [
+            "dry"
+        ],
+        "power": [
+            "intimate",
+            "flat"
+        ],
+        "resonance_placement": [
+            "chesty"
+        ],
+        "expressiveness": [
+            "raw/vulnerable"
+        ],
+        "articulation": [
+            "sprechgesang"
+        ]
+    },
+    {
+        "artist": "Bob Dylan",
+        "song": "Not Dark Yet",
+        "youtube": "https://youtu.be/Rb7R7x2x6eA?t=60",
+        "section": "Verse",
+        "weight_texture": [
+            "dry",
+            "frail",
+            "thin"
+        ],
+        "power": [
+            "flat",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "chesty"
+        ],
+        "expressiveness": [
+            "raw/vulnerable"
+        ],
+        "delivery": "uncertain/halting",
+        "articulation": [
+            "sprechgesang",
+            "slurred"
+        ]
+    },
+    {
+        "artist": "Eminem",
+        "song": "Rap God",
+        "youtube": "https://youtu.be/XbGs_qK2PQA?t=220",
+        "section": "High-Speed Mid-Verse",
+        "weight_texture": [
+            "crisp",
+            "punchy"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "nasally"
+        ],
+        "skillfulness": [
+            "agility"
+        ],
+        "delivery": [
+            "frenetic"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "rhythmic_phrasing": [
+            "staccato",
+            "syncopated"
+        ]
+    },
+    {
+        "artist": "Jacob Collier",
+        "song": "All Night Long",
+        "youtube": "https://youtu.be/nspqYGz-Z1s?t=123",
+        "section": "Live Scat Improvisation",
+        "weight_texture": [
+            "bright"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "resonant",
+            "mixed"
+        ],
+        "skillfulness": [
+            "runs",
+            "gliding",
+            "agility"
+        ],
+        "expressiveness": [
+            "bratty/playful",
+            "joyful"
+        ],
+        "delivery": [
+            "frenetic"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "rhythmic_phrasing": [
+            "syncopated"
+        ]
+    },
+    {
+        "artist": "Leonard Cohen",
+        "song": "You Want It Darker",
+        "youtube": "https://youtu.be/YD6fvzGIBfQ?t=27",
+        "section": "Verse",
+        "weight_texture": [
+            "raspy/gravelly"
+        ],
+        "power": [
+            "flat",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "chesty"
+        ],
+        "expressiveness": [
+            "dark"
+        ],
+        "articulation": [
+            "sprechgesang"
+        ]
+    },
+    {
+        "artist": "Nick Cave",
+        "song": "Red Right Hand",
+        "youtube": "https://youtu.be/RrxePKps87k?t=7",
+        "section": "Verse",
+        "weight_texture": [
+            "raspy/gravelly"
+        ],
+        "power": [
+            "intense"
+        ],
+        "resonance_placement": [
+            "throaty"
+        ],
+        "expressiveness": [
+            "theatrical",
+            "dark",
+            "distorted"
+        ],
+        "articulation": [
+            "hard attack"
+        ]
+    },
+    {
+        "artist": "Minnie Riperton",
+        "song": "Lovin' You",
+        "youtube": "https://youtu.be/9I3UTG1dSTc?t=70",
+        "section": "Chorus",
+        "weight_texture": [
+            "bright",
+            "piercing"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice"
+        ],
+        "skillfulness": [
+            "range"
+        ],
+        "expressiveness": [
+            "joyful"
+        ],
+        "articulation": [
+            "precise"
+        ]
+    },
+    {
+        "artist": "Ariana Grande",
+        "song": "Dangerous Woman",
+        "youtube": "https://youtu.be/9WbCfHutDSE?t=189",
+        "section": "Chorus + Ad-Libs",
+        "weight_texture": [
+            "belty"
+        ],
+        "power": [
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "heady"
+        ],
+        "skillfulness": [
+            "runs",
+            "range"
+        ],
+        "expressiveness": [
+            "proud/anthemic"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "mix belt"
+        ]
+    },
+    {
+        "artist": "Tori Kelly",
+        "song": "Nobody Love",
+        "youtube": "https://youtu.be/MPX3qz1ve7M?t=140",
+        "section": "Final Chorus + Ad-Libs",
+        "weight_texture": [
+            "bright"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "resonant"
+        ],
+        "skillfulness": [
+            "runs",
+            "agility",
+            "range"
+        ],
+        "expressiveness": [
+            "joyful"
+        ],
+        "articulation": [
+            "precise"
         ]
     }
 ]
