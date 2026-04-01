@@ -1,0 +1,11 @@
+﻿{
+    "title":  "Backyard Astro",
+    "description":  "Pixel astrophotography shot taken from my backyard.",
+    "tags":  [
+                 "astrophotography",
+                 "landscape"
+             ],
+    "captureDate":  null,
+    "featured":  false,
+    "status":  "updated"
+}

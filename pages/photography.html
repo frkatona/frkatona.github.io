@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Portfolio</title>
+    <meta name="description" content="Photography portfolio gallery for Anthony Katona.">
+    <link rel="icon" type="image/x-icon" href="../assets/images/icons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/photography.css">
+</head>
+
+<body>
+    <header class="page-hero">
+        <a class="back-link" href="../index.html">Back to home</a>
+        <div class="hero-copy">
+            <h1>Photography</h1>
+            <p class="intro">
+                A small personal collection of portraits, live music, street scenes, skies, and a few other photos.
+            </p>
+            <p class="intro-meta">
+                <span id="photo-count">0</span> photos
+            </p>
+            <span id="tag-count" hidden>0</span>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <section class="controls-panel" aria-labelledby="controls-heading">
+            <div class="controls-copy">
+                <h2 id="controls-heading">Browse</h2>
+            </div>
+            <div class="controls-row">
+                <label class="sort-control" for="sort-select">
+                    <span>Sort by</span>
+                    <select id="sort-select" name="sort-select">
+                        <option value="newest">Newest first</option>
+                        <option value="oldest">Oldest first</option>
+                        <option value="title">Title A-Z</option>
+                    </select>
+                </label>
+                <p class="status-pill" id="results-status">Loading photos...</p>
+            </div>
+            <div class="tag-toolbar" id="tag-toolbar" role="toolbar" aria-label="Filter photographs by tag"></div>
+        </section>
+
+        <section class="gallery-section" aria-labelledby="gallery-heading">
+            <div class="section-header">
+                <div>
+                    <h2 id="gallery-heading">Photos</h2>
+                </div>
+                <p class="active-filter-copy" id="active-filter-copy">Loading photos...</p>
+            </div>
+            <div class="gallery-grid" id="gallery-grid"></div>
+            <noscript>
+                <p class="empty-state">JavaScript is required to load the gallery and sidecar metadata.</p>
+            </noscript>
+        </section>
+    </main>
+
+    <div class="lightbox" id="lightbox" hidden>
+        <div class="lightbox-backdrop" data-close-lightbox></div>
+        <div class="lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+            <button class="lightbox-nav lightbox-nav-prev" id="lightbox-prev" type="button"
+                aria-label="Show previous photo">
+                <span aria-hidden="true">&#8592;</span>
+            </button>
+            <button class="lightbox-nav lightbox-nav-next" id="lightbox-next" type="button"
+                aria-label="Show next photo">
+                <span aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close image viewer">
+                Close
+            </button>
+            <figure class="lightbox-figure" id="lightbox-figure">
+                <img id="lightbox-image" alt="">
+            </figure>
+            <div class="lightbox-copy">
+                <p class="eyebrow" id="lightbox-date">Date not set</p>
+                <h2 id="lightbox-title">Photo</h2>
+                <p class="lightbox-description" id="lightbox-description"></p>
+                <div class="lightbox-tags" id="lightbox-tags"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/photography.js"></script>
+</body>
+
+</html>

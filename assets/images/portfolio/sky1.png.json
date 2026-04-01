@@ -1,0 +1,10 @@
+﻿{
+    "title":  "Sky 1",
+    "description":  "Astrophotography image of the night sky",
+    "tags":  [
+                 "astrophotography"
+             ],
+    "captureDate":  null,
+    "featured":  false,
+    "status":  "updated"
+}
