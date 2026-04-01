@@ -64,7 +64,7 @@
 
     <div class="lightbox" id="lightbox" hidden>
         <div class="lightbox-backdrop" data-close-lightbox></div>
-        <div class="lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+        <div class="lightbox-panel" id="lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
             <button class="lightbox-nav lightbox-nav-prev" id="lightbox-prev" type="button"
                 aria-label="Show previous photo">
                 <span aria-hidden="true">&#8592;</span>
@@ -72,6 +72,10 @@
             <button class="lightbox-nav lightbox-nav-next" id="lightbox-next" type="button"
                 aria-label="Show next photo">
                 <span aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="lightbox-expand" id="lightbox-expand" type="button" aria-label="Enter fullscreen"
+                title="Enter fullscreen">
+                <span id="lightbox-expand-icon" aria-hidden="true">&#x26F6;</span>
             </button>
             <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close image viewer">
                 Close

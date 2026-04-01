@@ -17,6 +17,7 @@ const resultsStatus = document.getElementById("results-status");
 const activeFilterCopy = document.getElementById("active-filter-copy");
 
 const lightbox = document.getElementById("lightbox");
+const lightboxPanel = document.getElementById("lightbox-panel");
 const lightboxFigure = document.getElementById("lightbox-figure");
 const lightboxLoader = document.getElementById("lightbox-loader");
 const lightboxImage = document.getElementById("lightbox-image");
@@ -24,6 +25,8 @@ const lightboxTitle = document.getElementById("lightbox-title");
 const lightboxDate = document.getElementById("lightbox-date");
 const lightboxDescription = document.getElementById("lightbox-description");
 const lightboxTags = document.getElementById("lightbox-tags");
+const lightboxExpand = document.getElementById("lightbox-expand");
+const lightboxExpandIcon = document.getElementById("lightbox-expand-icon");
 const lightboxClose = document.getElementById("lightbox-close");
 const lightboxPrev = document.getElementById("lightbox-prev");
 const lightboxNext = document.getElementById("lightbox-next");
@@ -34,6 +37,7 @@ let lightboxLoadToken = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   wireEvents();
+  updateFullscreenButton();
   loadPortfolio();
 });
 
@@ -73,11 +77,13 @@ function wireEvents() {
   lightboxNext.addEventListener("click", () => {
     navigateLightbox(1);
   });
+  lightboxExpand.addEventListener("click", toggleLightboxFullscreen);
   lightbox.addEventListener("click", (event) => {
     if (event.target.hasAttribute("data-close-lightbox")) {
       closeLightbox();
     }
   });
+  document.addEventListener("fullscreenchange", updateFullscreenButton);
 
   document.addEventListener("keydown", (event) => {
     if (lightbox.hidden) {
@@ -85,6 +91,11 @@ function wireEvents() {
     }
 
     if (event.key === "Escape") {
+      if (isLightboxFullscreen()) {
+        exitLightboxFullscreen();
+        return;
+      }
+
       closeLightbox();
       return;
     }
@@ -362,6 +373,7 @@ function updateLightbox(fileName) {
 
 function closeLightbox() {
   lightboxLoadToken += 1;
+  exitLightboxFullscreen();
   lightbox.hidden = true;
   document.body.classList.remove("modal-open");
   state.activeLightboxFileName = null;
@@ -421,6 +433,41 @@ function setLightboxLoadingState(isLoading) {
   lightboxFigure.classList.toggle("is-loading", isLoading);
   lightboxFigure.setAttribute("aria-busy", isLoading ? "true" : "false");
   lightboxLoader.setAttribute("aria-hidden", isLoading ? "false" : "true");
+}
+
+function toggleLightboxFullscreen() {
+  if (isLightboxFullscreen()) {
+    exitLightboxFullscreen();
+    return;
+  }
+
+  if (typeof lightboxPanel.requestFullscreen === "function") {
+    lightboxPanel.requestFullscreen().catch(() => {});
+  }
+}
+
+function exitLightboxFullscreen() {
+  if (isLightboxFullscreen() && typeof document.exitFullscreen === "function") {
+    document.exitFullscreen().catch(() => {});
+  }
+}
+
+function isLightboxFullscreen() {
+  return document.fullscreenElement === lightboxPanel;
+}
+
+function updateFullscreenButton() {
+  const supported = typeof lightboxPanel.requestFullscreen === "function" && typeof document.exitFullscreen === "function";
+  lightboxExpand.hidden = !supported;
+
+  if (!supported) {
+    return;
+  }
+
+  const fullscreen = isLightboxFullscreen();
+  lightboxExpand.setAttribute("aria-label", fullscreen ? "Exit fullscreen" : "Enter fullscreen");
+  lightboxExpand.setAttribute("title", fullscreen ? "Exit fullscreen" : "Enter fullscreen");
+  lightboxExpandIcon.innerHTML = fullscreen ? "&#x2715;" : "&#x26F6;";
 }
 
 function formatDate(value) {
