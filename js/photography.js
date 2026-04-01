@@ -18,6 +18,7 @@ const activeFilterCopy = document.getElementById("active-filter-copy");
 
 const lightbox = document.getElementById("lightbox");
 const lightboxFigure = document.getElementById("lightbox-figure");
+const lightboxLoader = document.getElementById("lightbox-loader");
 const lightboxImage = document.getElementById("lightbox-image");
 const lightboxTitle = document.getElementById("lightbox-title");
 const lightboxDate = document.getElementById("lightbox-date");
@@ -29,6 +30,7 @@ const lightboxNext = document.getElementById("lightbox-next");
 
 let touchStartX = 0;
 let touchStartY = 0;
+let lightboxLoadToken = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   wireEvents();
@@ -323,9 +325,8 @@ function updateLightbox(fileName) {
     return false;
   }
 
+  const loadToken = ++lightboxLoadToken;
   state.activeLightboxFileName = selectedItem.fileName;
-  lightboxImage.src = selectedItem.imagePath;
-  lightboxImage.alt = `${selectedItem.title} photograph`;
   lightboxTitle.textContent = selectedItem.title;
   lightboxDate.textContent = formatDate(selectedItem.captureDate);
   lightboxDescription.textContent = selectedItem.description;
@@ -333,13 +334,38 @@ function updateLightbox(fileName) {
     .map((tag) => `<span class="tag-chip">${escapeHtml(formatTag(tag))}</span>`)
     .join("");
   updateLightboxNavButtons();
+  setLightboxLoadingState(true);
+
+  const preloadImage = new Image();
+  preloadImage.decoding = "async";
+  preloadImage.onload = () => {
+    if (loadToken !== lightboxLoadToken) {
+      return;
+    }
+
+    lightboxImage.src = selectedItem.imagePath;
+    lightboxImage.alt = `${selectedItem.title} photograph`;
+    setLightboxLoadingState(false);
+  };
+  preloadImage.onerror = () => {
+    if (loadToken !== lightboxLoadToken) {
+      return;
+    }
+
+    lightboxImage.src = selectedItem.imagePath;
+    lightboxImage.alt = `${selectedItem.title} photograph`;
+    setLightboxLoadingState(false);
+  };
+  preloadImage.src = selectedItem.imagePath;
   return true;
 }
 
 function closeLightbox() {
+  lightboxLoadToken += 1;
   lightbox.hidden = true;
   document.body.classList.remove("modal-open");
   state.activeLightboxFileName = null;
+  setLightboxLoadingState(false);
 }
 
 function navigateLightbox(direction) {
@@ -389,6 +415,12 @@ function handleTouchEnd(event) {
   }
 
   navigateLightbox(1);
+}
+
+function setLightboxLoadingState(isLoading) {
+  lightboxFigure.classList.toggle("is-loading", isLoading);
+  lightboxFigure.setAttribute("aria-busy", isLoading ? "true" : "false");
+  lightboxLoader.setAttribute("aria-hidden", isLoading ? "false" : "true");
 }
 
 function formatDate(value) {
