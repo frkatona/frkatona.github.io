@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>APK Right Knee MRIs 2007</title>
+    <link rel="stylesheet" href="../../css/subpage_nav.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         #videoPlayer {
             width: 80%;
@@ -14,7 +16,13 @@
         }
     </style>
 </head>
-<body>
+<body class="has-subpage-nav">
+    <nav class="subpage-nav">
+        <a class="subpage-nav__link" href="../../index.html">
+            <i class="fas fa-home" aria-hidden="true"></i>
+            <span>Home</span>
+        </a>
+    </nav>
     <select id="videoList" onchange="loadVideo()">
         <!-- Options will be populated by JavaScript -->
     </select>
