@@ -1,350 +1,378 @@
-﻿{
-    "generatedAt":  "2026-03-31",
-    "thumbnailMaxDimension":  1400,
-    "thumbnailFormat":  "webp",
-    "items":  [
-                  {
-                      "fileName":  "2025-08_hockey.png",
-                      "metadataFileName":  "2025-08_hockey.png.json",
-                      "thumbnailFileName":  "thumbs/2025-08_hockey.png.webp",
-                      "width":  3056,
-                      "height":  4064
-                  },
-                  {
-                      "fileName":  "2025-09-12_298-turkeys-1.png",
-                      "metadataFileName":  "2025-09-12_298-turkeys-1.png.json",
-                      "thumbnailFileName":  "thumbs/2025-09-12_298-turkeys-1.png.webp",
-                      "width":  7276,
-                      "height":  5474
-                  },
-                  {
-                      "fileName":  "2025-09-21_Eric_MCB_1.png",
-                      "metadataFileName":  "2025-09-21_Eric_MCB_1.png.json",
-                      "thumbnailFileName":  "thumbs/2025-09-21_Eric_MCB_1.png.webp",
-                      "width":  7276,
-                      "height":  5474
-                  },
-                  {
-                      "fileName":  "2025-10-19_eric_1.png",
-                      "metadataFileName":  "2025-10-19_eric_1.png.json",
-                      "thumbnailFileName":  "thumbs/2025-10-19_eric_1.png.webp",
-                      "width":  6144,
-                      "height":  8160
-                  },
-                  {
-                      "fileName":  "2025-10-19_john_1.png",
-                      "metadataFileName":  "2025-10-19_john_1.png.json",
-                      "thumbnailFileName":  "thumbs/2025-10-19_john_1.png.webp",
-                      "width":  4654,
-                      "height":  7276
-                  },
-                  {
-                      "fileName":  "2025-10-19_marie_1.png",
-                      "metadataFileName":  "2025-10-19_marie_1.png.json",
-                      "thumbnailFileName":  "thumbs/2025-10-19_marie_1.png.webp",
-                      "width":  3094,
-                      "height":  4114
-                  },
-                  {
-                      "fileName":  "2025-10-19_Mary_1.png",
-                      "metadataFileName":  "2025-10-19_Mary_1.png.json",
-                      "thumbnailFileName":  "thumbs/2025-10-19_Mary_1.png.webp",
-                      "width":  6128,
-                      "height":  7112
-                  },
-                  {
-                      "fileName":  "2025-10-19_tim_1.png",
-                      "metadataFileName":  "2025-10-19_tim_1.png.json",
-                      "thumbnailFileName":  "thumbs/2025-10-19_tim_1.png.webp",
-                      "width":  5474,
-                      "height":  6988
-                  },
-                  {
-                      "fileName":  "2025-11-02_cynthia_1.png",
-                      "metadataFileName":  "2025-11-02_cynthia_1.png.json",
-                      "thumbnailFileName":  "thumbs/2025-11-02_cynthia_1.png.webp",
-                      "width":  4535,
-                      "height":  3401
-                  },
-                  {
-                      "fileName":  "2025-11-02_john_1.png",
-                      "metadataFileName":  "2025-11-02_john_1.png.json",
-                      "thumbnailFileName":  "thumbs/2025-11-02_john_1.png.webp",
-                      "width":  5474,
-                      "height":  7276
-                  },
-                  {
-                      "fileName":  "2025-11-09_Gwen_2.png",
-                      "metadataFileName":  "2025-11-09_Gwen_2.png.json",
-                      "thumbnailFileName":  "thumbs/2025-11-09_Gwen_2.png.webp",
-                      "width":  5474,
-                      "height":  7276
-                  },
-                  {
-                      "fileName":  "2025-11-09_Tara.png",
-                      "metadataFileName":  "2025-11-09_Tara.png.json",
-                      "thumbnailFileName":  "thumbs/2025-11-09_Tara.png.webp",
-                      "width":  5169,
-                      "height":  3877
-                  },
-                  {
-                      "fileName":  "2025-11-17_Cole.png",
-                      "metadataFileName":  "2025-11-17_Cole.png.json",
-                      "thumbnailFileName":  "thumbs/2025-11-17_Cole.png.webp",
-                      "width":  5474,
-                      "height":  7276
-                  },
-                  {
-                      "fileName":  "2025-11-17_Eric.png",
-                      "metadataFileName":  "2025-11-17_Eric.png.json",
-                      "thumbnailFileName":  "thumbs/2025-11-17_Eric.png.webp",
-                      "width":  5719,
-                      "height":  4289
-                  },
-                  {
-                      "fileName":  "2025-11-22_NYTraffic.png",
-                      "metadataFileName":  "2025-11-22_NYTraffic.png.json",
-                      "thumbnailFileName":  "thumbs/2025-11-22_NYTraffic.png.webp",
-                      "width":  4200,
-                      "height":  6904
-                  },
-                  {
-                      "fileName":  "2025-12-12_Arena_Eric.jpg",
-                      "metadataFileName":  "2025-12-12_Arena_Eric.jpg.json",
-                      "thumbnailFileName":  "thumbs/2025-12-12_Arena_Eric.jpg.webp",
-                      "width":  5074,
-                      "height":  6966
-                  },
-                  {
-                      "fileName":  "2025-12-21_Tara.png",
-                      "metadataFileName":  "2025-12-21_Tara.png.json",
-                      "thumbnailFileName":  "thumbs/2025-12-21_Tara.png.webp",
-                      "width":  2852,
-                      "height":  2292
-                  },
-                  {
-                      "fileName":  "2025-12-30_cat-last.jpg",
-                      "metadataFileName":  "2025-12-30_cat-last.jpg.json",
-                      "thumbnailFileName":  "thumbs/2025-12-30_cat-last.jpg.webp",
-                      "width":  3575,
-                      "height":  3056
-                  },
-                  {
-                      "fileName":  "arena-unknown-1.png",
-                      "metadataFileName":  "arena-unknown-1.png.json",
-                      "thumbnailFileName":  "thumbs/arena-unknown-1.png.webp",
-                      "width":  5271,
-                      "height":  6908
-                  },
-                  {
-                      "fileName":  "arena-unknown-2.png",
-                      "metadataFileName":  "arena-unknown-2.png.json",
-                      "thumbnailFileName":  "thumbs/arena-unknown-2.png.webp",
-                      "width":  5474,
-                      "height":  7276
-                  },
-                  {
-                      "fileName":  "backyard.png",
-                      "metadataFileName":  "backyard.png.json",
-                      "thumbnailFileName":  "thumbs/backyard.png.webp",
-                      "width":  6128,
-                      "height":  8144
-                  },
-                  {
-                      "fileName":  "cody1.jpg",
-                      "metadataFileName":  "cody1.jpg.json",
-                      "thumbnailFileName":  "thumbs/cody1.jpg.webp",
-                      "width":  4025,
-                      "height":  3156
-                  },
-                  {
-                      "fileName":  "cody2.jpg",
-                      "metadataFileName":  "cody2.jpg.json",
-                      "thumbnailFileName":  "thumbs/cody2.jpg.webp",
-                      "width":  4192,
-                      "height":  3156
-                  },
-                  {
-                      "fileName":  "eric6.jpg",
-                      "metadataFileName":  "eric6.jpg.json",
-                      "thumbnailFileName":  "thumbs/eric6.jpg.webp",
-                      "width":  4192,
-                      "height":  3156
-                  },
-                  {
-                      "fileName":  "eric6.png",
-                      "metadataFileName":  "eric6.png.json",
-                      "thumbnailFileName":  "thumbs/eric6.png.webp",
-                      "width":  3632,
-                      "height":  2730
-                  },
-                  {
-                      "fileName":  "heather-1.png",
-                      "metadataFileName":  "heather-1.png.json",
-                      "thumbnailFileName":  "thumbs/heather-1.png.webp",
-                      "width":  5690,
-                      "height":  4762
-                  },
-                  {
-                      "fileName":  "heather-2.png",
-                      "metadataFileName":  "heather-2.png.json",
-                      "thumbnailFileName":  "thumbs/heather-2.png.webp",
-                      "width":  5503,
-                      "height":  4053
-                  },
-                  {
-                      "fileName":  "marie-2.jpg",
-                      "metadataFileName":  "marie-2.jpg.json",
-                      "thumbnailFileName":  "thumbs/marie-2.jpg.webp",
-                      "width":  7276,
-                      "height":  5474
-                  },
-                  {
-                      "fileName":  "marie3.jpg",
-                      "metadataFileName":  "marie3.jpg.json",
-                      "thumbnailFileName":  "thumbs/marie3.jpg.webp",
-                      "width":  7276,
-                      "height":  5474
-                  },
-                  {
-                      "fileName":  "ponyo_3.png",
-                      "metadataFileName":  "ponyo_3.png.json",
-                      "thumbnailFileName":  "thumbs/ponyo_3.png.webp",
-                      "width":  7276,
-                      "height":  5457
-                  },
-                  {
-                      "fileName":  "ponyo_4.png",
-                      "metadataFileName":  "ponyo_4.png.json",
-                      "thumbnailFileName":  "thumbs/ponyo_4.png.webp",
-                      "width":  3493,
-                      "height":  2620
-                  },
-                  {
-                      "fileName":  "ponyo_9.png",
-                      "metadataFileName":  "ponyo_9.png.json",
-                      "thumbnailFileName":  "thumbs/ponyo_9.png.webp",
-                      "width":  3623,
-                      "height":  2717
-                  },
-                  {
-                      "fileName":  "seamus.jpg",
-                      "metadataFileName":  "seamus.jpg.json",
-                      "thumbnailFileName":  "thumbs/seamus.jpg.webp",
-                      "width":  2470,
-                      "height":  1853
-                  },
-                  {
-                      "fileName":  "seana1.jpg",
-                      "metadataFileName":  "seana1.jpg.json",
-                      "thumbnailFileName":  "thumbs/seana1.jpg.webp",
-                      "width":  3632,
-                      "height":  2730
-                  },
-                  {
-                      "fileName":  "seana2.png",
-                      "metadataFileName":  "seana2.png.json",
-                      "thumbnailFileName":  "thumbs/seana2.png.webp",
-                      "width":  3466,
-                      "height":  4348
-                  },
-                  {
-                      "fileName":  "seana3.jpg",
-                      "metadataFileName":  "seana3.jpg.json",
-                      "thumbnailFileName":  "thumbs/seana3.jpg.webp",
-                      "width":  2264,
-                      "height":  2913
-                  },
-                  {
-                      "fileName":  "seana4.jpg",
-                      "metadataFileName":  "seana4.jpg.json",
-                      "thumbnailFileName":  "thumbs/seana4.jpg.webp",
-                      "width":  1895,
-                      "height":  2636
-                  },
-                  {
-                      "fileName":  "sid.jpg",
-                      "metadataFileName":  "sid.jpg.json",
-                      "thumbnailFileName":  "thumbs/sid.jpg.webp",
-                      "width":  3632,
-                      "height":  2730
-                  },
-                  {
-                      "fileName":  "sir1.png",
-                      "metadataFileName":  "sir1.png.json",
-                      "thumbnailFileName":  "thumbs/sir1.png.webp",
-                      "width":  4209,
-                      "height":  3125
-                  },
-                  {
-                      "fileName":  "sky1.png",
-                      "metadataFileName":  "sky1.png.json",
-                      "thumbnailFileName":  "thumbs/sky1.png.webp",
-                      "width":  8144,
-                      "height":  6128
-                  },
-                  {
-                      "fileName":  "sky2.png",
-                      "metadataFileName":  "sky2.png.json",
-                      "thumbnailFileName":  "thumbs/sky2.png.webp",
-                      "width":  5166,
-                      "height":  5349
-                  },
-                  {
-                      "fileName":  "sky3.png",
-                      "metadataFileName":  "sky3.png.json",
-                      "thumbnailFileName":  "thumbs/sky3.png.webp",
-                      "width":  5984,
-                      "height":  6783
-                  },
-                  {
-                      "fileName":  "sky4.png",
-                      "metadataFileName":  "sky4.png.json",
-                      "thumbnailFileName":  "thumbs/sky4.png.webp",
-                      "width":  7276,
-                      "height":  5474
-                  },
-                  {
-                      "fileName":  "tara1.png",
-                      "metadataFileName":  "tara1.png.json",
-                      "thumbnailFileName":  "thumbs/tara1.png.webp",
-                      "width":  4004,
-                      "height":  3200
-                  },
-                  {
-                      "fileName":  "tara2.png",
-                      "metadataFileName":  "tara2.png.json",
-                      "thumbnailFileName":  "thumbs/tara2.png.webp",
-                      "width":  2912,
-                      "height":  1970
-                  },
-                  {
-                      "fileName":  "Tara3.png",
-                      "metadataFileName":  "Tara3.png.json",
-                      "thumbnailFileName":  "thumbs/Tara3.png.webp",
-                      "width":  2158,
-                      "height":  1617
-                  },
-                  {
-                      "fileName":  "tara4.jpg",
-                      "metadataFileName":  "tara4.jpg.json",
-                      "thumbnailFileName":  "thumbs/tara4.jpg.webp",
-                      "width":  4064,
-                      "height":  3056
-                  },
-                  {
-                      "fileName":  "tim2.jpg",
-                      "metadataFileName":  "tim2.jpg.json",
-                      "thumbnailFileName":  "thumbs/tim2.jpg.webp",
-                      "width":  3638,
-                      "height":  2737
-                  },
-                  {
-                      "fileName":  "tim3.jpg",
-                      "metadataFileName":  "tim3.jpg.json",
-                      "thumbnailFileName":  "thumbs/tim3.jpg.webp",
-                      "width":  3148,
-                      "height":  4990
-                  }
-              ]
+{
+  "generatedAt": "2026-04-02",
+  "thumbnailMaxDimension": 1400,
+  "thumbnailFormat": "webp",
+  "items": [
+    {
+      "fileName": "2025-08_hockey.png",
+      "metadataFileName": "2025-08_hockey.png.json",
+      "thumbnailFileName": "thumbs/2025-08_hockey.png.webp",
+      "width": 3056,
+      "height": 4064
+    },
+    {
+      "fileName": "2025-09-12_298-turkeys-1.png",
+      "metadataFileName": "2025-09-12_298-turkeys-1.png.json",
+      "thumbnailFileName": "thumbs/2025-09-12_298-turkeys-1.png.webp",
+      "width": 7276,
+      "height": 5474
+    },
+    {
+      "fileName": "2025-09-21_Eric_MCB_1.png",
+      "metadataFileName": "2025-09-21_Eric_MCB_1.png.json",
+      "thumbnailFileName": "thumbs/2025-09-21_Eric_MCB_1.png.webp",
+      "width": 7276,
+      "height": 5474
+    },
+    {
+      "fileName": "2025-10-19_eric_1.png",
+      "metadataFileName": "2025-10-19_eric_1.png.json",
+      "thumbnailFileName": "thumbs/2025-10-19_eric_1.png.webp",
+      "width": 6144,
+      "height": 8160
+    },
+    {
+      "fileName": "2025-10-19_john_1.png",
+      "metadataFileName": "2025-10-19_john_1.png.json",
+      "thumbnailFileName": "thumbs/2025-10-19_john_1.png.webp",
+      "width": 4654,
+      "height": 7276
+    },
+    {
+      "fileName": "2025-10-19_marie_1.png",
+      "metadataFileName": "2025-10-19_marie_1.png.json",
+      "thumbnailFileName": "thumbs/2025-10-19_marie_1.png.webp",
+      "width": 3094,
+      "height": 4114
+    },
+    {
+      "fileName": "2025-10-19_Mary_1.png",
+      "metadataFileName": "2025-10-19_Mary_1.png.json",
+      "thumbnailFileName": "thumbs/2025-10-19_Mary_1.png.webp",
+      "width": 6128,
+      "height": 7112
+    },
+    {
+      "fileName": "2025-10-19_tim_1.png",
+      "metadataFileName": "2025-10-19_tim_1.png.json",
+      "thumbnailFileName": "thumbs/2025-10-19_tim_1.png.webp",
+      "width": 5474,
+      "height": 6988
+    },
+    {
+      "fileName": "2025-11-02_cynthia_1.png",
+      "metadataFileName": "2025-11-02_cynthia_1.png.json",
+      "thumbnailFileName": "thumbs/2025-11-02_cynthia_1.png.webp",
+      "width": 4535,
+      "height": 3401
+    },
+    {
+      "fileName": "2025-11-02_john_1.png",
+      "metadataFileName": "2025-11-02_john_1.png.json",
+      "thumbnailFileName": "thumbs/2025-11-02_john_1.png.webp",
+      "width": 5474,
+      "height": 7276
+    },
+    {
+      "fileName": "2025-11-09_Gwen_2.png",
+      "metadataFileName": "2025-11-09_Gwen_2.png.json",
+      "thumbnailFileName": "thumbs/2025-11-09_Gwen_2.png.webp",
+      "width": 5474,
+      "height": 7276
+    },
+    {
+      "fileName": "2025-11-09_Tara.png",
+      "metadataFileName": "2025-11-09_Tara.png.json",
+      "thumbnailFileName": "thumbs/2025-11-09_Tara.png.webp",
+      "width": 5169,
+      "height": 3877
+    },
+    {
+      "fileName": "2025-11-17_Cole.png",
+      "metadataFileName": "2025-11-17_Cole.png.json",
+      "thumbnailFileName": "thumbs/2025-11-17_Cole.png.webp",
+      "width": 5474,
+      "height": 7276
+    },
+    {
+      "fileName": "2025-11-17_Eric.png",
+      "metadataFileName": "2025-11-17_Eric.png.json",
+      "thumbnailFileName": "thumbs/2025-11-17_Eric.png.webp",
+      "width": 5719,
+      "height": 4289
+    },
+    {
+      "fileName": "2025-11-22_NYTraffic.png",
+      "metadataFileName": "2025-11-22_NYTraffic.png.json",
+      "thumbnailFileName": "thumbs/2025-11-22_NYTraffic.png.webp",
+      "width": 4200,
+      "height": 6904
+    },
+    {
+      "fileName": "2025-12-12_Arena_Eric.jpg",
+      "metadataFileName": "2025-12-12_Arena_Eric.jpg.json",
+      "thumbnailFileName": "thumbs/2025-12-12_Arena_Eric.jpg.webp",
+      "width": 5074,
+      "height": 6966
+    },
+    {
+      "fileName": "2025-12-21_Tara.png",
+      "metadataFileName": "2025-12-21_Tara.png.json",
+      "thumbnailFileName": "thumbs/2025-12-21_Tara.png.webp",
+      "width": 2852,
+      "height": 2292
+    },
+    {
+      "fileName": "2025-12-30_cat-last.jpg",
+      "metadataFileName": "2025-12-30_cat-last.jpg.json",
+      "thumbnailFileName": "thumbs/2025-12-30_cat-last.jpg.webp",
+      "width": 3575,
+      "height": 3056
+    },
+    {
+      "fileName": "arena-unknown-1.png",
+      "metadataFileName": "arena-unknown-1.png.json",
+      "thumbnailFileName": "thumbs/arena-unknown-1.png.webp",
+      "width": 5271,
+      "height": 6908
+    },
+    {
+      "fileName": "arena-unknown-2.png",
+      "metadataFileName": "arena-unknown-2.png.json",
+      "thumbnailFileName": "thumbs/arena-unknown-2.png.webp",
+      "width": 5474,
+      "height": 7276
+    },
+    {
+      "fileName": "autumn-1.png",
+      "metadataFileName": "autumn-1.png.json",
+      "thumbnailFileName": "thumbs/autumn-1.png.webp",
+      "width": 5690,
+      "height": 4762
+    },
+    {
+      "fileName": "autumn-2.png",
+      "metadataFileName": "autumn-2.png.json",
+      "thumbnailFileName": "thumbs/autumn-2.png.webp",
+      "width": 5503,
+      "height": 4053
+    },
+    {
+      "fileName": "backyard.png",
+      "metadataFileName": "backyard.png.json",
+      "thumbnailFileName": "thumbs/backyard.png.webp",
+      "width": 6128,
+      "height": 8144
+    },
+    {
+      "fileName": "cody1.jpg",
+      "metadataFileName": "cody1.jpg.json",
+      "thumbnailFileName": "thumbs/cody1.jpg.webp",
+      "width": 4025,
+      "height": 3156
+    },
+    {
+      "fileName": "cody2.jpg",
+      "metadataFileName": "cody2.jpg.json",
+      "thumbnailFileName": "thumbs/cody2.jpg.webp",
+      "width": 4192,
+      "height": 3156
+    },
+    {
+      "fileName": "eric6.jpg",
+      "metadataFileName": "eric6.jpg.json",
+      "thumbnailFileName": "thumbs/eric6.jpg.webp",
+      "width": 4192,
+      "height": 3156
+    },
+    {
+      "fileName": "eric7.jpg",
+      "metadataFileName": "eric7.jpg.json",
+      "thumbnailFileName": "thumbs/eric7.jpg.webp",
+      "width": 3156,
+      "height": 4192
+    },
+    {
+      "fileName": "garden-tomatos.jpg",
+      "metadataFileName": "garden-tomatos.jpg.json",
+      "thumbnailFileName": "thumbs/garden-tomatos.jpg.webp",
+      "width": 3935,
+      "height": 3056
+    },
+    {
+      "fileName": "heather1.png",
+      "metadataFileName": "heather1.png.json",
+      "thumbnailFileName": "thumbs/heather1.png.webp",
+      "width": 3632,
+      "height": 2730
+    },
+    {
+      "fileName": "kristen-byHarry.jpg",
+      "metadataFileName": "kristen-byHarry.jpg.json",
+      "thumbnailFileName": "thumbs/kristen-byHarry.jpg.webp",
+      "width": 1482,
+      "height": 1536
+    },
+    {
+      "fileName": "marie-2.jpg",
+      "metadataFileName": "marie-2.jpg.json",
+      "thumbnailFileName": "thumbs/marie-2.jpg.webp",
+      "width": 7276,
+      "height": 5474
+    },
+    {
+      "fileName": "marie3.jpg",
+      "metadataFileName": "marie3.jpg.json",
+      "thumbnailFileName": "thumbs/marie3.jpg.webp",
+      "width": 7276,
+      "height": 5474
+    },
+    {
+      "fileName": "ponyo_3.png",
+      "metadataFileName": "ponyo_3.png.json",
+      "thumbnailFileName": "thumbs/ponyo_3.png.webp",
+      "width": 7276,
+      "height": 5457
+    },
+    {
+      "fileName": "ponyo_4.png",
+      "metadataFileName": "ponyo_4.png.json",
+      "thumbnailFileName": "thumbs/ponyo_4.png.webp",
+      "width": 3493,
+      "height": 2620
+    },
+    {
+      "fileName": "ponyo_9.png",
+      "metadataFileName": "ponyo_9.png.json",
+      "thumbnailFileName": "thumbs/ponyo_9.png.webp",
+      "width": 3623,
+      "height": 2717
+    },
+    {
+      "fileName": "psu-sunset.jpg",
+      "metadataFileName": "psu-sunset.jpg.json",
+      "thumbnailFileName": "thumbs/psu-sunset.jpg.webp",
+      "width": 3638,
+      "height": 2737
+    },
+    {
+      "fileName": "seamus.jpg",
+      "metadataFileName": "seamus.jpg.json",
+      "thumbnailFileName": "thumbs/seamus.jpg.webp",
+      "width": 2470,
+      "height": 1853
+    },
+    {
+      "fileName": "seana1.jpg",
+      "metadataFileName": "seana1.jpg.json",
+      "thumbnailFileName": "thumbs/seana1.jpg.webp",
+      "width": 3632,
+      "height": 2730
+    },
+    {
+      "fileName": "seana2.png",
+      "metadataFileName": "seana2.png.json",
+      "thumbnailFileName": "thumbs/seana2.png.webp",
+      "width": 3466,
+      "height": 4348
+    },
+    {
+      "fileName": "seana3.jpg",
+      "metadataFileName": "seana3.jpg.json",
+      "thumbnailFileName": "thumbs/seana3.jpg.webp",
+      "width": 2264,
+      "height": 2913
+    },
+    {
+      "fileName": "seana4.jpg",
+      "metadataFileName": "seana4.jpg.json",
+      "thumbnailFileName": "thumbs/seana4.jpg.webp",
+      "width": 1895,
+      "height": 2636
+    },
+    {
+      "fileName": "sid.jpg",
+      "metadataFileName": "sid.jpg.json",
+      "thumbnailFileName": "thumbs/sid.jpg.webp",
+      "width": 3632,
+      "height": 2730
+    },
+    {
+      "fileName": "sir1.png",
+      "metadataFileName": "sir1.png.json",
+      "thumbnailFileName": "thumbs/sir1.png.webp",
+      "width": 4209,
+      "height": 3125
+    },
+    {
+      "fileName": "sky1.png",
+      "metadataFileName": "sky1.png.json",
+      "thumbnailFileName": "thumbs/sky1.png.webp",
+      "width": 8144,
+      "height": 6128
+    },
+    {
+      "fileName": "sky2.png",
+      "metadataFileName": "sky2.png.json",
+      "thumbnailFileName": "thumbs/sky2.png.webp",
+      "width": 5166,
+      "height": 5349
+    },
+    {
+      "fileName": "sky3.png",
+      "metadataFileName": "sky3.png.json",
+      "thumbnailFileName": "thumbs/sky3.png.webp",
+      "width": 5984,
+      "height": 6783
+    },
+    {
+      "fileName": "sky4.png",
+      "metadataFileName": "sky4.png.json",
+      "thumbnailFileName": "thumbs/sky4.png.webp",
+      "width": 7276,
+      "height": 5474
+    },
+    {
+      "fileName": "tara1.png",
+      "metadataFileName": "tara1.png.json",
+      "thumbnailFileName": "thumbs/tara1.png.webp",
+      "width": 4004,
+      "height": 3200
+    },
+    {
+      "fileName": "tara2.png",
+      "metadataFileName": "tara2.png.json",
+      "thumbnailFileName": "thumbs/tara2.png.webp",
+      "width": 2912,
+      "height": 1970
+    },
+    {
+      "fileName": "Tara3.png",
+      "metadataFileName": "Tara3.png.json",
+      "thumbnailFileName": "thumbs/Tara3.png.webp",
+      "width": 2158,
+      "height": 1617
+    },
+    {
+      "fileName": "tara4.jpg",
+      "metadataFileName": "tara4.jpg.json",
+      "thumbnailFileName": "thumbs/tara4.jpg.webp",
+      "width": 4064,
+      "height": 3056
+    },
+    {
+      "fileName": "tim2.jpg",
+      "metadataFileName": "tim2.jpg.json",
+      "thumbnailFileName": "thumbs/tim2.jpg.webp",
+      "width": 3638,
+      "height": 2737
+    },
+    {
+      "fileName": "tim3.jpg",
+      "metadataFileName": "tim3.jpg.json",
+      "thumbnailFileName": "thumbs/tim3.jpg.webp",
+      "width": 3148,
+      "height": 4990
+    }
+  ]
 }
