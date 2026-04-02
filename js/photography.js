@@ -21,12 +21,15 @@ const lightboxPanel = document.getElementById("lightbox-panel");
 const lightboxFigure = document.getElementById("lightbox-figure");
 const lightboxLoader = document.getElementById("lightbox-loader");
 const lightboxImage = document.getElementById("lightbox-image");
+const lightboxCopy = document.getElementById("lightbox-copy");
 const lightboxTitle = document.getElementById("lightbox-title");
 const lightboxDate = document.getElementById("lightbox-date");
 const lightboxDescription = document.getElementById("lightbox-description");
 const lightboxTags = document.getElementById("lightbox-tags");
 const lightboxExpand = document.getElementById("lightbox-expand");
 const lightboxExpandIcon = document.getElementById("lightbox-expand-icon");
+const lightboxInfoToggle = document.getElementById("lightbox-info-toggle");
+const lightboxInfoToggleIcon = document.getElementById("lightbox-info-toggle-icon");
 const lightboxClose = document.getElementById("lightbox-close");
 const lightboxPrev = document.getElementById("lightbox-prev");
 const lightboxNext = document.getElementById("lightbox-next");
@@ -34,6 +37,7 @@ const lightboxNext = document.getElementById("lightbox-next");
 let touchStartX = 0;
 let touchStartY = 0;
 let lightboxLoadToken = 0;
+let lightboxInfoCollapsed = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   wireEvents();
@@ -54,7 +58,9 @@ function wireEvents() {
       return;
     }
 
-    state.activeTag = button.dataset.tag || "all";
+    const nextTag = button.dataset.tag || "all";
+    state.activeTag =
+      nextTag !== "all" && nextTag === state.activeTag ? "all" : nextTag;
     syncQueryString();
     renderTagToolbar();
     renderGallery();
@@ -78,6 +84,7 @@ function wireEvents() {
     navigateLightbox(1);
   });
   lightboxExpand.addEventListener("click", toggleLightboxFullscreen);
+  lightboxInfoToggle.addEventListener("click", toggleLightboxInfoPanel);
   lightbox.addEventListener("click", (event) => {
     if (event.target.hasAttribute("data-close-lightbox")) {
       closeLightbox();
@@ -325,6 +332,7 @@ function openLightbox(fileName) {
     return;
   }
 
+  updateLightboxInfoPanel();
   lightbox.hidden = false;
   document.body.classList.add("modal-open");
 }
@@ -373,6 +381,8 @@ function updateLightbox(fileName) {
 
 function closeLightbox() {
   lightboxLoadToken += 1;
+  lightboxInfoCollapsed = false;
+  updateLightboxInfoPanel();
   exitLightboxFullscreen();
   lightbox.hidden = true;
   document.body.classList.remove("modal-open");
@@ -435,6 +445,20 @@ function setLightboxLoadingState(isLoading) {
   lightboxLoader.setAttribute("aria-hidden", isLoading ? "false" : "true");
 }
 
+function toggleLightboxInfoPanel() {
+  lightboxInfoCollapsed = !lightboxInfoCollapsed;
+  updateLightboxInfoPanel();
+}
+
+function updateLightboxInfoPanel() {
+  lightboxPanel.classList.toggle("is-copy-collapsed", lightboxInfoCollapsed);
+  lightboxCopy.hidden = lightboxInfoCollapsed;
+  lightboxInfoToggle.setAttribute("aria-expanded", lightboxInfoCollapsed ? "false" : "true");
+  lightboxInfoToggle.setAttribute("aria-label", lightboxInfoCollapsed ? "Show details" : "Hide details");
+  lightboxInfoToggle.setAttribute("title", lightboxInfoCollapsed ? "Show details" : "Hide details");
+  lightboxInfoToggleIcon.innerHTML = lightboxInfoCollapsed ? "&#x276E;" : "&#x276F;";
+}
+
 function toggleLightboxFullscreen() {
   if (isLightboxFullscreen()) {
     exitLightboxFullscreen();
@@ -461,10 +485,14 @@ function updateFullscreenButton() {
   lightboxExpand.hidden = !supported;
 
   if (!supported) {
+    lightboxClose.hidden = false;
+    lightboxInfoToggle.hidden = false;
     return;
   }
 
   const fullscreen = isLightboxFullscreen();
+  lightboxClose.hidden = fullscreen;
+  lightboxInfoToggle.hidden = fullscreen;
   lightboxExpand.setAttribute("aria-label", fullscreen ? "Exit fullscreen" : "Enter fullscreen");
   lightboxExpand.setAttribute("title", fullscreen ? "Exit fullscreen" : "Enter fullscreen");
   lightboxExpandIcon.innerHTML = fullscreen ? "&#x2715;" : "&#x26F6;";

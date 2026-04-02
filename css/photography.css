@@ -343,6 +343,7 @@ code {
   background: rgba(9, 16, 20, 0.84);
   color: var(--text);
   cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 
 .lightbox-expand {
@@ -377,6 +378,51 @@ code {
 .lightbox-expand span {
   font-size: 1.2rem;
   line-height: 1;
+}
+
+.lightbox-info-toggle {
+  position: absolute;
+  top: 0.9rem;
+  right: calc(0.9rem + 8.3rem);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(9, 16, 20, 0.84);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.lightbox-info-toggle:hover,
+.lightbox-info-toggle:focus-visible {
+  background: rgba(24, 35, 40, 0.96);
+  border-color: var(--accent);
+}
+
+.lightbox-info-toggle span {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.lightbox-panel.is-copy-collapsed {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.lightbox-panel.is-copy-collapsed .lightbox-copy {
+  display: none;
+}
+
+.lightbox-panel.is-copy-collapsed .lightbox-close,
+.lightbox-panel.is-copy-collapsed .lightbox-expand,
+.lightbox-panel.is-copy-collapsed .lightbox-info-toggle,
+.lightbox-panel.is-copy-collapsed .lightbox-nav {
+  background: rgba(9, 16, 20, 0.66);
 }
 
 .lightbox-nav {
@@ -414,7 +460,7 @@ code {
 }
 
 .lightbox-nav-next {
-  right: calc(0.9rem + 4.6rem);
+  right: 0.9rem;
 }
 
 .lightbox-nav span {
@@ -506,9 +552,12 @@ code {
 }
 
 .lightbox-panel:fullscreen .lightbox-nav,
-.lightbox-panel:fullscreen .lightbox-close,
 .lightbox-panel:fullscreen .lightbox-expand {
   background: rgba(5, 9, 11, 0.8);
+}
+
+.lightbox-panel:fullscreen .lightbox-expand {
+  right: 0.9rem;
 }
 
 .lightbox-description {
@@ -586,12 +635,18 @@ body.modal-open {
     right: calc(0.65rem + 4.25rem);
   }
 
+  .lightbox-info-toggle {
+    width: 2.75rem;
+    height: 2.75rem;
+    right: calc(0.65rem + 7.4rem);
+  }
+
   .lightbox-nav-prev {
     left: 0.65rem;
   }
 
   .lightbox-nav-next {
-    right: calc(0.65rem + 4.25rem);
+    right: 0.65rem;
   }
 
   .lightbox-copy {

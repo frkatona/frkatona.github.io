@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+// update photography portfolio assets with:
 // npm run portfolio:check
 // npm run portfolio:sync
 // npm run portfolio:sync:clean
@@ -38,6 +39,7 @@ async function main() {
     migratedThumbs: [],
     createdSidecars: [],
     generatedThumbs: [],
+    nullCaptureDatePhotos: [],
     staleThumbs: [],
     staleSidecars: [],
     removedThumbs: [],
@@ -65,9 +67,10 @@ async function main() {
 
     const hasSidecarAfterSync = maybeMigrateLegacySidecar(fileName, imagesByStem, report, plannedMoves);
     const hasThumbAfterSync = maybeMigrateLegacyThumb(fileName, imagesByStem, report, plannedMoves);
+    let sidecarData = null;
 
     if (!fs.existsSync(expectedSidecarPath) && !hasSidecarAfterSync) {
-      createSidecar(fileName, expectedSidecarPath, report);
+      sidecarData = createSidecar(fileName, expectedSidecarPath, report);
     } else {
       const sidecarPathToValidate = fs.existsSync(expectedSidecarPath)
         ? expectedSidecarPath
@@ -77,7 +80,13 @@ async function main() {
 
       if (sidecarPathToValidate && !isValidJsonFile(sidecarPathToValidate)) {
         report.invalidSidecars.push(path.basename(sidecarPathToValidate));
+      } else if (sidecarPathToValidate) {
+        sidecarData = readJsonIfExists(sidecarPathToValidate);
       }
+    }
+
+    if (sidecarData && Object.prototype.hasOwnProperty.call(sidecarData, "captureDate") && sidecarData.captureDate === null) {
+      report.nullCaptureDatePhotos.push(fileName);
     }
 
     if (shouldGenerateThumbnail(imagePath, expectedThumbPath, hasThumbAfterSync)) {
@@ -101,6 +110,9 @@ async function main() {
 
   report.staleThumbs = findStaleThumbs(images, plannedMoves);
   report.staleSidecars = findStaleSidecars(images, plannedMoves);
+  report.nullCaptureDatePhotos.sort((left, right) =>
+    left.localeCompare(right, undefined, { numeric: true, sensitivity: "base" })
+  );
 
   if (options.pruneStale) {
     pruneStaleFiles(report);
@@ -373,6 +385,7 @@ function createSidecar(fileName, sidecarPath, report) {
   }
 
   report.createdSidecars.push(path.relative(ROOT_DIR, sidecarPath));
+  return payload;
 }
 
 function buildPlaceholderSidecar(fileName) {
@@ -629,6 +642,7 @@ function printSummary(imageCount, report) {
   printMoveList("Migrated legacy thumbs", report.migratedThumbs);
   printFileList("Created sidecars", report.createdSidecars);
   printFileList("Generated thumbnails", report.generatedThumbs);
+  printFileList("Photos with null captureDate", report.nullCaptureDatePhotos);
   printFileList("Invalid sidecars", report.invalidSidecars);
   printFileList("Stale thumbnails", report.staleThumbs);
   printFileList("Stale sidecars", report.staleSidecars);
