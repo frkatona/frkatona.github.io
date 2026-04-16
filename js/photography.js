@@ -24,6 +24,7 @@ const state = {
   activeTag: "all",
   activeSort: "newest",
   activeLightboxFileName: null,
+  openTagCategory: "",
 };
 
 const galleryGrid = document.getElementById("gallery-grid");
@@ -70,6 +71,15 @@ function wireEvents() {
   });
 
   tagToolbar.addEventListener("click", (event) => {
+    const categoryToggle = event.target.closest(".tag-category-toggle");
+
+    if (categoryToggle) {
+      const nextCategory = categoryToggle.dataset.category || "";
+      state.openTagCategory = nextCategory === state.openTagCategory ? "" : nextCategory;
+      renderTagToolbar();
+      return;
+    }
+
     const button = event.target.closest(".tag-button");
 
     if (!button) {
@@ -201,6 +211,9 @@ async function loadPortfolioItem(entry) {
 
 function renderTagToolbar() {
   const categorizedTags = getCategorizedTags(state.items);
+  const activeTagCategory = findTagCategory(categorizedTags, state.activeTag);
+  const openCategory = categorizedTags[state.openTagCategory]?.length ? state.openTagCategory : "";
+  const openCategoryConfig = TAG_CATEGORIES.find(({ key }) => key === openCategory) || null;
 
   tagToolbar.innerHTML = `
     <div class="tag-toolbar-all">
@@ -209,15 +222,37 @@ function renderTagToolbar() {
     <div class="tag-toolbar-grid">
       ${TAG_CATEGORIES.map(
         ({ key, label }) => `
-          <section class="tag-category" aria-labelledby="tag-category-${escapeHtml(key)}">
-            <p class="tag-category-title" id="tag-category-${escapeHtml(key)}">${escapeHtml(label)}</p>
-            <div class="tag-category-buttons">
-              ${categorizedTags[key].map((tag) => renderTagButton(tag, formatTag(tag))).join("")}
-            </div>
-          </section>
+          <button
+            class="tag-category-toggle${key === openCategory ? " is-open" : ""}${key === activeTagCategory ? " has-active-tag" : ""}"
+            type="button"
+            data-category="${escapeHtml(key)}"
+            aria-expanded="${key === openCategory ? "true" : "false"}"
+            aria-controls="tag-category-panel"
+            ${categorizedTags[key].length ? "" : "disabled"}
+          >
+            <span>${escapeHtml(label)}</span>
+            <span class="tag-category-toggle-count">${categorizedTags[key].length}</span>
+          </button>
         `
       ).join("")}
     </div>
+    <section
+      class="tag-category-panel${openCategory ? " is-open" : ""}"
+      id="tag-category-panel"
+      aria-live="polite"
+      ${openCategory ? "" : "hidden"}
+    >
+      ${
+        openCategoryConfig
+          ? `
+            <p class="tag-category-title">${escapeHtml(openCategoryConfig.label)}</p>
+            <div class="tag-category-buttons">
+              ${categorizedTags[openCategory].map((tag) => renderTagButton(tag, formatTag(tag))).join("")}
+            </div>
+          `
+          : ""
+      }
+    </section>
   `;
 }
 
@@ -349,6 +384,20 @@ function getCategorizedTags(items) {
       [...categorizedTags[key]].sort((left, right) => formatTag(left).localeCompare(formatTag(right))),
     ])
   );
+}
+
+function findTagCategory(categorizedTags, tag) {
+  if (!tag || tag === "all") {
+    return "";
+  }
+
+  for (const { key } of TAG_CATEGORIES) {
+    if (categorizedTags[key]?.includes(tag)) {
+      return key;
+    }
+  }
+
+  return "";
 }
 
 function sanitizeTagGroups(tags) {
