@@ -1,0 +1,16 @@
+{
+  "title": "Mom Lights",
+  "description": "Placeholder description for Mom Lights. Update this sidecar with a real caption when ready.",
+  "tags": {
+    "subject": [
+    ],
+    "location": ["Shermans Dale", "Pennsylvania"],
+    "cameraDetails": ["Sony a6300", "telephoto"],
+    "other": [
+      "placeholder-uncurated"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "placeholder"
+}

@@ -1,12 +1,15 @@
-﻿{
-    "title":  "Autumn 2",
-    "description":  "Autumn singing and playing acoustic guitar at My Cafe Buzz's open mic event",
-    "tags":  [
-                 "open mic",
-                 "Autumn",
-                 "My Cafe Buzz"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Autumn 2",
+  "description": "Autumn singing and playing acoustic guitar at My Cafe Buzz's open mic event",
+  "tags": {
+    "subject": ["Autumn"],
+    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

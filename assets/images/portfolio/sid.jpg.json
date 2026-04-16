@@ -1,12 +1,15 @@
-﻿{
-    "title":  "Sid",
-    "description":  "Sid singing and playing acoustic guitar at the Big Springs Brewery open mic event",
-    "tags":  [
-                 "open mic",
-                 "Big Springs Brewery",
-                 "Sid"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Sid",
+  "description": "Sid singing and playing acoustic guitar at the Big Springs Brewery open mic event",
+  "tags": {
+    "subject": ["Sid"],
+    "location": ["Big Springs Brewery", "Bellefonte", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

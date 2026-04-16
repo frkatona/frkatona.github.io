@@ -1,10 +1,15 @@
-﻿{
-    "title":  "sunbeam trophy",
-    "description":  "hockey trophy in a sunbeam in my dusty childhood bedroom",
-    "tags":  [
-                 "still-life"
-             ],
-    "captureDate":  "2025-08-01",
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "sunbeam trophy",
+  "description": "hockey trophy in a sunbeam in my dusty childhood bedroom",
+  "tags": {
+    "subject": [],
+    "location": [],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "still-life"
+    ]
+  },
+  "captureDate": "2025-08-01",
+  "featured": false,
+  "status": "updated"
 }

@@ -1,13 +1,16 @@
-﻿{
-    "title":  "Tara",
-    "description":  "Tara singing and playing keyboard at My Cafe Buzz's open mic event, captured with a low shot under the patio roof with vivid lens flares in late fall",
-    "tags":  [
-                 "open mic",
-                 "Tara",
-                 "My Cafe Buzz",
-                 "fall"
-             ],
-    "captureDate":  "2025-11-09",
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Tara",
+  "description": "Tara singing and playing keyboard at My Cafe Buzz's open mic event, captured with a low shot under the patio roof with vivid lens flares in late fall",
+  "tags": {
+    "subject": ["Tara"],
+    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic",
+      "fall"
+    ]
+  },
+  "captureDate": "2025-11-09",
+  "featured": false,
+  "status": "updated"
 }

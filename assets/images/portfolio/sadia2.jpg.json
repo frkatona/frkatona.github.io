@@ -1,0 +1,16 @@
+{
+  "title": "Sadia 2",
+  "description": "Placeholder description for Sadia 2. Update this sidecar with a real caption when ready.",
+  "tags": {
+    "subject": ["Sadia"
+    ],
+    "location": ["State College", "Pennsylvania"],
+    "cameraDetails": ["Sony a7s ii", "telephoto"],
+    "other": [
+      "portrait"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
+}

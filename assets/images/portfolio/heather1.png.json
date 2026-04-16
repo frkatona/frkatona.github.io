@@ -1,12 +1,15 @@
-﻿{
-    "title":  "Heather 1",
-    "description":  "Heather at Big Springs Brewery open mic event",
-    "tags":  [
-                 "open mic",
-                 "Heather",
-                 "Big Springs Brewery"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Heather 1",
+  "description": "Heather at Big Springs Brewery open mic event",
+  "tags": {
+    "subject": ["Heather"],
+    "location": ["Big Springs Brewery", "Bellefonte", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

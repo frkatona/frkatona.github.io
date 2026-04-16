@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-02",
+  "generatedAt": "2026-04-16",
   "thumbnailMaxDimension": 1400,
   "thumbnailFormat": "webp",
   "items": [
@@ -165,6 +165,13 @@
       "height": 8144
     },
     {
+      "fileName": "chelsea-crop2.jpg",
+      "metadataFileName": "chelsea-crop2.jpg.json",
+      "thumbnailFileName": "thumbs/chelsea-crop2.jpg.webp",
+      "width": 2026,
+      "height": 1335
+    },
+    {
       "fileName": "cody1.jpg",
       "metadataFileName": "cody1.jpg.json",
       "thumbnailFileName": "thumbs/cody1.jpg.webp",
@@ -191,6 +198,20 @@
       "thumbnailFileName": "thumbs/eric7.jpg.webp",
       "width": 3156,
       "height": 4192
+    },
+    {
+      "fileName": "eyeball.jpg",
+      "metadataFileName": "eyeball.jpg.json",
+      "thumbnailFileName": "thumbs/eyeball.jpg.webp",
+      "width": 1424,
+      "height": 949
+    },
+    {
+      "fileName": "firefighter-group.jpg",
+      "metadataFileName": "firefighter-group.jpg.json",
+      "thumbnailFileName": "thumbs/firefighter-group.jpg.webp",
+      "width": 4712,
+      "height": 2718
     },
     {
       "fileName": "garden-tomatos.jpg",
@@ -228,6 +249,27 @@
       "height": 5474
     },
     {
+      "fileName": "mom-lights.jpg",
+      "metadataFileName": "mom-lights.jpg.json",
+      "thumbnailFileName": "thumbs/mom-lights.jpg.webp",
+      "width": 4000,
+      "height": 3276
+    },
+    {
+      "fileName": "mom-plants.jpg",
+      "metadataFileName": "mom-plants.jpg.json",
+      "thumbnailFileName": "thumbs/mom-plants.jpg.webp",
+      "width": 3000,
+      "height": 2000
+    },
+    {
+      "fileName": "moms-lantern.jpg",
+      "metadataFileName": "moms-lantern.jpg.json",
+      "thumbnailFileName": "thumbs/moms-lantern.jpg.webp",
+      "width": 3000,
+      "height": 2000
+    },
+    {
       "fileName": "ponyo_3.png",
       "metadataFileName": "ponyo_3.png.json",
       "thumbnailFileName": "thumbs/ponyo_3.png.webp",
@@ -254,6 +296,13 @@
       "thumbnailFileName": "thumbs/psu-sunset.jpg.webp",
       "width": 3638,
       "height": 2737
+    },
+    {
+      "fileName": "sadia2.jpg",
+      "metadataFileName": "sadia2.jpg.json",
+      "thumbnailFileName": "thumbs/sadia2.jpg.webp",
+      "width": 2832,
+      "height": 3653
     },
     {
       "fileName": "seamus.jpg",
@@ -331,6 +380,20 @@
       "thumbnailFileName": "thumbs/sky4.png.webp",
       "width": 7276,
       "height": 5474
+    },
+    {
+      "fileName": "sun.jpg",
+      "metadataFileName": "sun.jpg.json",
+      "thumbnailFileName": "thumbs/sun.jpg.webp",
+      "width": 1901,
+      "height": 1377
+    },
+    {
+      "fileName": "sunset1.jpg",
+      "metadataFileName": "sunset1.jpg.json",
+      "thumbnailFileName": "thumbs/sunset1.jpg.webp",
+      "width": 4240,
+      "height": 2209
     },
     {
       "fileName": "tara1.png",

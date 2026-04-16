@@ -1,6 +1,5 @@
 #TODO
 [ ] General
- - [ ] update favicon (this shade of green is ugly)
  - [ ] take better pictures of myself
  - [ ] investigate optimal image sizes/filetypes and standardize border types and color schemes
  - [ ] Get 

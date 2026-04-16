@@ -1,11 +1,15 @@
-﻿{
-    "title":  "Tara 2",
-    "description":  " ",
-    "tags":  [
-                 "Big Springs Brewery",
-                 "open mic"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Tara 2",
+  "description": " ",
+  "tags": {
+    "subject": ["Tara"],
+    "location": ["Big Springs Brewery", "State College", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

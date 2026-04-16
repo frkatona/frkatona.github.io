@@ -1,0 +1,16 @@
+{
+  "title": "Sun",
+  "description": "Me probably destroying my camera sensor",
+  "tags": {
+    "subject": [
+    ],
+    "location": ["Lemont", "Pennsylvania"],
+    "cameraDetails": ["Sony a7s ii"],
+    "other": [
+      "landscape"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "placeholder"
+}

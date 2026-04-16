@@ -1,11 +1,16 @@
-﻿{
-    "title":  "Sir 1",
-    "description":  "Sir sitting in the window with a curious Ponyo",
-    "tags":  [
-                 "pet",
-                 "cat"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Window Sir",
+  "description": "Sir sitting in the window with a curious Ponyo",
+  "tags": {
+    "subject": [],
+    "location": ["Lemont", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "pet",
+      "cat"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

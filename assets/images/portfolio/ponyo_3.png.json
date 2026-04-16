@@ -1,11 +1,16 @@
-﻿{
-    "title":  "Bella chase",
-    "description":  "Bella chasing Ponyo",
-    "tags":  [
-                 "pet",
-                 "dog"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Bella chase",
+  "description": "Bella chasing Ponyo",
+  "tags": {
+    "subject": [],
+    "location": ["Lemont", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "pet",
+      "dog"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

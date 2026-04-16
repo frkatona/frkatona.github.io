@@ -1,10 +1,15 @@
-﻿{
-    "title":  "NYC Traffic",
-    "description":  "NYC traffic at night, captured while I was stuck on the bridge departing from JFK in a traffic jam",
-    "tags":  [
-                 "landscape"
-             ],
-    "captureDate":  "2025-11-22",
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "NYC Traffic",
+  "description": "NYC traffic at night, captured while I was stuck on the bridge departing from JFK in a traffic jam",
+  "tags": {
+    "subject": [],
+    "location": [],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "landscape"
+    ]
+  },
+  "captureDate": "2025-11-22",
+  "featured": false,
+  "status": "updated"
 }

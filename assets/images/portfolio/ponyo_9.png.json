@@ -1,11 +1,16 @@
-﻿{
-    "title":  "Ponyo and Bella 2",
-    "description":  "Ponyo and Bella panting together",
-    "tags":  [
-                 "pet",
-                 "dog"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Ponyo and Bella 2",
+  "description": "Ponyo and Bella panting together",
+  "tags": {
+    "subject": [],
+    "location": ["Lemont", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "pet",
+      "dog"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

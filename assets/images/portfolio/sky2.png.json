@@ -1,11 +1,16 @@
-﻿{
-    "title":  "Sky 2",
-    "description":  "Astrophotography image of the sky during sunset in Centre Hall",
-    "tags":  [
-                 "astrophotography",
-                 "landscape"
-             ],
-    "captureDate":  "2025-07-13",
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Sky 2",
+  "description": "Astrophotography image of the sky during sunset in Centre Hall",
+  "tags": {
+    "subject": [],
+    "location": [],
+    "cameraDetails": [],
+    "other": [
+      "astrophotography",
+      "landscape"
+    ]
+  },
+  "captureDate": "2025-07-13",
+  "featured": false,
+  "status": "updated"
 }

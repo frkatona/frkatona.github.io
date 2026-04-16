@@ -1,13 +1,15 @@
-﻿{
-    "title":  "John Doe at Arena",
-    "description":  "John Doe singing and playing guitar at Arena's open mic event, captured with moody stage lighting",
-    "tags":  [
-                 "open mic",
-                 "John Doe",
-                 "Arena",
-                 "fall"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "John Doe at Arena",
+  "description": "John Doe singing and playing guitar at Arena's open mic event, captured with moody stage lighting",
+  "tags": {
+    "subject": ["John Doe"],
+    "location": ["Arena Bar & Grill", "State College", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

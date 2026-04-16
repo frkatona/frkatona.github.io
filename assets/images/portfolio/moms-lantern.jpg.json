@@ -1,0 +1,16 @@
+{
+  "title": "Moms Lantern",
+  "description": "Placeholder description for Moms Lantern. Update this sidecar with a real caption when ready.",
+  "tags": {
+    "subject": [
+    ],
+    "location": ["Shermans Dale", "Pennsylvania"],
+    "cameraDetails": ["Sony a6300", "telephoto"],
+    "other": [
+      "still life"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "placeholder"
+}

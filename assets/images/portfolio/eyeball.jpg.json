@@ -1,0 +1,16 @@
+{
+  "title": "Eyeball",
+  "description": "eyeball",
+  "tags": {
+    "subject": [
+    ],
+    "location": [],
+    "cameraDetails": [],
+    "other": [
+      "experimental"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "placeholder"
+}

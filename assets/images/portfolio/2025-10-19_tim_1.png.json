@@ -1,13 +1,16 @@
-﻿{
-    "title":  "Tim 1",
-    "description":  "Tim playing acoustic guitar at My Cafe Buzz's open mic event",
-    "tags":  [
-                 "open mic",
-                 "Tim",
-                 "My Cafe Buzz",
-                 "fall"
-             ],
-    "captureDate":  "2025-10-19",
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Tim 1",
+  "description": "Tim playing acoustic guitar at My Cafe Buzz's open mic event",
+  "tags": {
+    "subject": ["Tim"],
+    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic",
+      "fall"
+    ]
+  },
+  "captureDate": "2025-10-19",
+  "featured": false,
+  "status": "updated"
 }

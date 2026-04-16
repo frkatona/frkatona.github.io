@@ -1,10 +1,15 @@
-﻿{
-    "title":  "Sky 1",
-    "description":  "Astrophotography image of the night sky",
-    "tags":  [
-                 "astrophotography"
-             ],
-    "captureDate":  "2025-07-14",
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Sky 1",
+  "description": "Astrophotography image of the night sky",
+  "tags": {
+    "subject": [],
+    "location": ["Centre Hall", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "astrophotography"
+    ]
+  },
+  "captureDate": "2025-07-14",
+  "featured": false,
+  "status": "updated"
 }

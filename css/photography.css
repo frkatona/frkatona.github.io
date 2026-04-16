@@ -183,10 +183,43 @@ code {
 }
 
 .tag-toolbar {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 0.85rem;
+}
+
+.tag-toolbar-all,
+.tag-category-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
-  margin-top: 0.85rem;
+}
+
+.tag-toolbar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.tag-category {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid rgba(246, 234, 212, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.tag-category-title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .tag-button,
@@ -206,6 +239,11 @@ code {
 .tag-button {
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.tag-toolbar .tag-button {
+  justify-content: flex-start;
+  text-align: left;
 }
 
 .tag-button:hover,
@@ -541,6 +579,10 @@ code {
   display: none;
 }
 
+.lightbox-panel:fullscreen .lightbox-info-toggle {
+  display: none;
+}
+
 .lightbox-panel:fullscreen .lightbox-figure {
   min-height: 100vh;
   background: #05090b;
@@ -575,6 +617,10 @@ body.modal-open {
     --lightbox-nav-top: clamp(10rem, 34vh, 18rem);
   }
 
+  .tag-toolbar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .lightbox-panel {
     grid-template-columns: 1fr;
   }
@@ -605,6 +651,10 @@ body.modal-open {
 
   .active-filter-copy {
     text-align: left;
+  }
+
+  .tag-toolbar-grid {
+    grid-template-columns: 1fr;
   }
 
   .gallery-grid {

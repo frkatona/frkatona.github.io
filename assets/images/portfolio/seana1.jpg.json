@@ -1,12 +1,15 @@
-﻿{
-    "title":  "Seana 1",
-    "description":  "Seana singing and playing acoustic guitar at Big Springs Brewery open mic event",
-    "tags":  [
-                 "open mic",
-                 "Seana",
-                 "Big Springs Brewery"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "placeholder"
+{
+  "title": "Seana 1",
+  "description": "Seana singing and playing acoustic guitar at Big Springs Brewery open mic event",
+  "tags": {
+    "subject": ["Seana"],
+    "location": ["Big Springs Brewery", "Bellefonte", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "placeholder"
 }

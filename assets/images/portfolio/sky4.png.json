@@ -1,10 +1,15 @@
-﻿{
-    "title":  "Lemont Sunset",
-    "description":  "Sunset in lemont from the back porch",
-    "tags":  [
-                 "landscape"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Lemont Sunset",
+  "description": "Sunset in lemont from the back porch",
+  "tags": {
+    "subject": [],
+    "location": ["Lemont", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "landscape"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

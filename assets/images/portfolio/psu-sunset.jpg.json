@@ -1,9 +1,14 @@
 {
   "title": "Stadium sunset",
   "description": "Sunset at the Beaver Stadium commuter lot",
-  "tags": [
-    "landscape"
-  ],
+  "tags": {
+    "subject": [],
+    "location": ["State College", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "landscape"
+    ]
+  },
   "captureDate": null,
   "featured": false,
   "status": "updated"

@@ -1,12 +1,15 @@
-﻿{
-    "title":  "Tim 3",
-    "description":  "Tim singing and playing guitar at the Arena open mic event",
-    "tags":  [
-                 "Arena",
-                 "open mic",
-                 "Tim"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Tim 3",
+  "description": "Tim singing and playing guitar at the Arena open mic event",
+  "tags": {
+    "subject": ["Tim"],
+    "location": ["Arena Bar & Grill", "State College", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

@@ -1,5 +1,23 @@
 const manifestPath = "../assets/images/portfolio/manifest.json";
 const portfolioBasePath = "../assets/images/portfolio/";
+const TAG_CATEGORIES = [
+  {
+    key: "subject",
+    label: "Subject",
+  },
+  {
+    key: "location",
+    label: "Location",
+  },
+  {
+    key: "cameraDetails",
+    label: "Camera Details",
+  },
+  {
+    key: "other",
+    label: "Other",
+  },
+];
 
 const state = {
   items: [],
@@ -161,6 +179,7 @@ async function loadPortfolioItem(entry) {
   }
 
   const captureDate = metadata.captureDate || inferCaptureDate(fileName);
+  const tagGroups = sanitizeTagGroups(metadata.tags);
 
   return {
     fileName,
@@ -171,7 +190,8 @@ async function loadPortfolioItem(entry) {
     description:
       metadata.description ||
       "Placeholder caption. Replace this in the image sidecar file when you are ready to add a real note.",
-    tags: sanitizeTags(metadata.tags),
+    tagGroups,
+    tags: flattenTagGroups(tagGroups),
     captureDate,
     width: typeof entry === "object" ? entry.width || null : null,
     height: typeof entry === "object" ? entry.height || null : null,
@@ -180,32 +200,25 @@ async function loadPortfolioItem(entry) {
 }
 
 function renderTagToolbar() {
-  const tags = getUniqueTags(state.items);
-  const buttons = [
-    {
-      tag: "all",
-      label: "All",
-    },
-    ...tags.map((tag) => ({
-      tag,
-      label: formatTag(tag),
-    })),
-  ];
+  const categorizedTags = getCategorizedTags(state.items);
 
-  tagToolbar.innerHTML = buttons
-    .map(
-      (button) => `
-        <button
-          class="tag-button${button.tag === state.activeTag ? " is-active" : ""}"
-          type="button"
-          data-tag="${escapeHtml(button.tag)}"
-          aria-pressed="${button.tag === state.activeTag ? "true" : "false"}"
-        >
-          ${escapeHtml(button.label)}
-        </button>
-      `
-    )
-    .join("");
+  tagToolbar.innerHTML = `
+    <div class="tag-toolbar-all">
+      ${renderTagButton("all", "All")}
+    </div>
+    <div class="tag-toolbar-grid">
+      ${TAG_CATEGORIES.map(
+        ({ key, label }) => `
+          <section class="tag-category" aria-labelledby="tag-category-${escapeHtml(key)}">
+            <p class="tag-category-title" id="tag-category-${escapeHtml(key)}">${escapeHtml(label)}</p>
+            <div class="tag-category-buttons">
+              ${categorizedTags[key].map((tag) => renderTagButton(tag, formatTag(tag))).join("")}
+            </div>
+          </section>
+        `
+      ).join("")}
+    </div>
+  `;
 }
 
 function renderGallery() {
@@ -317,12 +330,99 @@ function getUniqueTags(items) {
   );
 }
 
-function sanitizeTags(tags) {
-  if (!Array.isArray(tags) || !tags.length) {
-    return ["placeholder-uncurated"];
+function getCategorizedTags(items) {
+  const categorizedTags = Object.fromEntries(TAG_CATEGORIES.map(({ key }) => [key, new Set()]));
+
+  for (const item of items) {
+    for (const { key } of TAG_CATEGORIES) {
+      const tags = item.tagGroups?.[key] || [];
+
+      for (const tag of tags) {
+        categorizedTags[key].add(tag);
+      }
+    }
   }
 
-  return [...new Set(tags.map((tag) => normalizeTagValue(tag)).filter(Boolean))];
+  return Object.fromEntries(
+    TAG_CATEGORIES.map(({ key }) => [
+      key,
+      [...categorizedTags[key]].sort((left, right) => formatTag(left).localeCompare(formatTag(right))),
+    ])
+  );
+}
+
+function sanitizeTagGroups(tags) {
+  const tagGroups = {
+    subject: [],
+    location: [],
+    cameraDetails: [],
+    other: [],
+  };
+
+  if (Array.isArray(tags)) {
+    tagGroups.other = sanitizeTagValues(tags);
+  } else if (tags && typeof tags === "object") {
+    for (const [rawCategory, values] of Object.entries(tags)) {
+      const normalizedValues = sanitizeTagValues(values);
+
+      if (!normalizedValues.length) {
+        continue;
+      }
+
+      const category = normalizeTagCategoryKey(rawCategory);
+
+      if (!category) {
+        tagGroups.other.push(...normalizedValues);
+        continue;
+      }
+
+      tagGroups[category].push(...normalizedValues);
+    }
+  }
+
+  for (const key of Object.keys(tagGroups)) {
+    tagGroups[key] = [...new Set(tagGroups[key])];
+  }
+
+  if (!flattenTagGroups(tagGroups).length) {
+    tagGroups.other = ["placeholder-uncurated"];
+  }
+
+  return tagGroups;
+}
+
+function sanitizeTagValues(values) {
+  const list = Array.isArray(values) ? values : values ? [values] : [];
+  return [...new Set(list.map((tag) => normalizeTagValue(tag)).filter(Boolean))];
+}
+
+function flattenTagGroups(tagGroups) {
+  return [...new Set(Object.values(tagGroups || {}).flat().filter(Boolean))];
+}
+
+function normalizeTagCategoryKey(value) {
+  const normalized = String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[_\s-]+/g, "");
+
+  if (normalized === "subject") {
+    return "subject";
+  }
+
+  if (normalized === "location") {
+    return "location";
+  }
+
+  if (["cameradetails", "camera", "camerainfo", "technical"].includes(normalized)) {
+    return "cameraDetails";
+  }
+
+  if (["other", "general", "misc", "context"].includes(normalized)) {
+    return "other";
+  }
+
+  return "";
 }
 
 function openLightbox(fileName) {
@@ -612,4 +712,17 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function renderTagButton(tag, label) {
+  return `
+    <button
+      class="tag-button${tag === state.activeTag ? " is-active" : ""}"
+      type="button"
+      data-tag="${escapeHtml(tag)}"
+      aria-pressed="${tag === state.activeTag ? "true" : "false"}"
+    >
+      ${escapeHtml(label)}
+    </button>
+  `;
 }

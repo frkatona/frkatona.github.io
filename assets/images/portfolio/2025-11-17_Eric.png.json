@@ -1,13 +1,16 @@
-﻿{
-    "title":  "Eric 3",
-    "description":  "Eric singing and playing acoustic guitar at My Cafe Buzz's open mic event in late fall",
-    "tags":  [
-                 "open mic",
-                 "Eric",
-                 "My Cafe Buzz",
-                 "fall"
-             ],
-    "captureDate":  "2025-11-17",
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Eric 3",
+  "description": "Eric singing and playing acoustic guitar at My Cafe Buzz's open mic event in late fall",
+  "tags": {
+    "subject": ["Eric"],
+    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic",
+      "fall"
+    ]
+  },
+  "captureDate": "2025-11-17",
+  "featured": false,
+  "status": "updated"
 }

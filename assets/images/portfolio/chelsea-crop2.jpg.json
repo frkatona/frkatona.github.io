@@ -1,0 +1,18 @@
+{
+  "title": "Chelsea Sunset",
+  "description": "Chelsea on the back porch at sunset",
+  "tags": {
+    "subject": [
+      "Chelsea"
+    ],
+    "location": ["Lemont", "Pennsylvania"],
+    "cameraDetails": ["Sony a7s ii", "telephoto"],
+    "other": [
+      "portrait",
+      "sunset"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "placeholder"
+}

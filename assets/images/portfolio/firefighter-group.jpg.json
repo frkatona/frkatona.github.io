@@ -1,0 +1,16 @@
+{
+  "title": "Firefighter Group",
+  "description": "Firefighters after handling the Chemistry Building fire at Penn State",
+  "tags": {
+    "subject": [
+    ],
+    "location": ["Penn State", "State College", "Pennsylvania"],
+    "cameraDetails": ["Sony a6400", "telephoto"],
+    "other": [
+      "photojournalism"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
+}

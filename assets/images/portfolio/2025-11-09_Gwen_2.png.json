@@ -1,13 +1,17 @@
-﻿{
-    "title":  "Gwen 2",
-    "description":  "Gwen playing singing and playing banjo at My Cafe Buzz's open mic event, close-up under the patio roof in late fall",
-    "tags":  [
-                 "open mic",
-                 "Gwen",
-                 "My Cafe Buzz",
-                 "fall"
-             ],
-    "captureDate":  "2025-11-09",
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Gwen 2",
+  "description": "Gwen playing singing and playing banjo at My Cafe Buzz's open mic event, close-up under the patio roof in late fall",
+  "tags": {
+    "subject": ["Gwen"],
+    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic",
+      "My Cafe Buzz",
+      "fall"
+    ]
+  },
+  "captureDate": "2025-11-09",
+  "featured": false,
+  "status": "updated"
 }

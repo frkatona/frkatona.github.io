@@ -1,11 +1,14 @@
 {
   "title": "Eric 7",
   "description": "Eric playing guitar at his show at The Bar on Boalsburg",
-  "tags": [
-    "open mic",
-    "eric",
-    "The Bar"
-  ],
+  "tags": {
+    "subject": ["Eric M."],
+    "location": ["The Bar", "Boalsburg"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic"
+    ]
+  },
   "captureDate": "2025-03-14",
   "featured": false,
   "status": "updated"

@@ -38,6 +38,7 @@ async function main() {
     migratedSidecars: [],
     migratedThumbs: [],
     createdSidecars: [],
+    normalizedSidecars: [],
     generatedThumbs: [],
     nullCaptureDatePhotos: [],
     staleThumbs: [],
@@ -82,6 +83,17 @@ async function main() {
         report.invalidSidecars.push(path.basename(sidecarPathToValidate));
       } else if (sidecarPathToValidate) {
         sidecarData = readJsonIfExists(sidecarPathToValidate);
+        const normalizedSidecar = normalizeSidecarData(fileName, sidecarData);
+
+        sidecarData = normalizedSidecar.data;
+
+        if (normalizedSidecar.changed) {
+          if (!options.check) {
+            writeJson(expectedSidecarPath, normalizedSidecar.data);
+          }
+
+          report.normalizedSidecars.push(path.relative(ROOT_DIR, expectedSidecarPath));
+        }
       }
     }
 
@@ -199,6 +211,7 @@ function printHelp() {
 Syncs assets/images/portfolio by:
 - promoting misplaced original files out of thumbs/
 - migrating legacy sidecar/thumb names when possible
+- normalizing sidecars to categorized tag groups
 - generating missing or outdated WebP thumbnails
 - creating placeholder sidecars for new originals
 - rebuilding manifest.json from the actual originals
@@ -395,36 +408,157 @@ function buildPlaceholderSidecar(fileName) {
   return {
     title,
     description: `Placeholder description for ${title}. Update this sidecar with a real caption when ready.`,
-    tags: derivePlaceholderTags(fileName),
+    tags: buildPlaceholderTagCategories(title),
     captureDate,
     featured: false,
     status: "placeholder",
   };
 }
 
-function derivePlaceholderTags(fileName) {
-  const stem = fileName.replace(/\.[^.]+$/, "");
-  const withoutDate = stem.replace(/^\d{4}-\d{2}(?:-\d{2})?[_-]?/, "");
-  const normalized = withoutDate
-    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
-    .replace(/([a-z])([A-Z])/g, "$1 $2")
-    .replace(/([A-Za-z])(\d)/g, "$1 $2")
-    .replace(/(\d)([A-Za-z])/g, "$1 $2");
-
-  const tokens = normalized
-    .split(/[_\-\s]+/)
-    .map((token) => normalizeTagValue(token))
-    .filter((token) => token && !/^\d+$/.test(token));
-
-  return [...new Set(["placeholder-uncurated", ...tokens.slice(0, 4)])];
+function buildPlaceholderTagCategories(title) {
+  return {
+    subject: title ? [title] : [],
+    location: [],
+    cameraDetails: [],
+    other: ["placeholder-uncurated"],
+  };
 }
 
-function normalizeTagValue(value) {
-  return String(value || "")
+function normalizeSidecarData(fileName, sidecarData) {
+  const normalizedTags = normalizeTagCategories(sidecarData?.tags);
+  const normalizedData = {
+    ...sidecarData,
+    tags: normalizedTags,
+  };
+
+  if (!Object.prototype.hasOwnProperty.call(normalizedData, "title")) {
+    normalizedData.title = deriveTitle(fileName);
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(normalizedData, "description")) {
+    normalizedData.description = `Placeholder description for ${normalizedData.title}. Update this sidecar with a real caption when ready.`;
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(normalizedData, "captureDate")) {
+    normalizedData.captureDate = inferCaptureDate(fileName) || null;
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(normalizedData, "featured")) {
+    normalizedData.featured = false;
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(normalizedData, "status")) {
+    normalizedData.status = "updated";
+  }
+
+  return {
+    data: normalizedData,
+    changed: JSON.stringify(sidecarData) !== JSON.stringify(normalizedData),
+  };
+}
+
+function normalizeTagCategories(tags) {
+  const normalizedCategories = {
+    subject: [],
+    location: [],
+    cameraDetails: [],
+    other: [],
+  };
+  const extraCategories = {};
+
+  if (Array.isArray(tags)) {
+    normalizedCategories.other = sanitizeSidecarTagValues(tags);
+  } else if (tags && typeof tags === "object") {
+    for (const [rawCategory, rawValues] of Object.entries(tags)) {
+      const values = sanitizeSidecarTagValues(rawValues);
+
+      if (!values.length) {
+        continue;
+      }
+
+      const category = normalizeTagCategoryKey(rawCategory);
+
+      if (category) {
+        normalizedCategories[category].push(...values);
+        continue;
+      }
+
+      const preservedCategory = String(rawCategory || "").trim();
+
+      if (!preservedCategory) {
+        normalizedCategories.other.push(...values);
+        continue;
+      }
+
+      extraCategories[preservedCategory] = [
+        ...(extraCategories[preservedCategory] || []),
+        ...values,
+      ];
+    }
+  }
+
+  for (const key of Object.keys(normalizedCategories)) {
+    normalizedCategories[key] = dedupePreserveOrder(normalizedCategories[key]);
+  }
+
+  for (const key of Object.keys(extraCategories)) {
+    extraCategories[key] = dedupePreserveOrder(extraCategories[key]);
+  }
+
+  const hasAnyTags = [
+    ...Object.values(normalizedCategories),
+    ...Object.values(extraCategories),
+  ].some((values) => Array.isArray(values) && values.length > 0);
+
+  if (!hasAnyTags) {
+    normalizedCategories.other = ["placeholder-uncurated"];
+  }
+
+  return {
+    subject: normalizedCategories.subject,
+    location: normalizedCategories.location,
+    cameraDetails: normalizedCategories.cameraDetails,
+    other: normalizedCategories.other,
+    ...extraCategories,
+  };
+}
+
+function sanitizeSidecarTagValues(values) {
+  const list = Array.isArray(values) ? values : values ? [values] : [];
+  return dedupePreserveOrder(
+    list
+      .map((value) => String(value || "").trim())
+      .filter(Boolean)
+  );
+}
+
+function dedupePreserveOrder(values) {
+  return [...new Set(values)];
+}
+
+function normalizeTagCategoryKey(value) {
+  const normalized = String(value || "")
     .trim()
     .toLowerCase()
-    .replace(/[_\s]+/g, "-")
-    .replace(/-+/g, "-");
+    .replace(/[_\s-]+/g, "");
+
+  if (normalized === "subject") {
+    return "subject";
+  }
+
+  if (normalized === "location") {
+    return "location";
+  }
+
+  if (["cameradetails", "camera", "camerainfo", "technical"].includes(normalized)) {
+    return "cameraDetails";
+  }
+
+  if (["other", "general", "misc", "context"].includes(normalized)) {
+    return "other";
+  }
+
+  return "";
 }
 
 function inferCaptureDate(fileName) {
@@ -641,6 +775,7 @@ function printSummary(imageCount, report) {
   printMoveList("Migrated sidecars", report.migratedSidecars);
   printMoveList("Migrated legacy thumbs", report.migratedThumbs);
   printFileList("Created sidecars", report.createdSidecars);
+  printFileList("Normalized sidecars", report.normalizedSidecars);
   printFileList("Generated thumbnails", report.generatedThumbs);
   printFileList("Photos with null captureDate", report.nullCaptureDatePhotos);
   printFileList("Invalid sidecars", report.invalidSidecars);

@@ -1,12 +1,15 @@
-﻿{
-    "title":  "Marie 2",
-    "description":  "Marie singing and playing acoustic guitar at My Cafe Buzz's open mic event",
-    "tags":  [
-                 "open mic",
-                 "Marie",
-                 "My Cafe Buzz"
-             ],
-    "captureDate":  null,
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Marie 2",
+  "description": "Marie singing and playing acoustic guitar at My Cafe Buzz's open mic event",
+  "tags": {
+    "subject": ["Marie"],
+    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "open mic"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated"
 }

@@ -1,13 +1,13 @@
-﻿{
-    "title":  "Eric 4",
-    "description":  "Eric singing and playing acoustic guitar at Arena's open mic event with moody blue stage lighting",
-    "tags":  [
-                 "open mic",
-                 "Eric",
-                 "Arena",
-                 "fall"
-             ],
-    "captureDate":  "2025-12-12",
-    "featured":  false,
-    "status":  "updated"
+{
+  "title": "Eric 4",
+  "description": "Eric singing and playing acoustic guitar at Arena's open mic event with moody blue stage lighting",
+  "tags": {
+    "subject": ["Eric"],
+    "location": ["Arena Bar & Grill", "State College", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": ["open mic"]
+  },
+  "captureDate": "2025-12-12",
+  "featured": false,
+  "status": "updated"
 }
