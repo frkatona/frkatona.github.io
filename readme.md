@@ -26,3 +26,14 @@
 [ ] Footer
  - [ ] make gray background opaque
  - [ ] add link to source code as well as a "back to the top" button
+
+- mobile profile picture stretches
+- currently unlisted projects:
+  - in-folder
+    - [Godot Genetic Algorithm](projects/Pole-Cart-Godot/index.html)
+    - [Atmosphere Space Shader](projects/SpaceShaders/index.html)
+    - [TEM Training Simulator](projects/TEM2/TEM2.html)
+    - [pocket tempo vibrator](projects/TempoTapper/tempo.html)
+    - [text](projects/WebTerrainTest/TerrainWebGame.offline.html)
+    - [Hannah Adams Events Timeline](pages/HannahAdamsTimeline.html)
+  - github action pushes

@@ -3,8 +3,8 @@
   "description": "Astrophotography image of the sky during sunset in Centre Hall",
   "tags": {
     "subject": [],
-    "location": [],
-    "cameraDetails": [],
+    "location": ["Centre Hall", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
     "other": [
       "astrophotography",
       "landscape"
