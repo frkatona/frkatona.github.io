@@ -284,12 +284,10 @@ footer {
   }
 
   .profile img {
+    width: clamp(110px, 38vw, 160px);
+    height: clamp(110px, 38vw, 160px);
     margin-right: 0;
     margin-bottom: 2vh;
-    /* height: 30vw; */
-    /* width: 30vw; */
-    /* object-fit: cover; */
-    /* border-radius: 100%; */
   }
 
   .about-section p1 {
@@ -348,10 +346,13 @@ footer {
 }
 
 .profile img {
-  height: 15vw;
+  width: clamp(140px, 15vw, 220px);
+  height: clamp(140px, 15vw, 220px);
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   margin-right: 3vw;
   object-fit: cover;
+  flex: 0 0 auto;
   border: 2px solid #0f0f0f;
 }
 
