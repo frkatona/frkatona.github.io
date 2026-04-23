@@ -412,6 +412,41 @@ footer {
   transition: transform 0.3s ease-in-out;
 }
 
+.project-reveal {
+  display: flex;
+  justify-content: center;
+  padding: 1vh 2vw 4vh;
+}
+
+.see-more-projects {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.2rem;
+  border: 1px solid rgb(93 220 255 / 65%);
+  border-radius: 6px;
+  background: #191c29;
+  color: #f8fafc;
+  cursor: pointer;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  box-shadow: 0 0 24px rgb(93 220 255 / 18%);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.see-more-projects:hover,
+.see-more-projects:focus-visible {
+  background: #23283a;
+  border-color: rgb(93 220 255 / 90%);
+  transform: translateY(-1px);
+}
+
+.see-more-projects[hidden] {
+  display: none;
+}
+
 @property --rotate {
   syntax: "<angle>";
   initial-value: 132deg;

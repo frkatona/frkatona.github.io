@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const resumeIcon = document.getElementById("resume-icon");
   const pdfContainer = document.getElementById("pdf-container");
   const minimizeBtn = document.getElementById("minimize-btn");
+  const projectGrid = document.getElementById("project-grid");
+  const extraProjectCardsTemplate = document.getElementById("extra-project-cards");
+  const seeMoreProjectsButton = document.querySelector("[data-see-more-projects]");
 
   if (heading) {
     const shadowMaxDistance = 400;
@@ -23,6 +26,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
       heading.style.textShadow = `${shadowX}px ${shadowY}px 3px rgba(0, 0, 0, 0.5)`;
     });
+  }
+
+  if (projectGrid && extraProjectCardsTemplate && seeMoreProjectsButton) {
+    const projectReveal = seeMoreProjectsButton.closest(".project-reveal");
+    const hasExtraProjects =
+      extraProjectCardsTemplate.content.children.length > 0;
+
+    if (!hasExtraProjects) {
+      if (projectReveal) {
+        projectReveal.remove();
+      } else {
+        seeMoreProjectsButton.remove();
+      }
+    }
+
+    seeMoreProjectsButton.addEventListener(
+      "click",
+      () => {
+        projectGrid.appendChild(extraProjectCardsTemplate.content.cloneNode(true));
+        seeMoreProjectsButton.setAttribute("aria-expanded", "true");
+        if (projectReveal) {
+          projectReveal.remove();
+        } else {
+          seeMoreProjectsButton.remove();
+        }
+      },
+      { once: true }
+    );
   }
 
   if (!resumeIcon || !pdfContainer || !minimizeBtn) {
