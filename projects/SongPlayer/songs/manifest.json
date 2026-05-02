@@ -58,5 +58,29 @@
     "tags": ["hard rock", "rock", "protest"],
     "bpm": 120,
     "key": "Em"
+  },
+    {
+    "file": "TimD_CitizensBeware.mp3",
+    "id": "t6",
+    "title": "Citizens Beware",
+    "artist": "3 Chord Strummer",
+    "cover": "TimD_Arena_1.jpg",
+    "album": "Songs in the Key of Anger",
+    "year": 2026,
+    "tags": ["hard rock", "rock", "protest"],
+    "bpm": 135,
+    "key": "El"
+  },
+    {
+    "file": "TimD_OutOfTime.mp3",
+    "id": "t7",
+    "title": "Out of Time",
+    "artist": "3 Chord Strummer",
+    "cover": "TimD_Arena_1.jpg",
+    "album": "Songs in the Key of Anger",
+    "year": 2026,
+    "tags": ["hard rock", "rock", "protest"],
+    "bpm": 120,
+    "key": "Em"
   }
 ]
