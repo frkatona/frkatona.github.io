@@ -19,6 +19,7 @@
             --accent2: #21d4b6;
             --radius: 16px;
             --radius-sm: 10px;
+            --subpage-content-gap: 8px;
             --shadow: 0 10px 30px rgba(0, 0, 0, .35)
         }
 
@@ -39,6 +40,14 @@
                 radial-gradient(800px 600px at 110% 110%, rgba(33, 212, 182, .20), transparent 50%), var(--bg)
         }
 
+        body.has-subpage-nav {
+            padding-top: calc(var(--subpage-nav-height) + var(--subpage-content-gap));
+        }
+
+        body.has-subpage-nav>header {
+            top: calc(var(--subpage-nav-height) + var(--subpage-content-gap));
+        }
+
         .wrap {
             max-width: 1400px;
             margin: 0 auto;
@@ -52,7 +61,8 @@
             z-index: 10;
             backdrop-filter: blur(8px);
             background: linear-gradient(to bottom, rgba(11, 11, 12, .8), rgba(11, 11, 12, .3));
-            border-bottom: 1px solid var(--line)
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 4px
         }
 
         header .bar {
@@ -92,6 +102,18 @@
             background: #1b1b21
         }
 
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0
+        }
+
         .player-controls {
             display: flex;
             align-items: flex-start;
@@ -127,11 +149,20 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: transform .08s ease, box-shadow .12s ease, background-color .12s ease
+            transition: transform .08s ease, box-shadow .12s ease, background-color .12s ease, border-color .12s ease
+        }
+
+        #playPause:not(.playing):hover,
+        #playPause:not(.playing):focus-visible {
+            transform: translateY(-2px);
+            border-color: rgba(33, 212, 182, .45);
+            background: linear-gradient(180deg, #1c1c24, #15151b);
+            box-shadow: 0 10px 24px rgba(33, 212, 182, .16), 0 0 0 3px rgba(33, 212, 182, .08)
         }
 
         /* pressed-in effect for play button */
-        #playPause:active {
+        #playPause:active,
+        #playPause:not(.playing):active {
             transform: translateY(3px) scale(.985);
             box-shadow: 0 4px 12px rgba(63, 115, 168, 0.24);
         }
@@ -154,11 +185,106 @@
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28);
         }
 
+        .toggle-control {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 34px;
+            padding: 6px 10px;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            color: var(--fg);
+            cursor: pointer;
+            transition: background-color .12s ease, border-color .12s ease, transform .08s ease
+        }
+
+        .toggle-control:hover,
+        .toggle-control:focus-within {
+            background: #17171d;
+            border-color: var(--line)
+        }
+
+        .toggle-control:active {
+            transform: translateY(1px)
+        }
+
+        .toggle-control input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .toggle-indicator {
+            width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #4c4c55;
+            border-radius: 6px;
+            background: linear-gradient(180deg, #202029, #16161d);
+            color: transparent;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .03);
+            transition: background .12s ease, border-color .12s ease, color .12s ease, box-shadow .12s ease
+        }
+
+        .toggle-control:hover .toggle-indicator,
+        .toggle-control:focus-within .toggle-indicator {
+            border-color: rgba(33, 212, 182, .45)
+        }
+
+        .toggle-indicator::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 11px;
+            line-height: 1
+        }
+
+        .toggle-control input:checked+.toggle-indicator {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-color: transparent;
+            color: #07121a;
+            box-shadow: 0 0 0 3px rgba(33, 212, 182, .12)
+        }
+
+        .toggle-label {
+            font-size: 14px
+        }
+
+        .download-btn {
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--fg);
+            border-radius: 50%;
+            border-color: rgba(255, 255, 255, .08);
+            background: #17171d;
+            transition: transform .08s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease
+        }
+
+        .download-btn:hover,
+        .download-btn:focus-visible {
+            transform: translateY(-2px);
+            border-color: rgba(33, 212, 182, .45);
+            background: linear-gradient(135deg, #1f2430, #132823);
+            box-shadow: 0 8px 22px rgba(33, 212, 182, .16)
+        }
+
+        .download-btn:active {
+            transform: translateY(1px)
+        }
+
         main {
             display: grid;
             grid-template-columns: 400px 1fr;
             gap: 20px;
-            padding: 20px
+            padding: 24px 20px 20px
         }
 
         /* left column increased ~25% (320 -> 400) */
@@ -291,13 +417,13 @@
             cursor: pointer
         }
 
-        .bar {
+        .progress .bar {
             position: absolute;
             left: 0;
             top: 0;
             bottom: 0;
             border-radius: 999px;
-            /* background: linear-gradient(20deg, var(--fg), rgba(234, 238, 255, 0.5)); */
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
         }
 
         .knob {
@@ -309,7 +435,7 @@
             border-radius: 50%;
             background: #fff;
             box-shadow: 0 2px 10px rgba(0, 0, 0, .4);
-            opacity: .0
+            opacity: 1
         }
 
         .progress:hover .knob {
@@ -471,14 +597,18 @@
                                 <div style="margin-left:6px; display:flex; align-items:center; gap:12px">
                                     <div class="row" style="align-items:center">
                                         <span class="muted" style="font-size:12px">Vol</span>
-                                        <input id="vol" type="range" min="0" max="1" step="0.01" value="0.9" />
+                                        <input id="vol" type="range" min="0" max="1" step="0.01" value="0.5" />
                                     </div>
-                                    <label class="row" style="font-size:14px"><input id="loop" type="checkbox" />
-                                        Loop</label>
-                                    <label class="row" style="font-size:14px"><input id="shuffle" type="checkbox" />
-                                        Shuffle</label>
-                                    <a id="dl" class="btn" title="Download" download
-                                        style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;text-decoration:none;font-size:16px;color:var(--fg);margin-left:8px">⬇</a>
+                                    <label class="toggle-control"><input id="loop" type="checkbox" />
+                                        <span class="toggle-indicator" aria-hidden="true"></span>
+                                        <span class="toggle-label">Loop</span></label>
+                                    <label class="toggle-control"><input id="shuffle" type="checkbox" />
+                                        <span class="toggle-indicator" aria-hidden="true"></span>
+                                        <span class="toggle-label">Shuffle</span></label>
+                                    <a id="dl" class="btn download-btn" title="Download" download>
+                                        <i class="fas fa-download" aria-hidden="true"></i>
+                                        <span class="sr-only">Download</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -538,6 +668,7 @@
             let isPlaying = false;
             let loop = false;
             let shuffle = false;
+            const DEFAULT_VOLUME = 0.5;
 
             const fmt = (s) => {
                 if (!Number.isFinite(s)) return '0:00';
@@ -664,6 +795,10 @@
 
             function seekTo(seconds) { if (!Number.isFinite(seconds)) return; els.audio.currentTime = Math.max(0, Math.min(seconds, els.audio.duration || 0)); }
             function seekBy(dt) { seekTo((els.audio.currentTime || 0) + dt); }
+            function setVolumeFromSlider() {
+                const value = parseFloat(els.vol.value);
+                els.audio.volume = Number.isFinite(value) ? value : DEFAULT_VOLUME;
+            }
 
             function updateProgressUI() {
                 const cur = (els.audio && els.audio.currentTime) ? els.audio.currentTime : 0;
@@ -693,7 +828,9 @@
             els.playPause.addEventListener('click', () => isPlaying ? pause() : play());
             els.prev.addEventListener('click', prev);
             els.next.addEventListener('click', next);
-            els.vol.addEventListener('input', () => { els.audio.volume = parseFloat(els.vol.value || '0.9'); });
+            els.vol.value = String(DEFAULT_VOLUME);
+            setVolumeFromSlider();
+            els.vol.addEventListener('input', setVolumeFromSlider);
             els.loop.addEventListener('change', () => { loop = els.loop.checked; if (els.loopState) els.loopState.textContent = loop ? 'On' : 'Off'; });
             els.shuffle.addEventListener('change', () => { shuffle = els.shuffle.checked; if (els.shuffleState) els.shuffleState.textContent = shuffle ? 'On' : 'Off'; });
 
@@ -713,6 +850,12 @@
 
             // Progress bar: click or drag/touch to seek
             let _isScrubbing = false;
+            let _hasDraggedProgress = false;
+            let _progressStartClientX = 0;
+            let _lastProgressClickAt = 0;
+            let _suppressProgressClickUntil = 0;
+            const PROGRESS_CLICK_DEBOUNCE_MS = 250;
+            const PROGRESS_DRAG_THRESHOLD_PX = 3;
             function clientXFromEvent(e) {
                 if (e.touches && e.touches.length) return e.touches[0].clientX;
                 if (e.changedTouches && e.changedTouches.length) return e.changedTouches[0].clientX;
@@ -731,23 +874,49 @@
                 els.timeLeft.textContent = '-' + fmt(Math.max(0, dur - target));
                 return target;
             }
+            function seekFromProgressEvent(e) {
+                const target = scrubForClientX(clientXFromEvent(e));
+                seekTo(target);
+            }
 
             // Click to seek
             els.progress.addEventListener('click', (e) => {
-                const clientX = clientXFromEvent(e);
-                const target = scrubForClientX(clientX);
-                seekTo(target);
+                const now = performance.now();
+                if (now < _suppressProgressClickUntil || now - _lastProgressClickAt < PROGRESS_CLICK_DEBOUNCE_MS) return;
+                _lastProgressClickAt = now;
+                seekFromProgressEvent(e);
             });
 
             // Mouse drag to scrub
-            function onMouseMove(e) { if (!_isScrubbing) return; const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); }
-            function onMouseUp(e) { if (!_isScrubbing) return; _isScrubbing = false; window.removeEventListener('mousemove', onMouseMove); window.removeEventListener('mouseup', onMouseUp); const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); }
-            els.progress.addEventListener('mousedown', (e) => { _isScrubbing = true; const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); window.addEventListener('mousemove', onMouseMove); window.addEventListener('mouseup', onMouseUp); e.preventDefault(); });
+            function onMouseMove(e) {
+                if (!_isScrubbing) return;
+                const clientX = clientXFromEvent(e);
+                if (Math.abs(clientX - _progressStartClientX) > PROGRESS_DRAG_THRESHOLD_PX) _hasDraggedProgress = true;
+                if (_hasDraggedProgress) seekFromProgressEvent(e);
+            }
+            function onMouseUp(e) {
+                if (!_isScrubbing) return;
+                _isScrubbing = false;
+                window.removeEventListener('mousemove', onMouseMove);
+                window.removeEventListener('mouseup', onMouseUp);
+                if (_hasDraggedProgress) {
+                    seekFromProgressEvent(e);
+                    _suppressProgressClickUntil = performance.now() + PROGRESS_CLICK_DEBOUNCE_MS;
+                }
+            }
+            els.progress.addEventListener('mousedown', (e) => {
+                _isScrubbing = true;
+                _hasDraggedProgress = false;
+                _progressStartClientX = clientXFromEvent(e);
+                window.addEventListener('mousemove', onMouseMove);
+                window.addEventListener('mouseup', onMouseUp);
+                e.preventDefault();
+            });
 
             // Touch scrub
             function onTouchMove(e) { if (!_isScrubbing) return; e.preventDefault(); const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); }
-            function onTouchEnd(e) { if (!_isScrubbing) return; _isScrubbing = false; window.removeEventListener('touchmove', onTouchMove); window.removeEventListener('touchend', onTouchEnd); const clientX = clientXFromEvent(e); const target = scrubForClientX(clientX); seekTo(target); }
-            els.progress.addEventListener('touchstart', (e) => { _isScrubbing = true; const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); window.addEventListener('touchmove', onTouchMove, { passive: false }); window.addEventListener('touchend', onTouchEnd); });
+            function onTouchEnd(e) { if (!_isScrubbing) return; _isScrubbing = false; window.removeEventListener('touchmove', onTouchMove); window.removeEventListener('touchend', onTouchEnd); const clientX = clientXFromEvent(e); const target = scrubForClientX(clientX); seekTo(target); _suppressProgressClickUntil = performance.now() + 400; }
+            els.progress.addEventListener('touchstart', (e) => { _isScrubbing = true; _suppressProgressClickUntil = performance.now() + 400; const target = scrubForClientX(clientXFromEvent(e)); seekTo(target); window.addEventListener('touchmove', onTouchMove, { passive: false }); window.addEventListener('touchend', onTouchEnd); });
 
             // --- New: load songs from page-relative ./songs/ folder ---
             async function loadSongsFromFolder() {
