@@ -126,11 +126,23 @@ Title
 
     <!-- Song List Modal -->
     <div class="modal-overlay" id="songListModal">
-        <div class="modal-content">
+        <div class="modal-content song-list-modal-content">
             <div class="modal-header">
                 <div class="modal-title">Songs</div>
                 <button class="close-btn" onclick="closeModals()">×</button>
             </div>
+            <div class="song-selector-controls">
+                <label class="song-sort-control" for="songSortSelect">
+                    <span>Sort</span>
+                    <select id="songSortSelect">
+                        <option value="artist-title">Artist, A-Z</option>
+                        <option value="title-asc">Title, A-Z</option>
+                        <option value="title-desc">Title, Z-A</option>
+                        <option value="artist-desc">Artist, Z-A</option>
+                    </select>
+                </label>
+            </div>
+            <div class="artist-filter" id="artistFilterContainer"></div>
             <div id="songListContainer"></div>
         </div>
     </div>

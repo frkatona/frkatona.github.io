@@ -1,3 +1,5 @@
+const ALL_ARTISTS = '__all__';
+
 // --- State ---
 const state = {
     transpose: 0,
@@ -7,10 +9,13 @@ const state = {
     fontSize: 16,
     alignment: 'center',
     isEditMode: false,
-    currentSong: null, // Track current song filename
+    currentSong: null, // Track current artist-relative song path
     bpm: 0,
     tapTimes: [],
-    pulseInterval: null
+    pulseInterval: null,
+    songs: [],
+    selectedArtists: new Set([ALL_ARTISTS]),
+    songSort: 'artist-title'
 };
 
 // --- Elements ---
@@ -32,6 +37,8 @@ const els = {
     songListBtn: document.getElementById('songListBtn'),
     songListModal: document.getElementById('songListModal'),
     menuModal: document.getElementById('menuModal'),
+    songSortSelect: document.getElementById('songSortSelect'),
+    artistFilterContainer: document.getElementById('artistFilterContainer'),
     songListContainer: document.getElementById('songListContainer'),
     fontDown: document.getElementById('fontDown'),
     fontUp: document.getElementById('fontUp'),
@@ -69,18 +76,8 @@ function init() {
         els.transValue.textContent = state.transpose > 0 ? `+${state.transpose}` : state.transpose;
     }
 
-    // Load initial song
-    if (songParam) {
-        loadSongFile(songParam);
-    } else if (!els.songInput.value.trim()) {
-        els.songInput.value = "Amazing Grace\n\n[G]Amazing grace how [C]sweet the [G]sound\nThat [G]saved a wretch like [D]me\nI [G]once was lost but [C]now am [G]found\nWas [Em]blind but [D]now I [G]see";
-        renderSong();
-    } else {
-        renderSong();
-    }
-
     updateUI();
-    loadSongList();
+    loadSongList(songParam);
 }
 
 // --- Event Listeners ---
@@ -107,6 +104,11 @@ els.playBtn.addEventListener('click', toggleScroll);
 // Menu & Modals
 els.menuBtn.addEventListener('click', () => openModal(els.menuModal));
 els.songListBtn.addEventListener('click', () => openModal(els.songListModal));
+els.songSortSelect.addEventListener('change', () => {
+    state.songSort = els.songSortSelect.value;
+    renderSongList();
+});
+els.artistFilterContainer.addEventListener('change', handleArtistFilterChange);
 
 // Font
 els.fontDown.addEventListener('click', () => { state.fontSize = Math.max(10, state.fontSize - 2); updateUI(); });
@@ -462,42 +464,204 @@ function closeModals() {
 }
 window.closeModals = closeModals; // Expose to HTML
 
-function loadSongList() {
-    // Mock or fetch
-    fetch('songs/index.json')
-        .then(r => r.json())
-        .then(songs => {
-            els.songListContainer.innerHTML = '';
-            songs.forEach(song => {
-                const div = document.createElement('div');
-                div.className = 'song-list-item';
-                div.textContent = song.replace('.txt', '');
-                div.onclick = () => {
-                    state.transpose = 0;
-                    els.transValue.textContent = '0';
-                    // Pause if playing
-                    if (state.isScrolling) toggleScroll();
-                    loadSongFile(song);
-                    closeModals();
+function loadSongList(initialSong = null) {
+    els.songListContainer.innerHTML = '<div class="song-list-empty">Loading songs...</div>';
 
-                };
-                els.songListContainer.appendChild(div);
-            });
+    fetch('songs/index.json')
+        .then(r => {
+            if (!r.ok) throw new Error('Song index could not be loaded.');
+            return r.json();
         })
-        .catch(() => {
-            els.songListContainer.innerHTML = '<div style="padding:10px; color:#666;">No songs found or index.json missing.</div>';
+        .then(songs => {
+            state.songs = songs.map(normalizeSongEntry).filter(Boolean);
+            renderArtistFilters();
+            renderSongList();
+
+            if (initialSong) {
+                return loadSongFile(initialSong).catch(() => loadDefaultSong());
+            } else if (!els.songInput.value.trim()) {
+                loadDefaultSong();
+            } else {
+                renderSong();
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            els.songListContainer.innerHTML = '<div class="song-list-empty">No songs found or index.json missing.</div>';
+
+            if (initialSong) {
+                loadSongFile(initialSong).catch(() => loadDefaultSong());
+            } else if (!els.songInput.value.trim()) {
+                loadDefaultSong();
+            }
         });
 }
 
+function normalizeSongEntry(entry) {
+    const rawPath = typeof entry === 'string' ? entry : entry.path || entry.file || entry.filename;
+    if (!rawPath || !/\.txt$/i.test(rawPath)) return null;
+
+    const path = normalizeSongPath(rawPath);
+    const parts = path.split('/');
+    const fileName = parts.pop();
+    const artist = typeof entry === 'object' && entry.artist ? entry.artist : parts[0] || 'Unknown Artist';
+    const title = typeof entry === 'object' && entry.title ? entry.title : fileName.replace(/\.txt$/i, '');
+
+    return { path, fileName, artist, title };
+}
+
+function normalizeSongPath(path) {
+    return path.replace(/\\/g, '/').replace(/^songs\//, '').replace(/^\/+/, '');
+}
+
+function renderArtistFilters() {
+    const artists = [...new Set(state.songs.map(song => song.artist))]
+        .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+    els.artistFilterContainer.innerHTML = '';
+    els.artistFilterContainer.appendChild(createArtistFilterCheckbox(ALL_ARTISTS, 'All', state.selectedArtists.has(ALL_ARTISTS)));
+
+    artists.forEach(artist => {
+        const checked = !state.selectedArtists.has(ALL_ARTISTS) && state.selectedArtists.has(artist);
+        els.artistFilterContainer.appendChild(createArtistFilterCheckbox(artist, artist, checked));
+    });
+}
+
+function createArtistFilterCheckbox(value, label, checked) {
+    const wrapper = document.createElement('label');
+    wrapper.className = 'artist-filter-label';
+
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.value = value;
+    input.checked = checked;
+
+    const text = document.createElement('span');
+    text.textContent = label;
+
+    wrapper.append(input, text);
+    return wrapper;
+}
+
+function handleArtistFilterChange(e) {
+    if (e.target.type !== 'checkbox') return;
+
+    const value = e.target.value;
+
+    if (value === ALL_ARTISTS) {
+        if (e.target.checked) {
+            state.selectedArtists = new Set([ALL_ARTISTS]);
+        } else if (state.selectedArtists.size === 1) {
+            state.selectedArtists = new Set([ALL_ARTISTS]);
+        }
+    } else {
+        state.selectedArtists.delete(ALL_ARTISTS);
+
+        if (e.target.checked) {
+            state.selectedArtists.add(value);
+        } else {
+            state.selectedArtists.delete(value);
+        }
+
+        if (state.selectedArtists.size === 0) {
+            state.selectedArtists.add(ALL_ARTISTS);
+        }
+    }
+
+    renderArtistFilters();
+    renderSongList();
+}
+
+function renderSongList() {
+    const showAll = state.selectedArtists.has(ALL_ARTISTS);
+    const visibleSongs = showAll
+        ? state.songs
+        : state.songs.filter(song => state.selectedArtists.has(song.artist));
+    const sortedSongs = sortSongs(visibleSongs);
+
+    els.songListContainer.innerHTML = '';
+
+    if (sortedSongs.length === 0) {
+        els.songListContainer.innerHTML = '<div class="song-list-empty">No songs match the selected artists.</div>';
+        return;
+    }
+
+    sortedSongs.forEach(song => {
+        const div = document.createElement('div');
+        div.className = 'song-list-item';
+
+        const title = document.createElement('span');
+        title.className = 'song-list-title';
+        title.textContent = song.title;
+
+        const artist = document.createElement('span');
+        artist.className = 'song-list-artist';
+        artist.textContent = song.artist;
+
+        div.append(title, artist);
+        div.onclick = () => {
+            state.transpose = 0;
+            els.transValue.textContent = '0';
+            if (state.isScrolling) toggleScroll();
+            loadSongFile(song.path);
+            closeModals();
+        };
+        els.songListContainer.appendChild(div);
+    });
+}
+
+function sortSongs(songs) {
+    const sorted = [...songs];
+    const compareTitle = (a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
+    const compareArtist = (a, b) => a.artist.localeCompare(b.artist, undefined, { sensitivity: 'base' });
+
+    switch (state.songSort) {
+        case 'title-asc':
+            return sorted.sort((a, b) => compareTitle(a, b) || compareArtist(a, b));
+        case 'title-desc':
+            return sorted.sort((a, b) => compareTitle(b, a) || compareArtist(a, b));
+        case 'artist-desc':
+            return sorted.sort((a, b) => compareArtist(b, a) || compareTitle(a, b));
+        case 'artist-title':
+        default:
+            return sorted.sort((a, b) => compareArtist(a, b) || compareTitle(a, b));
+    }
+}
+
+function resolveSongPath(songPath) {
+    const normalized = normalizeSongPath(songPath);
+    const exactMatch = state.songs.find(song => song.path.toLowerCase() === normalized.toLowerCase());
+    if (exactMatch) return exactMatch.path;
+
+    const fileName = normalized.split('/').pop().toLowerCase();
+    const fileNameMatches = state.songs.filter(song => song.fileName.toLowerCase() === fileName);
+
+    return fileNameMatches.length === 1 ? fileNameMatches[0].path : normalized;
+}
+
 function loadSongFile(filename) {
-    fetch('songs/' + filename)
-        .then(r => r.text())
+    const songPath = resolveSongPath(filename);
+
+    return fetch('songs/' + encodeURI(songPath))
+        .then(r => {
+            if (!r.ok) throw new Error(`Song file could not be loaded: ${songPath}`);
+            return r.text();
+        })
         .then(text => {
             els.songInput.value = text;
-            state.currentSong = filename;
+            state.currentSong = songPath;
             renderSong();
             updateURLState();
+        })
+        .catch(error => {
+            console.error(error);
+            throw error;
         });
+}
+
+function loadDefaultSong() {
+    els.songInput.value = "Amazing Grace\n\n[G]Amazing grace how [C]sweet the [G]sound\nThat [G]saved a wretch like [D]me\nI [G]once was lost but [C]now am [G]found\nWas [Em]blind but [D]now I [G]see";
+    renderSong();
 }
 
 function updateURLState() {
@@ -506,7 +670,8 @@ function updateURLState() {
     if (state.scrollSpeed !== 1.0) params.set('speed', state.scrollSpeed);
     if (state.transpose !== 0) params.set('transpose', state.transpose);
 
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    const query = params.toString();
+    const newUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
     window.history.replaceState({}, '', newUrl);
 }
 

@@ -327,6 +327,14 @@ body {
     border: 1px solid var(--border-color);
 }
 
+.song-list-modal-content {
+    height: min(680px, calc(100vh - 48px));
+    max-height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -357,10 +365,101 @@ body {
     border-bottom: 1px solid #333;
     cursor: pointer;
     transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
 }
 
 .song-list-item:hover {
     background-color: #333;
+}
+
+#songListContainer {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    border-top: 1px solid #333;
+}
+
+.song-list-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.song-list-artist {
+    color: #aaa;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.artist-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 0;
+    padding-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.artist-filter-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border: 1px solid #3a3a3a;
+    border-radius: 6px;
+    background: #262626;
+    color: #ddd;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    cursor: pointer;
+    user-select: none;
+}
+
+.artist-filter-label:hover {
+    background: #303030;
+}
+
+.artist-filter-label input {
+    margin: 0;
+}
+
+.song-list-empty {
+    padding: 10px;
+    color: #888;
+}
+
+.song-selector-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+.song-sort-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #aaa;
+    font-size: 0.85rem;
+}
+
+.song-sort-control select {
+    background: #262626;
+    color: var(--text-color);
+    border: 1px solid #3a3a3a;
+    border-radius: 6px;
+    padding: 7px 28px 7px 10px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.song-sort-control select:focus {
+    border-color: var(--accent-color);
+    outline: none;
 }
 
 .menu-item {
