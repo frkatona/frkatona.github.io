@@ -93,6 +93,7 @@ const els = {
     mobileFontValue: document.getElementById('mobileFontValue'),
     menuBtn: document.getElementById('menuBtn'),
     hotkeyBtn: document.getElementById('hotkeyBtn'),
+    fullscreenBtn: document.getElementById('fullscreenBtn'),
     hotkeyModal: document.getElementById('hotkeyModal'),
     hotkeyStatus: document.getElementById('hotkeyStatus'),
     songListBtn: document.getElementById('songListBtn'),
@@ -182,19 +183,13 @@ document.querySelectorAll('.mobile-control-lane').forEach(lane => {
 // Menu & Modals
 els.menuBtn.addEventListener('click', () => openModal(els.menuModal));
 els.hotkeyBtn.addEventListener('click', () => openModal(els.hotkeyModal));
-els.hotkeyModal.addEventListener('click', (e) => {
-    if (e.button === 0 && e.target === els.hotkeyModal) {
-        closeModals();
-    }
-});
+els.fullscreenBtn.addEventListener('click', toggleFullscreen);
 els.songListBtn.addEventListener('click', () => {
     dismissStarterHints();
     openModal(els.songListModal);
 });
-els.songListModal.addEventListener('click', (e) => {
-    if (e.button === 0 && e.target === els.songListModal) {
-        closeModals();
-    }
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', closeModalOnBackdropClick);
 });
 els.songSortSelect.addEventListener('change', () => {
     state.songSort = els.songSortSelect.value;
@@ -233,6 +228,7 @@ els.resetBpmBtn.addEventListener('click', resetBpm);
 
 // Global Keys
 document.addEventListener('keydown', handleGlobalKeydown);
+document.addEventListener('fullscreenchange', updateFullscreenUI);
 
 // --- Core Logic ---
 
@@ -245,20 +241,21 @@ function renderSong() {
     if (lines.length > 0) {
         const title = lines[0].trim();
         els.headerTitle.textContent = title || 'Untitled Song';
-        html += `<div class="song-title-render">${escapeHtml(title)}</div>`;
         lines.shift();
     }
 
     // Metadata Parsing
-    let metadataHtml = '<div class="song-metadata" style="color: #888; font-size: 0.9em; margin-bottom: 1rem;">';
+    const metadataItems = [];
     while (lines.length > 0) {
         const line = lines[0].trim();
         // Check for "key: value" format
         const match = line.match(/^([a-zA-Z]+):\s*(.+)$/);
         if (match) {
             const key = match[1].toLowerCase();
-            const value = match[2];
-            metadataHtml += `<span style="margin: 0 10px;">${escapeHtml(key.toUpperCase())}: ${escapeHtml(value)}</span>`;
+            const value = match[2].trim();
+            if (isMeaningfulMetadataValue(value)) {
+                metadataItems.push(`<span style="margin: 0 10px;">${escapeHtml(key.toUpperCase())}: ${escapeHtml(value)}</span>`);
+            }
             lines.shift();
         } else if (line === '') {
             lines.shift(); // Skip empty lines between title/metadata and song
@@ -266,8 +263,10 @@ function renderSong() {
             break; // Stop at first non-metadata line
         }
     }
-    metadataHtml += '</div>';
-    html += metadataHtml;
+
+    if (metadataItems.length > 0) {
+        html += `<div class="song-metadata" style="color: #888; font-size: 0.9em; margin-bottom: 1rem;">${metadataItems.join('')}</div>`;
+    }
 
     lines.forEach(line => {
         const trimmed = line.trim();
@@ -569,6 +568,10 @@ function escapeHtml(text) {
         .replace(/'/g, "&#039;");
 }
 
+function isMeaningfulMetadataValue(value) {
+    return value.trim() !== '' && value.trim() !== '?';
+}
+
 function openModal(modal) {
     modal.classList.add('active');
 }
@@ -577,6 +580,49 @@ function closeModals() {
     document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
 }
 window.closeModals = closeModals; // Expose to HTML
+
+function closeModalOnBackdropClick(e) {
+    if (e.button === 0 && e.target === e.currentTarget) {
+        e.currentTarget.classList.remove('active');
+    }
+}
+
+function toggleFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+        return;
+    }
+
+    if (document.body.classList.contains('app-fullscreen')) {
+        setFallbackFullscreen(false);
+        return;
+    }
+
+    const target = document.documentElement;
+    if (target.requestFullscreen) {
+        target.requestFullscreen().catch(error => {
+            console.warn('Fullscreen could not be enabled.', error);
+            setFallbackFullscreen(true);
+        });
+    } else {
+        setFallbackFullscreen(!document.body.classList.contains('app-fullscreen'));
+    }
+}
+
+function updateFullscreenUI() {
+    const isFullscreen = Boolean(document.fullscreenElement);
+    document.body.classList.toggle('app-fullscreen', isFullscreen);
+    els.fullscreenBtn.classList.toggle('active', isFullscreen);
+    els.fullscreenBtn.textContent = isFullscreen ? '⇱' : '⛶';
+    els.fullscreenBtn.title = isFullscreen ? 'Exit fullscreen' : 'Toggle fullscreen';
+}
+
+function setFallbackFullscreen(isFullscreen) {
+    document.body.classList.toggle('app-fullscreen', isFullscreen);
+    els.fullscreenBtn.classList.toggle('active', isFullscreen);
+    els.fullscreenBtn.textContent = isFullscreen ? '⇱' : '⛶';
+    els.fullscreenBtn.title = isFullscreen ? 'Exit fullscreen' : 'Toggle fullscreen';
+}
 
 function toggleMobileControls() {
     if (els.mobileControlOverlay.classList.contains('active')) {

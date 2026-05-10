@@ -27,6 +27,14 @@ body {
     flex-direction: column;
 }
 
+body.app-fullscreen.has-subpage-nav {
+    padding-top: 0;
+}
+
+body.app-fullscreen .subpage-nav {
+    display: none;
+}
+
 /* --- Layout --- */
 .app-header {
     height: 60px;
