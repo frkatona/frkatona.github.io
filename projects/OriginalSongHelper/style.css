@@ -10,6 +10,9 @@
     --font-ui: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --font-song: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --font-chord: 'Consolas', 'Monaco', monospace;
+    --visual-viewport-top: 0px;
+    --visual-viewport-bottom: 0px;
+    --mobile-footer-height: 112px;
 }
 
 body {
@@ -168,7 +171,8 @@ body.show-starter-hints .starter-hint-label {
     display: block;
 }
 
-body.show-starter-hints .starter-hint-target .icon-btn {
+body.show-starter-hints .starter-hint-target .icon-btn,
+body.show-starter-hints .starter-hint-target .mobile-song-btn {
     color: var(--starter-hint-color);
     outline: 2px solid rgba(var(--starter-hint-rgb), 0.48);
     outline-offset: 3px;
@@ -180,7 +184,8 @@ body.show-starter-hints .starter-hint-target .icon-btn {
     animation: starterHintNeonPulse 1.45s ease-in-out infinite;
 }
 
-body.show-starter-hints .starter-hint-target .icon-btn::after {
+body.show-starter-hints .starter-hint-target .icon-btn::after,
+body.show-starter-hints .starter-hint-target .mobile-song-btn::after {
     content: "";
     position: absolute;
     inset: -7px;
@@ -755,7 +760,7 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
 @media (max-width: 720px), (max-aspect-ratio: 3/4) {
     .app-header {
         position: fixed;
-        top: var(--subpage-nav-height, 0px);
+        top: calc(var(--visual-viewport-top, 0px) + var(--subpage-nav-height, 0px));
         left: 0;
         right: 0;
         height: 56px;
@@ -767,7 +772,7 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
     }
 
     body.app-fullscreen .app-header {
-        top: 0;
+        top: var(--visual-viewport-top, 0px);
     }
 
     .header-title {
@@ -808,15 +813,15 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
 
     .app-main {
         position: fixed;
-        top: var(--subpage-nav-height, 0px);
+        top: calc(var(--visual-viewport-top, 0px) + var(--subpage-nav-height, 0px));
         right: 0;
-        bottom: 0;
+        bottom: var(--visual-viewport-bottom, 0px);
         left: 0;
         flex-grow: 0;
     }
 
     body.app-fullscreen .app-main {
-        top: 0;
+        top: var(--visual-viewport-top, 0px);
     }
 
     .song-title-render {
@@ -827,9 +832,10 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
         position: fixed;
         left: 0;
         right: 0;
-        bottom: 0;
+        bottom: var(--visual-viewport-bottom, 0px);
+        box-sizing: border-box;
         justify-content: center;
-        height: calc(112px + env(safe-area-inset-bottom));
+        height: calc(var(--mobile-footer-height) + env(safe-area-inset-bottom));
         padding: 10px 14px;
         padding-bottom: calc(14px + env(safe-area-inset-bottom));
         background-color: rgba(30, 30, 30, 0.60);
@@ -889,12 +895,41 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
     }
 
     .mobile-song-btn {
-        position: static;
+        position: relative;
         transform: none;
+        overflow: visible;
     }
 
     .mobile-controls-btn {
         right: 14px;
+    }
+
+    body.show-starter-hints .mobile-song-action .mobile-song-btn {
+        color: var(--starter-hint-color);
+        border-color: rgba(var(--starter-hint-rgb), 0.78);
+        outline: 2px solid rgba(var(--starter-hint-rgb), 0.56);
+        outline-offset: 3px;
+        text-shadow: 0 0 10px rgba(var(--starter-hint-rgb), 0.9);
+        box-shadow:
+            0 0 0 1px rgba(var(--starter-hint-rgb), 0.52),
+            0 0 18px rgba(var(--starter-hint-rgb), 0.78),
+            0 0 34px rgba(var(--starter-hint-rgb), 0.34),
+            inset 0 0 12px rgba(var(--starter-hint-rgb), 0.22);
+        animation: starterHintNeonPulse 1.45s ease-in-out infinite;
+    }
+
+    body.show-starter-hints .mobile-song-action .mobile-song-btn::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border: 2px solid rgba(var(--starter-hint-rgb), 0.68);
+        border-radius: 50%;
+        pointer-events: none;
+        box-shadow:
+            0 0 14px rgba(var(--starter-hint-rgb), 0.84),
+            0 0 30px rgba(var(--starter-hint-rgb), 0.46),
+            inset 0 0 10px rgba(var(--starter-hint-rgb), 0.3);
+        animation: starterHintHaloPulse 1.45s ease-in-out infinite;
     }
 
     .mobile-controls-btn.active {
@@ -907,8 +942,8 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
         position: fixed;
         left: 0;
         right: 0;
-        top: calc(var(--subpage-nav-height, 0px) + 56px);
-        bottom: calc(112px + env(safe-area-inset-bottom));
+        top: calc(var(--visual-viewport-top, 0px) + var(--subpage-nav-height, 0px) + 56px);
+        bottom: calc(var(--visual-viewport-bottom, 0px) + var(--mobile-footer-height) + env(safe-area-inset-bottom));
         z-index: 70;
         display: flex;
         align-items: flex-end;
@@ -917,7 +952,7 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
     }
 
     body.app-fullscreen .mobile-control-overlay.active {
-        top: 56px;
+        top: calc(var(--visual-viewport-top, 0px) + 56px);
     }
 
     .mobile-control-overlay.active .mobile-control-panel {

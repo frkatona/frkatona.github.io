@@ -127,6 +127,8 @@ const els = {
 
 // --- Initialization ---
 function init() {
+    syncVisualViewport();
+
     // Parse URL params
     const params = new URLSearchParams(window.location.search);
     const songParam = params.get('song');
@@ -157,6 +159,23 @@ function init() {
     updateUI();
     updateTransposeDisplay();
     loadSongList(songParam);
+}
+
+function syncVisualViewport() {
+    const viewport = window.visualViewport;
+    const offsetTop = viewport ? Math.max(0, viewport.offsetTop) : 0;
+    const visibleHeight = viewport ? viewport.height : window.innerHeight;
+    const bottomInset = Math.max(0, window.innerHeight - visibleHeight - offsetTop);
+
+    document.documentElement.style.setProperty('--visual-viewport-top', `${offsetTop}px`);
+    document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomInset}px`);
+}
+
+window.addEventListener('resize', syncVisualViewport, { passive: true });
+window.addEventListener('orientationchange', syncVisualViewport, { passive: true });
+if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncVisualViewport, { passive: true });
+    window.visualViewport.addEventListener('scroll', syncVisualViewport, { passive: true });
 }
 
 // --- Event Listeners ---
