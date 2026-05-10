@@ -66,6 +66,7 @@ Title
         </div>
 
         <button class="play-btn" id="playBtn">▶</button>
+        <button class="mobile-controls-btn" id="mobileControlsBtn" type="button">Controls</button>
 
         <div class="control-group">
             <div class="control-label">Font</div>
@@ -73,6 +74,39 @@ Title
                 <button class="control-btn" id="fontDown">A-</button>
                 <div class="control-value" id="fontValue">16</div>
                 <button class="control-btn" id="fontUp">A+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-control-overlay" id="mobileControlOverlay" aria-hidden="true">
+        <div class="mobile-control-panel" id="mobileControlPanel">
+            <div class="mobile-control-header">
+                <div>
+                    <div class="mobile-control-title">Controls</div>
+                    <div class="mobile-control-subtitle">Drag across any row to change it</div>
+                </div>
+                <button class="mobile-control-close" id="mobileControlClose" type="button" aria-label="Close controls">×</button>
+            </div>
+            <div class="mobile-control-lane" data-mobile-control="transpose">
+                <div class="mobile-control-copy">
+                    <span>Transpose</span>
+                    <strong id="mobileTransposeValue">0</strong>
+                </div>
+                <div class="mobile-control-track"><div class="mobile-control-fill"></div></div>
+            </div>
+            <div class="mobile-control-lane" data-mobile-control="speed">
+                <div class="mobile-control-copy">
+                    <span>Speed</span>
+                    <strong id="mobileSpeedValue">1.0</strong>
+                </div>
+                <div class="mobile-control-track"><div class="mobile-control-fill"></div></div>
+            </div>
+            <div class="mobile-control-lane" data-mobile-control="font">
+                <div class="mobile-control-copy">
+                    <span>Font</span>
+                    <strong id="mobileFontValue">16</strong>
+                </div>
+                <div class="mobile-control-track"><div class="mobile-control-fill"></div></div>
             </div>
         </div>
     </div>

@@ -22,6 +22,32 @@ const HOTKEY_ACTIONS = {
         run: () => updateSpeed(-0.25)
     }
 };
+const MOBILE_CONTROL_CONFIG = {
+    transpose: {
+        min: -12,
+        max: 12,
+        step: 1,
+        getValue: () => state.transpose,
+        setValue: value => setTranspose(value),
+        format: value => value > 0 ? `+${value}` : `${value}`
+    },
+    speed: {
+        min: 0.5,
+        max: 6,
+        step: 0.5,
+        getValue: () => state.scrollSpeed,
+        setValue: value => setSpeed(value),
+        format: value => value.toFixed(1)
+    },
+    font: {
+        min: 10,
+        max: 60,
+        step: 2,
+        getValue: () => state.fontSize,
+        setValue: value => setFontSize(value),
+        format: value => `${value}`
+    }
+};
 
 // --- State ---
 const state = {
@@ -58,6 +84,13 @@ const els = {
     speedUp: document.getElementById('speedUp'),
     speedValue: document.getElementById('speedValue'),
     playBtn: document.getElementById('playBtn'),
+    mobileControlsBtn: document.getElementById('mobileControlsBtn'),
+    mobileControlOverlay: document.getElementById('mobileControlOverlay'),
+    mobileControlPanel: document.getElementById('mobileControlPanel'),
+    mobileControlClose: document.getElementById('mobileControlClose'),
+    mobileTransposeValue: document.getElementById('mobileTransposeValue'),
+    mobileSpeedValue: document.getElementById('mobileSpeedValue'),
+    mobileFontValue: document.getElementById('mobileFontValue'),
     menuBtn: document.getElementById('menuBtn'),
     hotkeyBtn: document.getElementById('hotkeyBtn'),
     hotkeyModal: document.getElementById('hotkeyModal'),
@@ -133,9 +166,27 @@ els.speedUp.addEventListener('click', () => updateSpeed(0.25));
 // Play/Pause
 els.playBtn.addEventListener('click', toggleScroll);
 
+// Mobile Controls
+els.mobileControlsBtn.addEventListener('click', toggleMobileControls);
+els.mobileControlClose.addEventListener('click', closeMobileControls);
+els.mobileControlOverlay.addEventListener('click', (e) => {
+    if (e.target === els.mobileControlOverlay) closeMobileControls();
+});
+document.querySelectorAll('.mobile-control-lane').forEach(lane => {
+    lane.addEventListener('pointerdown', handleMobileControlPointerDown);
+    lane.addEventListener('pointermove', handleMobileControlPointerMove);
+    lane.addEventListener('pointerup', handleMobileControlPointerEnd);
+    lane.addEventListener('pointercancel', handleMobileControlPointerEnd);
+});
+
 // Menu & Modals
 els.menuBtn.addEventListener('click', () => openModal(els.menuModal));
 els.hotkeyBtn.addEventListener('click', () => openModal(els.hotkeyModal));
+els.hotkeyModal.addEventListener('click', (e) => {
+    if (e.button === 0 && e.target === els.hotkeyModal) {
+        closeModals();
+    }
+});
 els.songListBtn.addEventListener('click', () => {
     dismissStarterHints();
     openModal(els.songListModal);
@@ -149,7 +200,7 @@ els.songSortSelect.addEventListener('change', () => {
     state.songSort = els.songSortSelect.value;
     renderSongList();
 });
-els.artistFilterContainer.addEventListener('change', handleArtistFilterChange);
+els.artistFilterContainer.addEventListener('click', handleArtistFilterClick);
 document.querySelectorAll('.hotkey-input').forEach(input => {
     input.addEventListener('keydown', handleHotkeyInputKeydown);
     input.addEventListener('focus', () => {
@@ -404,10 +455,15 @@ function processLine(line) {
 }
 
 function updateTranspose(amount) {
-    state.transpose += amount;
-    els.transValue.textContent = state.transpose > 0 ? `+${state.transpose}` : state.transpose;
+    setTranspose(state.transpose + amount);
+}
+
+function setTranspose(value) {
+    state.transpose = Math.round(value);
+    els.transValue.textContent = formatTranspose(state.transpose);
     applyTranspose();
     updateURLState();
+    updateMobileControlUI();
 }
 
 function applyTranspose() {
@@ -444,7 +500,11 @@ function transposeChord(chord, semitones) {
 }
 
 function updateSpeed(amount) {
-    state.scrollSpeed = Math.max(0.5, Math.min(10, state.scrollSpeed + amount));
+    setSpeed(state.scrollSpeed + amount);
+}
+
+function setSpeed(value) {
+    state.scrollSpeed = clamp(Number(value), 0.5, 10);
     els.speedValue.textContent = state.scrollSpeed.toFixed(1);
     if (state.isScrolling) {
         clearInterval(state.scrollInterval);
@@ -453,10 +513,15 @@ function updateSpeed(amount) {
         }, 50 / state.scrollSpeed);
     }
     updateURLState();
+    updateMobileControlUI();
 }
 
 function updateFontSize(amount) {
-    state.fontSize = Math.max(10, Math.min(60, state.fontSize + amount));
+    setFontSize(state.fontSize + amount);
+}
+
+function setFontSize(value) {
+    state.fontSize = clamp(Math.round(value), 10, 60);
     updateUI();
 }
 
@@ -491,6 +556,7 @@ function updateUI() {
     els.fontValue.textContent = state.fontSize;
     els.alignToggle.dataset.alignment = state.alignment;
     els.alignToggle.setAttribute('aria-pressed', state.alignment === 'center' ? 'true' : 'false');
+    updateMobileControlUI();
 }
 
 // --- Helpers ---
@@ -511,6 +577,91 @@ function closeModals() {
     document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
 }
 window.closeModals = closeModals; // Expose to HTML
+
+function toggleMobileControls() {
+    if (els.mobileControlOverlay.classList.contains('active')) {
+        closeMobileControls();
+    } else {
+        openMobileControls();
+    }
+}
+
+function openMobileControls() {
+    els.mobileControlOverlay.classList.add('active');
+    els.mobileControlOverlay.setAttribute('aria-hidden', 'false');
+    els.mobileControlsBtn.classList.add('active');
+    updateMobileControlUI();
+}
+
+function closeMobileControls() {
+    els.mobileControlOverlay.classList.remove('active');
+    els.mobileControlOverlay.setAttribute('aria-hidden', 'true');
+    els.mobileControlsBtn.classList.remove('active');
+    document.querySelectorAll('.mobile-control-lane').forEach(lane => lane.classList.remove('dragging'));
+}
+
+function handleMobileControlPointerDown(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('dragging');
+    if (e.currentTarget.setPointerCapture) {
+        e.currentTarget.setPointerCapture(e.pointerId);
+    }
+    updateMobileControlFromPointer(e);
+}
+
+function handleMobileControlPointerMove(e) {
+    if (!e.currentTarget.classList.contains('dragging')) return;
+    e.preventDefault();
+    updateMobileControlFromPointer(e);
+}
+
+function handleMobileControlPointerEnd(e) {
+    e.currentTarget.classList.remove('dragging');
+    if (e.currentTarget.releasePointerCapture) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+}
+
+function updateMobileControlFromPointer(e) {
+    const control = e.currentTarget.dataset.mobileControl;
+    const config = MOBILE_CONTROL_CONFIG[control];
+    if (!config) return;
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const percent = rect.width ? clamp((e.clientX - rect.left) / rect.width, 0, 1) : 0;
+    const rawValue = config.min + percent * (config.max - config.min);
+    const steppedValue = quantize(rawValue, config.step, config.min);
+
+    config.setValue(clamp(steppedValue, config.min, config.max));
+}
+
+function updateMobileControlUI() {
+    document.querySelectorAll('.mobile-control-lane').forEach(lane => {
+        const control = lane.dataset.mobileControl;
+        const config = MOBILE_CONTROL_CONFIG[control];
+        if (!config) return;
+
+        const value = clamp(config.getValue(), config.min, config.max);
+        const percent = ((value - config.min) / (config.max - config.min)) * 100;
+        lane.style.setProperty('--mobile-control-level', `${percent}%`);
+    });
+
+    els.mobileTransposeValue.textContent = formatTranspose(state.transpose);
+    els.mobileSpeedValue.textContent = state.scrollSpeed.toFixed(1);
+    els.mobileFontValue.textContent = state.fontSize;
+}
+
+function formatTranspose(value) {
+    return value > 0 ? `+${value}` : `${value}`;
+}
+
+function quantize(value, step, min = 0) {
+    return min + Math.round((value - min) / step) * step;
+}
+
+function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+}
 
 function loadHotkeys() {
     try {
@@ -698,57 +849,54 @@ function renderArtistFilters() {
         .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 
     els.artistFilterContainer.innerHTML = '';
-    els.artistFilterContainer.appendChild(createArtistFilterCheckbox(ALL_ARTISTS, 'All', state.selectedArtists.has(ALL_ARTISTS)));
+    els.artistFilterContainer.appendChild(createArtistFilterPill(ALL_ARTISTS, 'All', state.selectedArtists.has(ALL_ARTISTS)));
 
     artists.forEach(artist => {
         const checked = !state.selectedArtists.has(ALL_ARTISTS) && state.selectedArtists.has(artist);
-        els.artistFilterContainer.appendChild(createArtistFilterCheckbox(artist, artist, checked));
+        els.artistFilterContainer.appendChild(createArtistFilterPill(artist, artist, checked));
     });
 }
 
-function createArtistFilterCheckbox(value, label, checked) {
-    const wrapper = document.createElement('label');
-    wrapper.className = 'artist-filter-label';
-
-    const input = document.createElement('input');
-    input.type = 'checkbox';
-    input.value = value;
-    input.checked = checked;
-
-    const text = document.createElement('span');
-    text.textContent = label;
-
-    wrapper.append(input, text);
-    return wrapper;
+function createArtistFilterPill(value, label, selected) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'artist-filter-pill';
+    button.dataset.artistFilter = value;
+    button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+    button.textContent = label;
+    return button;
 }
 
-function handleArtistFilterChange(e) {
-    if (e.target.type !== 'checkbox') return;
+function handleArtistFilterClick(e) {
+    const button = e.target.closest('.artist-filter-pill');
+    if (!button) return;
 
-    const value = e.target.value;
+    const value = button.dataset.artistFilter;
+    const isSelected = button.getAttribute('aria-pressed') === 'true';
 
-    if (value === ALL_ARTISTS) {
-        if (e.target.checked) {
-            state.selectedArtists = new Set([ALL_ARTISTS]);
-        } else if (state.selectedArtists.size === 1) {
-            state.selectedArtists = new Set([ALL_ARTISTS]);
-        }
-    } else {
-        state.selectedArtists.delete(ALL_ARTISTS);
-
-        if (e.target.checked) {
-            state.selectedArtists.add(value);
-        } else {
-            state.selectedArtists.delete(value);
-        }
-
-        if (state.selectedArtists.size === 0) {
-            state.selectedArtists.add(ALL_ARTISTS);
-        }
-    }
+    toggleArtistFilter(value, isSelected);
 
     renderArtistFilters();
     renderSongList();
+}
+
+function toggleArtistFilter(value, isSelected) {
+    if (value === ALL_ARTISTS) {
+        state.selectedArtists = new Set([ALL_ARTISTS]);
+        return;
+    }
+
+    state.selectedArtists.delete(ALL_ARTISTS);
+
+    if (isSelected) {
+        state.selectedArtists.delete(value);
+    } else {
+        state.selectedArtists.add(value);
+    }
+
+    if (state.selectedArtists.size === 0) {
+        state.selectedArtists.add(ALL_ARTISTS);
+    }
 }
 
 function renderSongList() {
@@ -779,8 +927,7 @@ function renderSongList() {
 
         div.append(title, artist);
         div.onclick = () => {
-            state.transpose = 0;
-            els.transValue.textContent = '0';
+            setTranspose(0);
             if (state.isScrolling) toggleScroll();
             loadSongFile(song.path);
             closeModals();
@@ -830,6 +977,7 @@ function loadSongFile(filename) {
             els.songInput.value = text;
             state.currentSong = songPath;
             renderSong();
+            els.songView.scrollTop = 0;
             updateURLState();
         })
         .catch(error => {
