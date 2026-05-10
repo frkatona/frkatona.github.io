@@ -1,50 +1,67 @@
 Everybody's Looking
 artist: Tim Dunleavy
 version: v2026.05.09
-key: E-D / Bridge Cmaj7-D6
-time: ?
-tempo: ?
+key: E
+time: 4:30
+tempo: 120
 
-Refrain:
-[E]Everybody's looking what you gonna [D]do? [E]Everybody's looking, you
-[D]can see it's true. [E]Everybody's looking at what you're gonna [D]do today.
+| [E]- - - - | [D]- - - - | (x4)
 
+Chorus:
+[E]Everybody's looking what you [D]gonna do? 
+[E]Everybody's looking, you can [D]see it's true. 
+[E]Everybody's looking at [D]what you're gonna do to-
+| [E]-day - - - | [D]- - - - |
 
 Verse1:
-[E]Everybody's looking and they just can't [D]stop. Everybody's looking at
-[E]I don't know [D]what. Everybody's looking and it don't look real good
-[E]today. Everybody's looking what you gonna [D]do? Everybody's looking
-[E]at me and [D]you. Everybody's looking for an ounce of truth.
+[E]Everybody's looking and they [D]just can't stop. 
+[E]Everybody's looking at [D]I don't know what. 
+[E]Everybody's looking and it [D]don't look real good to-
+| [E]-day - - - | [D]- - - - |
 
+Everybody's looking what you [D]gonna do
+Everybody's looking at [D]me and you. 
+[E]Everybody's looking[D] for an ounce of
+| [E]truth - - - | [D]- - - - |
 
 Verse2:
-[E]Everybody's looking at some social [D]feed. That always tells them just what
-[E]they need. Everybody's looking at the outrage of the [D]day. Everybody's
-[E]looking at what just happened. Looks to me like last week's [D]reactions.
-Everybody's talking about the price of eggs.
+[E]Everybody's looking at some [D]social feed. 
+[D]That always tells them just [D]what they need. 
+[D]Everybody's looking at the [D]outrage of the 
+| [E]day - - - | [D]- - - - |
 
+[E]Everybody's looking at what [D]just happened. 
+[E]Looks to me like last [D]week's reactions.
+[D]Everybody's talking [D]about the price of 
+| [E]eggs - - - | [D]- - - - |
 
-Refrain:
-[E]Everybody's looking what you gonna [D]do? [E]Everybody's looking, you
-[D]can see it's true. [E]Everybody's looking at what you're gonna [D]do today.
-
+Chorus:
+[E]Everybody's looking what you [D]gonna do? 
+[E]Everybody's looking, you can [D]see it's true. 
+[E]Everybody's looking at [D]what you're gonna do to-
+|[E]-day - - - | [D]- - - - |
 
 Bridge:
 | [Cmaj7]- - - | [D6]- - - | (4 bars)
 
-
 Verse3:
-[E]Everybody tells me what will make me [D]free. None of it sounds
-[E]very free to [D]me. Everybody wants their own reality.
+[E]Everybody tells me what will make me [D]free. 
+[E]None of it sounds very [D]free to me. 
+[E]Everybody wants their [D]own reali-
+| [E]-ty - - - | [D]- - - - |
 
+{p}[E]Everybody's talking it's a brand new [D]day. 
+{p}[E]But they've got nothing brand [D]new to say. 
+{p}[E]Everybody's on autoplay to- 
+| [E]-day - - - | [D]- - - - |
 
-Muted:
-[E]Everybody's talking it's a brand new [D]day. But they've got nothing brand
-[E]new to [D]say. Everybody's on autoplay today. [E]Everybody's rocking
-while they're Tik-[D]Tockin'. Looking at a horror and seeing no problem.
-[E]Everybody's shopping to keep the [D]blues away.
+{p}[E]Everybody's rocking while they're Tik-[D]Tockin'. 
+{p}[E]Looking at a horror and [D]seeing no problem.
+{p}[E]Everybody [D]shops to keep their [D]blues a-
+| [E]-way - - - | [D]- - - - |
 
-
-Refrain:
-[E]Everybody's looking what you gonna [D]do? [E]Everybody's looking, you
-[D]can see it's true. [E]Everybody's looking at what you're gonna [D]do today.
+Chorus:
+[E]Everybody's looking what you [D]gonna do? 
+[E]Everybody's looking, you can [D]see it's true. 
+[E]Everybody's looking at [D]what you're gonna do to-
+| [E]day - - - | [D]- - - - |
