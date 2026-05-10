@@ -747,7 +747,7 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
         height: 56px;
         padding-left: 10px;
         padding-right: 10px;
-        background-color: rgba(30, 30, 30, 0.25);
+        background-color: rgba(30, 30, 30, 0.95);
         backdrop-filter: none;
         z-index: 80;
     }
@@ -801,7 +801,7 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
         height: calc(112px + env(safe-area-inset-bottom));
         padding: 10px 14px;
         padding-bottom: calc(14px + env(safe-area-inset-bottom));
-        background-color: rgba(30, 30, 30, 0.25);
+        background-color: rgba(30, 30, 30, 0.95);
         z-index: 80;
     }
 
