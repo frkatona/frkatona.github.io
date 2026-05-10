@@ -101,6 +101,7 @@ const els = {
     hotkeyModal: document.getElementById('hotkeyModal'),
     hotkeyStatus: document.getElementById('hotkeyStatus'),
     songListBtn: document.getElementById('songListBtn'),
+    mobileSongListBtn: document.getElementById('mobileSongListBtn'),
     songListModal: document.getElementById('songListModal'),
     menuModal: document.getElementById('menuModal'),
     songSortSelect: document.getElementById('songSortSelect'),
@@ -197,10 +198,12 @@ document.querySelectorAll('.mobile-control-lane').forEach(lane => {
 els.menuBtn.addEventListener('click', () => openModal(els.menuModal));
 els.hotkeyBtn.addEventListener('click', () => openModal(els.hotkeyModal));
 els.fullscreenBtn.addEventListener('click', toggleFullscreen);
-els.songListBtn.addEventListener('click', () => {
+function openSongListModal() {
     dismissStarterHints();
     openModal(els.songListModal);
-});
+}
+els.songListBtn.addEventListener('click', openSongListModal);
+els.mobileSongListBtn.addEventListener('click', openSongListModal);
 document.querySelectorAll('.modal-overlay').forEach(modal => {
     modal.addEventListener('click', closeModalOnBackdropClick);
 });
@@ -1045,6 +1048,10 @@ function renderSongList() {
     sortedSongs.forEach(song => {
         const div = document.createElement('div');
         div.className = 'song-list-item';
+        if (state.currentSong === song.path) {
+            div.classList.add('selected');
+            div.setAttribute('aria-current', 'true');
+        }
 
         const title = document.createElement('span');
         title.className = 'song-list-title';
