@@ -22,11 +22,18 @@
     <div class="app-header">
         <div class="header-controls">
             <button class="icon-btn" id="menuBtn" title="Menu">☰</button>
-            <button class="icon-btn" id="songListBtn" title="Songs">♪</button>
+            <div class="header-action starter-hint-target starter-song-hint">
+                <button class="icon-btn" id="songListBtn" title="Songs">♪</button>
+                <div class="starter-hint-label">select song</div>
+            </div>
         </div>
         <div class="header-title" id="headerTitle">Untitled Song</div>
         <div class="header-controls">
-            <button class="icon-btn" id="editToggleBtn" title="Toggle Edit Mode">✎</button>
+            <button class="icon-btn" id="hotkeyBtn" title="Hotkeys">?</button>
+            <div class="header-action starter-hint-target starter-hint-target-right starter-edit-hint">
+                <button class="icon-btn" id="editToggleBtn" title="Toggle Edit Mode">✎</button>
+                <div class="starter-hint-label">edit lyrics and chords</div>
+            </div>
         </div>
     </div>
 
@@ -111,7 +118,10 @@ Title
             </div>
             <div class="menu-item">
                 <span>Alignment</span>
-                <button id="alignToggle" style="padding:5px 10px;">Center</button>
+                <button class="alignment-switch" id="alignToggle" type="button" aria-label="Toggle alignment">
+                    <span data-align-option="left">Left</span>
+                    <span data-align-option="center">Center</span>
+                </button>
             </div>
             <div class="menu-item">
                 <span>BPM Tapper</span>
@@ -121,6 +131,35 @@ Title
                     <button id="resetBpmBtn" style="padding:5px 10px;">Reset</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Hotkeys Modal -->
+    <div class="modal-overlay" id="hotkeyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Hotkeys</div>
+                <button class="close-btn" onclick="closeModals()">×</button>
+            </div>
+            <div class="hotkey-list">
+                <label class="hotkey-row">
+                    <span>Font size increase</span>
+                    <input class="hotkey-input" data-hotkey-action="fontSizeIncrease" readonly>
+                </label>
+                <label class="hotkey-row">
+                    <span>Font size decrease</span>
+                    <input class="hotkey-input" data-hotkey-action="fontSizeDecrease" readonly>
+                </label>
+                <label class="hotkey-row">
+                    <span>Scroll speed increase</span>
+                    <input class="hotkey-input" data-hotkey-action="scrollSpeedIncrease" readonly>
+                </label>
+                <label class="hotkey-row">
+                    <span>Scroll speed decrease</span>
+                    <input class="hotkey-input" data-hotkey-action="scrollSpeedDecrease" readonly>
+                </label>
+            </div>
+            <div class="hotkey-status" id="hotkeyStatus">Select a shortcut field, then press a key.</div>
         </div>
     </div>
 

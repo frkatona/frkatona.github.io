@@ -1,4 +1,27 @@
 const ALL_ARTISTS = '__all__';
+const HOTKEY_STORAGE_KEY = 'originalSongHelper.hotkeys';
+const HOTKEY_ACTIONS = {
+    fontSizeIncrease: {
+        label: 'Font size increase',
+        defaultKey: 'a',
+        run: () => updateFontSize(2)
+    },
+    fontSizeDecrease: {
+        label: 'Font size decrease',
+        defaultKey: 's',
+        run: () => updateFontSize(-2)
+    },
+    scrollSpeedIncrease: {
+        label: 'Scroll speed increase',
+        defaultKey: 'z',
+        run: () => updateSpeed(0.25)
+    },
+    scrollSpeedDecrease: {
+        label: 'Scroll speed decrease',
+        defaultKey: 'x',
+        run: () => updateSpeed(-0.25)
+    }
+};
 
 // --- State ---
 const state = {
@@ -15,7 +38,9 @@ const state = {
     pulseInterval: null,
     songs: [],
     selectedArtists: new Set([ALL_ARTISTS]),
-    songSort: 'artist-title'
+    songSort: 'artist-title',
+    showStarterHints: false,
+    hotkeys: Object.fromEntries(Object.entries(HOTKEY_ACTIONS).map(([action, config]) => [action, config.defaultKey]))
 };
 
 // --- Elements ---
@@ -34,6 +59,9 @@ const els = {
     speedValue: document.getElementById('speedValue'),
     playBtn: document.getElementById('playBtn'),
     menuBtn: document.getElementById('menuBtn'),
+    hotkeyBtn: document.getElementById('hotkeyBtn'),
+    hotkeyModal: document.getElementById('hotkeyModal'),
+    hotkeyStatus: document.getElementById('hotkeyStatus'),
     songListBtn: document.getElementById('songListBtn'),
     songListModal: document.getElementById('songListModal'),
     menuModal: document.getElementById('menuModal'),
@@ -65,6 +93,7 @@ function init() {
     const songParam = params.get('song');
     const speedParam = params.get('speed');
     const transParam = params.get('transpose');
+    state.showStarterHints = !songParam && !speedParam && !transParam;
 
     if (speedParam) {
         state.scrollSpeed = parseFloat(speedParam);
@@ -76,6 +105,8 @@ function init() {
         els.transValue.textContent = state.transpose > 0 ? `+${state.transpose}` : state.transpose;
     }
 
+    loadHotkeys();
+    renderHotkeyInputs();
     updateUI();
     loadSongList(songParam);
 }
@@ -84,6 +115,7 @@ function init() {
 els.songInput.addEventListener('input', renderSong);
 
 els.editToggleBtn.addEventListener('click', () => {
+    dismissStarterHints();
     state.isEditMode = !state.isEditMode;
     els.editorPanel.classList.toggle('hidden', !state.isEditMode);
     els.editToggleBtn.classList.toggle('active', state.isEditMode);
@@ -103,21 +135,35 @@ els.playBtn.addEventListener('click', toggleScroll);
 
 // Menu & Modals
 els.menuBtn.addEventListener('click', () => openModal(els.menuModal));
-els.songListBtn.addEventListener('click', () => openModal(els.songListModal));
+els.hotkeyBtn.addEventListener('click', () => openModal(els.hotkeyModal));
+els.songListBtn.addEventListener('click', () => {
+    dismissStarterHints();
+    openModal(els.songListModal);
+});
+els.songListModal.addEventListener('click', (e) => {
+    if (e.button === 0 && e.target === els.songListModal) {
+        closeModals();
+    }
+});
 els.songSortSelect.addEventListener('change', () => {
     state.songSort = els.songSortSelect.value;
     renderSongList();
 });
 els.artistFilterContainer.addEventListener('change', handleArtistFilterChange);
+document.querySelectorAll('.hotkey-input').forEach(input => {
+    input.addEventListener('keydown', handleHotkeyInputKeydown);
+    input.addEventListener('focus', () => {
+        els.hotkeyStatus.textContent = 'Press a key to assign it. Backspace clears the selected shortcut.';
+    });
+});
 
 // Font
-els.fontDown.addEventListener('click', () => { state.fontSize = Math.max(10, state.fontSize - 2); updateUI(); });
-els.fontUp.addEventListener('click', () => { state.fontSize = Math.min(60, state.fontSize + 2); updateUI(); });
+els.fontDown.addEventListener('click', () => updateFontSize(-2));
+els.fontUp.addEventListener('click', () => updateFontSize(2));
 
 // Alignment
 els.alignToggle.addEventListener('click', () => {
     state.alignment = state.alignment === 'center' ? 'left' : 'center';
-    els.alignToggle.textContent = state.alignment === 'center' ? 'Center' : 'Left';
     updateUI();
 });
 
@@ -135,12 +181,7 @@ els.tapBtn.addEventListener('click', tapTempo);
 els.resetBpmBtn.addEventListener('click', resetBpm);
 
 // Global Keys
-document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'TEXTAREA') return; // Ignore if typing
-    if (e.code === 'Space') { e.preventDefault(); toggleScroll(); }
-    if (e.code === 'ArrowUp') { els.songView.scrollTop -= 50; }
-    if (e.code === 'ArrowDown') { els.songView.scrollTop += 50; }
-});
+document.addEventListener('keydown', handleGlobalKeydown);
 
 // --- Core Logic ---
 
@@ -414,6 +455,11 @@ function updateSpeed(amount) {
     updateURLState();
 }
 
+function updateFontSize(amount) {
+    state.fontSize = Math.max(10, Math.min(60, state.fontSize + amount));
+    updateUI();
+}
+
 function toggleScroll() {
     if (state.isScrolling) {
         clearInterval(state.scrollInterval);
@@ -443,6 +489,8 @@ function updateUI() {
     els.songView.style.fontSize = `${state.fontSize}px`;
     els.songView.style.textAlign = state.alignment;
     els.fontValue.textContent = state.fontSize;
+    els.alignToggle.dataset.alignment = state.alignment;
+    els.alignToggle.setAttribute('aria-pressed', state.alignment === 'center' ? 'true' : 'false');
 }
 
 // --- Helpers ---
@@ -463,6 +511,137 @@ function closeModals() {
     document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
 }
 window.closeModals = closeModals; // Expose to HTML
+
+function loadHotkeys() {
+    try {
+        const stored = window.localStorage ? JSON.parse(window.localStorage.getItem(HOTKEY_STORAGE_KEY) || '{}') : {};
+        Object.keys(HOTKEY_ACTIONS).forEach(action => {
+            if (typeof stored[action] === 'string') {
+                state.hotkeys[action] = stored[action];
+            }
+        });
+    } catch (error) {
+        console.warn('Hotkey settings could not be loaded.', error);
+    }
+}
+
+function saveHotkeys() {
+    try {
+        if (window.localStorage) {
+            window.localStorage.setItem(HOTKEY_STORAGE_KEY, JSON.stringify(state.hotkeys));
+        }
+    } catch (error) {
+        console.warn('Hotkey settings could not be saved.', error);
+    }
+}
+
+function renderHotkeyInputs() {
+    document.querySelectorAll('.hotkey-input').forEach(input => {
+        const action = input.dataset.hotkeyAction;
+        input.value = formatShortcutKey(state.hotkeys[action]);
+        input.setAttribute('aria-label', `${HOTKEY_ACTIONS[action].label} hotkey`);
+    });
+}
+
+function handleHotkeyInputKeydown(e) {
+    e.preventDefault();
+
+    const action = e.target.dataset.hotkeyAction;
+    if (!HOTKEY_ACTIONS[action]) return;
+
+    if (e.key === 'Backspace' || e.key === 'Delete') {
+        state.hotkeys[action] = '';
+        saveHotkeys();
+        renderHotkeyInputs();
+        els.hotkeyStatus.textContent = `${HOTKEY_ACTIONS[action].label} hotkey cleared.`;
+        return;
+    }
+
+    const key = normalizeShortcutKey(e);
+    if (!key) {
+        els.hotkeyStatus.textContent = 'Choose a letter, number, punctuation key, or named key.';
+        return;
+    }
+
+    Object.keys(state.hotkeys).forEach(existingAction => {
+        if (existingAction !== action && state.hotkeys[existingAction] === key) {
+            state.hotkeys[existingAction] = '';
+        }
+    });
+
+    state.hotkeys[action] = key;
+    saveHotkeys();
+    renderHotkeyInputs();
+    els.hotkeyStatus.textContent = `${HOTKEY_ACTIONS[action].label} set to ${formatShortcutKey(key)}.`;
+}
+
+function handleGlobalKeydown(e) {
+    if (shouldIgnoreHotkeys(e)) return;
+
+    if (e.code === 'Space') {
+        e.preventDefault();
+        toggleScroll();
+        return;
+    }
+
+    if (e.code === 'ArrowUp') {
+        e.preventDefault();
+        els.songView.scrollTop -= 50;
+        return;
+    }
+
+    if (e.code === 'ArrowDown') {
+        e.preventDefault();
+        els.songView.scrollTop += 50;
+        return;
+    }
+
+    const key = normalizeShortcutKey(e);
+    const action = Object.keys(state.hotkeys).find(actionName => state.hotkeys[actionName] === key);
+    if (!action) return;
+
+    e.preventDefault();
+    HOTKEY_ACTIONS[action].run();
+}
+
+function shouldIgnoreHotkeys(e) {
+    if (state.isEditMode) return true;
+    if (!e.target) return false;
+
+    const tagName = e.target.tagName;
+    return e.target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(tagName);
+}
+
+function normalizeShortcutKey(e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return '';
+    const key = e.key === ' ' ? 'space' : e.key.toLowerCase();
+    if (['shift', 'control', 'alt', 'meta', 'tab', 'escape'].includes(key)) return '';
+    return key;
+}
+
+function formatShortcutKey(key) {
+    if (!key) return '';
+    const names = {
+        space: 'Space',
+        arrowup: 'Arrow Up',
+        arrowdown: 'Arrow Down',
+        arrowleft: 'Arrow Left',
+        arrowright: 'Arrow Right'
+    };
+    return names[key] || (key.length === 1 ? key.toUpperCase() : key);
+}
+
+function showStarterHints() {
+    if (state.showStarterHints) {
+        document.body.classList.add('show-starter-hints');
+    }
+}
+
+function dismissStarterHints() {
+    if (!state.showStarterHints) return;
+    state.showStarterHints = false;
+    document.body.classList.remove('show-starter-hints');
+}
 
 function loadSongList(initialSong = null) {
     els.songListContainer.innerHTML = '<div class="song-list-empty">Loading songs...</div>';
@@ -662,6 +841,7 @@ function loadSongFile(filename) {
 function loadDefaultSong() {
     els.songInput.value = "Amazing Grace\n\n[G]Amazing grace how [C]sweet the [G]sound\nThat [G]saved a wretch like [D]me\nI [G]once was lost but [C]now am [G]found\nWas [Em]blind but [D]now I [G]see";
     renderSong();
+    showStarterHints();
 }
 
 function updateURLState() {
