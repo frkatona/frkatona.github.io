@@ -1,42 +1,64 @@
 Ducks With Blood
 artist: Tim Dunleavy
 version: v2026.05.09
-key: ?
-time: ?
-tempo: ?
+key: Em
+time: 4:30
+tempo: 150
+
+| [E (long ring)]- - - - | - - - - | - - - - | - - - - |
+
+| [E]- - [G]- - | [E]- - [A]- - | (x4)
 
 Verse1:
-[E]Stuck beside a truck on a dirty [G]highway. Dead factories are all I [E]see.
-There's road destruction on all the [A]byways. Looking like no way out for me.
-[E]Lots of billboards on that [G]highway. Trying to tell me who to [E]be.
-Propaganda on the [A]highway. To pierce my mind and gaslight me.
+[E]Stuck beside a [G]truck on a [E]dirty [A]highway. 
+Dead [E]factor[G]ies are [E]all I [A]see.
+There's [E]road des[G]truction on [E]all the [A]byways. 
+[E]Looking like [G]no way [E]out for [A]me.
 
+[E]Lots of [G]billboards [E]on that [A]highway. 
+[E]Trying to [G]tell me [E]who to [A]be. [E - G - E - A]
+[E]Propa[G]ganda [E]on the [A]highway. [E - G - E - A]
+To [E]pierce my [G]mind and [E]gaslight [A]me. [E - G - E - A]
 
-Refrain:
-[C]Ducks with [C]blood [C]available. [C]Hold by [B]neck to [A]pour. [E]Lots of
-[A]ducks available at a local North Side store.
+Prechorus:
+And the sign [C-B-A]said...
 
+Chorus:
+[E]Ducks with [A]blood a[E]vaila[A]ble, [C-B-A]
+[E]hold by [A]neck to [E]pour. [A]  [C-B-A]
+[E]Lots of [A]ducks a[E]vaila[A]ble, [C-B-A]
+[E]at a [A]local [E]North Side [A]store.
+
+| [E]- - [G]- - | [E]- - [A]- - | (x4)
 
 Verse2:
-[E]Lots of people on the [G]sidewalk, where I walk against the [E]stream. Stare at
-their [A]phones and never talking. Lost in someone else's dream. [E]Some of them,
-they follow the [G]Preacher. Others they believe in [E]laws. Me I don't
-[A]believe in nothing, that I never touched or saw.
+[E]Lots of [G]people [E]on the [A]sidewalk, 
+[E]where I [G]walk a[E]gainst the [A]stream. 
+[E]Stare at their [G]phones and [A]never [A]talking. 
+[E]Lost in [G]someone [E]else's [A]dream. 
 
+[E]Some of [G]them,they [E]follow the [A]Preacher. 
+[E]Others [G]they be[E]lieve in [A]laws. 
+[E]Me I [G]don't be[E]lieve in [A]nothing, 
+[E]that I [G]never [E]touched or [A]saw.
 
-Refrain:
-And the sign says, "[C]Ducks with [C]blood [C]available. [C]Hold by [B]neck to
-[A]pour. [E]Lots of [A]ducks available, let's kill a couple more."
+Prechorus:
+And the sign [C-B-A]said...
 
+Chorus:
+[E]Ducks with [A]blood a[E]vaila[A]ble, [C-B-A]
+[E]hold by [A]neck to [E]pour. [A]  [C-B-A]
+[E]Lots of [A]ducks a[E]vaila[A]ble, [C-B-A]
+[E]let's kill a [A]couple [E]more. [A]
 
 Instrumental:
-| [E]- - - | [G]- - - | [E]- - - | [A]- - - | (4-8 or more bars)
+| [E]- - [G]- - | [E]- - [A]- - | (x16+)
 
-
-Outro:
-[C]Ducks with [C]blood [C]available. [C]Hold by [B]neck to [A]pour. [E]Lots of
-[A]drugs available, let's kill a couple more.
-
+Chorus:
+[E]Ducks with [A]blood a[E]vaila[A]ble, [C-B-A]
+[E]hold by [A]neck to [E]pour. [A]  [C-B-A]
+[E]Lots of [A]ducks a[E]vaila[A]ble, [C-B-A]
+[E]let's kill a [A]couple [E]more. [A] (here we go!)
 
 Instrumental to end:
-| [E]- - - | [G]- - - | [E]- - - | [A]- - - | (repeat)
+| [E]- - [G]- - | [E]- - [A]- - | (x8+)
