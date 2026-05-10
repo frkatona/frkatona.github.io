@@ -740,9 +740,20 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
 
 @media (max-width: 720px), (max-aspect-ratio: 3/4) {
     .app-header {
+        position: fixed;
+        top: var(--subpage-nav-height, 0px);
+        left: 0;
+        right: 0;
         height: 56px;
         padding-left: 10px;
         padding-right: 10px;
+        background-color: rgba(30, 30, 30, 0.25);
+        backdrop-filter: none;
+        z-index: 80;
+    }
+
+    body.app-fullscreen .app-header {
+        top: 0;
     }
 
     .header-title {
@@ -761,7 +772,20 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
     }
 
     .song-view {
-        padding: 18px 14px 120px 14px;
+        padding: 74px 14px 138px 14px;
+    }
+
+    .app-main {
+        position: fixed;
+        top: var(--subpage-nav-height, 0px);
+        right: 0;
+        bottom: 0;
+        left: 0;
+        flex-grow: 0;
+    }
+
+    body.app-fullscreen .app-main {
+        top: 0;
     }
 
     .song-title-render {
@@ -769,11 +793,15 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
     }
 
     .app-footer {
-        position: relative;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
         justify-content: center;
         height: calc(112px + env(safe-area-inset-bottom));
         padding: 10px 14px;
         padding-bottom: calc(14px + env(safe-area-inset-bottom));
+        background-color: rgba(30, 30, 30, 0.25);
         z-index: 80;
     }
 
@@ -816,13 +844,17 @@ body.show-starter-hints .starter-hint-target .icon-btn::after {
         position: fixed;
         left: 0;
         right: 0;
-        top: calc(56px + env(safe-area-inset-top));
+        top: calc(var(--subpage-nav-height, 0px) + 56px);
         bottom: calc(112px + env(safe-area-inset-bottom));
         z-index: 70;
         display: flex;
         align-items: flex-end;
         background: rgba(0, 0, 0, 0.38);
         backdrop-filter: blur(2px);
+    }
+
+    body.app-fullscreen .mobile-control-overlay.active {
+        top: 56px;
     }
 
     .mobile-control-overlay.active .mobile-control-panel {

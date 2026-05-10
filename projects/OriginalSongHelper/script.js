@@ -1,5 +1,7 @@
 const ALL_ARTISTS = '__all__';
+const PREFERENCES_STORAGE_KEY = 'originalSongHelper.preferences';
 const HOTKEY_STORAGE_KEY = 'originalSongHelper.hotkeys';
+const SONG_TRANSPOSE_STORAGE_KEY = 'originalSongHelper.songTranspose';
 const HOTKEY_ACTIONS = {
     fontSizeIncrease: {
         label: 'Font size increase',
@@ -66,7 +68,9 @@ const state = {
     selectedArtists: new Set([ALL_ARTISTS]),
     songSort: 'artist-title',
     showStarterHints: false,
-    hotkeys: Object.fromEntries(Object.entries(HOTKEY_ACTIONS).map(([action, config]) => [action, config.defaultKey]))
+    hotkeys: Object.fromEntries(Object.entries(HOTKEY_ACTIONS).map(([action, config]) => [action, config.defaultKey])),
+    songTranspose: {},
+    initialTranspose: null
 };
 
 // --- Elements ---
@@ -129,19 +133,28 @@ function init() {
     const transParam = params.get('transpose');
     state.showStarterHints = !songParam && !speedParam && !transParam;
 
+    loadPreferences();
+    loadHotkeys();
+    loadSongTranspose();
+
     if (speedParam) {
-        state.scrollSpeed = parseFloat(speedParam);
-        els.speedValue.textContent = state.scrollSpeed.toFixed(1);
+        const parsedSpeed = parseFloat(speedParam);
+        if (Number.isFinite(parsedSpeed)) {
+            state.scrollSpeed = clamp(parsedSpeed, 0.5, 10);
+        }
     }
 
     if (transParam) {
-        state.transpose = parseInt(transParam, 10);
-        els.transValue.textContent = state.transpose > 0 ? `+${state.transpose}` : state.transpose;
+        const parsedTranspose = parseInt(transParam, 10);
+        if (Number.isFinite(parsedTranspose)) {
+            state.initialTranspose = Math.round(clamp(parsedTranspose, -12, 12));
+        }
     }
 
-    loadHotkeys();
+    els.speedValue.textContent = state.scrollSpeed.toFixed(1);
     renderHotkeyInputs();
     updateUI();
+    updateTransposeDisplay();
     loadSongList(songParam);
 }
 
@@ -211,6 +224,7 @@ els.fontUp.addEventListener('click', () => updateFontSize(2));
 els.alignToggle.addEventListener('click', () => {
     state.alignment = state.alignment === 'center' ? 'left' : 'center';
     updateUI();
+    savePreferences();
 });
 
 // File Ops
@@ -458,11 +472,16 @@ function updateTranspose(amount) {
 }
 
 function setTranspose(value) {
-    state.transpose = Math.round(value);
-    els.transValue.textContent = formatTranspose(state.transpose);
+    state.transpose = Math.round(clamp(value, -12, 12));
+    updateTransposeDisplay();
+    saveCurrentSongTranspose();
     applyTranspose();
     updateURLState();
     updateMobileControlUI();
+}
+
+function updateTransposeDisplay() {
+    els.transValue.textContent = formatTranspose(state.transpose);
 }
 
 function applyTranspose() {
@@ -505,6 +524,7 @@ function updateSpeed(amount) {
 function setSpeed(value) {
     state.scrollSpeed = clamp(Number(value), 0.5, 10);
     els.speedValue.textContent = state.scrollSpeed.toFixed(1);
+    savePreferences();
     if (state.isScrolling) {
         clearInterval(state.scrollInterval);
         state.scrollInterval = setInterval(() => {
@@ -522,6 +542,7 @@ function updateFontSize(amount) {
 function setFontSize(value) {
     state.fontSize = clamp(Math.round(value), 10, 60);
     updateUI();
+    savePreferences();
 }
 
 function toggleScroll() {
@@ -570,6 +591,74 @@ function escapeHtml(text) {
 
 function isMeaningfulMetadataValue(value) {
     return value.trim() !== '' && value.trim() !== '?';
+}
+
+function loadPreferences() {
+    try {
+        const stored = getStoredJson(PREFERENCES_STORAGE_KEY, {});
+        if (Number.isFinite(stored.fontSize)) {
+            state.fontSize = clamp(Math.round(stored.fontSize), 10, 60);
+        }
+        if (stored.alignment === 'left' || stored.alignment === 'center') {
+            state.alignment = stored.alignment;
+        }
+        if (Number.isFinite(stored.scrollSpeed)) {
+            state.scrollSpeed = clamp(Number(stored.scrollSpeed), 0.5, 10);
+            els.speedValue.textContent = state.scrollSpeed.toFixed(1);
+        }
+    } catch (error) {
+        console.warn('Preferences could not be loaded.', error);
+    }
+}
+
+function savePreferences() {
+    setStoredJson(PREFERENCES_STORAGE_KEY, {
+        fontSize: state.fontSize,
+        alignment: state.alignment,
+        scrollSpeed: state.scrollSpeed
+    }, 'Preferences could not be saved.');
+}
+
+function loadSongTranspose() {
+    try {
+        const stored = getStoredJson(SONG_TRANSPOSE_STORAGE_KEY, {});
+        state.songTranspose = typeof stored === 'object' && stored ? stored : {};
+    } catch (error) {
+        console.warn('Song transpose settings could not be loaded.', error);
+    }
+}
+
+function saveCurrentSongTranspose() {
+    if (!state.currentSong) return;
+
+    if (state.transpose === 0) {
+        delete state.songTranspose[state.currentSong];
+    } else {
+        state.songTranspose[state.currentSong] = state.transpose;
+    }
+
+    setStoredJson(SONG_TRANSPOSE_STORAGE_KEY, state.songTranspose, 'Song transpose settings could not be saved.');
+}
+
+function getStoredSongTranspose(songPath) {
+    const stored = state.songTranspose[songPath];
+    return Number.isFinite(stored) ? Math.round(clamp(stored, -12, 12)) : 0;
+}
+
+function getStoredJson(key, fallback) {
+    if (!window.localStorage) return fallback;
+    const value = window.localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+}
+
+function setStoredJson(key, value, warning) {
+    try {
+        if (window.localStorage) {
+            window.localStorage.setItem(key, JSON.stringify(value));
+        }
+    } catch (error) {
+        console.warn(warning, error);
+    }
 }
 
 function openModal(modal) {
@@ -711,7 +800,7 @@ function clamp(value, min, max) {
 
 function loadHotkeys() {
     try {
-        const stored = window.localStorage ? JSON.parse(window.localStorage.getItem(HOTKEY_STORAGE_KEY) || '{}') : {};
+        const stored = getStoredJson(HOTKEY_STORAGE_KEY, {});
         Object.keys(HOTKEY_ACTIONS).forEach(action => {
             if (typeof stored[action] === 'string') {
                 state.hotkeys[action] = stored[action];
@@ -723,13 +812,7 @@ function loadHotkeys() {
 }
 
 function saveHotkeys() {
-    try {
-        if (window.localStorage) {
-            window.localStorage.setItem(HOTKEY_STORAGE_KEY, JSON.stringify(state.hotkeys));
-        }
-    } catch (error) {
-        console.warn('Hotkey settings could not be saved.', error);
-    }
+    setStoredJson(HOTKEY_STORAGE_KEY, state.hotkeys, 'Hotkey settings could not be saved.');
 }
 
 function renderHotkeyInputs() {
@@ -973,7 +1056,6 @@ function renderSongList() {
 
         div.append(title, artist);
         div.onclick = () => {
-            setTranspose(0);
             if (state.isScrolling) toggleScroll();
             loadSongFile(song.path);
             closeModals();
@@ -1022,6 +1104,7 @@ function loadSongFile(filename) {
         .then(text => {
             els.songInput.value = text;
             state.currentSong = songPath;
+            applySongTransposePreference(songPath);
             renderSong();
             els.songView.scrollTop = 0;
             updateURLState();
@@ -1032,8 +1115,26 @@ function loadSongFile(filename) {
         });
 }
 
+function applySongTransposePreference(songPath) {
+    if (state.initialTranspose !== null) {
+        state.transpose = state.initialTranspose;
+        state.initialTranspose = null;
+        saveCurrentSongTranspose();
+    } else {
+        state.transpose = getStoredSongTranspose(songPath);
+    }
+
+    updateTransposeDisplay();
+    updateMobileControlUI();
+}
+
 function loadDefaultSong() {
     els.songInput.value = "Amazing Grace\n\n[G]Amazing grace how [C]sweet the [G]sound\nThat [G]saved a wretch like [D]me\nI [G]once was lost but [C]now am [G]found\nWas [Em]blind but [D]now I [G]see";
+    state.currentSong = null;
+    state.transpose = 0;
+    state.initialTranspose = null;
+    updateTransposeDisplay();
+    updateMobileControlUI();
     renderSong();
     showStarterHints();
 }
