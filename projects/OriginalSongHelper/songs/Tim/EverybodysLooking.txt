@@ -42,7 +42,7 @@ Chorus:
 |[E]-day - - - | [D]- - - - |
 
 Bridge:
-| [Cmaj7]- - - | [D6]- - - | (4 bars)
+| [Cmaj7]- - - - | [D6]- - - - | (4 bars)
 
 Verse3:
 [E]Everybody tells me what will make me [D]free. 
