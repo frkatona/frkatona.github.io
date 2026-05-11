@@ -311,6 +311,12 @@ function renderSong() {
             return;
         }
 
+        const bracketSection = getBracketSectionHeader(trimmed);
+        if (bracketSection) {
+            html += `<div class="section-header">${escapeHtml(bracketSection)}</div>`;
+            return;
+        }
+
         // Section Header (ends with :)
         if (/^(\w+[\s\w]*):$/.test(trimmed)) {
             html += `<div class="section-header">${escapeHtml(trimmed)}</div>`;
@@ -319,13 +325,11 @@ function renderSong() {
 
         // Lyric/Chord Line
         const processed = processLine(line);
-        const isChordOnly = processed.lyrics.trim().length === 0;
-        const lineClass = isChordOnly ? 'song-line chord-only' : 'song-line';
+        const lineClasses = ['song-line'];
+        if (processed.hasChords) lineClasses.push('has-chords');
+        if (!processed.hasLyrics) lineClasses.push('chord-only');
 
-        html += `<div class="${lineClass}">
-                    <div class="chord-line">${processed.chords}</div>
-                    <div class="lyric-line">${processed.lyrics}</div>
-                 </div>`;
+        html += `<div class="${lineClasses.join(' ')}">${processed.html}</div>`;
     });
 
     els.songView.innerHTML = html;
@@ -333,160 +337,87 @@ function renderSong() {
 }
 
 function processLine(line) {
-    // New logic: We want chords to be on their own line visually, but aligned.
-    // Actually, the previous logic of "chord line" + "lyric line" works well for fixed width fonts.
-    // But for variable width, we might want inline chords or positioned chords.
-    // Let's stick to the "Chord Line above Lyric Line" approach but use monospace for spacing alignment if possible,
-    // OR use the "inline chord" approach where chords are floating above the word.
-    // The previous code did a complex spacing calculation.
-    // Let's try a simpler "inline block" approach for robustness.
-    // We will split the line by chords [C].
+    const chordRegex = /\[([^\]]+)\]/g;
+    const matches = [...line.matchAll(chordRegex)];
+    const cleanLine = line.replace(chordRegex, '');
 
-    // Actually, the most robust way for "Songbook Pro" style is often "Chords above text".
-    // Let's try to map chords to their position.
-
-    // Simple approach:
-    // 1. Extract chords and their indices.
-    // 2. Build a chord line string with spaces.
-    // 3. Build a lyric line string.
-
-    let chordLine = '';
-    let lyricLine = '';
-    let lastIdx = 0;
-    let chordOffset = 0; // Adjust for removed brackets
-
-    const regex = /\[([^\]]+)\]/g;
-    let match;
-    let chords = [];
-
-    // Pass 1: Get all chords and their "lyric index"
-    let cleanLine = line.replace(regex, '');
-
-    // We need to reconstruct the chord line to match the visual width of the clean line.
-    // This is hard with variable width fonts. 
-    // Alternative: Use HTML structure <span class="chord-wrapper"><span class="chord">C</span>Word</span>
-    // This binds the chord to the word.
-
-    let resultHtml = '';
-    let currentIndex = 0;
-
-    // Reset regex
-    regex.lastIndex = 0;
-
-    // We will rebuild the line as a sequence of text nodes and chord-wrappers.
-    // But wait, the previous code separated them into two lines.
-    // Let's try the wrapper approach, it handles variable width fonts better.
-
-    // However, the prompt asked for "Songbook Pro" style. 
-    // Songbook Pro often does "Chords above lyrics".
-    // Let's stick to the previous logic's output structure but refined.
-    // Actually, the previous logic was:
-    // <div class="chord-line">...</div> <div class="lyric-line">...</div>
-    // This relies on monospace to align.
-
-    // Let's switch to the "Inline Block" method which is superior for responsive text.
-    // We iterate through the string. When we see [Chord], we start a wrapper.
-
-    let parts = line.split(/(\[[^\]]+\])/);
-    let finalHtml = '';
-
-    // This is tricky because [C] usually applies to the *following* syllable.
-    // Example: Am[C]azing -> Am [C] azing.
-    // If we want [C] above 'a', we need to wrap 'azing'.
-
-    // Let's go with a simpler approximation:
-    // Just replace [Chord] with <span class="chord">Chord</span> and let CSS position it.
-    // If we make .song-line relative, and .chord absolute? No, that overlaps.
-    // If we make .chord inline-block with negative margin?
-
-    // Let's use the "Chord over text" trick:
-    // <span class="pair"><span class="chord">C</span><span class="text">Text</span></span>
-    // But we don't know how much text the chord covers.
-
-    // FALLBACK: Use the previous "Monospace Spacing" logic but render it cleaner.
-    // It worked well enough.
-
-    // Let's reuse the previous logic's core idea but simplified.
-
-    let chordLineHtml = '';
-    let lyricLineHtml = '';
-    let plain = line.replace(regex, '');
-
-    // We will use &nbsp; for spaces in chord line.
-    // To make this work with variable width fonts, we really should use a monospace font for the song view
-    // OR use the wrapper method.
-    // Let's enforce Monospace for the song view for now to ensure alignment.
-    // It's the safest bet for a text-based format.
-    // I set --font-chord to monospace. I should set --font-song to monospace too if I want perfect alignment.
-    // Songbook Pro allows variable width, but it parses the song into objects.
-    // Given I'm working with raw text, Monospace is the robust choice.
-
-    // Let's stick to the previous implementation's logic for `processLine` as it was decent,
-    // but I'll clean it up.
-
-    let buffer = '';
-    let chordBuffer = '';
-    let textIndex = 0;
-
-    // Re-implementing the "Space padding" logic
-    let chordsMap = []; // {pos: 5, chord: "C"}
-
-    let cleanLen = 0;
-    let match2;
-    const r2 = /\[([^\]]+)\]/g;
-    while ((match2 = r2.exec(line)) !== null) {
-        // Position in clean text is match.index minus length of all previous brackets
-        let pre = line.substring(0, match2.index);
-        let preClean = pre.replace(/\[[^\]]+\]/g, '');
-        chordsMap.push({ pos: preClean.length, chord: match2[1] });
+    if (matches.length === 0) {
+        return {
+            html: `<span class="lyric-text">${escapeHtml(line)}</span>`,
+            hasChords: false,
+            hasLyrics: line.trim().length > 0
+        };
     }
 
-    let clean = line.replace(r2, '');
+    let html = '';
+    let cursor = 0;
 
-    // Build chord line
-    let cLine = '';
-    let lastPos = 0;
+    matches.forEach((match, index) => {
+        const chord = match[1].trim();
+        const chordStart = match.index;
+        const lyricStart = chordStart + match[0].length;
+        const nextChordStart = matches[index + 1] ? matches[index + 1].index : line.length;
 
-    chordsMap.forEach(c => {
-        // Add spaces
-        while (cLine.length < c.pos) cLine += ' ';
-        // If overlap, just append (simple collision handling)
-        if (cLine.length > c.pos) {
-            // cLine += ' '; // Force space?
+        appendLyricText(line.slice(cursor, chordStart));
+
+        const lyricSegment = line.slice(lyricStart, nextChordStart);
+        const anchorParts = splitChordAnchorText(lyricSegment);
+        const preserveLeadingSpace = html.length > 0;
+
+        if (preserveLeadingSpace) {
+            appendLyricText(anchorParts.leading);
         }
-        // Add chord marker
-        // We wrap it in a span for transposition
-        cLine += `___CHORD___${c.chord}___END___`;
+
+        html += renderChordAnchor(chord, anchorParts.anchor);
+        appendLyricText(anchorParts.tail);
+        cursor = nextChordStart;
     });
 
-    // Replace markers with HTML
-    // We need to handle the length of the chord string vs the length of the space it takes.
-    // In a monospace view, [C] takes 3 chars in source, but we want it to sit above the char.
-    // The `cLine` string length now is "virtual".
-    // This is getting complicated.
-
-    // SIMPLIFIED APPROACH:
-    // Just return the clean text and a chord line that attempts to align.
-    // We will rely on the user putting chords roughly where they want them.
-    // Actually, the previous code did:
-    // Iterate chars of plain text. If chord at index, insert chord span. Else insert space.
-
-    let chordSpans = [];
-    let cMap = new Map();
-    chordsMap.forEach(c => cMap.set(c.pos, c.chord));
-
-    for (let i = 0; i < clean.length + 5; i++) { // +5 for trailing chords
-        if (cMap.has(i)) {
-            chordSpans.push(`<span class="chord-root" data-root="${cMap.get(i)}">${cMap.get(i)}</span>`);
-        } else {
-            if (i < clean.length) chordSpans.push('&nbsp;');
-        }
-    }
+    appendLyricText(line.slice(cursor));
 
     return {
-        chords: chordSpans.join(''),
-        lyrics: escapeHtml(clean)
+        html,
+        hasChords: true,
+        hasLyrics: cleanLine.trim().length > 0
     };
+
+    function appendLyricText(text) {
+        if (!text) return;
+        html += `<span class="lyric-text">${escapeHtml(text)}</span>`;
+    }
+}
+
+function splitChordAnchorText(text) {
+    const leading = text.match(/^\s*/)[0];
+    const rest = text.slice(leading.length);
+
+    if (!rest) {
+        return { leading, anchor: '', tail: '' };
+    }
+
+    const anchor = rest.match(/^\S+/)[0];
+    return {
+        leading,
+        anchor,
+        tail: rest.slice(anchor.length)
+    };
+}
+
+function renderChordAnchor(chord, lyricAnchor) {
+    const chordClass = lyricAnchor ? 'chord-anchor' : 'chord-anchor chord-anchor-empty';
+    const lyricHtml = lyricAnchor
+        ? escapeHtml(lyricAnchor)
+        : '<span class="chord-lyric-spacer" aria-hidden="true">&nbsp;</span>';
+
+    return `<span class="${chordClass}"><span class="chord-root" data-root="${escapeHtml(chord)}">${escapeHtml(chord)}</span><span class="chord-lyric">${lyricHtml}</span></span>`;
+}
+
+function getBracketSectionHeader(line) {
+    const match = line.match(/^\[([^\]]+)\]$/);
+    if (!match) return '';
+
+    const label = match[1].trim();
+    return containsChordSymbol(label) ? '' : label;
 }
 
 function updateTranspose(amount) {
@@ -518,25 +449,43 @@ function applyTranspose() {
 }
 
 const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const CHORD_SYMBOL_SOURCE = '[A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add|m|M)\\d*)?(?:\\d+)?(?:[#b]\\d+)*(?:\\/[A-G](?:#|b)?)?';
+const CHORD_SYMBOL_REGEX = new RegExp(`(^|[^A-Za-z])(${CHORD_SYMBOL_SOURCE})(?![A-Za-z])`, 'g');
+
+function containsChordSymbol(text) {
+    return new RegExp(`(^|[^A-Za-z])(${CHORD_SYMBOL_SOURCE})(?![A-Za-z])`).test(text);
+}
+
 function transposeChord(chord, semitones) {
-    // Split root from suffix (e.g. C#m7 -> C#, m7)
-    let match = chord.match(/^([A-G][#b]?)(.*)$/);
-    if (!match) return chord;
+    if (semitones === 0) return chord;
 
-    let root = match[1];
-    let suffix = match[2];
+    return chord.replace(CHORD_SYMBOL_REGEX, (match, prefix, token) => {
+        return prefix + transposeChordToken(token, semitones);
+    });
+}
 
+function transposeChordToken(token, semitones) {
+    const match = token.match(/^([A-G][#b]?)(.*)$/);
+    if (!match) return token;
+
+    const root = transposeRoot(match[1], semitones);
+    const suffix = match[2].replace(/\/([A-G][#b]?)/g, (_, bassRoot) => `/${transposeRoot(bassRoot, semitones)}`);
+
+    return root + suffix;
+}
+
+function transposeRoot(root, semitones) {
     // Normalize flats to sharps for simplicity
     const flatMap = { 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#' };
     if (flatMap[root]) root = flatMap[root];
 
     let idx = NOTES.indexOf(root);
-    if (idx === -1) return chord;
+    if (idx === -1) return root;
 
     let newIdx = (idx + semitones) % 12;
     if (newIdx < 0) newIdx += 12;
 
-    return NOTES[newIdx] + suffix;
+    return NOTES[newIdx];
 }
 
 function updateSpeed(amount) {
