@@ -11,18 +11,7 @@
     "bpm": 75,
     "key": "Bbm"
   },
-  {
-    "file": "53ana_HoiPolloi.mp3",
-    "id": "t2",
-    "title": "Hoi Polloi",
-    "artist": "53ana",
-    "cover": "Seana_MCB_1.jpg",
-    "album": "Album #1",
-    "year": 2023,
-    "tags": ["guitar", "soft rock", "singer/songwriter"],
-    "bpm": 120,
-    "key": "G"
-  },
+
   {
     "file": "TimD_DucksWithBlood.mp3",
     "id": "t3",
