@@ -50,7 +50,9 @@ Title
 
     <div class="app-footer">
         <div class="control-group">
-            <div class="control-label">Transpose</div>
+            <div class="control-label" title="Transpose" aria-label="Transpose">
+                <i class="fas fa-right-left" aria-hidden="true"></i>
+            </div>
             <div class="control-buttons">
                 <button class="control-btn" id="transDown">-</button>
                 <div class="control-value" id="transValue">0</div>
@@ -58,7 +60,9 @@ Title
             </div>
         </div>
         <div class="control-group">
-            <div class="control-label">Speed</div>
+            <div class="control-label" title="Speed" aria-label="Speed">
+                <i class="fas fa-gauge-high" aria-hidden="true"></i>
+            </div>
             <div class="control-buttons">
                 <button class="control-btn" id="speedDown">-</button>
                 <div class="control-value" id="speedValue">1.0</div>
@@ -74,7 +78,9 @@ Title
         <button class="mobile-controls-btn" id="mobileControlsBtn" type="button" aria-label="Controls">⚙</button>
 
         <div class="control-group">
-            <div class="control-label">Font</div>
+            <div class="control-label" title="Font" aria-label="Font">
+                <i class="fas fa-font" aria-hidden="true"></i>
+            </div>
             <div class="control-buttons">
                 <button class="control-btn" id="fontDown">A-</button>
                 <div class="control-value" id="fontValue">16</div>
@@ -160,6 +166,13 @@ Title
                 <button class="alignment-switch" id="alignToggle" type="button" aria-label="Toggle alignment">
                     <span data-align-option="left">Left</span>
                     <span data-align-option="center">Center</span>
+                </button>
+            </div>
+            <div class="menu-item">
+                <span>Footer controls</span>
+                <button class="footer-layout-switch" id="footerLayoutToggle" type="button" aria-label="Toggle footer controls">
+                    <span data-footer-layout-option="compact">Compact</span>
+                    <span data-footer-layout-option="expanded">Full</span>
                 </button>
             </div>
             <div class="menu-item">

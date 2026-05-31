@@ -67,6 +67,7 @@ const state = {
     songs: [],
     selectedArtists: new Set([ALL_ARTISTS]),
     songSort: 'artist-title',
+    expandedFooter: false,
     showStarterHints: false,
     hotkeys: Object.fromEntries(Object.entries(HOTKEY_ACTIONS).map(([action, config]) => [action, config.defaultKey])),
     songTranspose: {},
@@ -111,6 +112,7 @@ const els = {
     fontUp: document.getElementById('fontUp'),
     fontValue: document.getElementById('fontValue'),
     alignToggle: document.getElementById('alignToggle'),
+    footerLayoutToggle: document.getElementById('footerLayoutToggle'),
     downloadBtn: document.getElementById('downloadBtn'),
     uploadBtn: document.getElementById('uploadBtn'),
     fileInput: document.getElementById('fileInput'),
@@ -245,6 +247,13 @@ els.fontUp.addEventListener('click', () => updateFontSize(2));
 // Alignment
 els.alignToggle.addEventListener('click', () => {
     state.alignment = state.alignment === 'center' ? 'left' : 'center';
+    updateUI();
+    savePreferences();
+});
+
+els.footerLayoutToggle.addEventListener('click', () => {
+    state.expandedFooter = !state.expandedFooter;
+    closeMobileControls();
     updateUI();
     savePreferences();
 });
@@ -547,6 +556,9 @@ function updateUI() {
     els.fontValue.textContent = state.fontSize;
     els.alignToggle.dataset.alignment = state.alignment;
     els.alignToggle.setAttribute('aria-pressed', state.alignment === 'center' ? 'true' : 'false');
+    document.body.classList.toggle('expanded-footer', state.expandedFooter);
+    els.footerLayoutToggle.dataset.footerLayout = state.expandedFooter ? 'expanded' : 'compact';
+    els.footerLayoutToggle.setAttribute('aria-pressed', state.expandedFooter ? 'true' : 'false');
     updateMobileControlUI();
 }
 
@@ -573,6 +585,7 @@ function loadPreferences() {
         if (stored.alignment === 'left' || stored.alignment === 'center') {
             state.alignment = stored.alignment;
         }
+        state.expandedFooter = stored.expandedFooter === true;
         if (Number.isFinite(stored.scrollSpeed)) {
             state.scrollSpeed = clamp(Number(stored.scrollSpeed), 0.5, 10);
             els.speedValue.textContent = state.scrollSpeed.toFixed(1);
@@ -586,6 +599,7 @@ function savePreferences() {
     setStoredJson(PREFERENCES_STORAGE_KEY, {
         fontSize: state.fontSize,
         alignment: state.alignment,
+        expandedFooter: state.expandedFooter,
         scrollSpeed: state.scrollSpeed
     }, 'Preferences could not be saved.');
 }
