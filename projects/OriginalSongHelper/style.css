@@ -531,6 +531,19 @@ body.show-starter-hints .starter-hint-target .mobile-song-btn::after {
     opacity: 0.6;
 }
 
+.play-btn.return-top {
+    background-color: #f97316;
+    opacity: 1;
+}
+
+.play-btn.return-top:hover {
+    background-color: #ea580c;
+}
+
+.play-btn.return-top:active {
+    background-color: #c2410c;
+}
+
 body.expanded-footer .song-view {
     padding-bottom: calc(var(--desktop-footer-height) + 24px);
 }

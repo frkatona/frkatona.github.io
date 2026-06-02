@@ -56,6 +56,7 @@ const state = {
     transpose: 0,
     scrollSpeed: 1.0,
     isScrolling: false,
+    isAtBottom: false,
     scrollInterval: null,
     fontSize: 16,
     alignment: 'center',
@@ -182,6 +183,7 @@ if (window.visualViewport) {
 
 // --- Event Listeners ---
 els.songInput.addEventListener('input', renderSong);
+els.songView.addEventListener('scroll', handleSongViewScroll, { passive: true });
 
 els.editToggleBtn.addEventListener('click', () => {
     dismissStarterHints();
@@ -343,6 +345,7 @@ function renderSong() {
 
     els.songView.innerHTML = html;
     applyTranspose(); // Re-apply current transpose
+    updateSongBottomState();
 }
 
 function processLine(line) {
@@ -507,9 +510,7 @@ function setSpeed(value) {
     savePreferences();
     if (state.isScrolling) {
         clearInterval(state.scrollInterval);
-        state.scrollInterval = setInterval(() => {
-            els.songView.scrollTop += 1;
-        }, 50 / state.scrollSpeed);
+        state.scrollInterval = setInterval(stepAutoScroll, 50 / state.scrollSpeed);
     }
     updateURLState();
     updateMobileControlUI();
@@ -526,27 +527,99 @@ function setFontSize(value) {
 }
 
 function toggleScroll() {
-    if (state.isScrolling) {
-        clearInterval(state.scrollInterval);
-        state.isScrolling = false;
-        els.playBtn.textContent = '▶';
-        els.playBtn.classList.remove('playing');
-        els.playBtn.classList.remove('pulsing');
-    } else {
-        state.scrollInterval = setInterval(() => {
-            els.songView.scrollTop += 1;
-        }, 50 / state.scrollSpeed); // Simple speed logic
-        state.isScrolling = true;
-        els.playBtn.textContent = '❚❚';
-        els.playBtn.classList.add('playing');
+    if (state.isAtBottom) {
+        returnSongToTop();
+        return;
+    }
 
-        if (state.bpm > 0) {
-            els.playBtn.classList.add('pulsing');
-            // Set pulse duration based on BPM
-            // 60 BPM = 1 beat per second
-            const duration = 60 / state.bpm;
-            els.playBtn.style.setProperty('--pulse-duration', `${duration}s`);
-        }
+    if (state.isScrolling) {
+        pauseAutoScroll();
+    } else {
+        startAutoScroll();
+    }
+}
+
+function startAutoScroll() {
+    if (isSongViewAtBottom()) {
+        updateSongBottomState();
+        return;
+    }
+
+    clearInterval(state.scrollInterval);
+    state.scrollInterval = setInterval(stepAutoScroll, 50 / state.scrollSpeed);
+    state.isScrolling = true;
+    updatePlayButtonUI();
+}
+
+function pauseAutoScroll() {
+    clearInterval(state.scrollInterval);
+    state.scrollInterval = null;
+    state.isScrolling = false;
+    updatePlayButtonUI();
+}
+
+function stepAutoScroll() {
+    els.songView.scrollTop += 1;
+
+    if (isSongViewAtBottom()) {
+        updateSongBottomState();
+        pauseAutoScroll();
+    }
+}
+
+function returnSongToTop() {
+    pauseAutoScroll();
+    els.songView.scrollTop = 0;
+    updateSongBottomState();
+}
+
+function handleSongViewScroll() {
+    updateSongBottomState();
+
+    if (state.isScrolling && state.isAtBottom) {
+        pauseAutoScroll();
+    }
+}
+
+function updateSongBottomState() {
+    const wasAtBottom = state.isAtBottom;
+    state.isAtBottom = isSongViewAtBottom();
+
+    if (wasAtBottom !== state.isAtBottom || state.isAtBottom) {
+        updatePlayButtonUI();
+    }
+}
+
+function isSongViewAtBottom() {
+    const threshold = 2;
+    const hasScrollableContent = els.songView.scrollHeight > els.songView.clientHeight + threshold;
+    if (!hasScrollableContent) return false;
+
+    return els.songView.scrollHeight - els.songView.clientHeight - els.songView.scrollTop <= threshold;
+}
+
+function updatePlayButtonUI() {
+    els.playBtn.classList.toggle('playing', state.isScrolling);
+    els.playBtn.classList.toggle('return-top', state.isAtBottom);
+
+    if (state.isAtBottom) {
+        els.playBtn.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
+        els.playBtn.setAttribute('aria-label', 'Return to top');
+        els.playBtn.title = 'Return to top';
+        els.playBtn.classList.remove('pulsing');
+        return;
+    }
+
+    els.playBtn.textContent = state.isScrolling ? '❚❚' : '▶';
+    els.playBtn.setAttribute('aria-label', state.isScrolling ? 'Pause auto-scroll' : 'Start auto-scroll');
+    els.playBtn.title = state.isScrolling ? 'Pause auto-scroll' : 'Start auto-scroll';
+
+    if (state.isScrolling && state.bpm > 0) {
+        els.playBtn.classList.add('pulsing');
+        const duration = 60 / state.bpm;
+        els.playBtn.style.setProperty('--pulse-duration', `${duration}s`);
+    } else {
+        els.playBtn.classList.remove('pulsing');
     }
 }
 
@@ -560,6 +633,7 @@ function updateUI() {
     els.footerLayoutToggle.dataset.footerLayout = state.expandedFooter ? 'expanded' : 'compact';
     els.footerLayoutToggle.setAttribute('aria-pressed', state.expandedFooter ? 'true' : 'false');
     updateMobileControlUI();
+    updateSongBottomState();
 }
 
 // --- Helpers ---
@@ -1096,6 +1170,7 @@ function loadSongFile(filename) {
             applySongTransposePreference(songPath);
             renderSong();
             els.songView.scrollTop = 0;
+            updateSongBottomState();
             updateURLState();
         })
         .catch(error => {
@@ -1125,6 +1200,8 @@ function loadDefaultSong() {
     updateTransposeDisplay();
     updateMobileControlUI();
     renderSong();
+    els.songView.scrollTop = 0;
+    updateSongBottomState();
     showStarterHints();
 }
 
@@ -1401,6 +1478,7 @@ function tapTempo() {
         const bpm = Math.round(60000 / avgInterval);
         state.bpm = bpm;
         els.bpmDisplay.textContent = `BPM: ${bpm}`;
+        updatePlayButtonUI();
     }
 }
 
@@ -1408,6 +1486,7 @@ function resetBpm() {
     state.bpm = 0;
     state.tapTimes = [];
     els.bpmDisplay.textContent = `BPM: --`;
+    updatePlayButtonUI();
 }
 
 // Run
