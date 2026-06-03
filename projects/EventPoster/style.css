@@ -1,0 +1,250 @@
+:root {
+  --page-bg: #17191f;
+  --panel-bg: #f2efe8;
+  --panel-ink: #17191f;
+  --muted: #6b665f;
+  --line: rgba(23, 25, 31, 0.16);
+  --accent: #d8753b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(216, 117, 59, 0.18), transparent 28rem),
+    linear-gradient(135deg, #101217 0%, #222733 100%);
+  color: #f7f3ea;
+  font-family: "Fira Sans", Arial, sans-serif;
+}
+
+nav.subpage-nav {
+  background: rgba(12, 13, 17, 0.72);
+}
+
+.poster-app {
+  width: min(1440px, 100%);
+  min-height: calc(100vh - var(--subpage-nav-height));
+  margin: 0 auto;
+  padding: clamp(1rem, 2vw, 2rem);
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(320px, 420px);
+  gap: clamp(1rem, 2vw, 2rem);
+  align-items: start;
+}
+
+.poster-stage {
+  min-height: calc(100vh - var(--subpage-nav-height) - 2rem);
+  display: grid;
+  place-items: center;
+}
+
+.poster-frame {
+  width: min(100%, 76vh);
+  aspect-ratio: 4 / 5;
+  background: #090a0d;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.control-panel {
+  width: 100%;
+  align-self: stretch;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  background: var(--panel-bg);
+  color: var(--panel-ink);
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
+}
+
+.panel-header {
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.25rem;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  line-height: 1.04;
+}
+
+.drop-zone {
+  min-height: 116px;
+  margin-bottom: 1rem;
+  border: 2px dashed rgba(23, 25, 31, 0.32);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.54);
+  display: grid;
+  place-items: center;
+  gap: 0.15rem;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.drop-zone:hover,
+.drop-zone.is-dragging {
+  border-color: var(--accent);
+  background: #fff9ef;
+  transform: translateY(-1px);
+}
+
+.drop-zone input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.drop-zone__title,
+.drop-zone__hint {
+  display: block;
+}
+
+.drop-zone__title {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.drop-zone__hint {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.control-group {
+  margin-bottom: 0.9rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #37332d;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.72rem 0.75rem;
+  background: #fffdf8;
+  color: var(--panel-ink);
+  font-weight: 600;
+  resize: vertical;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+input[type="color"] {
+  width: 100%;
+  height: 42px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fffdf8;
+}
+
+.preset-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.preset,
+.download-button {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.preset {
+  background: #fffdf8;
+  color: #2b2824;
+}
+
+.preset.is-active {
+  background: #24242a;
+  color: #fffdf8;
+}
+
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.download-button {
+  width: 100%;
+  margin-top: 0.2rem;
+  background: #17191f;
+  color: #fffdf8;
+}
+
+.download-button:hover,
+.preset:hover {
+  border-color: rgba(216, 117, 59, 0.72);
+}
+
+@media (max-width: 920px) {
+  .poster-app {
+    grid-template-columns: 1fr;
+  }
+
+  .poster-stage {
+    min-height: auto;
+  }
+
+  .poster-frame {
+    width: min(100%, 620px);
+  }
+}
+
+@media (max-width: 540px) {
+  .poster-app {
+    padding: 0.75rem;
+  }
+
+  .control-panel {
+    border-radius: 0;
+  }
+
+  .control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preset-row {
+    grid-template-columns: 1fr;
+  }
+}

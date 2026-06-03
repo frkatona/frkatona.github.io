@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Poster Maker</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/images/icons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fira+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/subpage_nav.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="has-subpage-nav">
+    <nav class="subpage-nav">
+        <a href="../../index.html" class="subpage-nav__link" title="Home">
+            <span aria-hidden="true">⌂</span>
+            <span>Home</span>
+        </a>
+    </nav>
+
+    <main class="poster-app">
+        <section class="poster-stage" aria-label="Poster preview">
+            <div class="poster-frame">
+                <canvas id="poster-canvas" width="1080" height="1350" aria-label="Generated event poster preview"></canvas>
+            </div>
+        </section>
+
+        <aside class="control-panel" aria-label="Poster controls">
+            <div class="panel-header">
+                <p class="eyebrow">Event Poster</p>
+                <h1>Image + Type Layout</h1>
+            </div>
+
+            <label class="drop-zone" id="drop-zone" for="image-input">
+                <input id="image-input" type="file" accept="image/*">
+                <span class="drop-zone__title">Drop image here</span>
+                <span class="drop-zone__hint">or choose a photo</span>
+            </label>
+
+            <div class="control-group">
+                <label for="poster-title">Title</label>
+                <textarea id="poster-title" rows="2" maxlength="80">MIDNIGHT SET</textarea>
+            </div>
+
+            <div class="control-group">
+                <label for="poster-subtitle">Subtitle</label>
+                <input id="poster-subtitle" type="text" value="LIVE AT THE RIVER ROOM" maxlength="70">
+            </div>
+
+            <div class="control-group">
+                <label for="poster-details">Date and Time</label>
+                <input id="poster-details" type="text" value="SATURDAY · JUNE 21 · 8 PM" maxlength="80">
+            </div>
+
+            <div class="control-group">
+                <label for="poster-footer">Location / Tickets</label>
+                <input id="poster-footer" type="text" value="123 MARKET ST · TICKETS AT THE DOOR" maxlength="90">
+            </div>
+
+            <div class="preset-row" aria-label="Style presets">
+                <button class="preset is-active" type="button" data-preset="noir">Noir</button>
+                <button class="preset" type="button" data-preset="amber">Amber</button>
+                <button class="preset" type="button" data-preset="clean">Clean</button>
+            </div>
+
+            <div class="control-grid">
+                <div class="control-group">
+                    <label for="title-y">Title Y</label>
+                    <input id="title-y" type="range" min="90" max="760" value="260">
+                </div>
+                <div class="control-group">
+                    <label for="details-y">Details Y</label>
+                    <input id="details-y" type="range" min="700" max="1230" value="1010">
+                </div>
+                <div class="control-group">
+                    <label for="text-color">Text</label>
+                    <input id="text-color" type="color" value="#f8f4eb">
+                </div>
+                <div class="control-group">
+                    <label for="accent-color">Accent</label>
+                    <input id="accent-color" type="color" value="#f4b860">
+                </div>
+            </div>
+
+            <button class="download-button" id="download-button" type="button">Download Poster</button>
+        </aside>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

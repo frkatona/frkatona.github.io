@@ -41,12 +41,12 @@ Ideas are grouped by estimated implementation difficulty. The references are exa
    - Continue supporting the current lightweight format so existing songs do not need conversion.
    - Reference: ChordPro is a useful standard for portable chord charts.
 
-3. Better chord rendering
+3. [x] Better chord rendering
    - Replace the current monospace spacing approach with inline chord anchors above lyric syllables.
    - This would make chords align more reliably on mobile and allow variable-width fonts.
    - Reference: SongbookPro and Ultimate Guitar chord sheets are easier to scan because chord placement survives responsive layouts.
 
-4. Section navigation
+4. [ ] Section navigation
    - Parse section headers like `Verse:`, `Chorus:`, `Bridge:` and create a small jump menu.
    - Useful for rehearsal when someone says "go back to bridge."
 
@@ -131,3 +131,6 @@ Keep your current left-most text convention, but formalize it as a parsed dynami
 
 Render recognized dynamics markers as compact badges in the left margin instead of normal lyrics. Use standard markings such as `pp`, `p`, `mp`, `mf`, `f`, `ff`, plus text directions like `crescendo`, `dim`, `rit`, and `hold`. On mobile, keep the badge inline at the beginning of the lyric line so it does not consume too much horizontal space. This keeps the source text readable while making performance cues easier to scan.
 
+---
+
+after local app settings, establish local folder to check for songs + a 'save as' option'
