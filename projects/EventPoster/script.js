@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 
 const controls = {
   imageInput: document.getElementById("image-input"),
-  dropZone: document.getElementById("drop-zone"),
+  posterFrame: document.getElementById("poster-frame"),
   title: document.getElementById("poster-title"),
   subtitle: document.getElementById("poster-subtitle"),
   details: document.getElementById("poster-details"),
@@ -18,6 +18,10 @@ const controls = {
   baseHue: document.getElementById("base-hue"),
   swatchList: document.getElementById("split-swatch-list"),
   wheelMarkers: Array.from(document.querySelectorAll("[data-marker]")),
+  posterActionDialog: document.getElementById("poster-action-dialog"),
+  closePosterActions: document.getElementById("close-poster-actions"),
+  downloadFromPreview: document.getElementById("download-from-preview"),
+  uploadBaseImage: document.getElementById("upload-base-image"),
   download: document.getElementById("download-button"),
   presets: Array.from(document.querySelectorAll("[data-preset]")),
 };
@@ -28,6 +32,7 @@ const state = {
   overlay: "rgba(0, 0, 0, 0.34)",
   vignette: "rgba(0, 0, 0, 0.58)",
   shadow: "rgba(0, 0, 0, 0.82)",
+  lastDropAt: 0,
 };
 
 const presets = {
@@ -409,24 +414,34 @@ function downloadPoster() {
 
 controls.imageInput.addEventListener("change", (event) => {
   loadImageFile(event.target.files[0]);
+  event.target.value = "";
 });
 
 ["dragenter", "dragover"].forEach((eventName) => {
-  controls.dropZone.addEventListener(eventName, (event) => {
+  controls.posterFrame.addEventListener(eventName, (event) => {
     event.preventDefault();
-    controls.dropZone.classList.add("is-dragging");
+    controls.posterFrame.classList.add("is-dragging");
   });
 });
 
 ["dragleave", "drop"].forEach((eventName) => {
-  controls.dropZone.addEventListener(eventName, (event) => {
+  controls.posterFrame.addEventListener(eventName, (event) => {
     event.preventDefault();
-    controls.dropZone.classList.remove("is-dragging");
+    controls.posterFrame.classList.remove("is-dragging");
   });
 });
 
-controls.dropZone.addEventListener("drop", (event) => {
+controls.posterFrame.addEventListener("drop", (event) => {
+  state.lastDropAt = Date.now();
   loadImageFile(event.dataTransfer.files[0]);
+});
+
+controls.posterFrame.addEventListener("click", () => {
+  if (Date.now() - state.lastDropAt < 300) {
+    return;
+  }
+
+  controls.posterActionDialog.showModal();
 });
 
 [
@@ -470,6 +485,26 @@ controls.swatchList.addEventListener("click", (event) => {
   }
 
   setHarmonyColor(button.dataset.apply, button.dataset.color);
+});
+
+controls.closePosterActions.addEventListener("click", () => {
+  controls.posterActionDialog.close();
+});
+
+controls.posterActionDialog.addEventListener("click", (event) => {
+  if (event.target === controls.posterActionDialog) {
+    controls.posterActionDialog.close();
+  }
+});
+
+controls.downloadFromPreview.addEventListener("click", () => {
+  controls.posterActionDialog.close();
+  downloadPoster();
+});
+
+controls.uploadBaseImage.addEventListener("click", () => {
+  controls.posterActionDialog.close();
+  controls.imageInput.click();
 });
 
 controls.download.addEventListener("click", downloadPoster);

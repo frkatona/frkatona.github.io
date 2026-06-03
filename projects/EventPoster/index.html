@@ -23,22 +23,16 @@
 
     <main class="poster-app">
         <section class="poster-stage" aria-label="Poster preview">
-            <div class="poster-frame">
+            <div class="poster-frame" id="poster-frame" title="Click for poster actions or drop an image">
                 <canvas id="poster-canvas" width="1080" height="1350" aria-label="Generated event poster preview"></canvas>
             </div>
+            <input class="image-input" id="image-input" type="file" accept="image/*">
         </section>
 
         <aside class="control-panel" aria-label="Poster controls">
             <div class="panel-header">
                 <p class="eyebrow">Event Poster</p>
-                <h1>Image + Type Layout</h1>
             </div>
-
-            <label class="drop-zone" id="drop-zone" for="image-input">
-                <input id="image-input" type="file" accept="image/*">
-                <span class="drop-zone__title">Drop image here</span>
-                <span class="drop-zone__hint">or choose a photo</span>
-            </label>
 
             <div class="control-group">
                 <label for="poster-title">Title</label>
@@ -66,7 +60,9 @@
                 <button class="preset" type="button" data-preset="clean">Clean</button>
             </div>
 
-            <div class="control-grid">
+            <hr class="panel-separator" aria-hidden="true">
+
+            <div class="control-grid position-grid">
                 <div class="control-group">
                     <label for="title-y">Title Y</label>
                     <input id="title-y" type="range" min="90" max="760" value="260">
@@ -75,6 +71,9 @@
                     <label for="details-y">Details Y</label>
                     <input id="details-y" type="range" min="700" max="1230" value="1010">
                 </div>
+            </div>
+
+            <div class="control-grid color-grid">
                 <div class="control-group">
                     <label for="text-color">Text</label>
                     <input id="text-color" type="color" value="#f8f4eb">
@@ -83,9 +82,13 @@
                     <label for="accent-color">Accent</label>
                     <input id="accent-color" type="color" value="#f4b860">
                 </div>
+                <div class="control-group color-wheel-control">
+                    <label for="open-color-wheel">Extra</label>
+                    <button class="color-wheel-button" id="open-color-wheel" type="button">Harmony</button>
+                </div>
             </div>
 
-            <button class="color-wheel-button" id="open-color-wheel" type="button">Split Complementary Wheel</button>
+            <hr class="panel-separator" aria-hidden="true">
 
             <button class="download-button" id="download-button" type="button">Download Poster</button>
         </aside>
@@ -115,6 +118,21 @@
 
                 <div class="swatch-list" id="split-swatch-list" aria-live="polite"></div>
             </div>
+        </div>
+    </dialog>
+
+    <dialog class="poster-action-dialog" id="poster-action-dialog" aria-labelledby="poster-action-title">
+        <div class="color-dialog__header">
+            <div>
+                <p class="eyebrow">Poster Preview</p>
+                <h2 id="poster-action-title">Choose Action</h2>
+            </div>
+            <button class="dialog-close" id="close-poster-actions" type="button" aria-label="Close poster actions">Close</button>
+        </div>
+
+        <div class="poster-action-list">
+            <button class="poster-action-button" id="download-from-preview" type="button">Download Poster</button>
+            <button class="poster-action-button" id="upload-base-image" type="button">Upload New Base Image</button>
         </div>
     </dialog>
 
