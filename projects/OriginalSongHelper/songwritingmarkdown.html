@@ -175,6 +175,19 @@ Title
                     <span data-footer-layout-option="expanded">Full</span>
                 </button>
             </div>
+            <div class="menu-item menu-item-stacked">
+                <div class="menu-item-heading">
+                    <span>Dynamics line</span>
+                    <span class="range-value" id="dynamicLineRangeValue">8% - 33%</span>
+                </div>
+                <div class="dual-range" aria-label="Dynamics indicator line range">
+                    <div class="dual-range-track"></div>
+                    <input id="dynamicLineStartInput" type="range" min="0" max="100" step="1" value="8"
+                        aria-label="Dynamics line start">
+                    <input id="dynamicLineStopInput" type="range" min="0" max="100" step="1" value="33"
+                        aria-label="Dynamics line stop">
+                </div>
+            </div>
             <div class="menu-item">
                 <span>BPM Tapper</span>
                 <div style="display:flex; gap:10px; align-items:center;">

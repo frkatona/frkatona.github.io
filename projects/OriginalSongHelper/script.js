@@ -69,6 +69,8 @@ const state = {
     selectedArtists: new Set([ALL_ARTISTS]),
     songSort: 'artist-title',
     expandedFooter: false,
+    dynamicLineStart: 0.08,
+    dynamicLineStop: 0.33,
     showStarterHints: false,
     hotkeys: Object.fromEntries(Object.entries(HOTKEY_ACTIONS).map(([action, config]) => [action, config.defaultKey])),
     songTranspose: {},
@@ -114,6 +116,9 @@ const els = {
     fontValue: document.getElementById('fontValue'),
     alignToggle: document.getElementById('alignToggle'),
     footerLayoutToggle: document.getElementById('footerLayoutToggle'),
+    dynamicLineStartInput: document.getElementById('dynamicLineStartInput'),
+    dynamicLineStopInput: document.getElementById('dynamicLineStopInput'),
+    dynamicLineRangeValue: document.getElementById('dynamicLineRangeValue'),
     downloadBtn: document.getElementById('downloadBtn'),
     uploadBtn: document.getElementById('uploadBtn'),
     fileInput: document.getElementById('fileInput'),
@@ -259,6 +264,8 @@ els.footerLayoutToggle.addEventListener('click', () => {
     updateUI();
     savePreferences();
 });
+els.dynamicLineStartInput.addEventListener('input', handleDynamicLineRangeInput);
+els.dynamicLineStopInput.addEventListener('input', handleDynamicLineRangeInput);
 
 // File Ops
 els.downloadBtn.addEventListener('click', downloadSong);
@@ -339,8 +346,12 @@ function renderSong() {
         const lineClasses = ['song-line'];
         if (processed.hasChords) lineClasses.push('has-chords');
         if (!processed.hasLyrics) lineClasses.push('chord-only');
+        if (processed.dynamics.length > 0) lineClasses.push('has-dynamics');
 
-        html += `<div class="${lineClasses.join(' ')}">${processed.html}</div>`;
+        const dynamicHtml = processed.dynamics.length > 0
+            ? `<span class="dynamic-marker">${processed.dynamics.map(escapeHtml).join(' ')}</span>`
+            : '';
+        html += `<div class="${lineClasses.join(' ')}">${dynamicHtml}<span class="song-line-content">${processed.html}</span></div>`;
     });
 
     els.songView.innerHTML = html;
@@ -349,6 +360,9 @@ function renderSong() {
 }
 
 function processLine(line) {
+    const dynamicResult = extractDynamicMarkers(line);
+    line = dynamicResult.line;
+
     const chordRegex = /\[([^\]]+)\]/g;
     const matches = [...line.matchAll(chordRegex)];
     const cleanLine = line.replace(chordRegex, '');
@@ -357,7 +371,8 @@ function processLine(line) {
         return {
             html: `<span class="lyric-text">${escapeHtml(line)}</span>`,
             hasChords: false,
-            hasLyrics: line.trim().length > 0
+            hasLyrics: line.trim().length > 0,
+            dynamics: dynamicResult.dynamics
         };
     }
 
@@ -390,13 +405,28 @@ function processLine(line) {
     return {
         html,
         hasChords: true,
-        hasLyrics: cleanLine.trim().length > 0
+        hasLyrics: cleanLine.trim().length > 0,
+        dynamics: dynamicResult.dynamics
     };
 
     function appendLyricText(text) {
         if (!text) return;
         html += `<span class="lyric-text">${escapeHtml(text)}</span>`;
     }
+}
+
+function extractDynamicMarkers(line) {
+    const dynamics = [];
+    const strippedLine = line.replace(/\{([^{}]+)\}/g, (_, dynamicText) => {
+        const value = dynamicText.trim();
+        if (value) dynamics.push(value);
+        return '';
+    });
+
+    return {
+        dynamics,
+        line: dynamics.length > 0 ? strippedLine.replace(/^\s+/, '') : strippedLine
+    };
 }
 
 function splitChordAnchorText(text) {
@@ -632,8 +662,45 @@ function updateUI() {
     document.body.classList.toggle('expanded-footer', state.expandedFooter);
     els.footerLayoutToggle.dataset.footerLayout = state.expandedFooter ? 'expanded' : 'compact';
     els.footerLayoutToggle.setAttribute('aria-pressed', state.expandedFooter ? 'true' : 'false');
+    updateDynamicLineControls();
     updateMobileControlUI();
     updateSongBottomState();
+}
+
+function handleDynamicLineRangeInput(e) {
+    const minGap = 0.01;
+    const startInput = Number(els.dynamicLineStartInput.value) / 100;
+    const stopInput = Number(els.dynamicLineStopInput.value) / 100;
+
+    if (e.target === els.dynamicLineStartInput) {
+        state.dynamicLineStart = clamp(startInput, 0, state.dynamicLineStop - minGap);
+    } else {
+        state.dynamicLineStop = clamp(stopInput, state.dynamicLineStart + minGap, 1);
+    }
+
+    updateDynamicLineControls();
+    savePreferences();
+}
+
+function updateDynamicLineControls() {
+    const minGap = 0.01;
+    if (!Number.isFinite(Number(state.dynamicLineStart))) state.dynamicLineStart = 0.08;
+    if (!Number.isFinite(Number(state.dynamicLineStop))) state.dynamicLineStop = 0.33;
+    state.dynamicLineStart = clamp(Number(state.dynamicLineStart), 0, 1 - minGap);
+    state.dynamicLineStop = clamp(Number(state.dynamicLineStop), state.dynamicLineStart + minGap, 1);
+
+    const startPercent = Math.round(state.dynamicLineStart * 100);
+    const stopPercent = Math.round(state.dynamicLineStop * 100);
+    els.dynamicLineStartInput.value = startPercent;
+    els.dynamicLineStopInput.value = stopPercent;
+    els.dynamicLineRangeValue.textContent = `${startPercent}% - ${stopPercent}%`;
+    document.documentElement.style.setProperty('--dynamic-line-start', `${state.dynamicLineStart * 100}vw`);
+    document.documentElement.style.setProperty('--dynamic-line-stop', `${state.dynamicLineStop * 100}vw`);
+
+    const track = document.querySelector('.dual-range-track');
+    if (track) {
+        track.style.background = `linear-gradient(90deg, #262626 0%, #262626 ${startPercent}%, rgba(192, 132, 252, 0.48) ${startPercent}%, rgba(192, 132, 252, 0.48) ${stopPercent}%, #262626 ${stopPercent}%, #262626 100%)`;
+    }
 }
 
 // --- Helpers ---
@@ -660,6 +727,12 @@ function loadPreferences() {
             state.alignment = stored.alignment;
         }
         state.expandedFooter = stored.expandedFooter === true;
+        if (Number.isFinite(stored.dynamicLineStart)) {
+            state.dynamicLineStart = clamp(Number(stored.dynamicLineStart), 0, 0.99);
+        }
+        if (Number.isFinite(stored.dynamicLineStop)) {
+            state.dynamicLineStop = clamp(Number(stored.dynamicLineStop), state.dynamicLineStart + 0.01, 1);
+        }
         if (Number.isFinite(stored.scrollSpeed)) {
             state.scrollSpeed = clamp(Number(stored.scrollSpeed), 0.5, 10);
             els.speedValue.textContent = state.scrollSpeed.toFixed(1);
@@ -674,6 +747,8 @@ function savePreferences() {
         fontSize: state.fontSize,
         alignment: state.alignment,
         expandedFooter: state.expandedFooter,
+        dynamicLineStart: state.dynamicLineStart,
+        dynamicLineStop: state.dynamicLineStop,
         scrollSpeed: state.scrollSpeed
     }, 'Preferences could not be saved.');
 }
