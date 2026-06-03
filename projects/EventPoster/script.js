@@ -12,6 +12,12 @@ const controls = {
   detailsY: document.getElementById("details-y"),
   textColor: document.getElementById("text-color"),
   accentColor: document.getElementById("accent-color"),
+  openColorWheel: document.getElementById("open-color-wheel"),
+  closeColorWheel: document.getElementById("close-color-wheel"),
+  colorDialog: document.getElementById("color-dialog"),
+  baseHue: document.getElementById("base-hue"),
+  swatchList: document.getElementById("split-swatch-list"),
+  wheelMarkers: Array.from(document.querySelectorAll("[data-marker]")),
   download: document.getElementById("download-button"),
   presets: Array.from(document.querySelectorAll("[data-preset]")),
 };
@@ -302,6 +308,98 @@ function applyPreset(name) {
   draw();
 }
 
+function getSplitComplementaryColors(baseHue) {
+  return [
+    { key: "base", name: "Base", hue: baseHue },
+    { key: "split-a", name: "Split A", hue: normalizeHue(baseHue + 150) },
+    { key: "split-b", name: "Split B", hue: normalizeHue(baseHue + 210) },
+  ].map((color) => ({
+    ...color,
+    hex: hslToHex(color.hue, 82, 58),
+  }));
+}
+
+function normalizeHue(hue) {
+  return ((hue % 360) + 360) % 360;
+}
+
+function hslToHex(h, s, l) {
+  const saturation = s / 100;
+  const lightness = l / 100;
+  const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
+  const x = chroma * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = lightness - chroma / 2;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+
+  if (h < 60) {
+    r = chroma;
+    g = x;
+  } else if (h < 120) {
+    r = x;
+    g = chroma;
+  } else if (h < 180) {
+    g = chroma;
+    b = x;
+  } else if (h < 240) {
+    g = x;
+    b = chroma;
+  } else if (h < 300) {
+    r = x;
+    b = chroma;
+  } else {
+    r = chroma;
+    b = x;
+  }
+
+  return `#${[r, g, b]
+    .map((channel) => Math.round((channel + m) * 255).toString(16).padStart(2, "0"))
+    .join("")}`;
+}
+
+function setHarmonyColor(target, hex) {
+  if (target === "text") {
+    controls.textColor.value = hex;
+  } else {
+    controls.accentColor.value = hex;
+  }
+  draw();
+}
+
+function renderColorHarmony() {
+  const colors = getSplitComplementaryColors(Number(controls.baseHue.value));
+  const markerRadius = 42;
+
+  controls.wheelMarkers.forEach((marker) => {
+    const color = colors.find((item) => item.key === marker.dataset.marker);
+    if (!color) {
+      return;
+    }
+
+    const radians = ((color.hue - 90) * Math.PI) / 180;
+    marker.style.setProperty("--x", `${50 + Math.cos(radians) * markerRadius}%`);
+    marker.style.setProperty("--y", `${50 + Math.sin(radians) * markerRadius}%`);
+    marker.style.setProperty("--marker-color", color.hex);
+  });
+
+  controls.swatchList.innerHTML = "";
+  colors.forEach((color) => {
+    const swatch = document.createElement("div");
+    swatch.className = "swatch-card";
+    swatch.innerHTML = `
+      <span class="swatch-chip" style="background: ${color.hex}"></span>
+      <span>
+        <span class="swatch-name">${color.name}</span>
+        <span class="swatch-value">${color.hex.toUpperCase()}</span>
+      </span>
+      <button class="swatch-action" type="button" data-apply="text" data-color="${color.hex}">Text</button>
+      <button class="swatch-action" type="button" data-apply="accent" data-color="${color.hex}">Accent</button>
+    `;
+    controls.swatchList.appendChild(swatch);
+  });
+}
+
 function downloadPoster() {
   const link = document.createElement("a");
   link.download = "event-poster.png";
@@ -348,9 +446,36 @@ controls.presets.forEach((button) => {
   button.addEventListener("click", () => applyPreset(button.dataset.preset));
 });
 
+controls.openColorWheel.addEventListener("click", () => {
+  renderColorHarmony();
+  controls.colorDialog.showModal();
+});
+
+controls.closeColorWheel.addEventListener("click", () => {
+  controls.colorDialog.close();
+});
+
+controls.colorDialog.addEventListener("click", (event) => {
+  if (event.target === controls.colorDialog) {
+    controls.colorDialog.close();
+  }
+});
+
+controls.baseHue.addEventListener("input", renderColorHarmony);
+
+controls.swatchList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-apply]");
+  if (!button) {
+    return;
+  }
+
+  setHarmonyColor(button.dataset.apply, button.dataset.color);
+});
+
 controls.download.addEventListener("click", downloadPoster);
 
 draw();
+renderColorHarmony();
 
 if (document.fonts) {
   document.fonts.ready.then(draw);

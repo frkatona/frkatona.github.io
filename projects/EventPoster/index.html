@@ -85,9 +85,38 @@
                 </div>
             </div>
 
+            <button class="color-wheel-button" id="open-color-wheel" type="button">Split Complementary Wheel</button>
+
             <button class="download-button" id="download-button" type="button">Download Poster</button>
         </aside>
     </main>
+
+    <dialog class="color-dialog" id="color-dialog" aria-labelledby="color-dialog-title">
+        <div class="color-dialog__header">
+            <div>
+                <p class="eyebrow">Color Harmony</p>
+                <h2 id="color-dialog-title">Split Complementary</h2>
+            </div>
+            <button class="dialog-close" id="close-color-wheel" type="button" aria-label="Close color wheel">Close</button>
+        </div>
+
+        <div class="wheel-layout">
+            <div class="wheel-wrap" aria-hidden="true">
+                <div class="hue-wheel" id="hue-wheel">
+                    <span class="wheel-marker is-base" data-marker="base"></span>
+                    <span class="wheel-marker" data-marker="split-a"></span>
+                    <span class="wheel-marker" data-marker="split-b"></span>
+                </div>
+            </div>
+
+            <div class="wheel-controls">
+                <label for="base-hue">Base hue</label>
+                <input id="base-hue" type="range" min="0" max="359" value="36">
+
+                <div class="swatch-list" id="split-swatch-list" aria-live="polite"></div>
+            </div>
+        </div>
+    </dialog>
 
     <script src="script.js"></script>
 </body>
