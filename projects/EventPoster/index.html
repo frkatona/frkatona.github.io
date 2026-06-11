@@ -62,6 +62,23 @@
 
             <hr class="panel-separator" aria-hidden="true">
 
+            <div class="control-grid image-grid">
+                <div class="control-group">
+                    <label for="image-scale">Image Scale</label>
+                    <input id="image-scale" type="range" min="60" max="220" value="100">
+                </div>
+                <div class="control-group">
+                    <label for="image-x">Image X</label>
+                    <input id="image-x" type="range" min="-420" max="420" value="0">
+                </div>
+                <div class="control-group">
+                    <label for="image-y">Image Y</label>
+                    <input id="image-y" type="range" min="-520" max="520" value="0">
+                </div>
+            </div>
+
+            <hr class="panel-separator" aria-hidden="true">
+
             <div class="control-grid position-grid">
                 <div class="control-group">
                     <label for="title-y">Title Y</label>
@@ -85,6 +102,28 @@
                 <div class="control-group color-wheel-control">
                     <label for="open-color-wheel">Extra</label>
                     <button class="color-wheel-button" id="open-color-wheel" type="button">Harmony</button>
+                </div>
+            </div>
+
+            <hr class="panel-separator" aria-hidden="true">
+
+            <div class="control-group">
+                <label for="qr-link">QR Code Link</label>
+                <input id="qr-link" type="url" placeholder="https://example.com/tickets">
+            </div>
+
+            <div class="control-grid qr-grid">
+                <div class="control-group">
+                    <label for="qr-size">QR Size</label>
+                    <input id="qr-size" type="range" min="110" max="310" value="190">
+                </div>
+                <div class="control-group">
+                    <label for="qr-x">QR X</label>
+                    <input id="qr-x" type="range" min="40" max="930" value="815">
+                </div>
+                <div class="control-group">
+                    <label for="qr-y">QR Y</label>
+                    <input id="qr-y" type="range" min="40" max="1190" value="1060">
                 </div>
             </div>
 
@@ -136,6 +175,7 @@
         </div>
     </dialog>
 
+    <script src="qrcode-generator.js"></script>
     <script src="script.js"></script>
 </body>
 

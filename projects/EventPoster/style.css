@@ -120,6 +120,7 @@ button {
 }
 
 input[type="text"],
+input[type="url"],
 textarea {
   width: 100%;
   border: 1px solid var(--line);
@@ -180,6 +181,11 @@ input[type="color"] {
 
 .position-grid {
   margin-bottom: 0.25rem;
+}
+
+.image-grid,
+.qr-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .color-grid {

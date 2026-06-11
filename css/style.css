@@ -222,9 +222,37 @@ footer {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  align-items: center;
+  position: relative;
+  padding: 0;
+  background: transparent;
+  border: 0;
   border-radius: 3px;
-  cursor: pointer
+  cursor: pointer;
+}
+
+.resume-icon-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
+}
+
+#resume-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #c2aeae;
+  border-radius: inherit;
+  mask: url("../assets/images/icons/resume-mask.png") center / contain no-repeat;
+  -webkit-mask: url("../assets/images/icons/resume-mask.png") center / contain no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+#resume-icon:hover::after,
+#resume-icon:focus-visible::after {
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
@@ -251,9 +279,8 @@ footer {
   #resume-icon {
     margin-top: 100px;
     width: 20vw;
-    align-items: center;
     border-radius: 3px;
-    cursor: pointer
+    cursor: pointer;
   }
 
   #pdf-container {

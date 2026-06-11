@@ -8,10 +8,17 @@ const controls = {
   subtitle: document.getElementById("poster-subtitle"),
   details: document.getElementById("poster-details"),
   footer: document.getElementById("poster-footer"),
+  imageScale: document.getElementById("image-scale"),
+  imageX: document.getElementById("image-x"),
+  imageY: document.getElementById("image-y"),
   titleY: document.getElementById("title-y"),
   detailsY: document.getElementById("details-y"),
   textColor: document.getElementById("text-color"),
   accentColor: document.getElementById("accent-color"),
+  qrLink: document.getElementById("qr-link"),
+  qrSize: document.getElementById("qr-size"),
+  qrX: document.getElementById("qr-x"),
+  qrY: document.getElementById("qr-y"),
   openColorWheel: document.getElementById("open-color-wheel"),
   closeColorWheel: document.getElementById("close-color-wheel"),
   colorDialog: document.getElementById("color-dialog"),
@@ -32,6 +39,7 @@ const state = {
   overlay: "rgba(0, 0, 0, 0.34)",
   vignette: "rgba(0, 0, 0, 0.58)",
   shadow: "rgba(0, 0, 0, 0.82)",
+  qrCanvas: null,
   lastDropAt: 0,
 };
 
@@ -64,6 +72,7 @@ function draw() {
   drawImageCover();
   drawReadabilityLayer();
   drawText();
+  drawQrCode();
 }
 
 function drawBackground() {
@@ -86,22 +95,26 @@ function drawImageCover() {
     return;
   }
 
+  const imageScale = Number(controls.imageScale.value) / 100;
+  const imageOffsetX = Number(controls.imageX.value);
+  const imageOffsetY = Number(controls.imageY.value);
   const imageRatio = state.image.width / state.image.height;
   const canvasRatio = canvas.width / canvas.height;
   let drawWidth = canvas.width;
   let drawHeight = canvas.height;
-  let x = 0;
-  let y = 0;
 
   if (imageRatio > canvasRatio) {
     drawHeight = canvas.height;
     drawWidth = drawHeight * imageRatio;
-    x = (canvas.width - drawWidth) / 2;
   } else {
     drawWidth = canvas.width;
     drawHeight = drawWidth / imageRatio;
-    y = (canvas.height - drawHeight) / 2;
   }
+
+  drawWidth *= imageScale;
+  drawHeight *= imageScale;
+  const x = (canvas.width - drawWidth) / 2 + imageOffsetX;
+  const y = (canvas.height - drawHeight) / 2 + imageOffsetY;
 
   ctx.drawImage(state.image, x, y, drawWidth, drawHeight);
 }
@@ -180,6 +193,29 @@ function drawText() {
     shadow: state.shadow,
   });
 
+  ctx.restore();
+}
+
+function drawQrCode() {
+  if (!state.qrCanvas) {
+    return;
+  }
+
+  const size = Number(controls.qrSize.value);
+  const padding = Math.round(size * 0.09);
+  const boxSize = size + padding * 2;
+  const x = clamp(Number(controls.qrX.value), 0, canvas.width - boxSize);
+  const y = clamp(Number(controls.qrY.value), 0, canvas.height - boxSize);
+
+  ctx.save();
+  ctx.shadowColor = "rgba(0, 0, 0, 0.38)";
+  ctx.shadowBlur = 20;
+  ctx.shadowOffsetY = 8;
+  roundRect(x, y, boxSize, boxSize, 18);
+  ctx.fillStyle = "#fffdf8";
+  ctx.fill();
+  ctx.shadowColor = "transparent";
+  ctx.drawImage(state.qrCanvas, x + padding, y + padding, size, size);
   ctx.restore();
 }
 
@@ -276,6 +312,65 @@ function roundRect(x, y, width, height, radius) {
   ctx.lineTo(x, y + radius);
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function updateQrCode() {
+  const qrText = controls.qrLink.value.trim();
+
+  if (!qrText) {
+    state.qrCanvas = null;
+    draw();
+    return;
+  }
+
+  if (typeof window.qrcode !== "function") {
+    state.qrCanvas = null;
+    draw();
+    return;
+  }
+
+  const qrCanvas = document.createElement("canvas");
+  const qrContext = qrCanvas.getContext("2d");
+  const quietZone = 4;
+  const outputSize = 512;
+
+  try {
+    const qr = window.qrcode(0, "M");
+    qr.addData(qrText);
+    qr.make();
+
+    const moduleCount = qr.getModuleCount();
+    const cellSize = outputSize / (moduleCount + quietZone * 2);
+    qrCanvas.width = outputSize;
+    qrCanvas.height = outputSize;
+    qrContext.fillStyle = "#ffffff";
+    qrContext.fillRect(0, 0, outputSize, outputSize);
+    qrContext.fillStyle = "#17191f";
+
+    for (let row = 0; row < moduleCount; row += 1) {
+      for (let col = 0; col < moduleCount; col += 1) {
+        if (!qr.isDark(row, col)) {
+          continue;
+        }
+
+        const x = Math.floor((col + quietZone) * cellSize);
+        const y = Math.floor((row + quietZone) * cellSize);
+        const width = Math.ceil((col + quietZone + 1) * cellSize) - x;
+        const height = Math.ceil((row + quietZone + 1) * cellSize) - y;
+        qrContext.fillRect(x, y, width, height);
+      }
+    }
+
+    state.qrCanvas = qrCanvas;
+  } catch (error) {
+    state.qrCanvas = null;
+  }
+
+  draw();
 }
 
 function loadImageFile(file) {
@@ -449,13 +544,21 @@ controls.posterFrame.addEventListener("click", () => {
   controls.subtitle,
   controls.details,
   controls.footer,
+  controls.imageScale,
+  controls.imageX,
+  controls.imageY,
   controls.titleY,
   controls.detailsY,
   controls.textColor,
   controls.accentColor,
+  controls.qrSize,
+  controls.qrX,
+  controls.qrY,
 ].forEach((control) => {
   control.addEventListener("input", draw);
 });
+
+controls.qrLink.addEventListener("input", updateQrCode);
 
 controls.presets.forEach((button) => {
   button.addEventListener("click", () => applyPreset(button.dataset.preset));
