@@ -24,6 +24,7 @@ const controls = {
   colorDialog: document.getElementById("color-dialog"),
   baseHue: document.getElementById("base-hue"),
   swatchList: document.getElementById("split-swatch-list"),
+  imagePaletteList: document.getElementById("image-palette-list"),
   wheelMarkers: Array.from(document.querySelectorAll("[data-marker]")),
   posterActionDialog: document.getElementById("poster-action-dialog"),
   closePosterActions: document.getElementById("close-poster-actions"),
@@ -40,6 +41,7 @@ const state = {
   vignette: "rgba(0, 0, 0, 0.58)",
   shadow: "rgba(0, 0, 0, 0.82)",
   qrCanvas: null,
+  paletteColors: [],
   lastDropAt: 0,
 };
 
@@ -95,6 +97,11 @@ function drawImageCover() {
     return;
   }
 
+  const rect = getImageDrawRect();
+  ctx.drawImage(state.image, rect.x, rect.y, rect.width, rect.height);
+}
+
+function getImageDrawRect() {
   const imageScale = Number(controls.imageScale.value) / 100;
   const imageOffsetX = Number(controls.imageX.value);
   const imageOffsetY = Number(controls.imageY.value);
@@ -116,7 +123,12 @@ function drawImageCover() {
   const x = (canvas.width - drawWidth) / 2 + imageOffsetX;
   const y = (canvas.height - drawHeight) / 2 + imageOffsetY;
 
-  ctx.drawImage(state.image, x, y, drawWidth, drawHeight);
+  return {
+    x,
+    y,
+    width: drawWidth,
+    height: drawHeight,
+  };
 }
 
 function drawPlaceholderTexture() {
@@ -383,6 +395,9 @@ function loadImageFile(file) {
     const image = new Image();
     image.addEventListener("load", () => {
       state.image = image;
+      if (controls.colorDialog.open) {
+        renderImagePalette();
+      }
       draw();
     });
     image.src = reader.result;
@@ -458,6 +473,118 @@ function hslToHex(h, s, l) {
     .join("")}`;
 }
 
+function extractProminentImageColors() {
+  if (!state.image) {
+    return [];
+  }
+
+  const sampleWidth = 120;
+  const sampleHeight = 150;
+  const sampleCanvas = document.createElement("canvas");
+  const sampleContext = sampleCanvas.getContext("2d");
+  const rect = getImageDrawRect();
+  const scaleX = sampleWidth / canvas.width;
+  const scaleY = sampleHeight / canvas.height;
+
+  sampleCanvas.width = sampleWidth;
+  sampleCanvas.height = sampleHeight;
+  sampleContext.clearRect(0, 0, sampleWidth, sampleHeight);
+  sampleContext.drawImage(
+    state.image,
+    rect.x * scaleX,
+    rect.y * scaleY,
+    rect.width * scaleX,
+    rect.height * scaleY
+  );
+
+  const imageData = sampleContext.getImageData(0, 0, sampleWidth, sampleHeight).data;
+  const buckets = new Map();
+
+  for (let index = 0; index < imageData.length; index += 16) {
+    const r = imageData[index];
+    const g = imageData[index + 1];
+    const b = imageData[index + 2];
+    const alpha = imageData[index + 3];
+
+    if (alpha < 160) {
+      continue;
+    }
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const lightness = (max + min) / 510;
+
+    if (lightness < 0.04 || lightness > 0.98) {
+      continue;
+    }
+
+    const saturation = max === min ? 0 : (max - min) / (255 - Math.abs(max + min - 255));
+    const key = [r, g, b]
+      .map((channel) => Math.min(255, Math.round(channel / 24) * 24))
+      .join(",");
+    const bucket = buckets.get(key) || {
+      count: 0,
+      r: 0,
+      g: 0,
+      b: 0,
+      saturation: 0,
+      lightness: 0,
+    };
+
+    bucket.count += 1;
+    bucket.r += r;
+    bucket.g += g;
+    bucket.b += b;
+    bucket.saturation += saturation;
+    bucket.lightness += lightness;
+    buckets.set(key, bucket);
+  }
+
+  const candidates = Array.from(buckets.values())
+    .map((bucket) => {
+      const r = Math.round(bucket.r / bucket.count);
+      const g = Math.round(bucket.g / bucket.count);
+      const b = Math.round(bucket.b / bucket.count);
+      const saturation = bucket.saturation / bucket.count;
+      const lightness = bucket.lightness / bucket.count;
+      const balance = 1 - Math.abs(lightness - 0.52) * 0.45;
+
+      return {
+        hex: rgbToHex(r, g, b),
+        r,
+        g,
+        b,
+        score: bucket.count * (0.55 + saturation) * balance,
+      };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  const colors = [];
+
+  candidates.forEach((candidate) => {
+    if (colors.length >= 8) {
+      return;
+    }
+
+    const isDistinct = colors.every((color) => colorDistance(candidate, color) > 44);
+    if (isDistinct) {
+      colors.push(candidate);
+    }
+  });
+
+  return colors.map((color) => color.hex);
+}
+
+function rgbToHex(r, g, b) {
+  return `#${[r, g, b]
+    .map((channel) => channel.toString(16).padStart(2, "0"))
+    .join("")}`;
+}
+
+function colorDistance(a, b) {
+  return Math.hypot(a.r - b.r, a.g - b.g, a.b - b.b);
+}
+
 function setHarmonyColor(target, hex) {
   if (target === "text") {
     controls.textColor.value = hex;
@@ -483,20 +610,61 @@ function renderColorHarmony() {
     marker.style.setProperty("--marker-color", color.hex);
   });
 
-  controls.swatchList.innerHTML = "";
+  renderSwatchList(controls.swatchList, colors);
+}
+
+function renderImagePalette() {
+  state.paletteColors = extractProminentImageColors();
+  renderSwatchList(
+    controls.imagePaletteList,
+    state.paletteColors.map((hex, index) => ({
+      name: `Image ${index + 1}`,
+      hex,
+    }))
+  );
+}
+
+function renderSwatchList(container, colors) {
+  container.innerHTML = "";
+
+  if (!colors.length) {
+    const empty = document.createElement("div");
+    empty.className = "swatch-empty";
+    empty.textContent = "No image colors";
+    container.appendChild(empty);
+    return;
+  }
+
   colors.forEach((color) => {
     const swatch = document.createElement("div");
+    const chip = document.createElement("span");
+    const detail = document.createElement("span");
+    const name = document.createElement("span");
+    const value = document.createElement("span");
+    const textButton = document.createElement("button");
+    const accentButton = document.createElement("button");
+
     swatch.className = "swatch-card";
-    swatch.innerHTML = `
-      <span class="swatch-chip" style="background: ${color.hex}"></span>
-      <span>
-        <span class="swatch-name">${color.name}</span>
-        <span class="swatch-value">${color.hex.toUpperCase()}</span>
-      </span>
-      <button class="swatch-action" type="button" data-apply="text" data-color="${color.hex}">Text</button>
-      <button class="swatch-action" type="button" data-apply="accent" data-color="${color.hex}">Accent</button>
-    `;
-    controls.swatchList.appendChild(swatch);
+    chip.className = "swatch-chip";
+    chip.style.background = color.hex;
+    name.className = "swatch-name";
+    name.textContent = color.name;
+    value.className = "swatch-value";
+    value.textContent = color.hex.toUpperCase();
+    textButton.className = "swatch-action";
+    textButton.type = "button";
+    textButton.dataset.apply = "text";
+    textButton.dataset.color = color.hex;
+    textButton.textContent = "Text";
+    accentButton.className = "swatch-action";
+    accentButton.type = "button";
+    accentButton.dataset.apply = "accent";
+    accentButton.dataset.color = color.hex;
+    accentButton.textContent = "Accent";
+
+    detail.append(name, value);
+    swatch.append(chip, detail, textButton, accentButton);
+    container.appendChild(swatch);
   });
 }
 
@@ -560,11 +728,20 @@ controls.posterFrame.addEventListener("click", () => {
 
 controls.qrLink.addEventListener("input", updateQrCode);
 
+[controls.imageScale, controls.imageX, controls.imageY].forEach((control) => {
+  control.addEventListener("input", () => {
+    if (controls.colorDialog.open) {
+      renderImagePalette();
+    }
+  });
+});
+
 controls.presets.forEach((button) => {
   button.addEventListener("click", () => applyPreset(button.dataset.preset));
 });
 
 controls.openColorWheel.addEventListener("click", () => {
+  renderImagePalette();
   renderColorHarmony();
   controls.colorDialog.showModal();
 });
@@ -582,6 +759,15 @@ controls.colorDialog.addEventListener("click", (event) => {
 controls.baseHue.addEventListener("input", renderColorHarmony);
 
 controls.swatchList.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-apply]");
+  if (!button) {
+    return;
+  }
+
+  setHarmonyColor(button.dataset.apply, button.dataset.color);
+});
+
+controls.imagePaletteList.addEventListener("click", (event) => {
   const button = event.target.closest("[data-apply]");
   if (!button) {
     return;
