@@ -71,7 +71,7 @@
     <button class="hamburger" onclick="toggleMenu()">☰</button>
 
     <div id="parameters" class="menu">
-        <form id="parameters">
+        <form id="parameterControls">
             <label for="volume">Volume:</label>
             <input type="range" id="volume" name="volume" min="0" max="0.3" step="0.05">
             
@@ -118,6 +118,8 @@
                 <option value="4">add11</option>
             </select>
 
+            <button type="button" id="openChordSelection" class="menu-button">Chord Selection</button>
+
             <!-- <label for="openness">Voice Openness:</label>
             <select id="openness" name="openness">
                 <option value="1">Very Closed</option>
@@ -135,8 +137,22 @@
                 <option value="2">tight</option>
             </select>
 
-            <a href="https://github.com/frkatona/frkatona.github.io/blob/main/Subpages/ChordNetwork/data/FRK-Clipboard-Chords.pyscript" target="_blank">[Download FL Script Here]</a>
+            <a href="https://github.com/frkatona/frkatona.github.io/blob/fb74fd3ffa69c6534b17bbacabb5748fa13e8f55/projects/ChordNetwork/data/FRK-Clipboard-Chords.pyscript" target="_blank">[Download FL Script Here]</a>
         </form>
+    </div>
+
+    <div id="chordSelectionModal" class="chord-modal" aria-hidden="true">
+        <div class="chord-modal__panel" role="dialog" aria-modal="true" aria-labelledby="chordSelectionTitle">
+            <div class="chord-modal__header">
+                <h2 id="chordSelectionTitle">Chord Selection</h2>
+                <button type="button" id="closeChordSelection" class="chord-modal__close" aria-label="Close chord selection">&times;</button>
+            </div>
+            <div id="chordSelectionList" class="chord-selection-list"></div>
+            <div class="chord-selection-actions">
+                <button type="button" id="resetChordSelection">Reset Selection</button>
+                <button type="button" id="uncheckAllChords">Uncheck All</button>
+            </div>
+        </div>
     </div>
 
     <div id="bottomContainer">
@@ -147,10 +163,10 @@
             <div id="box1circle2">
                 <div class="circle" onclick="handleClick()"></div>
             </div> -->
-            <div id="box1"></div>
-            <div id="box2"></div>
-            <div id="box3"></div>
-            <div id="box4"></div>
+            <div id="box1" data-placeholder="Chord 1"></div>
+            <div id="box2" data-placeholder="Chord 2"></div>
+            <div id="box3" data-placeholder="Chord 3"></div>
+            <div id="box4" data-placeholder="Chord 4"></div>
         </div>
         <button id="randomNext" onclick="toggleRandomNext()">Random Next</button>
         <button id="exportMIDI" onclick="copyToClipboard()">Copy MIDI</button>

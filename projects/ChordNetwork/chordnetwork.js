@@ -7,6 +7,95 @@ document.getElementById('welcome-overlay').onclick = function() {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
 }
 
+var allChordNodes = [];
+var allChordLinks = [];
+var selectedChordIds = new Set();
+var renderChordGraph = function() {};
+
+function getSubpageNavHeight() {
+    var nav = document.querySelector('.subpage-nav');
+    return nav ? nav.offsetHeight : 0;
+}
+
+function getGraphHeight() {
+    return Math.max(window.innerHeight - getSubpageNavHeight(), 320);
+}
+
+function getLinkEndpointId(endpoint) {
+    return typeof endpoint === 'object' ? endpoint.id : endpoint;
+}
+
+function openChordSelectionModal() {
+    var modal = document.getElementById('chordSelectionModal');
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('chord-modal-open');
+}
+
+function closeChordSelectionModal() {
+    var modal = document.getElementById('chordSelectionModal');
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('chord-modal-open');
+}
+
+function isChordSelectionModalOpen() {
+    return document.getElementById('chordSelectionModal').classList.contains('is-open');
+}
+
+function updateChordSelectionCheckboxes() {
+    document.querySelectorAll('#chordSelectionList input[type="checkbox"]').forEach(function(checkbox) {
+        checkbox.checked = selectedChordIds.has(checkbox.value);
+    });
+}
+
+function populateChordSelection(nodes) {
+    var list = document.getElementById('chordSelectionList');
+    list.innerHTML = '';
+
+    nodes.forEach(function(chord) {
+        var label = document.createElement('label');
+        label.className = 'chord-selection-option';
+
+        var checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = chord.id;
+        checkbox.checked = selectedChordIds.has(chord.id);
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                selectedChordIds.add(chord.id);
+            } else {
+                selectedChordIds.delete(chord.id);
+            }
+            renderChordGraph();
+        });
+
+        var labelText = document.createElement('span');
+        labelText.textContent = chord.id;
+
+        label.appendChild(checkbox);
+        label.appendChild(labelText);
+        list.appendChild(label);
+    });
+}
+
+document.getElementById('openChordSelection').addEventListener('click', openChordSelectionModal);
+document.getElementById('closeChordSelection').addEventListener('click', closeChordSelectionModal);
+document.getElementById('chordSelectionModal').addEventListener('click', function(event) {
+    if (event.target === this) {
+        closeChordSelectionModal();
+    }
+});
+document.getElementById('resetChordSelection').addEventListener('click', function() {
+    selectedChordIds = new Set(allChordNodes.map(function(chord) { return chord.id; }));
+    updateChordSelectionCheckboxes();
+    renderChordGraph();
+});
+document.getElementById('uncheckAllChords').addEventListener('click', function() {
+    selectedChordIds.clear();
+    updateChordSelectionCheckboxes();
+    renderChordGraph();
+});
 
 document.addEventListener('keydown', function(event) {
     if (event.key === 'x') {
@@ -14,6 +103,10 @@ document.addEventListener('keydown', function(event) {
     } else if (event.key === 'c') {
         copyToClipboard()
     } else if (event.key === 'Escape') {
+        if (isChordSelectionModalOpen()) {
+            closeChordSelectionModal();
+            return;
+        }
         if (keyboardContainer = document.querySelector('.keyboardContainer')) {
             keyboardContainer.remove();
         }
@@ -127,11 +220,84 @@ function toggleRandomNext() {
 
 var linkColors = ["#ff4a4a", "#6fc66c", "#78b0ff"];
 var svg = d3.select("body").append("svg")
+.attr("class", "chord-network-svg")
 .attr("width", window.innerWidth)
-.attr("height", window.innerHeight);
+.attr("height", getGraphHeight());
+var graphTransform = d3.zoomIdentity;
+var graphViewport = svg.append("g").attr("class", "graph-viewport");
 
 var functionColors = ["#04395e", "#70a288", "#c44900"]; // tonic blue; pre-dom green; dom orange
 var color = d3.scaleOrdinal(functionColors);
+
+function applyGraphTransform() {
+    graphViewport.attr("transform", graphTransform);
+}
+
+var zoomBehavior = d3.zoom()
+    .scaleExtent([0.35, 4])
+    .filter(function() {
+        var eventType = d3.event.type;
+        return eventType === "wheel" ||
+            eventType === "touchstart" ||
+            eventType === "touchmove" ||
+            eventType === "touchend";
+    })
+    .on("zoom", function() {
+        graphTransform = d3.event.transform;
+        applyGraphTransform();
+    });
+
+svg.call(zoomBehavior)
+    .on("dblclick.zoom", null)
+    .on("contextmenu.rightPan", function() {
+        d3.event.preventDefault();
+    });
+
+function setGraphTransform(transform) {
+    graphTransform = transform;
+    svg.call(zoomBehavior.transform, graphTransform);
+}
+
+var rightPanState = null;
+
+function handleRightPanMove(event) {
+    if (!rightPanState) {
+        return;
+    }
+
+    event.preventDefault();
+    var nextTransform = d3.zoomIdentity
+        .translate(
+            rightPanState.transform.x + event.clientX - rightPanState.x,
+            rightPanState.transform.y + event.clientY - rightPanState.y
+        )
+        .scale(rightPanState.transform.k);
+    setGraphTransform(nextTransform);
+}
+
+function stopRightPan() {
+    rightPanState = null;
+    svg.classed("is-right-panning", false);
+    document.removeEventListener("mousemove", handleRightPanMove);
+    document.removeEventListener("mouseup", stopRightPan);
+}
+
+svg.on("mousedown.rightPan", function() {
+    if (d3.event.button !== 2) {
+        return;
+    }
+
+    d3.event.preventDefault();
+    d3.event.stopPropagation();
+    rightPanState = {
+        x: d3.event.clientX,
+        y: d3.event.clientY,
+        transform: graphTransform
+    };
+    svg.classed("is-right-panning", true);
+    document.addEventListener("mousemove", handleRightPanMove);
+    document.addEventListener("mouseup", stopRightPan);
+});
 
 var simulation = d3.forceSimulation()
 .force("link", d3.forceLink().id(function(d) { return d.id; })
@@ -142,7 +308,18 @@ var simulation = d3.forceSimulation()
     .distanceMin(1)  // Avoid instability for very close nodes
     .distanceMax(100)  // Ignore nodes that are very far away
     .theta(.5))  // Make the simulation run faster but less accurately
-.force("center", d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2.5));
+.force("center", d3.forceCenter(window.innerWidth / 2, getGraphHeight() / 2.5));
+
+function updateSvgSize() {
+    svg
+        .attr("width", window.innerWidth)
+        .attr("height", getGraphHeight());
+
+    simulation.force("center", d3.forceCenter(window.innerWidth / 2, getGraphHeight() / 2.5));
+    simulation.alpha(0.3).restart();
+}
+
+window.addEventListener('resize', updateSvgSize);
     
 d3.json("chord-flow-D3.json", function(error, graph) {
     if (error) {
@@ -167,46 +344,115 @@ svg.append("defs").selectAll("marker")
     .append("path")
     .attr("d", "M0,-5L10,0L0,5");
 
-var link = svg.append("g")
-    .attr("class", "links")
-    .selectAll("line")
-    .data(graph.links)
-    .enter().append("line")
-    .attr("id", function(d) { return "link-" + d.id; })  // Assign an ID to each link
-    .attr("stroke-width", function(d) { return Math.sqrt(d.value); })
-    .attr("stroke", function(d) { return linkColor(d.type); })
-    .attr("marker-end", "url(#end)");
+allChordNodes = graph.nodes.map(function(nodeData) {
+    return {
+        id: nodeData.id,
+        group: nodeData.group,
+        notes: nodeData.notes.slice()
+    };
+});
 
-var node = svg.append("g")
-    .attr("class", "nodes")
-    .selectAll("circle")
-    .data(graph.nodes)
-    .enter().append("circle")
-    .attr("r", 50)
-    .attr("fill", function(d) { return color(d.group); })
-    .call(d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended));
+allChordLinks = graph.links.map(function(linkData, index) {
+    return {
+        id: linkData.id,
+        key: linkData.id + "-" + index,
+        domId: "link-" + index,
+        sourceId: getLinkEndpointId(linkData.source),
+        targetId: getLinkEndpointId(linkData.target),
+        value: linkData.value,
+        type: linkData.type
+    };
+});
 
-var labels = svg.append("g")
-    .attr("class", "labels")
-    .selectAll("text")
-    .data(graph.nodes)
-    .enter().append("text")
-    .attr("class", "unselectable")
-    .text(function(d) { return d.id; })
-    .style("text-anchor", "middle")
-    .style("fill", "#000")
-    .style("font-family", "Arial")
-    .style("font-size", 30)
-    .call(d3.drag()  // Add the same drag handlers to the labels
+selectedChordIds = new Set(allChordNodes.map(function(chord) { return chord.id; }));
+populateChordSelection(allChordNodes);
+
+var linkLayer = graphViewport.append("g").attr("class", "links");
+var nodeLayer = graphViewport.append("g").attr("class", "nodes");
+var labelLayer = graphViewport.append("g").attr("class", "labels");
+var link = linkLayer.selectAll("line");
+var node = nodeLayer.selectAll("circle");
+var labels = labelLayer.selectAll("text");
+var visibleLinks = [];
+var dragBehavior = d3.drag()
     .on("start", dragstarted)
     .on("drag", dragged)
-    .on("end", dragended));
+    .on("end", dragended);
+
+renderChordGraph = function() {
+    var visibleNodes = allChordNodes.filter(function(chord) {
+        return selectedChordIds.has(chord.id);
+    });
+
+    visibleLinks = allChordLinks
+        .filter(function(linkData) {
+            return selectedChordIds.has(linkData.sourceId) && selectedChordIds.has(linkData.targetId);
+        })
+        .map(function(linkData) {
+            return {
+                id: linkData.id,
+                key: linkData.key,
+                domId: linkData.domId,
+                sourceId: linkData.sourceId,
+                targetId: linkData.targetId,
+                source: linkData.sourceId,
+                target: linkData.targetId,
+                value: linkData.value,
+                type: linkData.type
+            };
+        });
+
+    link = linkLayer.selectAll("line")
+        .data(visibleLinks, function(d) { return d.key; });
+    link.exit().remove();
+    link = link.enter().append("line")
+        .attr("id", function(d) { return d.domId; })
+        .attr("marker-end", "url(#end)")
+        .merge(link)
+        .attr("stroke-width", function(d) { return Math.max(3, Math.sqrt(d.value) * 2); })
+        .attr("stroke", function(d) { return linkColor(d.type); });
+
+    node = nodeLayer.selectAll("circle")
+        .data(visibleNodes, function(d) { return d.id; });
+    node.exit().remove();
+    node = node.enter().append("circle")
+        .attr("r", 50)
+        .attr("stroke", "#000")
+        .attr("stroke-width", 6)
+        .call(dragBehavior)
+        .merge(node)
+        .attr("fill", function(d) { return color(d.group); });
+
+    labels = labelLayer.selectAll("text")
+        .data(visibleNodes, function(d) { return d.id; });
+    labels.exit().remove();
+    labels = labels.enter().append("text")
+        .attr("class", "unselectable")
+        .style("text-anchor", "middle")
+        .style("fill", "#000")
+        .style("font-family", "Arial")
+        .style("font-size", 30)
+        .call(dragBehavior)
+        .merge(labels)
+        .text(function(d) { return d.id; });
+
+    node.on("click", HandleNodeClick);
+    labels.on("click", HandleNodeClick);
+
+    simulation
+        .nodes(visibleNodes)
+        .on("tick", ticked);
+
+    simulation.force("link")
+        .links(visibleLinks);
+
+    simulation.alpha(0.6).restart();
+};
+
+renderChordGraph();
 
 function TriggerNodeLinkVisuals(d) {
-    d3.select(node._groups[0][d.index])
+    node.filter(function(nodeData) { return nodeData.id === d.id; })
     .transition()
     .duration(attack * 1000)
     .attr("r", 100)
@@ -216,14 +462,14 @@ function TriggerNodeLinkVisuals(d) {
     .attr("r", 50)  // Reset the radius
     .style("fill", function(d) { return color(d.group); });  // Reset the color
 
-    // Find the links connected to the node as a source
-    let linksFrom = graph.links.filter(function(link) {
-        return link.source === d;
+    // Find the visible links connected to the node as a source
+    let linksFrom = visibleLinks.filter(function(link) {
+        return getLinkEndpointId(link.source) === d.id;
     });
     
     // Create a transition for each link
     linksFrom.forEach(function(link) {
-        d3.select("#link-" + link.id)
+        d3.select("#" + link.domId)
             .transition()
             .duration(attack * 2000)
             .style("stroke", function(d) { return linkColor(d.type); })  // Change the color
@@ -231,17 +477,22 @@ function TriggerNodeLinkVisuals(d) {
             .transition()  // Add another transition
             .duration(1000)  // Set the duration for the second transition
             .style("stroke", function(d) { return linkColor(d.type); })  // Reset the color
-            .attr("stroke-width", function(d) { return Math.sqrt(d.value); });  // Reset the stroke width
+            .attr("stroke-width", function(d) { return Math.max(3, Math.sqrt(d.value) * 2); });  // Reset the stroke width
     });
 
-    // pick a random node that is connected to the node as a target
-    let linksTo = graph.links.filter(function(link) {
-        return link.source === d;
-    });
+    // pick a random visible node that is connected to the node as a target
+    let linksTo = linksFrom;
+    if (linksTo.length === 0) {
+        repeatCounter = 0;
+        return;
+    }
+
     let randomLink = linksTo[Math.floor(Math.random() * linksTo.length)];
-    let randomNode = randomLink.target;
+    let randomNode = typeof randomLink.target === 'object'
+        ? randomLink.target
+        : allChordNodes.find(function(chord) { return chord.id === randomLink.targetId; });
     
-    if (repeatTest == true && repeatCounter < chordBars - 1) {
+    if (repeatTest == true && repeatCounter < chordBars - 1 && randomNode) {
         setTimeout(function() { HandleNodeClick(randomNode); }, randomDelay);
         repeatCounter++;
     } else {
@@ -453,10 +704,15 @@ function HandleNodeClick(d) {
 
 // handle chord box clicking
 d3.selectAll("#box1, #box2, #box3, #box4").on("click", function() {
+    var boxIndex = this.id[this.id.length - 1] - 1;
+    if (!lastFourChordNotes[boxIndex]) {
+        return;
+    }
+
     console.log(this.id + " clicked");
     console.log(this.textContent);
-    console.log(lastFourChordNotes[this.id[this.id.length - 1] - 1].identity);
-    AudioHandle(lastFourChordNotes[this.id[this.id.length - 1] - 1].identity);
+    console.log(lastFourChordNotes[boxIndex].identity);
+    AudioHandle(lastFourChordNotes[boxIndex].identity);
     
 // Trigger box visuals
 d3.select(this)
@@ -465,19 +721,9 @@ d3.select(this)
     .style("background-color", "#511")
     .transition()
     .duration(attack * 20000)
-    .style("background-color", lastFourChordNames[this.id[this.id.length - 1] - 1].color);
-    CreateKeyboardGUI(lastFourChordNotes[this.id[this.id.length - 1] - 1].identity, this.id);
+    .style("background-color", lastFourChordNames[boxIndex].color);
+    CreateKeyboardGUI(lastFourChordNotes[boxIndex].identity, this.id);
 });
-
-node.on("click", HandleNodeClick);
-labels.on("click", HandleNodeClick);
-
-simulation
-    .nodes(graph.nodes)
-    .on("tick", ticked);
-
-simulation.force("link")
-    .links(graph.links);
 
 function ticked() {
     link
