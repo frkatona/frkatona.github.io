@@ -45,9 +45,16 @@
                     <input id="poster-subtitle" type="text" value="LIVE AT THE RIVER ROOM" maxlength="70">
                 </div>
 
-                <div class="control-group">
-                    <label for="poster-details">Date and Time</label>
-                    <input id="poster-details" type="text" value="SATURDAY &middot; JUNE 21 &middot; 8 PM" maxlength="80">
+                <div class="control-group date-time-control">
+                    <div class="field-label-row">
+                        <label id="poster-date-times-label" for="poster-details-1">Date and Time</label>
+                        <button class="icon-button add-date-time-button" id="add-date-time" type="button" aria-label="Add date and time" title="Add date and time">+</button>
+                    </div>
+                    <div class="date-time-list" id="date-time-list" aria-labelledby="poster-date-times-label">
+                        <div class="date-time-row">
+                            <input class="date-time-input" id="poster-details-1" type="text" value="SATURDAY &middot; JUNE 21 &middot; 8 PM" maxlength="80" aria-label="Date and time 1">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="control-group">
@@ -65,7 +72,7 @@
                             <input id="title-y" type="range" min="90" max="1160" value="260">
                         </div>
                         <div class="control-group">
-                            <label for="details-y">Details Y</label>
+                            <label for="details-y">Schedule Y</label>
                             <input id="details-y" type="range" min="700" max="1230" value="1010">
                         </div>
                     </div>

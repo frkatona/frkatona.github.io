@@ -148,6 +148,18 @@ canvas {
   margin-bottom: 0.9rem;
 }
 
+.field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.field-label-row label {
+  margin-bottom: 0;
+}
+
 label {
   display: block;
   margin-bottom: 0.35rem;
@@ -187,6 +199,48 @@ input[type="color"] {
   border: 1px solid var(--line);
   border-radius: 6px;
   background: #fffdf8;
+}
+
+.date-time-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.date-time-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.date-time-row.has-remove {
+  grid-template-columns: minmax(0, 1fr) 40px;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fffdf8;
+  color: #17191f;
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.icon-button:hover {
+  border-color: rgba(216, 117, 59, 0.72);
+}
+
+.icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.add-date-time-button {
+  flex: 0 0 auto;
 }
 
 .preset-row {

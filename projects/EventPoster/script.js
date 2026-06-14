@@ -1,12 +1,15 @@
 const canvas = document.getElementById("poster-canvas");
 const ctx = canvas.getContext("2d");
+const MAX_DATE_TIME_ROWS = 6;
 
 const controls = {
   imageInput: document.getElementById("image-input"),
   posterFrame: document.getElementById("poster-frame"),
   title: document.getElementById("poster-title"),
   subtitle: document.getElementById("poster-subtitle"),
-  details: document.getElementById("poster-details"),
+  dateTimeLabel: document.getElementById("poster-date-times-label"),
+  dateTimeList: document.getElementById("date-time-list"),
+  addDateTime: document.getElementById("add-date-time"),
   footer: document.getElementById("poster-footer"),
   imageScale: document.getElementById("image-scale"),
   imageX: document.getElementById("image-x"),
@@ -169,6 +172,15 @@ function drawText() {
   const titleY = Number(controls.titleY.value);
   const detailsY = Number(controls.detailsY.value);
   const margin = 72;
+  const scheduleLines = getDateTimeLines();
+  const scheduleLayout = getScheduleLayout(scheduleLines.length);
+  const scheduleHalfHeight = scheduleLayout.blockHeight / 2;
+  const footerText = controls.footer.value.trim();
+  const scheduleY = clamp(
+    detailsY,
+    margin + scheduleLayout.ruleGap + scheduleHalfHeight,
+    canvas.height - margin - scheduleHalfHeight - (footerText ? scheduleLayout.footerGap : 0)
+  );
 
   ctx.save();
   ctx.textAlign = "center";
@@ -188,22 +200,25 @@ function drawText() {
     shadow: state.shadow,
   });
 
-  drawRule(margin, detailsY - 100, canvas.width - margin, accent);
-  drawCenteredText(controls.details.value.toUpperCase(), 540, detailsY, {
+  drawRule(margin, scheduleY - scheduleHalfHeight - scheduleLayout.ruleGap, canvas.width - margin, accent);
+  drawScheduleLines(scheduleLines, 540, scheduleY, {
     font: "Fira Sans",
-    size: 46,
+    size: scheduleLayout.size,
     weight: 800,
     fill: textColor,
     shadow: state.shadow,
+    lineHeight: scheduleLayout.lineHeight,
   });
 
-  drawCenteredText(controls.footer.value.toUpperCase(), 540, detailsY + 86, {
-    font: "Fira Sans",
-    size: 31,
-    weight: 700,
-    fill: textColor,
-    shadow: state.shadow,
-  });
+  if (footerText) {
+    drawCenteredText(footerText.toUpperCase(), 540, scheduleY + scheduleHalfHeight + scheduleLayout.footerGap, {
+      font: "Fira Sans",
+      size: scheduleLayout.footerSize,
+      weight: 700,
+      fill: textColor,
+      shadow: state.shadow,
+    });
+  }
 
   ctx.restore();
 }
@@ -275,6 +290,24 @@ function drawOutlinedLines(lines, x, y, options) {
   ctx.shadowColor = "transparent";
 }
 
+function drawScheduleLines(lines, x, y, options) {
+  if (!lines.length) {
+    return;
+  }
+
+  const totalHeight = (lines.length - 1) * options.lineHeight;
+
+  lines.forEach((line, index) => {
+    drawCenteredText(line.toUpperCase(), x, y - totalHeight / 2 + index * options.lineHeight, {
+      font: options.font,
+      size: options.size,
+      weight: options.weight,
+      fill: options.fill,
+      shadow: options.shadow,
+    });
+  });
+}
+
 function drawCenteredText(text, x, y, options) {
   if (!text.trim()) {
     return;
@@ -287,6 +320,27 @@ function drawCenteredText(text, x, y, options) {
   ctx.fillStyle = options.fill;
   ctx.fillText(text, x, y, 930);
   ctx.shadowColor = "transparent";
+}
+
+function getDateTimeLines() {
+  return Array.from(controls.dateTimeList.querySelectorAll(".date-time-input"))
+    .map((input) => input.value.trim())
+    .filter(Boolean);
+}
+
+function getScheduleLayout(lineCount) {
+  const count = Math.max(lineCount, 1);
+  const size = clamp(46 - (count - 1) * 4, 30, 46);
+  const lineHeight = Math.round(size * 1.28);
+
+  return {
+    size,
+    lineHeight,
+    blockHeight: Math.max(0, count - 1) * lineHeight,
+    ruleGap: count > 1 ? 74 : 100,
+    footerGap: count > 1 ? 68 : 86,
+    footerSize: count > 3 ? 27 : 31,
+  };
 }
 
 function wrapText(text, maxWidth, font, size, scale) {
@@ -668,6 +722,65 @@ function renderSwatchList(container, colors) {
   });
 }
 
+function createRemoveDateTimeButton() {
+  const button = document.createElement("button");
+  button.className = "icon-button remove-date-time";
+  button.type = "button";
+  button.textContent = "-";
+  button.title = "Remove date and time";
+  button.setAttribute("aria-label", "Remove date and time");
+  return button;
+}
+
+function addDateTimeRow(value = "") {
+  const row = document.createElement("div");
+  const input = document.createElement("input");
+
+  row.className = "date-time-row";
+  input.className = "date-time-input";
+  input.type = "text";
+  input.maxLength = 80;
+  input.value = value;
+
+  row.append(input);
+  controls.dateTimeList.append(row);
+  updateDateTimeRows();
+
+  return row;
+}
+
+function updateDateTimeRows() {
+  const rows = Array.from(controls.dateTimeList.querySelectorAll(".date-time-row"));
+  const canRemove = rows.length > 1;
+  const canAdd = rows.length < MAX_DATE_TIME_ROWS;
+
+  rows.forEach((row, index) => {
+    const input = row.querySelector(".date-time-input");
+    let removeButton = row.querySelector(".remove-date-time");
+
+    input.id = `poster-details-${index + 1}`;
+    input.setAttribute("aria-label", `Date and time ${index + 1}`);
+    row.classList.toggle("has-remove", canRemove);
+
+    if (canRemove && !removeButton) {
+      removeButton = createRemoveDateTimeButton();
+      row.append(removeButton);
+    } else if (!canRemove && removeButton) {
+      removeButton.remove();
+    }
+  });
+
+  const firstInput = rows[0]?.querySelector(".date-time-input");
+  if (firstInput) {
+    controls.dateTimeLabel.setAttribute("for", firstInput.id);
+  }
+
+  controls.addDateTime.disabled = !canAdd;
+  controls.addDateTime.title = canAdd
+    ? "Add date and time"
+    : `Up to ${MAX_DATE_TIME_ROWS} date/time rows`;
+}
+
 function downloadPoster() {
   const link = document.createElement("a");
   link.download = "event-poster.png";
@@ -710,7 +823,6 @@ controls.posterFrame.addEventListener("click", () => {
 [
   controls.title,
   controls.subtitle,
-  controls.details,
   controls.footer,
   controls.imageScale,
   controls.imageX,
@@ -724,6 +836,33 @@ controls.posterFrame.addEventListener("click", () => {
   controls.qrY,
 ].forEach((control) => {
   control.addEventListener("input", draw);
+});
+
+controls.addDateTime.addEventListener("click", () => {
+  if (controls.dateTimeList.querySelectorAll(".date-time-row").length >= MAX_DATE_TIME_ROWS) {
+    return;
+  }
+
+  const row = addDateTimeRow();
+  row.querySelector(".date-time-input").focus();
+  draw();
+});
+
+controls.dateTimeList.addEventListener("input", (event) => {
+  if (event.target.matches(".date-time-input")) {
+    draw();
+  }
+});
+
+controls.dateTimeList.addEventListener("click", (event) => {
+  const button = event.target.closest(".remove-date-time");
+  if (!button) {
+    return;
+  }
+
+  button.closest(".date-time-row").remove();
+  updateDateTimeRows();
+  draw();
 });
 
 controls.qrLink.addEventListener("input", updateQrCode);
@@ -798,6 +937,7 @@ controls.uploadBaseImage.addEventListener("click", () => {
 
 controls.download.addEventListener("click", downloadPoster);
 
+updateDateTimeRows();
 draw();
 renderColorHarmony();
 
