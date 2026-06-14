@@ -117,6 +117,7 @@
         .player-controls {
             display: flex;
             align-items: flex-start;
+            flex-wrap: wrap;
             gap: 12px
         }
 
@@ -124,7 +125,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            flex: 0 0 auto;
             gap: 8px
+        }
+
+        .player-options {
+            margin-left: 6px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            min-width: 0
         }
 
         .skip-row {
@@ -144,12 +155,25 @@
             font-size: 22px;
             width: 72px;
             height: 72px;
+            min-width: 72px;
+            min-height: 72px;
+            flex: 0 0 72px;
+            line-height: 1;
             padding: 0;
             border-radius: 14px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             transition: transform .08s ease, box-shadow .12s ease, background-color .12s ease, border-color .12s ease
+        }
+
+        #playPause .play-icon {
+            display: block;
+            line-height: 1
+        }
+
+        #playPause .fa-play {
+            transform: translateX(2px)
         }
 
         #playPause:not(.playing):hover,
@@ -287,6 +311,11 @@
             padding: 24px 20px 20px
         }
 
+        main>aside,
+        main>section {
+            min-width: 0
+        }
+
         /* left column increased ~25% (320 -> 400) */
         @media (max-width: 900px) {
             main {
@@ -393,10 +422,25 @@
             gap: 24px
         }
 
+        .player>div {
+            min-width: 0
+        }
+
         /* match left column widening for player art area */
         @media (max-width:900px) {
             .player {
                 grid-template-columns: 1fr
+            }
+        }
+
+        @media (max-width:520px) {
+            .player-options {
+                margin-left: 0;
+                flex: 1 1 180px
+            }
+
+            #vol {
+                max-width: 150px
             }
         }
 
@@ -495,7 +539,19 @@
 
         .about {
             line-height: 1.6;
-            color: #d6d6db
+            color: #a7a7b0
+        }
+
+        .artist-link {
+            color: inherit;
+            text-decoration-color: rgba(243, 243, 244, .34);
+            text-underline-offset: 3px
+        }
+
+        .artist-link:hover,
+        .artist-link:focus-visible {
+            color: var(--fg);
+            text-decoration-color: rgba(33, 212, 182, .75)
         }
 
         kbd {
@@ -588,13 +644,13 @@
                         <div class="row" style="margin-top:12px">
                             <div class="player-controls">
                                 <div class="center">
-                                    <button id="playPause" class="btn" aria-label="Play/Pause">►</button>
+                                    <button id="playPause" class="btn" aria-label="Play/Pause"><i class="fas fa-play play-icon" aria-hidden="true"></i></button>
                                     <div class="skip-row">
                                         <button id="prev" class="btn" aria-label="Previous">⏮</button>
                                         <button id="next" class="btn" aria-label="Next">⏭</button>
                                     </div>
                                 </div>
-                                <div style="margin-left:6px; display:flex; align-items:center; gap:12px">
+                                <div class="player-options">
                                     <div class="row" style="align-items:center">
                                         <span class="muted" style="font-size:12px">Vol</span>
                                         <input id="vol" type="range" min="0" max="1" step="0.01" value="0.5" />
@@ -639,8 +695,11 @@
 
             <div class="card pad" style="margin-top:16px">
                 <div class="title" style="margin-bottom:6px">Dev Notes</div>
-                <p class="about"> added download button and updated URL to accept query parameters for artist
-                    (portfolio.html?artist=artistname)</p>
+                <p class="about"> <ul>
+                    <li>June 2026 - added hyperlink to artist name in the player section
+                    <li>March 2026 - added download button and updated URL to accept query parameters for artist
+                    (portfolio.html?artist=artistname)</li>
+                    </ul></p>
             </div>
         </section>
     </main>
@@ -649,7 +708,7 @@
 
     <script>
         (function () {
-            /** @typedef {{id:string,title:string,artist:string,album:string,src:string,cover?:string,tags?:string[],bpm?:number,key?:string,length?:string,year?:number}} Track */
+            /** @typedef {{id:string,title:string,artist:string,artistUrl?:string,album:string,src:string,cover?:string,tags?:string[],bpm?:number,key?:string,length?:string,year?:number}} Track */
 
             const $ = (id) => document.getElementById(id);
             const els = {
@@ -745,7 +804,7 @@
                 const t = library[currentIndex];
                 els.audio.src = t.src;
                 els.title.textContent = t.title || '—';
-                els.subtitle.textContent = `${t.artist || '—'} · ${t.album || ''} ${t.year ? '· ' + t.year : ''}`;
+                setSubtitle(t);
                 if (els.dl) { els.dl.href = t.src; els.dl.download = (t.title || 'track') + '.mp3'; }
                 if (t.cover) {
                     els.cover.src = t.cover;
@@ -773,10 +832,32 @@
 
             function playByIndex(idx) { selectTrack(idx, true); }
 
+            function setSubtitle(t) {
+                els.subtitle.textContent = '';
+
+                if (t.artist && t.artistUrl) {
+                    const artist = document.createElement('a');
+                    artist.className = 'artist-link';
+                    artist.href = t.artistUrl;
+                    artist.textContent = t.artist;
+                    els.subtitle.appendChild(artist);
+                } else {
+                    els.subtitle.appendChild(document.createTextNode(t.artist || '—'));
+                }
+
+                const details = [t.album || '', t.year || ''].filter(Boolean).join(' · ');
+                if (details) els.subtitle.appendChild(document.createTextNode(' · ' + details));
+            }
+
             function setPlayButtonState(playing) {
                 const btn = els.playPause;
-                if (playing) { btn.classList.add('playing'); btn.textContent = '❚❚'; }
-                else { btn.classList.remove('playing'); btn.textContent = '►'; }
+                if (playing) {
+                    btn.classList.add('playing');
+                    btn.innerHTML = '<i class="fas fa-pause play-icon" aria-hidden="true"></i>';
+                } else {
+                    btn.classList.remove('playing');
+                    btn.innerHTML = '<i class="fas fa-play play-icon" aria-hidden="true"></i>';
+                }
             }
             function play() {
                 // attempt to play and update UI only when successful
@@ -938,6 +1019,7 @@
                                 id: 'remote-' + (entry.id || fname || idx),
                                 title: entry.title || (fname ? fname.replace(/\.[^.]+$/, '') : 'track'),
                                 artist: entry.artist || '',
+                                artistUrl: entry.artistUrl || entry.artist_url || entry.artistLink || entry.artist_link,
                                 album: entry.album || '',
                                 // include optional metadata fields from manifest
                                 bpm: entry.bpm,
