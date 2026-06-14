@@ -1,5 +1,5 @@
 window.onload = function() {
-    document.getElementById('welcome-overlay').style.display = "block";
+    document.getElementById('welcome-overlay').style.display = "flex";
 }
 
 document.getElementById('welcome-overlay').onclick = function() {
@@ -11,6 +11,7 @@ var allChordNodes = [];
 var allChordLinks = [];
 var selectedChordIds = new Set();
 var renderChordGraph = function() {};
+var chordBoxAnimationTimer;
 
 function getSubpageNavHeight() {
     var nav = document.querySelector('.subpage-nav');
@@ -111,7 +112,7 @@ document.addEventListener('keydown', function(event) {
             keyboardContainer.remove();
         }
     } else if (event.key === 'q') {
-        document.getElementById('welcome-overlay').style.display = "block";
+        document.getElementById('welcome-overlay').style.display = "flex";
     } else if (event.key === 'z') {
         toggleMenu()
     } else if (event.key === 'ArrowUp') {
@@ -231,6 +232,18 @@ var color = d3.scaleOrdinal(functionColors);
 
 function applyGraphTransform() {
     graphViewport.attr("transform", graphTransform);
+}
+
+function animateChordBoxesSlide() {
+    var chordBoxes = document.getElementById('chordBoxes');
+    chordBoxes.classList.remove('is-sliding');
+    void chordBoxes.offsetWidth;
+    chordBoxes.classList.add('is-sliding');
+
+    window.clearTimeout(chordBoxAnimationTimer);
+    chordBoxAnimationTimer = window.setTimeout(function() {
+        chordBoxes.classList.remove('is-sliding');
+    }, 360);
 }
 
 var zoomBehavior = d3.zoom()
@@ -429,9 +442,13 @@ renderChordGraph = function() {
     labels = labels.enter().append("text")
         .attr("class", "unselectable")
         .style("text-anchor", "middle")
-        .style("fill", "#000")
-        .style("font-family", "Arial")
-        .style("font-size", 30)
+        .style("fill", "#fff")
+        .style("font-family", "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif")
+        .style("font-size", 28)
+        .style("font-weight", 800)
+        .style("stroke", "rgba(0, 0, 0, 0.9)")
+        .style("stroke-width", 5)
+        .style("paint-order", "stroke")
         .call(dragBehavior)
         .merge(labels)
         .text(function(d) { return d.id; });
@@ -520,6 +537,7 @@ function PushChordBoxStack(chordName, color, chordNotes) {
         box.textContent = lastFourChordNames[i].identity;
         box.style.backgroundColor = lastFourChordNames[i].color;
     }
+    animateChordBoxesSlide();
 
     // Update the clipboard-copyable text with chordNotes
     clipboardText = lastFourChordNotes.map(function(chord) {
