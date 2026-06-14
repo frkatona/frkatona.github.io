@@ -183,9 +183,11 @@ h1 {
 }
 
 .chord.selected {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-color: #764ba2;
-    box-shadow: 0 4px 16px rgba(118, 75, 162, 0.4);
+    background: rgba(255, 255, 255, 0.16);
+    background: color-mix(in srgb, var(--chord-color, #667eea) 28%, rgba(255, 255, 255, 0.08));
+    border-color: var(--chord-color, #764ba2);
+    box-shadow: 0 4px 16px var(--chord-glow, rgba(118, 75, 162, 0.4));
+    color: #fff;
 }
 
 /* Output section */
@@ -203,6 +205,73 @@ h1 {
 
 #output:empty::before {
     content: "no valid capo positions found for current selection";
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+}
+
+.capo-position {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.capo-position:first-child {
+    padding-top: 0;
+}
+
+.capo-position:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.capo-position h3 {
+    margin: 0 0 0.75rem;
+    color: #fff;
+    font-size: 1.05rem;
+    line-height: 1.3;
+}
+
+.chord-mapping {
+    display: grid;
+    grid-template-columns: minmax(56px, max-content) 28px minmax(56px, max-content);
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.55rem;
+}
+
+.chord-mapping:last-child {
+    margin-bottom: 0;
+}
+
+.mapped-chord {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    padding: 0.2rem 0.6rem;
+    border: 2px solid var(--chord-color);
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.original-chord {
+    background: rgba(255, 255, 255, 0.12);
+    background: color-mix(in srgb, var(--chord-color) 28%, rgba(255, 255, 255, 0.08));
+}
+
+.new-chord {
+    background: var(--chord-color);
+    color: #111;
+}
+
+.mapping-arrow {
+    color: var(--chord-color);
+    font-weight: 700;
+    text-align: center;
+}
+
+.output-empty-state {
     color: rgba(255, 255, 255, 0.4);
     font-style: italic;
 }
@@ -231,5 +300,9 @@ h1 {
     .toggle-container {
         top: 0.5rem;
         left: 0.5rem;
+    }
+
+    .chord-mapping {
+        grid-template-columns: minmax(48px, max-content) 24px minmax(48px, max-content);
     }
 }
