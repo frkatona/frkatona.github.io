@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="../../css/subpage_nav.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root { --size: 520px; }
+    :root {
+      --stage-size: min(94vw, calc(100vh - var(--subpage-nav-height, 0px) - 24px), 960px);
+    }
     html, body { height: 100%; margin: 0; }
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -18,8 +20,8 @@
     }
     .wrap {
       position: relative;
-      width: var(--size);
-      height: var(--size);
+      width: var(--stage-size);
+      height: var(--stage-size);
       user-select: none;
       border-radius: 16px;
       background: radial-gradient(120% 120% at 20% 20%, #14141f, #0e0e16 70%);
@@ -35,10 +37,39 @@
     .stage {
       position: absolute; inset: 0;
       display: grid; place-items: center;
+      border-radius: inherit;
       background-image:
         linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
       background-size: 24px 24px, 24px 24px;
+    }
+    .stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255,255,255,0);
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0);
+      pointer-events: none;
+    }
+    .stage.is-flashing::after {
+      animation: stage-flash 260ms ease-out;
+    }
+    @keyframes stage-flash {
+      0% {
+        border-color: rgba(255,255,255,0.55);
+        box-shadow:
+          inset 0 0 0 1px rgba(255,255,255,0.35),
+          inset 0 0 28px rgba(255,255,255,0.16),
+          0 0 22px rgba(255,255,255,0.28);
+      }
+      100% {
+        border-color: rgba(255,255,255,0);
+        box-shadow:
+          inset 0 0 0 1px rgba(255,255,255,0),
+          inset 0 0 0 rgba(255,255,255,0),
+          0 0 0 rgba(255,255,255,0);
+      }
     }
     .centered {
       position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
@@ -91,17 +122,29 @@
   <script>
     (function() {
       const wrap = document.getElementById('wrap');
+      const stage = document.querySelector('.stage');
       const d12 = document.getElementById('dodecagon');
       const angleReadout = document.getElementById('angle');
       const STEP = 30; // degrees per wheel tick
       let rot = 0;
+      let flashTimer;
 
       function applyRotation() {
         d12.style.transform = `translate(-50%, -50%) rotate(${rot}deg)`; // preserve centering
         const wrapped = ((rot % 360) + 360) % 360; // keep 0..359 for display
+        if (!angleReadout) return;
         angleReadout.textContent = wrapped.toFixed(0) + '°';
       }
 
+
+      function flashStageBoundary() {
+        if (!stage) return;
+        clearTimeout(flashTimer);
+        stage.classList.remove('is-flashing');
+        void stage.offsetWidth;
+        stage.classList.add('is-flashing');
+        flashTimer = setTimeout(() => stage.classList.remove('is-flashing'), 280);
+      }
 
       function onWheel(e) {
         // Most browsers: deltaY < 0 for up; > 0 for down
@@ -109,6 +152,7 @@
         const dir = e.deltaY < 0 ? 1 : -1; // up = clockwise
         rot += dir * STEP;
         applyRotation();
+        flashStageBoundary();
       }
 
       wrap.addEventListener('wheel', onWheel, { passive: false });

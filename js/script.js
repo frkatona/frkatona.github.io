@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const minimizeBtn = document.getElementById("minimize-btn");
   const projectGrid = document.getElementById("project-grid");
   const extraProjectCardsTemplate = document.getElementById("extra-project-cards");
-  const seeMoreProjectsButton = document.querySelector("[data-see-more-projects]");
+  const projectFilterInput = document.querySelector("[data-project-filter]");
+  const projectPagination = document.querySelector("[data-project-pagination]");
+  const projectPageSelect = document.querySelector("[data-page-select]");
+  const projectEmptyMessage = document.querySelector("[data-project-empty]");
 
   if (heading) {
     const shadowMaxDistance = 400;
@@ -28,32 +31,152 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (projectGrid && extraProjectCardsTemplate && seeMoreProjectsButton) {
-    const projectReveal = seeMoreProjectsButton.closest(".project-reveal");
-    const hasExtraProjects =
-      extraProjectCardsTemplate.content.children.length > 0;
+  if (projectGrid) {
+    const projectsPerPage = 6;
+    const visibleProjectCards = Array.from(projectGrid.querySelectorAll(":scope > .card"));
+    const extraProjectCards = extraProjectCardsTemplate
+      ? Array.from(extraProjectCardsTemplate.content.querySelectorAll(".card"))
+      : [];
+    const projectCards = [...visibleProjectCards, ...extraProjectCards].map((card) => {
+      const title = card.querySelector("h3")?.textContent.trim() || "";
 
-    if (!hasExtraProjects) {
-      if (projectReveal) {
-        projectReveal.remove();
-      } else {
-        seeMoreProjectsButton.remove();
+      return {
+        element: card.cloneNode(true),
+        title,
+        searchableTitle: title.toLowerCase(),
+      };
+    });
+    let filteredProjectCards = projectCards;
+    let currentProjectPage = 0;
+
+    function renderProjectPagination(pageCount) {
+      if (!projectPagination || !projectPageSelect) {
+        return;
+      }
+
+      projectPagination.hidden = filteredProjectCards.length === 0;
+      projectPageSelect.replaceChildren();
+
+      for (let pageIndex = 0; pageIndex < pageCount; pageIndex += 1) {
+        const option = document.createElement("option");
+        option.value = String(pageIndex);
+        option.textContent = `${pageIndex + 1} of ${pageCount}`;
+        option.selected = pageIndex === currentProjectPage;
+        projectPageSelect.appendChild(option);
+      }
+
+      projectPageSelect.disabled = pageCount <= 1;
+
+      projectPagination.querySelectorAll("[data-page-action]").forEach((button) => {
+        const action = button.dataset.pageAction;
+        const isFirstPage = currentProjectPage === 0;
+        const isLastPage = currentProjectPage >= pageCount - 1;
+
+        if (action === "previous") {
+          button.disabled = isFirstPage;
+        }
+
+        if (action === "next") {
+          button.disabled = isLastPage;
+        }
+      });
+    }
+
+    function createProjectPlaceholderCard() {
+      const placeholder = document.createElement("div");
+      placeholder.className = "card card-placeholder";
+      placeholder.setAttribute("aria-hidden", "true");
+      return placeholder;
+    }
+
+    function renderProjectPage({ preserveScrollPosition = false } = {}) {
+      const scrollX = window.scrollX;
+      const scrollY = window.scrollY;
+      const pageCount = Math.max(Math.ceil(filteredProjectCards.length / projectsPerPage), 1);
+      currentProjectPage = Math.min(currentProjectPage, pageCount - 1);
+      const startIndex = currentProjectPage * projectsPerPage;
+      const pageCards = filteredProjectCards.slice(startIndex, startIndex + projectsPerPage);
+      const fragment = document.createDocumentFragment();
+
+      pageCards.forEach((project) => {
+        fragment.appendChild(project.element.cloneNode(true));
+      });
+
+      if (pageCount > 1) {
+        const placeholderCount = projectsPerPage - pageCards.length;
+
+        for (let index = 0; index < placeholderCount; index += 1) {
+          fragment.appendChild(createProjectPlaceholderCard());
+        }
+      }
+
+      projectGrid.replaceChildren(fragment);
+
+      if (projectEmptyMessage) {
+        projectEmptyMessage.hidden = filteredProjectCards.length > 0;
+      }
+
+      renderProjectPagination(pageCount);
+
+      if (preserveScrollPosition) {
+        window.scrollTo(scrollX, scrollY);
+        requestAnimationFrame(() => {
+          window.scrollTo(scrollX, scrollY);
+        });
       }
     }
 
-    seeMoreProjectsButton.addEventListener(
-      "click",
-      () => {
-        projectGrid.appendChild(extraProjectCardsTemplate.content.cloneNode(true));
-        seeMoreProjectsButton.setAttribute("aria-expanded", "true");
-        if (projectReveal) {
-          projectReveal.remove();
-        } else {
-          seeMoreProjectsButton.remove();
+    function applyProjectFilter() {
+      const query = projectFilterInput?.value.trim().toLowerCase() || "";
+      filteredProjectCards = query
+        ? projectCards.filter((project) => project.searchableTitle.includes(query))
+        : projectCards;
+      currentProjectPage = 0;
+      renderProjectPage();
+    }
+
+    if (projectFilterInput) {
+      projectFilterInput.addEventListener("input", applyProjectFilter);
+    }
+
+    if (projectPageSelect) {
+      projectPageSelect.addEventListener("change", () => {
+        currentProjectPage = Number(projectPageSelect.value);
+        renderProjectPage();
+      });
+    }
+
+    if (projectPagination) {
+      projectPagination.addEventListener("pointerdown", (event) => {
+        if (event.target.closest("[data-page-action]")) {
+          event.preventDefault();
         }
-      },
-      { once: true }
-    );
+      });
+
+      projectPagination.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-page-action]");
+
+        if (!button || button.disabled) {
+          return;
+        }
+
+        const pageCount = Math.max(Math.ceil(filteredProjectCards.length / projectsPerPage), 1);
+        button.blur();
+
+        if (button.dataset.pageAction === "previous") {
+          currentProjectPage -= 1;
+        }
+
+        if (button.dataset.pageAction === "next") {
+          currentProjectPage += 1;
+        }
+
+        currentProjectPage = Math.max(0, Math.min(currentProjectPage, pageCount - 1));
+        renderProjectPage({ preserveScrollPosition: true });
+      });
+    }
+
+    renderProjectPage();
   }
 
   if (!resumeIcon || !pdfContainer || !minimizeBtn) {

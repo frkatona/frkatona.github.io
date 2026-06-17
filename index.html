@@ -30,21 +30,31 @@
                 <h1>Anthony's WIP</h1>
                 <p>professional portfolio and personal playground</p>
                 <div class="social-media">
-                    <a class="icon" href="https://github.com/frkatona" target="_blank"><i class="fab fa-github"></i></a>
-                    <a class="icon" href="https://akatona.itch.io/" target="_blank"><i class="fab fa-unity"></i></a>
-                    <a class="icon" href="https://www.deviantart.com/frkatona" target="_blank"><i
-                            class="fab fa-deviantart"></i></a>
-                    <a class="icon" href="https://www.youtube.com/@frkatona" target="_blank"><i
-                            class="fab fa-youtube"></i></a>
+                    <a class="icon" href="https://github.com/frkatona" target="_blank" rel="noopener noreferrer"
+                        aria-label="GitHub" data-tooltip="GitHub"><i class="fab fa-github"
+                            aria-hidden="true"></i></a>
+                    <a class="icon" href="https://akatona.itch.io/" target="_blank" rel="noopener noreferrer"
+                        aria-label="Itch.io" data-tooltip="Itch.io"><i class="fab fa-unity"
+                            aria-hidden="true"></i></a>
+                    <a class="icon" href="https://www.deviantart.com/frkatona" target="_blank"
+                        rel="noopener noreferrer" aria-label="DeviantArt" data-tooltip="DeviantArt"><i
+                            class="fab fa-deviantart" aria-hidden="true"></i></a>
+                    <a class="icon" href="https://www.youtube.com/@frkatona" target="_blank"
+                        rel="noopener noreferrer" aria-label="YouTube" data-tooltip="YouTube"><i
+                            class="fab fa-youtube" aria-hidden="true"></i></a>
                     <a class="icon"
                         href="https://open.spotify.com/artist/3y4NQcSLdOR1YGWKhEbmHy?si=8fVnoXfCRl61DnbVYepZFA"
-                        target="_blank"><i class="fab fa-spotify"></i></a>
-                    <a class="icon" href="https://soundcloud.com/anthony-phillip-katona/" target="_blank"><i
-                            class="fab fa-soundcloud"></i></a>
+                        target="_blank" rel="noopener noreferrer" aria-label="Spotify" data-tooltip="Spotify"><i
+                            class="fab fa-spotify" aria-hidden="true"></i></a>
+                    <a class="icon" href="https://soundcloud.com/anthony-phillip-katona/" target="_blank"
+                        rel="noopener noreferrer" aria-label="SoundCloud" data-tooltip="SoundCloud"><i
+                            class="fab fa-soundcloud" aria-hidden="true"></i></a>
                     <a class="icon" href="https://scholar.google.com/citations?user=qmKID2MAAAAJ&hl=en&oi=ao"
-                        target="_blank"><i class="fas fa-file-alt"></i></a>
-                    <a class="icon" href="https://www.linkedin.com/in/akatona8/" target="_blank"><i
-                            class="fab fa-linkedin-in"></i></a>
+                        target="_blank" rel="noopener noreferrer" aria-label="Google Scholar"
+                        data-tooltip="Google Scholar"><i class="fas fa-file-alt" aria-hidden="true"></i></a>
+                    <a class="icon" href="https://www.linkedin.com/in/akatona8/" target="_blank"
+                        rel="noopener noreferrer" aria-label="LinkedIn" data-tooltip="LinkedIn"><i
+                            class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                 </div>
                 <button id="resume-icon" type="button" aria-label="Open resume">
                     <img src="assets/images/icons/resume.png" alt="" class="resume-icon-image">
@@ -72,7 +82,14 @@
         </div>
     </div>
     <h2 class="centered-head">Recent Projects</h2>
-    <section class="thumbnails" id="project-grid">
+    <div class="project-browser">
+        <label class="project-filter" for="project-filter-input">
+            <span class="visually-hidden">Filter projects</span>
+            <input id="project-filter-input" type="search" placeholder="Filter projects..." autocomplete="off"
+                data-project-filter>
+        </label>
+    </div>
+    <section class="thumbnails" id="project-grid" aria-live="polite">
         <div class="card">
             <a href="projects/OriginalSongHelper/songwritingmarkdown">
                 <h3>Songwriting Markdown</h3>
@@ -147,13 +164,16 @@
             </a>
         </div>
     </section>
-    <div class="project-reveal">
-        <button class="see-more-projects" type="button" aria-controls="project-grid" aria-expanded="false"
-            data-see-more-projects>
-            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-            <span>See more projects</span>
-        </button>
-    </div>
+    <nav class="project-pagination" aria-label="Project pages" data-project-pagination hidden>
+        <button class="project-page-control" type="button" data-page-action="previous" aria-label="Previous page"
+            title="Previous page"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+        <div class="project-page-picker">
+            <select class="project-page-select" id="project-page-select" aria-label="Page" data-page-select></select>
+        </div>
+        <button class="project-page-control" type="button" data-page-action="next" aria-label="Next page"
+            title="Next page"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+    </nav>
+    <p class="project-empty" data-project-empty hidden>No projects match that title.</p>
     <template id="extra-project-cards">
         <div class="card">
             <a href="projects/VocalWarmup/VocalWarmup">
