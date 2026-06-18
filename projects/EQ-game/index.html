@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EQ Fault Trainer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <main class="workspace">
+        <section class="panel transport-panel" aria-labelledby="audioHeading">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Source</p>
+              <h2 id="audioHeading">Audio</h2>
+            </div>
+            <button id="fileButton" class="ghost-button" type="button">Choose File</button>
+            <input id="fileInput" type="file" accept="audio/*" />
+          </div>
+
+          <div id="dropZone" class="drop-zone">
+            <div class="drop-mark">EQ</div>
+            <div>
+              <strong id="trackName">No Track Loaded</strong>
+              <span id="trackMeta">WAV, MP3, AIFF, M4A</span>
+            </div>
+          </div>
+
+          <div class="wave-wrap">
+            <canvas
+              id="waveCanvas"
+              width="1200"
+              height="280"
+              role="slider"
+              tabindex="0"
+              aria-label="Song position"
+              aria-valuemin="0"
+              aria-valuemax="0"
+              aria-valuenow="0"
+            ></canvas>
+            <canvas id="feedbackCanvas" width="1200" height="280" aria-hidden="true"></canvas>
+          </div>
+
+          <div class="transport-footer">
+            <div class="time-readout">
+              <span id="currentTime">0:00</span>
+              <span aria-hidden="true">/</span>
+              <span id="durationTime">0:00</span>
+            </div>
+            <label class="volume-control" for="volumeSlider">
+              <span>Volume</span>
+              <input id="volumeSlider" type="range" min="0" max="100" step="1" value="86" />
+              <output id="volumeValue" for="volumeSlider">86%</output>
+            </label>
+          </div>
+
+          <div class="controls">
+            <button id="playButton" class="primary-button" type="button" disabled>
+              <span class="button-icon" aria-hidden="true">&gt;</span>
+              <span>Play</span>
+            </button>
+            <div class="segmented" aria-label="A B monitor">
+              <button id="dryButton" class="segment is-active" type="button" disabled>Original</button>
+              <button id="wetButton" class="segment" type="button" disabled>Affected</button>
+            </div>
+            <button id="loopButton" class="icon-button" type="button" disabled aria-pressed="false">
+              <span aria-hidden="true">1s</span>
+              <span>Loop</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="panel quiz-panel" aria-labelledby="quizHeading">
+          <div class="mode-tabs" role="tablist" aria-label="Fault mode">
+            <button id="identifyTab" class="mode-tab is-active" type="button" role="tab" aria-selected="true">
+              Identify
+            </button>
+            <button id="auditionTab" class="mode-tab" type="button" role="tab" aria-selected="false">
+              Audition
+            </button>
+          </div>
+
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Fault</p>
+              <h2 id="quizHeading">Identify the EQ move</h2>
+            </div>
+            <button id="nextButton" class="ghost-button" type="button" disabled>New Round</button>
+          </div>
+
+          <div id="difficultyControl" class="difficulty-control">
+            <div class="difficulty-heading">
+              <label for="difficultySlider">Difficulty</label>
+              <output id="difficultyValue" for="difficultySlider">12 faults</output>
+            </div>
+            <input id="difficultySlider" type="range" min="3" max="12" step="1" value="12" />
+          </div>
+
+          <div id="optionGrid" class="option-grid" aria-label="EQ fault choices"></div>
+
+          <div id="answerActions" class="answer-actions">
+            <div class="streak-pill" aria-live="polite">
+              <span class="streak-label">Streak</span>
+              <span id="streakCount" class="streak-count">0</span>
+            </div>
+            <button id="confirmButton" class="primary-button" type="button" disabled>Confirm</button>
+          </div>
+
+          <div id="resultPanel" class="result-panel is-muted" aria-live="polite">
+            <span id="resultKicker">Answer hidden</span>
+            <strong id="resultTitle">Round active</strong>
+            <p id="resultText">Curve locked.</p>
+          </div>
+
+          <div class="eq-frame">
+            <canvas id="eqCanvas" width="1100" height="460" aria-label="EQ curve"></canvas>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
