@@ -1,0 +1,9 @@
+- [ ] determine/document the normalization strategy
+- [ ] clean unnecessary text (e.g., "Track" in the top left)
+- [ ] visually clarify the scroll behavior for the loop button
+- [ ] start volume at ~50%
+- [ ] clarify filetypes (flac was possible and not on the list)
+- [ ] improve play button icon (not just a ">")
+- [ ] add text between guess rounds (e.g., "remember to refresh your ears between takes, and rest them every few minutes, particularly if you have headphones on!")
+  - [ ] also add 'almost!' text when selecting a the wrong choice neighboring the correct one
+- [ ] add gamey visual feedback for correct/incorrect/close incorrect answers
