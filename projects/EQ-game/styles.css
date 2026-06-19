@@ -189,7 +189,7 @@ h2 {
 
 .drop-zone {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
   gap: 14px;
   min-height: 90px;
@@ -197,10 +197,22 @@ h2 {
   background: #1f1d1a;
   border: 1px dashed #6a6258;
   border-radius: 8px;
+  cursor: pointer;
   transition:
     border-color 160ms ease,
     background 160ms ease,
     transform 160ms ease;
+}
+
+.drop-zone:hover,
+.drop-zone:focus-visible {
+  border-color: var(--mint);
+  background: #22251f;
+}
+
+.drop-zone:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
 }
 
 .drop-zone.is-dragging {
@@ -220,18 +232,6 @@ h2 {
   margin-top: 4px;
   color: var(--muted);
   font-size: 0.88rem;
-}
-
-.drop-mark {
-  display: grid;
-  place-items: center;
-  width: 58px;
-  aspect-ratio: 1;
-  background: #322c26;
-  color: var(--mint);
-  border: 1px solid #5c5147;
-  border-radius: 8px;
-  font-weight: 900;
 }
 
 .wave-wrap {
@@ -416,7 +416,7 @@ input:focus-visible {
 .option-grid {
   display: grid;
   grid-template-columns: 26px repeat(6, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(72px, auto));
+  grid-template-rows: minmax(72px, auto) 26px minmax(72px, auto);
   gap: 6px;
 }
 
@@ -437,6 +437,36 @@ input:focus-visible {
 
 .fault-row-label[data-polarity="cut"] {
   color: var(--cyan);
+}
+
+.fault-row-label[data-polarity="neutral"] {
+  color: var(--mint);
+}
+
+.neutral-option {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: 0 3px;
+  background: #222720;
+  color: var(--mint);
+  border: 1px solid #3f594d;
+  border-radius: 5px;
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  overflow-wrap: anywhere;
+  user-select: none;
+}
+
+.neutral-option.is-partial {
+  opacity: 0.58;
+}
+
+.neutral-option.is-inactive {
+  opacity: 0.25;
+  filter: saturate(0.3);
 }
 
 .option-button {
@@ -673,10 +703,6 @@ input:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .drop-mark {
-    width: 48px;
-  }
-
   .transport-footer {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -684,7 +710,7 @@ input:focus-visible {
 
   .option-grid {
     grid-template-columns: 22px repeat(6, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(76px, auto));
+    grid-template-rows: minmax(76px, auto) 24px minmax(76px, auto);
     gap: 4px;
   }
 
@@ -698,6 +724,11 @@ input:focus-visible {
 
   .option-button span {
     font-size: 0.61rem;
+  }
+
+  .neutral-option {
+    padding: 0 1px;
+    font-size: 0.55rem;
   }
 
   .primary-button,

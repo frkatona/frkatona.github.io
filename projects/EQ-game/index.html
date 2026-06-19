@@ -13,14 +13,13 @@
           <div class="panel-heading">
             <div>
               <p class="eyebrow">Source</p>
-              <h2 id="audioHeading">Audio</h2>
+              <h2 id="audioHeading">Track</h2>
             </div>
             <button id="fileButton" class="ghost-button" type="button">Choose File</button>
             <input id="fileInput" type="file" accept="audio/*" />
           </div>
 
-          <div id="dropZone" class="drop-zone">
-            <div class="drop-mark">EQ</div>
+          <div id="dropZone" class="drop-zone" role="button" tabindex="0" aria-label="Choose audio file">
             <div>
               <strong id="trackName">No Track Loaded</strong>
               <span id="trackMeta">WAV, MP3, AIFF, M4A</span>
@@ -65,7 +64,7 @@
               <button id="wetButton" class="segment" type="button" disabled>Affected</button>
             </div>
             <button id="loopButton" class="icon-button" type="button" disabled aria-pressed="false">
-              <span aria-hidden="true">1s</span>
+              <span id="loopLengthValue" aria-hidden="true">1s</span>
               <span>Loop</span>
             </button>
           </div>
@@ -86,7 +85,6 @@
               <p class="eyebrow">Fault</p>
               <h2 id="quizHeading">Identify the EQ move</h2>
             </div>
-            <button id="nextButton" class="ghost-button" type="button" disabled>New Round</button>
           </div>
 
           <div id="difficultyControl" class="difficulty-control">
@@ -108,9 +106,9 @@
           </div>
 
           <div id="resultPanel" class="result-panel is-muted" aria-live="polite">
-            <span id="resultKicker">Answer hidden</span>
-            <strong id="resultTitle">Round active</strong>
-            <p id="resultText">Curve locked.</p>
+            <span id="resultKicker">Round active</span>
+            <strong id="resultTitle" hidden></strong>
+            <p id="resultText" hidden></p>
           </div>
 
           <div class="eq-frame">

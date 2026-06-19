@@ -85,19 +85,28 @@ const profiles = [
   },
 ];
 
+const eqPairs = [
+  { boost: "boomy", neutral: "Full", cut: "thin" },
+  { boost: "muddy", neutral: "Warm", cut: "cold" },
+  { boost: "boxy", neutral: "Natural", cut: "hollow" },
+  { boost: "nasal", neutral: "Balanced", cut: "scooped" },
+  { boost: "harsh", neutral: "Clear", cut: "distant" },
+  { boost: "sibilant", neutral: "Crisp", cut: "dull" },
+];
+
 const difficultyOrder = [
   "boomy",
   "thin",
   "harsh",
   "distant",
-  "muddy",
-  "dull",
   "boxy",
-  "cold",
-  "nasal",
   "hollow",
-  "sibilant",
+  "nasal",
   "scooped",
+  "muddy",
+  "cold",
+  "sibilant",
+  "dull",
 ];
 
 const els = {
@@ -116,6 +125,7 @@ const els = {
   dryButton: document.getElementById("dryButton"),
   wetButton: document.getElementById("wetButton"),
   loopButton: document.getElementById("loopButton"),
+  loopLengthValue: document.getElementById("loopLengthValue"),
   identifyTab: document.getElementById("identifyTab"),
   auditionTab: document.getElementById("auditionTab"),
   quizHeading: document.getElementById("quizHeading"),
@@ -125,7 +135,6 @@ const els = {
   optionGrid: document.getElementById("optionGrid"),
   answerActions: document.getElementById("answerActions"),
   confirmButton: document.getElementById("confirmButton"),
-  nextButton: document.getElementById("nextButton"),
   resultPanel: document.getElementById("resultPanel"),
   resultKicker: document.getElementById("resultKicker"),
   resultTitle: document.getElementById("resultTitle"),
@@ -153,6 +162,7 @@ let startCtxTime = 0;
 let loopEnabled = false;
 let loopStart = 0;
 let loopEnd = 1;
+let loopLength = 1;
 let wavePeaks = [];
 let particles = [];
 let lastProfileId = "";
@@ -222,22 +232,31 @@ function getCurrentPosition() {
     return loopStart + ((startOffset - loopStart + elapsed) % length);
   }
 
-  return Math.min(getDuration(), startOffset + elapsed);
+  const duration = getDuration();
+  return duration ? (startOffset + elapsed) % duration : 0;
 }
 
 function setLoopWindow(position) {
   const duration = getDuration();
   if (!duration) {
     loopStart = 0;
-    loopEnd = 1;
+    loopEnd = loopLength;
     return;
   }
 
-  loopStart = Math.min(Math.max(0, position), Math.max(0, duration - 1));
-  loopEnd = Math.min(duration, loopStart + 1);
+  const windowLength = Math.min(loopLength, duration);
+  loopStart = Math.min(Math.max(0, position), Math.max(0, duration - windowLength));
+  loopEnd = Math.min(duration, loopStart + windowLength);
   if (loopEnd - loopStart < 0.05) {
     loopStart = Math.max(0, loopEnd - 0.05);
   }
+}
+
+function updateLoopLengthUi() {
+  const label = Number.isInteger(loopLength) ? String(loopLength) : loopLength.toFixed(1);
+  els.loopLengthValue.textContent = `${label}s`;
+  els.loopButton.title = "Scroll to change loop length";
+  els.loopButton.setAttribute("aria-label", `${label} second loop. Scroll to adjust length.`);
 }
 
 function stopCurrentSource() {
@@ -280,24 +299,17 @@ async function startPlayback(offset = startOffset) {
   applyMonitorGains();
 
   let playOffset = clampTime(offset);
+  source.loop = true;
   if (loopEnabled) {
     if (playOffset < loopStart || playOffset >= loopEnd) {
       playOffset = loopStart;
     }
-    source.loop = true;
     source.loopStart = loopStart;
     source.loopEnd = loopEnd;
+  } else {
+    source.loopStart = 0;
+    source.loopEnd = getDuration();
   }
-
-  source.onended = () => {
-    if (currentSource !== source || loopEnabled) {
-      return;
-    }
-    currentSource = null;
-    isPlaying = false;
-    startOffset = getDuration();
-    updateTransportUi();
-  };
 
   currentSource = source;
   startOffset = playOffset;
@@ -390,14 +402,17 @@ function startNewRound() {
   renderOptions();
   setResultHidden();
   drawEqCurve(null, false);
+  updateActionStates();
   restartIfPlaying(position >= getDuration() ? 0 : position);
 }
 
 function setResultHidden() {
   els.resultPanel.className = "result-panel is-muted";
-  els.resultKicker.textContent = "Answer hidden";
-  els.resultTitle.textContent = "Round active";
-  els.resultText.textContent = "Curve locked.";
+  els.resultKicker.textContent = "Round active";
+  els.resultTitle.textContent = "";
+  els.resultText.textContent = "";
+  els.resultTitle.hidden = true;
+  els.resultText.hidden = true;
 }
 
 function setAuditionIdle() {
@@ -405,6 +420,8 @@ function setAuditionIdle() {
   els.resultKicker.textContent = "Audition";
   els.resultTitle.textContent = "No fault selected";
   els.resultText.textContent = "Load audio to begin.";
+  els.resultTitle.hidden = false;
+  els.resultText.hidden = false;
 }
 
 function applyAuditionProfile(profile) {
@@ -421,6 +438,8 @@ function applyAuditionProfile(profile) {
   els.resultKicker.textContent = "Applied";
   els.resultTitle.textContent = `${profile.label}: ${curveSummary(profile)}`;
   els.resultText.textContent = profile.summary;
+  els.resultTitle.hidden = false;
+  els.resultText.hidden = false;
   drawEqCurve(profile, true);
   renderOptions();
   updateActionStates();
@@ -441,7 +460,6 @@ function setGameMode(mode) {
   els.quizHeading.textContent = isIdentify ? "Identify the EQ move" : "Audition EQ faults";
   els.difficultyControl.hidden = !isIdentify;
   els.answerActions.hidden = !isIdentify;
-  els.nextButton.hidden = !isIdentify;
 
   if (!audioBuffer) {
     currentProfile = null;
@@ -479,20 +497,28 @@ function updateDifficultyUi() {
 function renderOptions() {
   els.optionGrid.innerHTML = "";
   const activeIds = getActiveProfileIds();
+  const profileById = new Map(profiles.map((profile) => [profile.id, profile]));
   const rows = [
     {
+      type: "fault",
       label: "+",
       ariaLabel: "Boost faults",
-      profiles: profiles
-        .filter((profile) => profile.filters[0].gain > 0)
-        .sort((a, b) => a.filters[0].frequency - b.filters[0].frequency),
+      polarity: "boost",
+      profiles: eqPairs.map((pair) => profileById.get(pair.boost)),
     },
     {
+      type: "neutral",
+      label: "=",
+      ariaLabel: "Properly equalized targets",
+      polarity: "neutral",
+      pairs: eqPairs,
+    },
+    {
+      type: "fault",
       label: "-",
       ariaLabel: "Cut faults",
-      profiles: profiles
-        .filter((profile) => profile.filters[0].gain < 0)
-        .sort((a, b) => a.filters[0].frequency - b.filters[0].frequency),
+      polarity: "cut",
+      profiles: eqPairs.map((pair) => profileById.get(pair.cut)),
     },
   ];
 
@@ -500,9 +526,26 @@ function renderOptions() {
     const rowLabel = document.createElement("span");
     rowLabel.className = "fault-row-label";
     rowLabel.textContent = row.label;
-    rowLabel.dataset.polarity = row.label === "+" ? "boost" : "cut";
+    rowLabel.dataset.polarity = row.polarity;
     rowLabel.setAttribute("aria-label", row.ariaLabel);
     els.optionGrid.appendChild(rowLabel);
+
+    if (row.type === "neutral") {
+      for (const pair of row.pairs) {
+        const neutral = document.createElement("span");
+        const activeCount =
+          gameMode === "audition"
+            ? 2
+            : Number(activeIds.has(pair.boost)) + Number(activeIds.has(pair.cut));
+        neutral.className = "neutral-option";
+        neutral.classList.toggle("is-partial", activeCount === 1);
+        neutral.classList.toggle("is-inactive", activeCount === 0);
+        neutral.textContent = pair.neutral;
+        neutral.setAttribute("aria-label", `${pair.neutral}, properly equalized`);
+        els.optionGrid.appendChild(neutral);
+      }
+      continue;
+    }
 
     for (const profile of row.profiles) {
       const isExcluded = gameMode === "identify" && !activeIds.has(profile.id);
@@ -577,6 +620,8 @@ function confirmAnswer() {
     ? `${currentProfile.label}: ${curveSummary(currentProfile)}`
     : `${selected.label} heard, ${currentProfile.label} was applied`;
   els.resultText.textContent = currentProfile.summary;
+  els.resultTitle.hidden = false;
+  els.resultText.hidden = false;
 
   drawEqCurve(currentProfile, true, isCorrect ? null : selected);
   renderOptions();
@@ -596,8 +641,9 @@ function updateActionStates() {
   els.dryButton.disabled = !loaded;
   els.wetButton.disabled = !loaded;
   els.loopButton.disabled = !loaded;
-  els.confirmButton.disabled = gameMode !== "identify" || !loaded || answered || !selectedProfileId;
-  els.nextButton.disabled = !loaded;
+  els.confirmButton.textContent = answered ? "New Round" : "Confirm";
+  els.confirmButton.disabled =
+    gameMode !== "identify" || !loaded || (!answered && !selectedProfileId);
 }
 
 function updateTransportUi() {
@@ -613,12 +659,6 @@ function updateTransportUi() {
   els.playButton.querySelector(".button-icon").textContent = isPlaying ? "||" : ">";
   els.loopButton.setAttribute("aria-pressed", String(loopEnabled));
   updateActionStates();
-
-  if (!loopEnabled && isPlaying && position >= duration - 0.02) {
-    isPlaying = false;
-    startOffset = duration;
-    stopCurrentSource();
-  }
 }
 
 function buildWavePeaks(buffer) {
@@ -958,6 +998,7 @@ async function loadAudioFile(file) {
     startOffset = 0;
     loopEnabled = false;
     setLoopWindow(0);
+    els.fileButton.textContent = "New File";
     els.trackName.textContent = file.name;
     els.trackMeta.textContent = `${formatTime(audioBuffer.duration)} | ${audioBuffer.numberOfChannels} ch | ${Math.round(
       audioBuffer.sampleRate / 1000,
@@ -974,6 +1015,7 @@ async function loadAudioFile(file) {
     currentProfile = null;
     selectedProfileId = "";
     answered = false;
+    els.fileButton.textContent = "Choose File";
     els.trackName.textContent = "Could not decode file";
     els.trackMeta.textContent = error.message || "Try another audio format";
     renderOptions();
@@ -1008,6 +1050,13 @@ function seekFromWavePointer(event) {
 
 function attachEvents() {
   els.fileButton.addEventListener("click", () => els.fileInput.click());
+  els.dropZone.addEventListener("click", () => els.fileInput.click());
+  els.dropZone.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      els.fileInput.click();
+    }
+  });
   els.fileInput.addEventListener("change", (event) => {
     loadAudioFile(event.target.files[0]);
     event.target.value = "";
@@ -1072,6 +1121,28 @@ function attachEvents() {
     }
     updateTransportUi();
   });
+  els.loopButton.addEventListener(
+    "wheel",
+    (event) => {
+      event.preventDefault();
+      const delta = event.deltaY < 0 ? 0.5 : -0.5;
+      const nextLength = Math.min(5, Math.max(0.5, loopLength + delta));
+      if (nextLength === loopLength) {
+        return;
+      }
+
+      const position = getCurrentPosition();
+      const anchor = loopStart;
+      loopLength = nextLength;
+      updateLoopLengthUi();
+      if (audioBuffer && loopEnabled) {
+        setLoopWindow(anchor);
+        restartIfPlaying(position);
+      }
+      drawWaveform();
+    },
+    { passive: false },
+  );
 
   els.waveCanvas.addEventListener("pointerdown", (event) => {
     if (!audioBuffer) {
@@ -1115,8 +1186,13 @@ function attachEvents() {
       seekToPosition(getDuration());
     }
   });
-  els.confirmButton.addEventListener("click", confirmAnswer);
-  els.nextButton.addEventListener("click", startNewRound);
+  els.confirmButton.addEventListener("click", () => {
+    if (answered) {
+      startNewRound();
+    } else {
+      confirmAnswer();
+    }
+  });
 
   window.addEventListener("resize", () => {
     drawWaveform();
@@ -1140,6 +1216,7 @@ function animationLoop() {
 function init() {
   updateDifficultyUi();
   updateVolume();
+  updateLoopLengthUi();
   setMonitor("dry");
   setGameMode("identify");
   updateTransportUi();
