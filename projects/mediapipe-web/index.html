@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Handmate MIDI</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" type="text/css" href="appstyle.css">
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.6/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.3/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/webmidi@next/dist/iife/webmidi.iife.js"></script>
+</head>
+
+<body>
+  <main class="app-shell">
+    <section class="stage" aria-label="Hand tracking stage">
+      <video class="input_video" playsinline></video>
+      <canvas class="output_canvas" width="1280" height="720"></canvas>
+
+      <div class="stage-status">
+        <div class="brand-lockup">
+          <span class="brand-mark"></span>
+          <span>Handmate MIDI</span>
+        </div>
+        <div class="status-cluster">
+          <span id="trackingStatus" class="status-chip">Camera</span>
+          <span class="status-chip"><span id="fps">--</span> fps</span>
+        </div>
+      </div>
+
+      <div id="triggerStack" class="trigger-stack" aria-live="polite"></div>
+    </section>
+
+    <aside class="source-rail" aria-label="Movement sources">
+      <header class="rail-header">
+        <div>
+          <h1>Handmate MIDI</h1>
+          <a class="creator-link" href="https://github.com/monlim/" target="_blank" rel="noopener noreferrer">base by monlim</a>
+        </div>
+      </header>
+
+      <section class="rail-section">
+        <div class="section-title">Sources</div>
+        <div class="source-group">
+          <h2>L Hand</h2>
+          <div class="source-palette" data-source-group="left"></div>
+        </div>
+        <div class="source-group">
+          <h2>R Hand</h2>
+          <div class="source-palette" data-source-group="right"></div>
+        </div>
+        <div class="source-group">
+          <h2>Both</h2>
+          <div class="source-palette" data-source-group="both"></div>
+        </div>
+      </section>
+    </aside>
+
+    <aside class="inspector-dock" id="controlDock">
+      <button class="panel-toggle" onclick="toggleControl()" id="controlButton" aria-expanded="true">Hide</button>
+
+      <div class="midi-inspector" id="controlPanel" aria-label="MIDI inspector">
+        <header class="panel-header">
+          <div>
+            <div class="eyebrow">Route</div>
+            <h2 id="selectedRouteName">No route</h2>
+          </div>
+          <span id="midiStatus" class="midi-status" title="MIDI"></span>
+        </header>
+
+        <section class="control-section selected-route">
+          <div class="selected-route-grid">
+            <span>Source</span>
+            <strong id="selectedRouteSource">Add a route</strong>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <div class="section-title">Setup</div>
+          <div class="toggle-grid">
+            <label class="switch-row">
+              <span>Selfie</span>
+              <input id="selfie" type="checkbox" checked>
+              <i></i>
+            </label>
+            <label class="switch-row">
+              <span>Tracking</span>
+              <input id="showTracking" type="checkbox" checked>
+              <i></i>
+            </label>
+          </div>
+          <label class="field-row" for="videoSource">
+            <span>Camera</span>
+            <select id="videoSource"></select>
+          </label>
+          <label class="field-row" id="dropdown" for="device">
+            <span>MIDI</span>
+            <select id="device" onchange="changeDevice()"></select>
+          </label>
+        </section>
+
+        <section class="control-section">
+          <div class="section-title">Stream</div>
+          <label class="switch-row stream-row" data-stream="sendMidi">
+            <span>Notes</span>
+            <input id="sendMidi" type="checkbox">
+            <i></i>
+            <span class="activity-dot"></span>
+          </label>
+          <label class="mini-field" for="midiChannel">
+            <span>Ch</span>
+            <input type="number" id="midiChannel" min="1" max="16" value="1">
+          </label>
+          <div class="range-grid">
+            <input type="number" id="sliderMinValue" value="20" step="1" aria-label="Minimum BPM">
+            <input type="range" id="bpm" name="bpm" min="20" max="500" step="1" value="120">
+            <input type="number" id="sliderMaxValue" value="500" step="1" aria-label="Maximum BPM">
+            <output for="bpm" id="bpmValue" class="rangeValue">120</output>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <div class="section-title">Gestures</div>
+          <label class="switch-row">
+            <span>Enabled</span>
+            <input id="gesture" type="checkbox">
+            <i></i>
+          </label>
+
+          <div class="gesture-grid">
+            <div class="gesture-row" data-gesture="indexTouch">
+              <input type="hidden" id="trigger1ModeInput" value="note">
+              <div class="gesture-head">
+                <span>Index touch</span>
+                <span class="activity-dot"></span>
+              </div>
+              <div class="mode-picker" data-gesture-mode="indexTouch"></div>
+              <div class="gesture-fields">
+                <label data-channel-field><span>Ch</span><input type="number" id="trigger1Channel" min="1" max="16" value="1" aria-label="Index touch channel"></label>
+                <label data-note-field><span>Note</span><input type="number" id="midi1NoteInput" min="0" max="127" value="60" aria-label="Index touch MIDI note"></label>
+                <label data-cc-field><span>CC</span><input type="number" id="trigger1CcInput" min="0" max="127" value="20" aria-label="Index touch CC"></label>
+                <label data-amount-field><span>Amt</span><input type="number" id="trigger1AmountInput" min="0" max="127" value="127" aria-label="Index touch amount"></label>
+              </div>
+            </div>
+            <div class="gesture-row" data-gesture="leftBack">
+              <input type="hidden" id="trigger2ModeInput" value="note">
+              <div class="gesture-head">
+                <span>L back</span>
+                <span class="activity-dot"></span>
+              </div>
+              <div class="mode-picker" data-gesture-mode="leftBack"></div>
+              <div class="gesture-fields">
+                <label data-channel-field><span>Ch</span><input type="number" id="trigger2Channel" min="1" max="16" value="1" aria-label="Left back channel"></label>
+                <label data-note-field><span>Note</span><input type="number" id="midi2NoteInput" min="0" max="127" value="62" aria-label="Left back MIDI note"></label>
+                <label data-cc-field><span>CC</span><input type="number" id="trigger2CcInput" min="0" max="127" value="21" aria-label="Left back CC"></label>
+                <label data-amount-field><span>Amt</span><input type="number" id="trigger2AmountInput" min="0" max="127" value="127" aria-label="Left back amount"></label>
+              </div>
+            </div>
+            <div class="gesture-row" data-gesture="rightBack">
+              <input type="hidden" id="trigger3ModeInput" value="note">
+              <div class="gesture-head">
+                <span>R back</span>
+                <span class="activity-dot"></span>
+              </div>
+              <div class="mode-picker" data-gesture-mode="rightBack"></div>
+              <div class="gesture-fields">
+                <label data-channel-field><span>Ch</span><input type="number" id="trigger3Channel" min="1" max="16" value="1" aria-label="Right back channel"></label>
+                <label data-note-field><span>Note</span><input type="number" id="midi3NoteInput" min="0" max="127" value="64" aria-label="Right back MIDI note"></label>
+                <label data-cc-field><span>CC</span><input type="number" id="trigger3CcInput" min="0" max="127" value="22" aria-label="Right back CC"></label>
+                <label data-amount-field><span>Amt</span><input type="number" id="trigger3AmountInput" min="0" max="127" value="127" aria-label="Right back amount"></label>
+              </div>
+            </div>
+            <div class="gesture-row" data-gesture="leftPinch">
+              <input type="hidden" id="trigger4ModeInput" value="note">
+              <div class="gesture-head">
+                <span>L pinch</span>
+                <span class="activity-dot"></span>
+              </div>
+              <div class="mode-picker" data-gesture-mode="leftPinch"></div>
+              <div class="gesture-fields">
+                <label data-channel-field><span>Ch</span><input type="number" id="trigger4Channel" min="1" max="16" value="1" aria-label="Left pinch channel"></label>
+                <label data-note-field><span>Note</span><input type="number" id="midi4NoteInput" min="0" max="127" value="65" aria-label="Left pinch MIDI note"></label>
+                <label data-cc-field><span>CC</span><input type="number" id="trigger4CcInput" min="0" max="127" value="23" aria-label="Left pinch CC"></label>
+                <label data-amount-field><span>Amt</span><input type="number" id="trigger4AmountInput" min="0" max="127" value="127" aria-label="Left pinch amount"></label>
+              </div>
+            </div>
+            <div class="gesture-row" data-gesture="rightPinch">
+              <input type="hidden" id="trigger5ModeInput" value="note">
+              <div class="gesture-head">
+                <span>R pinch</span>
+                <span class="activity-dot"></span>
+              </div>
+              <div class="mode-picker" data-gesture-mode="rightPinch"></div>
+              <div class="gesture-fields">
+                <label data-channel-field><span>Ch</span><input type="number" id="trigger5Channel" min="1" max="16" value="1" aria-label="Right pinch channel"></label>
+                <label data-note-field><span>Note</span><input type="number" id="midi5NoteInput" min="0" max="127" value="67" aria-label="Right pinch MIDI note"></label>
+                <label data-cc-field><span>CC</span><input type="number" id="trigger5CcInput" min="0" max="127" value="24" aria-label="Right pinch CC"></label>
+                <label data-amount-field><span>Amt</span><input type="number" id="trigger5AmountInput" min="0" max="127" value="127" aria-label="Right pinch amount"></label>
+              </div>
+            </div>
+            <div class="gesture-row" data-gesture="doubleFist">
+              <input type="hidden" id="trigger6ModeInput" value="note">
+              <div class="gesture-head">
+                <span>Both fists</span>
+                <span class="activity-dot"></span>
+              </div>
+              <div class="mode-picker" data-gesture-mode="doubleFist"></div>
+              <div class="gesture-fields">
+                <label data-channel-field><span>Ch</span><input type="number" id="trigger6Channel" min="1" max="16" value="1" aria-label="Both fists channel"></label>
+                <label data-note-field><span>Note</span><input type="number" id="midi6NoteInput" min="0" max="127" value="69" aria-label="Both fists MIDI note"></label>
+                <label data-cc-field><span>CC</span><input type="number" id="trigger6CcInput" min="0" max="127" value="25" aria-label="Both fists CC"></label>
+                <label data-amount-field><span>Amt</span><input type="number" id="trigger6AmountInput" min="0" max="127" value="127" aria-label="Both fists amount"></label>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <section class="route-strip" aria-label="MIDI routes">
+      <div class="route-grid" id="routeGrid">
+        <button class="add-route-card" type="button" id="addRouteButton" aria-expanded="false">+</button>
+      </div>
+
+      <div class="route-menu" id="routeMenu" hidden>
+        <button type="button" data-add-route="midiPitchControlInput">Pitch</button>
+        <button type="button" data-add-route="midiVelInput">Velocity</button>
+        <button type="button" data-add-route="BPMAutomateInput">BPM</button>
+        <button type="button" data-add-route="pitchBendInput">Bend</button>
+        <button type="button" data-add-route="aftertouchInput">Touch</button>
+        <button type="button" data-add-route="cc1Input">CC 1</button>
+        <button type="button" data-add-route="cc2Input">CC 2</button>
+        <button type="button" data-add-route="cc3Input">CC 3</button>
+        <button type="button" data-add-route="cc4Input">CC 4</button>
+      </div>
+
+      <div class="route-store" id="routeStore" hidden>
+        <input type="hidden" name="midiPitchControlInput" id="midiPitchControlInput" value="nil" data-control-input data-route-label="Pitch" data-route-default-label="Pitch">
+        <input type="hidden" name="midiVelInput" id="midiVelInput" value="nil" data-control-input data-route-label="Velocity" data-route-default-label="Velocity">
+        <input type="hidden" name="BPMAutomateInput" id="BPMAutomateInput" value="nil" data-control-input data-route-label="BPM" data-route-default-label="BPM">
+        <input type="hidden" name="pitchBendInput" id="pitchBendInput" value="nil" data-control-input data-route-label="Bend" data-route-default-label="Bend">
+        <input type="hidden" name="aftertouchInput" id="aftertouchInput" value="nil" data-control-input data-route-label="Touch" data-route-default-label="Touch">
+
+        <input type="hidden" name="cc1Input" id="cc1Input" value="nil" data-control-input data-route-label="CC 1" data-route-default-label="CC 1">
+        <input type="number" id="cc1Channel" min="1" max="16" value="1" aria-label="CC 1 channel">
+        <input type="number" id="cc1Controller" min="0" max="127" value="1" aria-label="CC 1 controller">
+
+        <input type="hidden" name="cc2Input" id="cc2Input" value="nil" data-control-input data-route-label="CC 2" data-route-default-label="CC 2">
+        <input type="number" id="cc2Channel" min="1" max="16" value="2" aria-label="CC 2 channel">
+        <input type="number" id="cc2Controller" min="0" max="127" value="2" aria-label="CC 2 controller">
+
+        <input type="hidden" name="cc3Input" id="cc3Input" value="nil" data-control-input data-route-label="CC 3" data-route-default-label="CC 3">
+        <input type="number" id="cc3Channel" min="1" max="16" value="3" aria-label="CC 3 channel">
+        <input type="number" id="cc3Controller" min="0" max="127" value="3" aria-label="CC 3 controller">
+
+        <input type="hidden" name="cc4Input" id="cc4Input" value="nil" data-control-input data-route-label="CC 4" data-route-default-label="CC 4">
+        <input type="number" id="cc4Channel" min="1" max="16" value="4" aria-label="CC 4 channel">
+        <input type="number" id="cc4Controller" min="0" max="127" value="4" aria-label="CC 4 controller">
+      </div>
+    </section>
+  </main>
+
+  <script type="text/javascript" src="script.js"></script>
+</body>
+</html>
