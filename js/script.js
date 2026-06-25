@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (projectGrid) {
-    const projectsPerPage = 6;
+    const projectsPerPage = Number(projectGrid.dataset.projectsPerPage) || 8;
     const visibleProjectCards = Array.from(projectGrid.querySelectorAll(":scope > .card"));
     const extraProjectCards = extraProjectCardsTemplate
       ? Array.from(extraProjectCardsTemplate.content.querySelectorAll(".card"))
