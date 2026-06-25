@@ -1,7 +1,8 @@
 function toggleControl() {
   const controlButton = document.getElementById("controlButton");
   const hidden = document.body.classList.toggle("controls-hidden");
-  controlButton.textContent = hidden ? "MIDI" : "Hide";
+  controlButton.textContent = hidden ? "›" : "‹";
+  controlButton.setAttribute("aria-label", hidden ? "Expand route panel" : "Collapse route panel");
   controlButton.setAttribute("aria-expanded", String(!hidden));
 }
 
@@ -23,6 +24,12 @@ const movementInputs = [
   { value: "rightPalmRoll", label: "Roll", group: "right" },
   { value: "indexDistance", label: "Index gap", group: "both" },
   { value: "handsDistance", label: "Hands apart", group: "both" },
+  { value: "gesture:indexTouch", label: "Index touch", group: "gesture" },
+  { value: "gesture:leftBack", label: "L back", group: "gesture" },
+  { value: "gesture:rightBack", label: "R back", group: "gesture" },
+  { value: "gesture:leftPinch", label: "L pinch", group: "gesture" },
+  { value: "gesture:rightPinch", label: "R pinch", group: "gesture" },
+  { value: "gesture:doubleFist", label: "Both fists", group: "gesture" },
 ];
 
 const gestureModes = [
@@ -34,6 +41,7 @@ const gestureModes = [
 ];
 
 const routeDefinitions = {
+  noteRouteInput: { label: "Note", note: true, accent: "gold" },
   midiPitchControlInput: { label: "Pitch", accent: "teal" },
   midiVelInput: { label: "Velocity", accent: "teal" },
   BPMAutomateInput: { label: "BPM", accent: "gold" },
@@ -49,9 +57,18 @@ const routeGrid = document.getElementById("routeGrid");
 const routeStore = document.getElementById("routeStore");
 const addRouteButton = document.getElementById("addRouteButton");
 const routeMenu = document.getElementById("routeMenu");
+const sourceRail = document.querySelector(".source-rail");
+const noteRouteOptions = document.getElementById("noteRouteOptions");
 let selectedRouteInputId = null;
 let draggedRouteId = null;
+let rangeDrag = null;
+let panelResize = null;
 const addedRoutes = new Set();
+const ccRouteIds = ["cc1Input", "cc2Input", "cc3Input", "cc4Input"];
+const panelWidthConfig = {
+  route: { property: "--route-panel-width", selector: ".inspector-dock", min: 250, max: 540 },
+  source: { property: "--source-panel-width", selector: ".source-rail", min: 260, max: 560 },
+};
 
 function getMovementLabel(value) {
   const input = movementInputs.find((movementInput) => movementInput.value === value);
@@ -67,9 +84,11 @@ function getRouteInput(routeInputId = selectedRouteInputId) {
 
 function updateSourcePalette() {
   const selectedInput = getRouteInput();
+  const canUseSources = Boolean(selectedInput && !routeDefinitions[selectedInput.id]?.note);
   const selectedValue = selectedInput ? selectedInput.value : "nil";
   document.querySelectorAll(".source-chip").forEach((chip) => {
-    chip.classList.toggle("is-selected", Boolean(selectedInput) && chip.dataset.value === selectedValue);
+    chip.classList.toggle("is-selected", canUseSources && chip.dataset.value === selectedValue);
+    chip.disabled = Boolean(selectedInput && routeDefinitions[selectedInput.id]?.note);
   });
 }
 
@@ -79,8 +98,20 @@ function updateRouteRow(routeInput) {
   if (!row) return;
   const sourceLabel = row.querySelector("[data-route-source]");
   if (sourceLabel) {
-    sourceLabel.textContent = getMovementLabel(routeInput.value);
+    sourceLabel.textContent = routeDefinitions[routeInput.id]?.note
+      ? "Stream"
+      : getMovementLabel(routeInput.value);
   }
+}
+
+function updateContextPanel() {
+  const selectedInput = getRouteInput();
+  const hasSelectedRoute = Boolean(selectedInput && addedRoutes.has(selectedInput.id));
+  const isNoteRoute = Boolean(selectedInput && routeDefinitions[selectedInput.id]?.note);
+  document.body.classList.toggle("has-selected-route", hasSelectedRoute);
+  document.body.classList.toggle("has-note-route", isNoteRoute);
+  if (sourceRail) sourceRail.setAttribute("aria-hidden", String(!hasSelectedRoute));
+  if (noteRouteOptions) noteRouteOptions.hidden = !isNoteRoute;
 }
 
 function updateSelectedRouteDetails() {
@@ -94,7 +125,9 @@ function updateSelectedRouteDetails() {
     return;
   }
   name.textContent = selectedInput.dataset.routeLabel || "Route";
-  source.textContent = getMovementLabel(selectedInput.value);
+  source.textContent = routeDefinitions[selectedInput.id]?.note
+    ? "Note stream"
+    : getMovementLabel(selectedInput.value);
 }
 
 function selectRoute(routeInputId) {
@@ -105,6 +138,7 @@ function selectRoute(routeInputId) {
     });
     updateSourcePalette();
     updateSelectedRouteDetails();
+    updateContextPanel();
     return;
   }
 
@@ -114,11 +148,13 @@ function selectRoute(routeInputId) {
   });
   updateSourcePalette();
   updateSelectedRouteDetails();
+  updateContextPanel();
 }
 
 function assignSourceToSelectedRoute(sourceValue) {
   const selectedInput = getRouteInput();
   if (!selectedInput || !addedRoutes.has(selectedInput.id)) return;
+  if (routeDefinitions[selectedInput.id]?.note) return;
   selectedInput.value = sourceValue;
   selectedInput.dispatchEvent(new Event("change", { bubbles: true }));
   updateRouteRow(selectedInput);
@@ -143,6 +179,10 @@ document.querySelectorAll("[data-source-group]").forEach((palette) => {
 
 function updateRouteMenu() {
   routeMenu.querySelectorAll("[data-add-route]").forEach((button) => {
+    if (button.dataset.addRoute === "cc") {
+      button.disabled = ccRouteIds.every((routeId) => addedRoutes.has(routeId));
+      return;
+    }
     button.disabled = addedRoutes.has(button.dataset.addRoute);
   });
 }
@@ -157,10 +197,50 @@ function toggleRouteMenu() {
   addRouteButton.setAttribute("aria-expanded", String(!routeMenu.hidden));
 }
 
+function getNextCcRouteId() {
+  return ccRouteIds.find((routeId) => !addedRoutes.has(routeId));
+}
+
+function resolveRouteToAdd(routeInputId) {
+  return routeInputId === "cc" ? getNextCcRouteId() : routeInputId;
+}
+
+function getCurrentCcRouteCount() {
+  return [...document.querySelectorAll(".route-item.cc-route")].length;
+}
+
+function ensureRouteRange(routeInput) {
+  if (!routeInput) return;
+  if (routeInput.dataset.routeMin === undefined) routeInput.dataset.routeMin = "0";
+  if (routeInput.dataset.routeMax === undefined) routeInput.dataset.routeMax = "1";
+}
+
+function getRouteRange(routeInput) {
+  ensureRouteRange(routeInput);
+  const min = clamp(Number(routeInput.dataset.routeMin), 0, 1);
+  const max = clamp(Number(routeInput.dataset.routeMax), 0, 1);
+  return min <= max ? { min, max } : { min: max, max: min };
+}
+
+function applyRouteRange(routeInput, value) {
+  const { min, max } = getRouteRange(routeInput);
+  return linearScale(clamp(value, 0, 1), 0, 1, min, max);
+}
+
+function updateRouteRangeVisual(row, routeInput, value = 0) {
+  if (!row || !routeInput) return;
+  const { min, max } = getRouteRange(routeInput);
+  const safeValue = clamp(value, 0, 1);
+  row.style.setProperty("--route-min", String(min));
+  row.style.setProperty("--route-max", String(max));
+  row.style.setProperty("--route-value", String(safeValue));
+}
+
 function createRouteCard(routeInputId) {
   const routeInput = document.getElementById(routeInputId);
   const definition = routeDefinitions[routeInputId];
   if (!routeInput || !definition) return null;
+  ensureRouteRange(routeInput);
 
   const card = document.createElement("div");
   card.className = "route-item mapping-row";
@@ -169,11 +249,17 @@ function createRouteCard(routeInputId) {
   if (definition.cc) card.classList.add("cc-route");
   if (definition.accent) card.dataset.accent = definition.accent;
 
-  const button = document.createElement("button");
+  const button = document.createElement("div");
   button.className = "route-button";
-  button.type = "button";
+  button.role = "button";
+  button.tabIndex = 0;
   button.dataset.routeButton = routeInputId;
   button.addEventListener("click", () => selectRoute(routeInputId));
+  button.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    selectRoute(routeInputId);
+  });
 
   const target = document.createElement("span");
   target.className = "route-target";
@@ -187,12 +273,24 @@ function createRouteCard(routeInputId) {
   const source = document.createElement("span");
   source.className = "route-source";
   source.dataset.routeSource = "";
-  source.textContent = getMovementLabel(routeInput.value);
+  source.textContent = definition.note ? "Stream" : getMovementLabel(routeInput.value);
 
   const meter = document.createElement("span");
   meter.className = "meter";
+  meter.dataset.routeMeter = routeInputId;
   const meterFill = document.createElement("span");
-  meter.appendChild(meterFill);
+  meterFill.className = "meter-fill";
+  const meterRange = document.createElement("span");
+  meterRange.className = "meter-range";
+  const minHandle = document.createElement("span");
+  minHandle.className = "range-handle range-handle-min";
+  minHandle.dataset.rangeHandle = "min";
+  minHandle.setAttribute("aria-hidden", "true");
+  const maxHandle = document.createElement("span");
+  maxHandle.className = "range-handle range-handle-max";
+  maxHandle.dataset.rangeHandle = "max";
+  maxHandle.setAttribute("aria-hidden", "true");
+  meter.append(meterFill, meterRange, minHandle, maxHandle);
 
   button.append(target, source, meter);
   card.append(button);
@@ -217,14 +315,30 @@ function createRouteCard(routeInputId) {
 
   card.append(routeInput);
   attachRouteDragHandlers(card);
+  attachRouteRangeHandlers(card, routeInput);
+  updateRouteRangeVisual(card, routeInput, 0);
   return card;
 }
 
 function addRoute(routeInputId) {
+  const requestedRouteId = routeInputId;
+  routeInputId = resolveRouteToAdd(routeInputId);
+  if (!routeInputId) {
+    closeRouteMenu();
+    return;
+  }
+
   if (addedRoutes.has(routeInputId)) {
     selectRoute(routeInputId);
     closeRouteMenu();
     return;
+  }
+
+  if (requestedRouteId === "cc") {
+    const routeInput = document.getElementById(routeInputId);
+    const label = `CC ${getCurrentCcRouteCount() + 1}`;
+    routeInput.dataset.routeLabel = label;
+    routeInput.dataset.routeDefaultLabel = label;
   }
 
   const card = createRouteCard(routeInputId);
@@ -311,6 +425,131 @@ function attachRouteDragHandlers(card) {
   });
 }
 
+function attachRouteRangeHandlers(card, routeInput) {
+  const meter = card.querySelector(".meter");
+  if (!meter) return;
+
+  meter.addEventListener("pointerdown", (event) => {
+    const handle = event.target.closest("[data-range-handle]");
+    if (!handle) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    card.draggable = false;
+    const { min, max } = getRouteRange(routeInput);
+    rangeDrag = {
+      card,
+      meter,
+      routeInput,
+      handle: handle.dataset.rangeHandle,
+      startMin: min,
+      startMax: max,
+    };
+    handle.setPointerCapture?.(event.pointerId);
+    handle.classList.add("is-dragging");
+  });
+}
+
+function updateRangeDrag(event) {
+  if (!rangeDrag) return;
+  const rect = rangeDrag.meter.getBoundingClientRect();
+  const fraction = clamp((event.clientX - rect.left) / Math.max(rect.width, 1), 0, 1);
+  const minGap = 0.04;
+  const currentRange = getRouteRange(rangeDrag.routeInput);
+
+  if (rangeDrag.handle === "min") {
+    rangeDrag.routeInput.dataset.routeMin = String(
+      clamp(fraction, 0, Math.max(0, currentRange.max - minGap))
+    );
+  } else {
+    rangeDrag.routeInput.dataset.routeMax = String(
+      clamp(fraction, Math.min(1, currentRange.min + minGap), 1)
+    );
+  }
+
+  updateRouteRangeVisual(rangeDrag.card, rangeDrag.routeInput, Number(rangeDrag.card.style.getPropertyValue("--route-value")) || 0);
+}
+
+function endRangeDrag() {
+  if (!rangeDrag) return;
+  rangeDrag.card.draggable = true;
+  rangeDrag.card.querySelectorAll(".range-handle").forEach((handle) => {
+    handle.classList.remove("is-dragging");
+  });
+  rangeDrag = null;
+}
+
+function getCssPixelValue(name, fallback) {
+  const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function getPanelWidth(panelName) {
+  const config = panelWidthConfig[panelName];
+  const panel = document.querySelector(config.selector);
+  return getCssPixelValue(config.property, panel?.getBoundingClientRect().width || config.min);
+}
+
+function clampPanelWidth(panelName, width) {
+  const config = panelWidthConfig[panelName];
+  let max = config.max;
+
+  if (window.innerWidth > 1000) {
+    const otherPanelName = panelName === "route" ? "source" : "route";
+    const otherWidth = getPanelWidth(otherPanelName);
+    const edge = getCssPixelValue("--edge-margin", 16);
+    const gap = getCssPixelValue("--panel-gap", 16);
+    const minimumRouteSpace = 300;
+    max = Math.min(max, window.innerWidth - otherWidth - (edge * 2) - (gap * 2) - minimumRouteSpace);
+  }
+
+  return Math.max(config.min, Math.min(Math.max(config.min, max), width));
+}
+
+function setPanelWidth(panelName, width) {
+  const config = panelWidthConfig[panelName];
+  document.documentElement.style.setProperty(config.property, `${Math.round(width)}px`);
+}
+
+function updatePanelResize(event) {
+  if (!panelResize) return;
+  const delta = event.clientX - panelResize.startX;
+  const nextWidth = panelResize.panelName === "source"
+    ? panelResize.startWidth - delta
+    : panelResize.startWidth + delta;
+  setPanelWidth(panelResize.panelName, clampPanelWidth(panelResize.panelName, nextWidth));
+}
+
+function endPanelResize() {
+  if (!panelResize) return;
+  panelResize.handle.classList.remove("is-dragging");
+  document.body.classList.remove("panel-resizing");
+  panelResize = null;
+}
+
+document.addEventListener("pointermove", updateRangeDrag);
+document.addEventListener("pointerup", endRangeDrag);
+document.addEventListener("pointermove", updatePanelResize);
+document.addEventListener("pointerup", endPanelResize);
+
+document.querySelectorAll("[data-panel-resizer]").forEach((handle) => {
+  handle.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const panelName = handle.dataset.panelResizer;
+    panelResize = {
+      panelName,
+      handle,
+      startX: event.clientX,
+      startWidth: getPanelWidth(panelName),
+    };
+    handle.classList.add("is-dragging");
+    document.body.classList.add("panel-resizing");
+    handle.setPointerCapture?.(event.pointerId);
+  });
+});
+
 addRouteButton.addEventListener("click", (event) => {
   event.stopPropagation();
   toggleRouteMenu();
@@ -323,6 +562,14 @@ routeMenu.querySelectorAll("[data-add-route]").forEach((button) => {
 document.addEventListener("click", (event) => {
   if (!routeMenu.hidden && !routeMenu.contains(event.target) && event.target !== addRouteButton) {
     closeRouteMenu();
+  }
+
+  const inRouteCard = Boolean(event.target.closest(".route-item"));
+  const inSourcePanel = Boolean(event.target.closest(".source-rail"));
+  const inPanelResizer = Boolean(event.target.closest("[data-panel-resizer]"));
+  const inRouteMenu = routeMenu.contains(event.target) || event.target === addRouteButton;
+  if (!inRouteCard && !inSourcePanel && !inPanelResizer && !inRouteMenu) {
+    selectRoute(null);
   }
 });
 
@@ -381,6 +628,7 @@ const gesture = document.getElementById("gesture");
 const device = document.getElementById("device");
 const sendMidi = document.getElementById("sendMidi");
 const bpm = document.getElementById("bpm");
+const noteRouteInput = document.getElementById("noteRouteInput");
 const BPMAutomateInput = document.getElementById("BPMAutomateInput");
 const bpmValue = document.getElementById("bpmValue");
 const sliderMinValueInput = document.getElementById("sliderMinValue");
@@ -612,11 +860,16 @@ function playMidiNote(note, channel, duration = 500, attack = 1) {
 
 function myMidiNoteLoop(hands) {
   const hasHand = Boolean(hands.left || hands.right);
-  streamRow.classList.toggle("is-active", sendMidi.checked && hasHand);
+  const isActive = sendMidi.checked && hasHand;
+  streamRow.classList.toggle("is-active", isActive);
 
   const now = new Date();
   const timeDiffBPM = now.getTime() - BPMTracker.getTime();
-  if (sendMidi.checked && hasHand && timeDiffBPM >= tempo) {
+  if (addedRoutes.has("noteRouteInput")) {
+    setControlFeedback(noteRouteInput, isActive ? 1 : 0, isActive);
+  }
+
+  if (isActive && timeDiffBPM >= tempo) {
     playMidiNote(midiPitchControlValue, midiChannel.value, tempo * 0.8, midiVel);
     BPMTracker = new Date();
   }
@@ -752,6 +1005,12 @@ function depthValue(hand) {
 }
 
 function getControlValue(controlName, hands) {
+  if (controlName?.startsWith("gesture:")) {
+    const gestureId = controlName.slice("gesture:".length);
+    const config = gestureConfigs.find((gestureConfig) => gestureConfig.id === gestureId);
+    return config?.on ? 1 : 0;
+  }
+
   switch (controlName) {
     case "leftIndexX":
       return hands.left ? hands.left.index.x : null;
@@ -799,14 +1058,12 @@ function setControlFeedback(selectElement, value, isActive) {
   if (!row) return;
 
   row.classList.toggle("is-active", isActive);
-  const meterFill = row.querySelector(".meter span");
-  if (meterFill) {
-    meterFill.style.transform = `scaleX(${isActive ? clamp(value, 0, 1) : 0})`;
-  }
+  updateRouteRangeVisual(row, selectElement, isActive ? clamp(value, 0, 1) : 0);
 }
 
 function resetControlFeedback() {
   controls_io.forEach((io) => setControlFeedback(io.in, 0, false));
+  if (noteRouteInput) setControlFeedback(noteRouteInput, 0, false);
   streamRow.classList.remove("is-active");
   activeControlKeys = new Set();
 }
@@ -820,7 +1077,8 @@ function myMidi(hands) {
 
   controls_io.forEach((io) => {
     const controlName = io.in.value;
-    const controlValue = getControlValue(controlName, hands);
+    const rawControlValue = getControlValue(controlName, hands);
+    const controlValue = rawControlValue === null ? null : applyRouteRange(io.in, rawControlValue);
     const isActive = controlName !== "nil" && controlValue !== null;
 
     if (isActive) {
@@ -1241,8 +1499,8 @@ function onResults(results) {
   trackingStatus.textContent = handCount ? `Hands ${handCount}` : "No hands";
 
   if (handCount) {
-    myMidi(hands);
     processGestures(hands);
+    myMidi(hands);
     myMidiNoteLoop(hands);
     activeControlKeys.forEach((controlName) => drawControlOverlay(controlName, hands));
     drawGestureOverlays(hands);
