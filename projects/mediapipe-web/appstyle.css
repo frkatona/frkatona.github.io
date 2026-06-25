@@ -534,6 +534,24 @@ body.panel-resizing {
   transform: translateX(16px);
 }
 
+.fx-child {
+  grid-column: 1 / -1;
+  border-color: rgba(255, 113, 89, 0.36);
+  background:
+    linear-gradient(135deg, rgba(155, 92, 255, 0.12), rgba(255, 113, 89, 0.09)),
+    var(--surface-soft);
+}
+
+.fx-child span {
+  color: #ffd7ca;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.fx-child input:checked + i {
+  background: linear-gradient(90deg, #9b5cff, #ff7159, #ffd166);
+}
+
 .field-row {
   grid-template-columns: 64px minmax(0, 1fr);
   padding: 6px 8px 6px 10px;
