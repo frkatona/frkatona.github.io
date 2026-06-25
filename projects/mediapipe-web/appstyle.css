@@ -900,7 +900,7 @@ input[type="range"] {
 
 .meter-fill {
   background: color-mix(in srgb, var(--route-accent), transparent 16%);
-  transform: scaleX(0);
+  transform: scaleX(var(--route-value, 0));
   transform-origin: left center;
   transition: transform 0.08s linear;
 }

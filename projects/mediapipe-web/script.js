@@ -813,12 +813,67 @@ function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
+function getNumberInputStep(input) {
+  const step = Number(input.step);
+  return Number.isFinite(step) && step > 0 ? step : 1;
+}
+
+function getNumberInputValue(input) {
+  const value = Number(input.value);
+  if (Number.isFinite(value)) return value;
+
+  const defaultValue = Number(input.getAttribute("value"));
+  if (Number.isFinite(defaultValue)) return defaultValue;
+
+  const min = Number(input.min);
+  if (Number.isFinite(min)) return min;
+
+  return 0;
+}
+
+function getNumberInputBound(input, attributeName, fallback) {
+  const rawValue = input.getAttribute(attributeName);
+  if (rawValue === null || rawValue.trim() === "") return fallback;
+
+  const value = Number(rawValue);
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function formatNumberInputValue(value, step) {
+  if (Number.isInteger(step)) return String(Math.round(value));
+
+  const decimalPart = String(step).split(".")[1] || "";
+  return value.toFixed(Math.min(decimalPart.length, 6)).replace(/\.?0+$/, "");
+}
+
+function handleNumberInputWheel(event) {
+  const input = event.target.closest("input[type='number']");
+  if (!input || input.disabled || input.readOnly) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  const direction = event.deltaY < 0 ? 1 : -1;
+  const step = getNumberInputStep(input);
+  const lower = getNumberInputBound(input, "min", -Infinity);
+  const upper = getNumberInputBound(input, "max", Infinity);
+  const nextValue = clamp(getNumberInputValue(input) + direction * step, lower, upper);
+
+  input.value = formatNumberInputValue(nextValue, step);
+  input.dispatchEvent(new Event("input", { bubbles: true }));
+  input.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
 function linearScale(value, inMin, inMax, outMin, outMax) {
   const scaledValue = scaleValue(value, inMin, inMax, outMin, outMax);
   return outMin < outMax
     ? clamp(scaledValue, outMin, outMax)
     : clamp(scaledValue, outMax, outMin);
 }
+
+document.querySelectorAll("input[type='number']").forEach((input) => {
+  input.addEventListener("wheel", handleNumberInputWheel, { passive: false });
+});
 
 function setTempoFromBpm(bpmNumber) {
   const safeBpm = clamp(Number(bpmNumber) || 120, minVal, maxVal);
