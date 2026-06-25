@@ -622,6 +622,7 @@ const selectors = [videoSelect];
 const canvasElement = document.getElementsByClassName("output_canvas")[0];
 const canvasCtx = canvasElement.getContext("2d");
 const showTracking = document.getElementById("showTracking");
+const showOverlayFx = document.getElementById("showOverlayFx");
 const selfie = document.getElementById("selfie");
 const fpsoutput = document.getElementById("fps");
 const gesture = document.getElementById("gesture");
@@ -1400,6 +1401,151 @@ function drawLabel(text, landmark, color) {
   canvasCtx.restore();
 }
 
+function colorWithAlpha(hexColor, alpha) {
+  const value = hexColor.replace("#", "");
+  const red = parseInt(value.slice(0, 2), 16);
+  const green = parseInt(value.slice(2, 4), 16);
+  const blue = parseInt(value.slice(4, 6), 16);
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
+function drawSparkle(point, radius, color, rotation = 0) {
+  canvasCtx.save();
+  canvasCtx.translate(point.x, point.y);
+  canvasCtx.rotate(rotation);
+  canvasCtx.strokeStyle = color;
+  canvasCtx.lineWidth = 2;
+  canvasCtx.shadowColor = color;
+  canvasCtx.shadowBlur = 12;
+  canvasCtx.beginPath();
+  canvasCtx.moveTo(-radius, 0);
+  canvasCtx.lineTo(radius, 0);
+  canvasCtx.moveTo(0, -radius);
+  canvasCtx.lineTo(0, radius);
+  canvasCtx.stroke();
+  canvasCtx.restore();
+}
+
+function drawHandVisualEffects(hands) {
+  const time = performance.now() / 1000;
+  const minCanvasSize = Math.min(canvasElement.width, canvasElement.height);
+  const handEffects = [
+    {
+      hand: hands.left,
+      primary: "#00f5d4",
+      secondary: "#9b5cff",
+      label: "LEFT",
+    },
+    {
+      hand: hands.right,
+      primary: "#ff7159",
+      secondary: "#ffd166",
+      label: "RIGHT",
+    },
+  ];
+
+  canvasCtx.save();
+  canvasCtx.globalCompositeOperation = "lighter";
+
+  handEffects.forEach(({ hand, primary, secondary, label }, handIndex) => {
+    if (!hand) return;
+
+    const palm = toCanvasPoint(hand.palm);
+    const wrist = toCanvasPoint(hand.wrist);
+    const handSize = clamp((handScale(hand) || 0.12) * minCanvasSize, 44, 150);
+    const pulse = 0.5 + Math.sin(time * 4.5 + handIndex) * 0.5;
+    const fingertips = [hand.thumb, hand.index, hand.middle, hand.ring, hand.pinky].filter(Boolean);
+
+    const palmGlow = canvasCtx.createRadialGradient(
+      palm.x,
+      palm.y,
+      3,
+      palm.x,
+      palm.y,
+      handSize * (1.15 + pulse * 0.55)
+    );
+    palmGlow.addColorStop(0, colorWithAlpha(primary, 0.42));
+    palmGlow.addColorStop(0.36, colorWithAlpha(secondary, 0.16));
+    palmGlow.addColorStop(1, colorWithAlpha(primary, 0));
+    canvasCtx.fillStyle = palmGlow;
+    canvasCtx.beginPath();
+    canvasCtx.arc(palm.x, palm.y, handSize * 1.75, 0, Math.PI * 2);
+    canvasCtx.fill();
+
+    canvasCtx.strokeStyle = colorWithAlpha(primary, 0.68);
+    canvasCtx.lineWidth = 2.5 + pulse * 1.5;
+    canvasCtx.shadowColor = primary;
+    canvasCtx.shadowBlur = 22;
+    canvasCtx.beginPath();
+    canvasCtx.arc(palm.x, palm.y, handSize * (0.34 + pulse * 0.08), 0, Math.PI * 2);
+    canvasCtx.stroke();
+
+    fingertips.forEach((finger, fingerIndex) => {
+      const tip = toCanvasPoint(finger);
+      const phase = time * 2.7 + fingerIndex * 0.72 + handIndex;
+      const ringRadius = handSize * (0.12 + 0.04 * Math.sin(phase));
+      const sparkRadius = 5 + 3 * Math.sin(phase + Math.PI / 2);
+
+      canvasCtx.strokeStyle = colorWithAlpha(secondary, 0.44);
+      canvasCtx.lineWidth = 1.5;
+      canvasCtx.shadowColor = secondary;
+      canvasCtx.shadowBlur = 18;
+      canvasCtx.beginPath();
+      canvasCtx.moveTo(palm.x, palm.y);
+      canvasCtx.quadraticCurveTo(
+        (palm.x + tip.x) / 2 + Math.sin(phase) * 18,
+        (palm.y + tip.y) / 2 + Math.cos(phase) * 18,
+        tip.x,
+        tip.y
+      );
+      canvasCtx.stroke();
+
+      canvasCtx.strokeStyle = colorWithAlpha(primary, 0.78);
+      canvasCtx.lineWidth = 2.5;
+      canvasCtx.beginPath();
+      canvasCtx.arc(tip.x, tip.y, ringRadius, 0, Math.PI * 2);
+      canvasCtx.stroke();
+      drawSparkle(tip, sparkRadius, colorWithAlpha(secondary, 0.9), phase);
+    });
+
+    if (fingertips.length >= 3) {
+      canvasCtx.strokeStyle = colorWithAlpha(secondary, 0.22);
+      canvasCtx.lineWidth = 1;
+      canvasCtx.setLineDash([8, 10]);
+      canvasCtx.lineDashOffset = -time * 28;
+      canvasCtx.beginPath();
+      fingertips.forEach((finger, index) => {
+        const point = toCanvasPoint(finger);
+        if (index === 0) {
+          canvasCtx.moveTo(point.x, point.y);
+        } else {
+          canvasCtx.lineTo(point.x, point.y);
+        }
+      });
+      canvasCtx.closePath();
+      canvasCtx.stroke();
+      canvasCtx.setLineDash([]);
+    }
+
+    canvasCtx.strokeStyle = colorWithAlpha(primary, 0.34);
+    canvasCtx.lineWidth = 1.5;
+    canvasCtx.shadowColor = primary;
+    canvasCtx.shadowBlur = 14;
+    canvasCtx.beginPath();
+    canvasCtx.moveTo(wrist.x, wrist.y);
+    canvasCtx.lineTo(palm.x, palm.y);
+    canvasCtx.stroke();
+
+    canvasCtx.font = "800 11px Arial";
+    canvasCtx.fillStyle = colorWithAlpha(primary, 0.64);
+    canvasCtx.shadowColor = primary;
+    canvasCtx.shadowBlur = 12;
+    canvasCtx.fillText(label, palm.x + handSize * 0.18, palm.y - handSize * 0.28);
+  });
+
+  canvasCtx.restore();
+}
+
 function drawControlOverlay(controlName, hands) {
   const controlColor = "#0f9f8f";
 
@@ -1559,6 +1705,9 @@ function onResults(results) {
     myMidiNoteLoop(hands);
     activeControlKeys.forEach((controlName) => drawControlOverlay(controlName, hands));
     drawGestureOverlays(hands);
+    if (showTracking.checked && showOverlayFx?.checked) {
+      drawHandVisualEffects(hands);
+    }
   } else {
     resetControlFeedback();
     processGestures(hands);
