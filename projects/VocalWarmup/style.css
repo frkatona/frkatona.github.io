@@ -656,6 +656,12 @@
       font-style: italic;
   }
 
+  .s-year {
+      color: var(--text2);
+      font-size: 11px;
+      margin-top: 2px;
+  }
+
   .s-section {
       font-size: 11px;
       color: var(--text3);
@@ -902,4 +908,21 @@
 
   .filter-logic-toggle input:checked+span:hover {
       color: var(--text);
+  }
+
+  .sort-control {
+      align-items: center;
+      display: flex;
+      font-size: 12px;
+      gap: 6px;
+      white-space: nowrap;
+  }
+
+  .sort-select {
+      background: var(--bg2);
+      border: 1px solid var(--muted);
+      border-radius: 8px;
+      color: var(--text);
+      font: inherit;
+      padding: 7px 28px 7px 10px;
   }

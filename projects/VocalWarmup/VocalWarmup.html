@@ -152,7 +152,19 @@
           <div class="row-sb" style="margin-bottom:8px">
             <div class="h1" style="font-size:16px">Matches <span class="muted" style="font-size:12px; font-weight:400"
                 id="match-count">(0)</span></div>
-            <button class="btn" id="clear-filters" style="display:none">Clear Filters</button>
+            <div class="row">
+              <label class="sort-control muted" for="samples-sort">
+                Sort by
+                <select id="samples-sort" class="sort-select">
+                  <option value="song">Alphabetical</option>
+                  <option value="artist">Artist</option>
+                  <option value="release-asc">Release: oldest</option>
+                  <option value="release-desc">Release: newest</option>
+                  <option value="original">Default</option>
+                </select>
+              </label>
+              <button class="btn" id="clear-filters" style="display:none">Clear Filters</button>
+            </div>
           </div>
 
           <div id="samples-grid" class="grid g2">

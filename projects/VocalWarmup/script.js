@@ -438,12 +438,14 @@
         loaded: false,
         filters: new Set(), // active tag filters
         filterMode: 'and', // 'and' or 'or'
+        sortMode: 'song',
         allTags: {} // category -> set of tags
     };
     const listEl = document.getElementById('samples-grid');
     const filtersEl = document.getElementById('samples-filters');
     const matchCountEl = document.getElementById('match-count');
     const clearBtn = document.getElementById('clear-filters');
+    const sortSelect = document.getElementById('samples-sort');
     const filterLogicRadios = document.querySelectorAll('input[name="filter-logic"]');
 
     // Filter Logic Toggle Listener
@@ -456,6 +458,14 @@
                     checkAvailability();
                 }
             });
+        });
+    }
+
+    if (sortSelect) {
+        sortSelect.value = samplesState.sortMode;
+        sortSelect.addEventListener('change', (e) => {
+            samplesState.sortMode = e.target.value;
+            renderSamplesGrid();
         });
     }
 
@@ -482,7 +492,7 @@
         // Helper to map tag -> category for color coding later
         samplesState.tagMeta = {};
 
-        const skip = new Set(['artist', 'song', 'section', 'link']);
+        const skip = new Set(['artist', 'song', 'section', 'link', 'youtube', 'year']);
         data.forEach(item => {
             Object.keys(item).forEach(k => {
                 if (skip.has(k)) return;
@@ -610,6 +620,29 @@
         });
     }
 
+    function sortMatches(matches) {
+        const collator = new Intl.Collator(undefined, { sensitivity: 'base' });
+        const sorted = [...matches];
+        const bySong = (a, b) => collator.compare(a.song || '', b.song || '');
+        const byArtist = (a, b) => collator.compare(a.artist || '', b.artist || '') || bySong(a, b);
+        const byYearAsc = (a, b) => (a.year ?? 9999) - (b.year ?? 9999) || bySong(a, b);
+        const byYearDesc = (a, b) => (b.year ?? 0) - (a.year ?? 0) || bySong(a, b);
+
+        switch (samplesState.sortMode) {
+            case 'artist':
+                return sorted.sort(byArtist);
+            case 'release-asc':
+                return sorted.sort(byYearAsc);
+            case 'release-desc':
+                return sorted.sort(byYearDesc);
+            case 'original':
+                return matches;
+            case 'song':
+            default:
+                return sorted.sort(bySong);
+        }
+    }
+
     function updateClearBtn() {
         if (!clearBtn) return;
         if (samplesState.filters.size > 0) {
@@ -634,7 +667,7 @@
         if (!listEl) return;
         listEl.innerHTML = '';
 
-        const matches = getMatches(Array.from(samplesState.filters));
+        const matches = sortMatches(getMatches(Array.from(samplesState.filters)));
 
         if (matchCountEl) matchCountEl.textContent = `(${matches.length})`;
 
@@ -668,6 +701,7 @@
 
             const artist = document.createElement('div'); artist.className = 's-artist'; artist.textContent = item.artist;
             const song = document.createElement('div'); song.className = 's-song'; song.textContent = item.song;
+            const year = document.createElement('div'); year.className = 's-year'; year.textContent = item.year ? `Released ${item.year}` : 'Release year unknown';
             const section = document.createElement('div'); section.className = 's-section'; section.textContent = item.section;
 
             const tagsDiv = document.createElement('div'); tagsDiv.className = 's-tags';
@@ -689,6 +723,7 @@
 
             card.appendChild(artist);
             card.appendChild(song);
+            card.appendChild(year);
             card.appendChild(section);
             card.appendChild(tagsDiv);
 
