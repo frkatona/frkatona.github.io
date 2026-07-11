@@ -3,115 +3,589 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Palette Selector</title>
+    <meta name="theme-color" content="#101114">
+    <title>Palette Preview</title>
     <link rel="icon" type="image/x-icon" href="../../../assets/images/icons/favicon.ico">
-<link rel="stylesheet" href="../../../css/subpage_nav.css">
+    <link rel="stylesheet" href="../../../css/subpage_nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        #paletteDisplay {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 20px;
+        :root {
+            color-scheme: dark;
+            --page: #101114;
+            --surface: #181a1f;
+            --surface-raised: #202329;
+            --border: rgba(255, 255, 255, 0.1);
+            --muted: #9ca3af;
+            --text: #f7f7f8;
+            --accent: #c9ff5c;
+            --accent-ink: #182000;
+            --radius: 18px;
         }
-        .colorBox {
-            width: 100px;
-            height: 100px;
-            margin: 10px;
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body.has-subpage-nav {
+            margin: 0;
+            min-width: 300px;
+            background:
+                radial-gradient(circle at 85% 5%, rgba(201, 255, 92, 0.08), transparent 28rem),
+                var(--page);
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        nav.subpage-nav {
+            border-bottom: 1px solid var(--border);
+            background: rgba(16, 17, 20, 0.82);
+        }
+
+        nav.subpage-nav a.subpage-nav__link { font-size: 1rem; }
+
+        button, input, select { font: inherit; }
+
+        button, select { cursor: pointer; }
+
+        button:focus-visible, select:focus-visible, input:focus-visible, .color-card:focus-visible {
+            outline: 3px solid rgba(201, 255, 92, 0.55);
+            outline-offset: 3px;
+        }
+
+        .app-shell {
+            width: min(1440px, 100%);
+            margin: 0 auto;
+            padding: clamp(1.25rem, 3vw, 3rem);
+        }
+
+        .hero {
             display: flex;
-            justify-content: center;
+            align-items: end;
+            justify-content: space-between;
+            gap: 2rem;
+            margin: 1.5rem 0 2rem;
+        }
+
+        .eyebrow {
+            margin: 0 0 0.65rem;
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            max-width: 850px;
+            font-size: clamp(2.25rem, 6vw, 5.5rem);
+            font-weight: 750;
+            letter-spacing: -0.065em;
+            line-height: 0.94;
+        }
+
+        .hero-copy {
+            max-width: 34rem;
+            margin: 1.25rem 0 0;
+            color: var(--muted);
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
+            line-height: 1.6;
+        }
+
+        .shortcut-hint {
+            flex: 0 0 auto;
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        kbd {
+            display: inline-grid;
+            min-width: 1.8rem;
+            min-height: 1.7rem;
+            place-items: center;
+            margin: 0 0.16rem;
+            padding: 0.2rem 0.45rem;
+            border: 1px solid var(--border);
+            border-bottom-color: rgba(255,255,255,.22);
+            border-radius: 6px;
+            background: var(--surface-raised);
+            color: var(--text);
+            font-size: 0.72rem;
+        }
+
+        .toolbar {
+            position: sticky;
+            top: calc(var(--subpage-nav-height) + 0.75rem);
+            z-index: 20;
+            display: grid;
+            grid-template-columns: auto minmax(230px, 1fr) auto auto;
+            gap: 0.65rem;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: rgba(24, 26, 31, 0.88);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(18px);
+        }
+
+        .icon-button, .copy-all-button {
+            min-height: 48px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+        }
+
+        .icon-button {
+            width: 48px;
+            background: var(--surface-raised);
+            color: var(--text);
+        }
+
+        .icon-button:hover:not(:disabled), .copy-all-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        button:disabled { cursor: not-allowed; opacity: 0.4; }
+
+        .select-wrap { position: relative; min-width: 0; }
+
+        .select-wrap i {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            color: var(--muted);
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        #paletteSelector {
+            width: 100%;
+            min-height: 48px;
+            padding: 0 2.8rem 0 2.65rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            appearance: none;
+            background: var(--surface-raised) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 1rem center;
+            color: var(--text);
+            font-weight: 650;
+            text-overflow: ellipsis;
+        }
+
+        .copy-all-button {
+            padding: 0 1.15rem;
+            border-color: transparent;
+            background: var(--accent);
+            color: var(--accent-ink);
+            font-weight: 800;
+        }
+
+        .copy-all-button i { margin-right: 0.45rem; }
+
+        .palette-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0 1rem;
+        }
+
+        #paletteTitle {
+            margin: 0;
+            font-size: clamp(1.4rem, 3vw, 2.15rem);
+            letter-spacing: -0.035em;
+        }
+
+        #paletteCount { color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
+
+        #paletteDisplay {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+            gap: 1rem;
+        }
+
+        .color-card {
+            position: relative;
+            display: flex;
+            min-height: 290px;
+            overflow: hidden;
+            align-items: flex-end;
+            padding: 1rem;
+            border: 0;
+            border-radius: var(--radius);
+            background: var(--swatch);
+            color: var(--card-ink);
+            text-align: left;
+            box-shadow: inset 0 0 0 1px var(--card-border), 0 10px 28px rgba(0,0,0,.2);
+            isolation: isolate;
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+
+        .color-card::after {
+            position: absolute;
+            inset: 38% 0 0;
+            z-index: -1;
+            background: linear-gradient(transparent, var(--card-shade));
+            content: "";
+        }
+
+        .color-card:hover {
+            transform: translateY(-5px);
+            box-shadow: inset 0 0 0 1px var(--card-border), 0 18px 35px rgba(0,0,0,.28);
+        }
+
+        .color-details { width: 100%; }
+
+        .color-name {
+            display: block;
+            margin-bottom: 0.25rem;
+            overflow: hidden;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .color-hex-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+
+        .color-hex {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: clamp(1.15rem, 2vw, 1.35rem);
+            font-weight: 800;
+            letter-spacing: 0.015em;
+        }
+
+        .copy-indicator {
+            display: grid;
+            width: 2.1rem;
+            height: 2.1rem;
+            flex: 0 0 auto;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--card-chip);
+        }
+
+        .chart-panel {
+            margin-top: 1.25rem;
+            padding: clamp(1rem, 3vw, 1.5rem);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+        }
+
+        .chart-header { margin-bottom: 1.1rem; }
+
+        .chart-header h2 { margin: 0; font-size: 1rem; }
+
+        .chart-header p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.84rem; }
+
+        .chart-wrap { position: relative; height: clamp(280px, 38vw, 430px); }
+
+        .loading, .error {
+            grid-column: 1 / -1;
+            padding: 3rem;
+            border: 1px dashed var(--border);
+            border-radius: var(--radius);
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .toast {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 1.25rem;
+            z-index: 1001;
+            display: flex;
             align-items: center;
-            color: white;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px black;
+            gap: 0.6rem;
+            padding: 0.85rem 1rem;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 12px;
+            background: #f7f7f8;
+            color: #151619;
+            box-shadow: 0 18px 50px rgba(0,0,0,.4);
+            font-size: 0.9rem;
+            font-weight: 750;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity 180ms ease, transform 180ms ease;
+        }
+
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 700px) {
+            .hero { display: block; }
+            .shortcut-hint { display: none; }
+            .toolbar { grid-template-columns: auto minmax(0, 1fr) auto; }
+            .copy-all-button { grid-column: 1 / -1; }
+            #paletteDisplay { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .color-card { min-height: 220px; }
+        }
+
+        @media (max-width: 430px) {
+            .app-shell { padding-inline: 0.9rem; }
+            #paletteDisplay { grid-template-columns: 1fr; }
+            .color-card { min-height: 200px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
         }
     </style>
 </head>
 <body class="has-subpage-nav">
-    <nav class="subpage-nav">
+    <nav class="subpage-nav" aria-label="Site navigation">
         <a class="subpage-nav__link" href="../../../index.html">
-            <i class="fas fa-home" aria-hidden="true"></i>
-            <span>Home</span>
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            <span>Back home</span>
         </a>
     </nav>
-    <h1>Select a Color Palette</h1>
-    <select id="paletteSelector">
-        <option value="">Select a palette</option>
-    </select>
-    <div id="paletteDisplay"></div>
-    <canvas id="lineChart" width="800" height="400"></canvas>
+
+    <main class="app-shell">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">Color toolkit</p>
+                <h1>Palette preview</h1>
+                <p class="hero-copy">Browse color sets, compare them in context, and click any swatch to copy its hex code.</p>
+            </div>
+            <p class="shortcut-hint"><kbd>←</kbd> <kbd>→</kbd> switch palettes &nbsp; <kbd>C</kbd> copy all</p>
+        </header>
+
+        <section class="toolbar" aria-label="Palette controls">
+            <button class="icon-button" id="previousPalette" type="button" aria-label="Previous palette" title="Previous palette (Left arrow)">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            </button>
+            <label class="select-wrap">
+                <span class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Choose a palette</span>
+                <i class="fas fa-palette" aria-hidden="true"></i>
+                <select id="paletteSelector" aria-label="Choose a palette"></select>
+            </label>
+            <button class="icon-button" id="nextPalette" type="button" aria-label="Next palette" title="Next palette (Right arrow)">
+                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+            </button>
+            <button class="copy-all-button" id="copyAll" type="button" disabled>
+                <i class="far fa-copy" aria-hidden="true"></i><span>Copy all</span>
+            </button>
+        </section>
+
+        <section aria-live="polite">
+            <div class="palette-meta">
+                <h2 id="paletteTitle">Loading palettes…</h2>
+                <span id="paletteCount"></span>
+            </div>
+            <div id="paletteDisplay"><div class="loading">Loading colors…</div></div>
+        </section>
+
+        <section class="chart-panel" aria-labelledby="chartTitle">
+            <div class="chart-header">
+                <h2 id="chartTitle">Palette in action</h2>
+                <p>A consistent sample chart makes it easy to compare each palette.</p>
+            </div>
+            <div class="chart-wrap"><canvas id="lineChart"></canvas></div>
+        </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <i class="fas fa-check-circle" aria-hidden="true"></i><span id="toastText">Copied</span>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('AnthonyColors.json')
-                .then(response => response.json())
-                .then(data => {
-                    const palettes = data.palettes;
-                    const paletteSelector = document.getElementById('paletteSelector');
-                    
-                    palettes.forEach((palette, index) => {
-                        const option = document.createElement('option');
-                        option.value = index;
-                        option.textContent = palette.name;
-                        paletteSelector.appendChild(option);
-                    });
-                    
-                    paletteSelector.addEventListener('change', () => {
-                        const selectedIndex = paletteSelector.value;
-                        const selectedPalette = palettes[selectedIndex];
-                        displayPalette(selectedPalette);
-                        drawChart(selectedPalette.colors);
-                    });
+        const state = { palettes: [], selectedIndex: 0, toastTimer: null };
+        const sampleSeries = [34, 48, 43, 66, 58, 76, 69, 84, 79, 92];
+
+        const elements = {
+            selector: document.getElementById('paletteSelector'),
+            display: document.getElementById('paletteDisplay'),
+            title: document.getElementById('paletteTitle'),
+            count: document.getElementById('paletteCount'),
+            previous: document.getElementById('previousPalette'),
+            next: document.getElementById('nextPalette'),
+            copyAll: document.getElementById('copyAll'),
+            toast: document.getElementById('toast'),
+            toastText: document.getElementById('toastText')
+        };
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            bindControls();
+            try {
+                const response = await fetch('AnthonyColors.json');
+                if (!response.ok) throw new Error(`Unable to load palettes (${response.status})`);
+                const data = await response.json();
+                state.palettes = data.palettes || [];
+                if (!state.palettes.length) throw new Error('No palettes were found.');
+
+                state.palettes.forEach((palette, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `${String(index + 1).padStart(2, '0')} — ${palette.name}`;
+                    elements.selector.appendChild(option);
                 });
+
+                const requestedPalette = new URLSearchParams(window.location.search).get('palette');
+                const requestedIndex = state.palettes.findIndex(palette => slugify(palette.name) === requestedPalette);
+                selectPalette(requestedIndex >= 0 ? requestedIndex : 0, false);
+                elements.copyAll.disabled = false;
+            } catch (error) {
+                elements.title.textContent = 'Palettes unavailable';
+                elements.display.innerHTML = `<div class="error">${error.message}</div>`;
+                console.error(error);
+            }
         });
 
-        function displayPalette(palette) {
-            const paletteDisplay = document.getElementById('paletteDisplay');
-            paletteDisplay.innerHTML = '';
+        function bindControls() {
+            elements.selector.addEventListener('change', event => selectPalette(Number(event.target.value)));
+            elements.previous.addEventListener('click', () => movePalette(-1));
+            elements.next.addEventListener('click', () => movePalette(1));
+            elements.copyAll.addEventListener('click', copyAllColors);
+            document.addEventListener('keydown', event => {
+                if (event.target.matches('select, input, textarea, button')) return;
+                if (event.key === 'ArrowLeft') movePalette(-1);
+                if (event.key === 'ArrowRight') movePalette(1);
+                if (event.key.toLowerCase() === 'c') copyAllColors();
+            });
+        }
 
-            if (palette) {
-                palette.colors.forEach(color => {
-                    const colorBox = document.createElement('div');
-                    colorBox.className = 'colorBox';
-                    colorBox.style.backgroundColor = color.hex;
-                    colorBox.textContent = color.name;
-                    paletteDisplay.appendChild(colorBox);
-                });
+        function movePalette(direction) {
+            if (!state.palettes.length) return;
+            selectPalette((state.selectedIndex + direction + state.palettes.length) % state.palettes.length);
+        }
+
+        function selectPalette(index, updateUrl = true) {
+            const palette = state.palettes[index];
+            if (!palette) return;
+            state.selectedIndex = index;
+            elements.selector.value = index;
+            elements.previous.disabled = state.palettes.length < 2;
+            elements.next.disabled = state.palettes.length < 2;
+            renderPalette(palette);
+            drawChart(palette.colors);
+
+            if (updateUrl) {
+                const url = new URL(window.location.href);
+                url.searchParams.set('palette', slugify(palette.name));
+                history.replaceState(null, '', url);
             }
         }
 
-        function drawChart(colors) {
-            const ctx = document.getElementById('lineChart').getContext('2d');
-            const colorHexes = colors.map(color => color.hex);
-            const datasets = colorHexes.map((color, index) => ({
-                label: `Line ${index + 1}`,
-                data: Array.from({length: 10}, () => Math.floor(Math.random() * 100)),
-                borderColor: color,
-                fill: false
-            }));
+        function renderPalette(palette) {
+            elements.title.textContent = palette.name;
+            elements.count.textContent = `${palette.colors.length} ${palette.colors.length === 1 ? 'color' : 'colors'} · ${state.selectedIndex + 1} of ${state.palettes.length}`;
+            elements.display.replaceChildren(...palette.colors.map(color => createColorCard(color)));
+        }
 
-            if (window.myLineChart) {
-                window.myLineChart.destroy();
+        function createColorCard(color) {
+            const button = document.createElement('button');
+            const darkBackground = getLuminance(color.hex) < 0.43;
+            button.type = 'button';
+            button.className = 'color-card';
+            button.style.setProperty('--swatch', color.hex);
+            button.style.setProperty('--card-ink', darkBackground ? '#ffffff' : '#121316');
+            button.style.setProperty('--card-shade', darkBackground ? 'rgba(0,0,0,.45)' : 'rgba(255,255,255,.25)');
+            button.style.setProperty('--card-chip', darkBackground ? 'rgba(255,255,255,.16)' : 'rgba(0,0,0,.1)');
+            button.style.setProperty('--card-border', darkBackground ? 'rgba(255,255,255,.15)' : 'rgba(0,0,0,.18)');
+            button.setAttribute('aria-label', `Copy ${color.name}, ${color.hex}`);
+            button.title = `Copy ${color.hex}`;
+            button.innerHTML = `
+                <span class="color-details">
+                    <span class="color-name">${escapeHtml(color.name)}</span>
+                    <span class="color-hex-row">
+                        <span class="color-hex">${escapeHtml(color.hex.toUpperCase())}</span>
+                        <span class="copy-indicator"><i class="far fa-copy" aria-hidden="true"></i></span>
+                    </span>
+                </span>`;
+            button.addEventListener('click', async () => {
+                await copyText(color.hex.toUpperCase());
+                const icon = button.querySelector('.copy-indicator i');
+                icon.className = 'fas fa-check';
+                window.setTimeout(() => icon.className = 'far fa-copy', 1100);
+                showToast(`${color.hex.toUpperCase()} copied`);
+            });
+            return button;
+        }
+
+        async function copyAllColors() {
+            const palette = state.palettes[state.selectedIndex];
+            if (!palette) return;
+            const values = palette.colors.map(color => color.hex.toUpperCase()).join(', ');
+            await copyText(values);
+            showToast(`${palette.colors.length} hex codes copied`);
+        }
+
+        async function copyText(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch (_) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                textarea.remove();
             }
+        }
 
-            window.myLineChart = new Chart(ctx, {
+        function showToast(message) {
+            window.clearTimeout(state.toastTimer);
+            elements.toastText.textContent = message;
+            elements.toast.classList.add('show');
+            state.toastTimer = window.setTimeout(() => elements.toast.classList.remove('show'), 1800);
+        }
+
+        function drawChart(colors) {
+            if (typeof Chart === 'undefined') return;
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            if (window.paletteChart) window.paletteChart.destroy();
+
+            window.paletteChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: Array.from({length: 10}, (_, i) => `Point ${i + 1}`),
-                    datasets: datasets
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: colors.map((color, index) => ({
+                        label: color.name,
+                        data: sampleSeries.map((value, point) => Math.max(4, Math.min(100, value + index * 5 - point * (index % 2)))),
+                        borderColor: color.hex,
+                        backgroundColor: color.hex,
+                        borderWidth: 3,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                        tension: 0.38
+                    }))
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { intersect: false, mode: 'index' },
+                    plugins: {
+                        legend: { labels: { color: '#c5c8ce', usePointStyle: true, boxWidth: 8, padding: 18 } },
+                        tooltip: { backgroundColor: '#f7f7f8', titleColor: '#151619', bodyColor: '#151619', padding: 12, cornerRadius: 10 }
+                    },
                     scales: {
-                        x: {
-                            beginAtZero: true
-                        },
-                        y: {
-                            beginAtZero: true
-                        }
+                        x: { grid: { display: false }, ticks: { color: '#858b96' } },
+                        y: { beginAtZero: true, max: 110, grid: { color: 'rgba(255,255,255,.07)' }, ticks: { color: '#858b96' } }
                     }
                 }
             });
+        }
+
+        function getLuminance(hex) {
+            const rgb = hex.replace('#', '').match(/.{2}/g).map(value => parseInt(value, 16) / 255)
+                .map(value => value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4));
+            return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+        }
+
+        function slugify(value) {
+            return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        }
+
+        function escapeHtml(value) {
+            const element = document.createElement('span');
+            element.textContent = value;
+            return element.innerHTML;
         }
     </script>
 </body>
