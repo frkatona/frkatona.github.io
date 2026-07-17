@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A glanceable Deadlock match clock for objectives, camps, and retrigger timers.">
+  <title>Field Clock — Deadlock Timing Companion</title>
+  <link rel="icon" href="icons/unstable-rift.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="field-clock">
+    <header class="command-bar">
+      <div class="brand-block">
+        <span class="brand-mark" aria-hidden="true">FC</span>
+        <div>
+          <p>DEADLOCK COMPANION</p>
+          <h1>FIELD CLOCK</h1>
+        </div>
+      </div>
+
+      <div class="master-clock" aria-live="polite" aria-label="Match time 00:00">00:00</div>
+
+      <div class="clock-controls">
+        <button class="run-button" type="button" data-action="run">
+          <span class="run-light" aria-hidden="true"></span>
+          <span data-run-label>START</span>
+        </button>
+        <button type="button" data-action="back" aria-label="Move match clock back ten seconds">−10s</button>
+        <button type="button" data-action="forward" aria-label="Move match clock forward ten seconds">+10s</button>
+        <button type="button" data-action="set-time">SET TIME</button>
+        <button type="button" class="menu-button" data-action="menu" aria-label="Display and cue options" aria-expanded="false" aria-controls="preferences-menu">
+          <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </button>
+
+        <form class="set-time-popover" data-set-time-form hidden>
+          <label for="clock-input">MATCH CLOCK</label>
+          <div>
+            <input id="clock-input" data-clock-input value="00:00" placeholder="MM:SS" inputmode="numeric" aria-describedby="clock-format">
+            <button type="submit">SYNC</button>
+          </div>
+          <small id="clock-format">Enter MM:SS</small>
+        </form>
+
+        <div class="preferences-menu" id="preferences-menu" data-preferences-menu hidden>
+          <div class="preferences-title">
+            <div><span>DISPLAY OPTIONS</span><strong>CUES + EVENT FEED</strong></div>
+            <button type="button" data-action="close-menu" aria-label="Close options">×</button>
+          </div>
+
+          <div class="cue-options">
+            <label>
+              <input type="checkbox" data-preference="flashWarning">
+              <span><strong>Screen pulse</strong><small>Flashier cue at 30 seconds</small></span>
+            </label>
+            <label>
+              <input type="checkbox" data-preference="audioCues">
+              <span><strong>Audio cue</strong><small>Two soft tones at 30 seconds</small></span>
+            </label>
+          </div>
+
+          <div class="event-filters">
+            <fieldset>
+              <legend>HIGH PRIORITY</legend>
+              <label><input type="checkbox" data-filter="boss" checked><span>Mid Boss</span></label>
+              <label><input type="checkbox" data-filter="rift" checked><span>Unstable Rift</span></label>
+              <label><input type="checkbox" data-filter="urn" checked><span>Soul Urn</span></label>
+              <label><input type="checkbox" data-filter="bridge" checked><span>Bridge Buffs</span></label>
+              <label><input type="checkbox" data-filter="towers" checked><span>Tower Windows</span></label>
+            </fieldset>
+            <fieldset>
+              <legend>LOW PRIORITY</legend>
+              <label><input type="checkbox" data-filter="camps" checked><span>Neutral Camps + Sinner’s</span></label>
+              <label><input type="checkbox" data-filter="economy" checked><span>Boxes + Statues</span></label>
+              <label><input type="checkbox" data-filter="creeps" checked><span>Lane Trooper Changes</span></label>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="dashboard-grid">
+      <section class="schedule-panel" aria-labelledby="schedule-heading">
+        <div class="panel-heading">
+          <div>
+            <p>MATCH SCHEDULE</p>
+            <h2 id="schedule-heading">OBJECTIVE FEED</h2>
+          </div>
+          <div class="next-readout">
+            <span data-active-eyebrow>MAP OBJECTIVE</span>
+            <strong data-active-title>MID BOSS AVAILABLE</strong>
+          </div>
+        </div>
+        <div class="event-list" data-event-list>
+          <div class="event-list-spacer" aria-hidden="true"></div>
+          <div data-event-rows></div>
+          <div class="event-list-tail" aria-hidden="true">60:00 · END OF TRACKED SCHEDULE</div>
+        </div>
+      </section>
+
+      <aside class="timer-panel" aria-labelledby="timer-heading">
+        <div class="panel-heading timer-heading">
+          <div>
+            <p>START ON CLEAR</p>
+            <h2 id="timer-heading">RETRIGGER TIMERS</h2>
+          </div>
+          <span class="pause-note" data-live-status>PAUSED</span>
+        </div>
+
+        <div class="preset-grid">
+          <button type="button" class="timer-preset preset-coral" data-timer="boss">
+            <span class="preset-icon"><img src="icons/mid-boss.png" alt="" width="76" height="76"></span>
+            <strong>BOSS DOWN</strong>
+            <small>START 07:00</small>
+          </button>
+          <button type="button" class="timer-preset preset-amber" data-timer="sinner">
+            <span class="preset-icon"><img class="preset-icon-large" src="icons/neutral-vault.png" alt="" width="76" height="76"></span>
+            <strong>SINNER CLEARED</strong>
+            <small>START 05:00</small>
+          </button>
+          <div class="timer-preset preset-cyan camp-preset">
+            <button type="button" class="camp-start" data-timer="camp">
+              <span class="preset-icon"><img class="preset-icon-large" data-camp-icon src="icons/neutral-small.png" alt="" width="76" height="76"></span>
+              <strong>CAMP CLEARED</strong>
+            </button>
+            <label>
+              <span class="sr-only">Camp timer type</span>
+              <select data-camp-select>
+                <option value="0">SMALL · 1:25</option>
+                <option value="1">MEDIUM · 5:00</option>
+                <option value="2">LARGE · 5:30</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="active-timers" aria-live="polite">
+          <div class="active-timers-heading">
+            <h3>ACTIVE TIMERS</h3>
+            <span data-timer-count>0</span>
+          </div>
+          <div data-active-timers></div>
+        </div>
+
+        <p class="source-note">Timings follow the public playtest and can change between patches.</p>
+      </aside>
+    </section>
+
+    <footer>
+      <span>UNOFFICIAL FAN TOOL · GAME ASSETS © VALVE</span>
+      <a href="https://steamdb.info/patchnotes/24133845/" target="_blank" rel="noreferrer">PATCH 24133845 · UPDATED JUL 17, 2026</a>
+    </footer>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
