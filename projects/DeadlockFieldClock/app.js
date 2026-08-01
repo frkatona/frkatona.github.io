@@ -9,7 +9,6 @@
     flashWarning: false,
     audioCues: false,
     enabled: {
-      boss: true,
       rift: true,
       urn: true,
       bridge: true,
@@ -21,7 +20,6 @@
   };
 
   const baseEvents = [
-    event("mid-boss-live", 0, "00:00", "MID BOSS AVAILABLE", "boss", "boss", "icons/mid-boss.png", "MAP OBJECTIVE", "Mid Boss begins the match spawned. Start the retrigger timer when it is defeated.", [["FIRST SPAWN", "00:00"], ["FIRST RESPAWN", "7:00"]]),
     event("small-camps", 2 * MINUTE, "02:00", "SMALL CAMPS", "camp", "camps", "icons/neutral-small.png", "JUNGLE ECONOMY", "The first quick neutral farm appears across the map.", [["RESPAWN", "~1:25"], ["SOULS", "UNSECURED"]]),
     event("breakables", 3 * MINUTE, "03:00", "BOXES + STATUES SPAWN", "economy", "economy", "icons/golden-statue.png", "MAP ECONOMY", "Regular breakable boxes and Golden Statues appear. Boxes grant souls; statues grant a random permanent stat.", [["RESPAWN", "3:00"], ["STATUE BUFF", "PERMANENT"]]),
     event("medium-camps", 5 * MINUTE, "05:00", "MEDIUM CAMPS", "camp", "camps", "icons/neutral-medium.png", "JUNGLE ECONOMY", "Medium camps become available for the first time.", [["FIRST SPAWN", "05:00"], ["RESPAWN", "~5:00"]]),
@@ -52,7 +50,9 @@
     }
 
     for (let time = 10 * MINUTE; time <= TRACKED_DURATION; time += 5 * MINUTE) {
-      events.push(event(`urn-${time}`, time, formatTime(time), "SOUL URN", "urn", "urn", "icons/soul-urn.png", "MAP OBJECTIVE", "Carry it to the opposite side for an instant team bounty.", [["INTERVAL", "5:00"], ["BOUNTY DECAY", "AFTER 45s"]]));
+      const spawnSide = (time / (5 * MINUTE)) % 2 === 0 ? "YELLOW" : "GREEN";
+      const deliverySide = spawnSide === "YELLOW" ? "GREEN" : "YELLOW";
+      events.push(event(`urn-${time}`, time, formatTime(time), `SOUL URN · ${spawnSide}`, "urn", "urn", "icons/soul-urn.png", `${spawnSide} SIDE SPAWN`, `The Urn appears on the ${spawnSide.toLowerCase()} side. Carry it to the ${deliverySide.toLowerCase()} side for the team bounty.`, [["SPAWN SIDE", spawnSide], ["DELIVER TO", deliverySide]]));
     }
 
     for (let center = 14 * MINUTE; center <= 56 * MINUTE; center += 7 * MINUTE) {
@@ -178,6 +178,7 @@
     });
 
     document.querySelector('[data-timer="boss"]').addEventListener("click", () => startTimer({ title: "MID BOSS", duration: 7 * MINUTE, icon: "icons/mid-boss.png", color: "coral" }));
+    document.querySelector('[data-timer="rejuvenator"]').addEventListener("click", () => startTimer({ title: "REJUVENATOR", duration: 3 * MINUTE, icon: "icons/rejuvenator.svg", color: "green" }));
     document.querySelector('[data-timer="sinner"]').addEventListener("click", () => startTimer({ title: "SINNER’S", duration: 5 * MINUTE, icon: "icons/neutral-vault.png", color: "amber" }));
     document.querySelector('[data-timer="camp"]').addEventListener("click", () => startTimer({ ...campPresets[Number(campSelect.value)], color: "cyan" }));
 
@@ -270,7 +271,7 @@
     return `
       <article class="event-row event-${matchEvent.kind} is-${status} ${index === activeIndex ? "is-focus" : ""}" data-event-id="${matchEvent.id}" tabindex="0">
         <div class="event-time">${matchEvent.timeLabel}</div>
-        <div class="event-icon-wrap"><img class="event-icon ${enlargedIcon ? "event-icon-large" : ""}" src="${matchEvent.icon}" alt="" width="88" height="88"></div>
+        <div class="event-icon-wrap"><img class="event-icon event-icon-${matchEvent.kind} ${enlargedIcon ? "event-icon-large" : ""}" src="${matchEvent.icon}" alt="" width="88" height="88"></div>
         <div class="event-copy"><span>${matchEvent.eyebrow}</span><h3>${matchEvent.title}</h3></div>
         <div class="event-status">${statusMarkup}</div>
         <div class="event-tooltip" role="tooltip">

@@ -102,6 +102,43 @@ a:focus-visible,
   min-width: 0;
 }
 
+.companion-link {
+  min-width: 108px;
+  margin-left: clamp(2px, 1vw, 18px);
+  padding: 8px 11px 7px;
+  color: var(--muted);
+  border: 1px solid rgba(143, 188, 212, 0.22);
+  background: rgba(12, 27, 40, 0.72);
+  text-decoration: none;
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+.companion-link span,
+.companion-link strong {
+  display: block;
+  white-space: nowrap;
+}
+
+.companion-link span {
+  margin-bottom: 2px;
+  color: var(--cyan);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+}
+
+.companion-link strong {
+  color: var(--text);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.companion-link:hover {
+  color: var(--text);
+  border-color: var(--cyan);
+  background: #11283a;
+}
+
 .brand-mark {
   width: 50px;
   height: 50px;
@@ -395,7 +432,7 @@ a:focus-visible,
   position: relative;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(660px, 2.45fr) minmax(360px, 1fr);
+  grid-template-columns: minmax(650px, 2.15fr) minmax(520px, 1fr);
 }
 
 .schedule-panel,
@@ -552,6 +589,11 @@ a:focus-visible,
 .event-icon.event-icon-large {
   width: 88px;
   height: 88px;
+}
+
+.event-icon.event-icon-camp,
+.event-icon.event-icon-sinner {
+  transform: translate(1px, -1px);
 }
 
 .event-copy {
@@ -721,7 +763,7 @@ a:focus-visible,
 
 .preset-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 11px;
   padding: 22px 22px 16px;
 }
@@ -754,8 +796,10 @@ a:focus-visible,
 .preset-coral { --preset-color: var(--coral); }
 .preset-amber { --preset-color: var(--amber); }
 .preset-cyan { --preset-color: var(--cyan); }
+.preset-green { --preset-color: var(--green); }
 
 .preset-icon {
+  position: relative;
   width: 62px;
   height: 62px;
   display: grid;
@@ -768,13 +812,22 @@ a:focus-visible,
 .preset-icon img {
   width: 42px;
   height: 42px;
+  display: block;
   object-fit: contain;
 }
 
 .preset-icon img.preset-icon-large {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 72px;
   height: 72px;
   max-width: none;
+  transform: translate(-50%, -50%);
+}
+
+.preset-icon img.preset-icon-large.icon-optical-center {
+  transform: translate(calc(-50% + 1px), calc(-50% - 1px));
 }
 
 .timer-preset strong {
@@ -899,6 +952,7 @@ a:focus-visible,
 .timer-coral { --timer-color: var(--coral); }
 .timer-amber { --timer-color: var(--amber); }
 .timer-cyan { --timer-color: var(--cyan); }
+.timer-green { --timer-color: var(--green); }
 
 .active-timer > img {
   width: 42px;
@@ -1029,6 +1083,10 @@ footer a:hover {
     display: none;
   }
 
+  .companion-link {
+    display: none;
+  }
+
   .master-clock {
     min-width: 210px;
   }
@@ -1044,7 +1102,7 @@ footer a:hover {
   }
 
   .dashboard-grid {
-    grid-template-columns: minmax(590px, 2fr) minmax(330px, 1fr);
+    grid-template-columns: minmax(590px, 1.8fr) minmax(460px, 1fr);
   }
 
   .event-row {
@@ -1092,7 +1150,7 @@ footer a:hover {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1060px) {
   .field-clock {
     height: auto;
     min-height: 100vh;

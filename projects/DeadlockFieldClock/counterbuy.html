@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A glanceable Deadlock counter-item guide that ranks shared value against an enemy lineup.">
+  <title>Counterbuy Guide - Deadlock Item Guide</title>
+  <link rel="icon" href="counterbuy-assets/items/slowing-hex.webp">
+  <link rel="stylesheet" href="counterbuy.css">
+</head>
+<body>
+  <main class="counterbuy-app">
+    <header class="counterbuy-header">
+      <a class="back-link" href="index.html" aria-label="Return to Field Clock">
+        <span aria-hidden="true">&larr;</span>
+        <span>FIELD CLOCK</span>
+      </a>
+
+      <div class="counterbuy-brand">
+        <h1>COUNTERBUY GUIDE</h1>
+        <a class="video-credit" href="https://youtu.be/Re9kWOCJXMY" target="_blank" rel="noreferrer">ITEMIZATION AND COMMENTARY FROM ASHIRES COUNTERBUYING GUIDE VIDEO</a>
+      </div>
+
+      <div class="header-actions">
+        <span class="lineup-count" data-lineup-count>0 / 6 SELECTED</span>
+        <button type="button" data-action="clear-lineup">CLEAR</button>
+      </div>
+    </header>
+
+    <section class="lineup-section" aria-labelledby="lineup-heading">
+      <div class="section-heading compact-heading">
+        <div>
+          <p>ENEMY TEAM</p>
+          <h2 id="lineup-heading">LINEUP</h2>
+        </div>
+        <span>Click a portrait to replace it</span>
+      </div>
+      <div class="lineup-slots" data-lineup-slots></div>
+    </section>
+
+    <section class="overlap-section" aria-labelledby="overlap-heading">
+      <div class="section-heading overlap-heading">
+        <div>
+          <p>CONSOLIDATED BUY ORDER</p>
+          <h2 id="overlap-heading">BEST OVERLAP</h2>
+        </div>
+        <label class="sort-control">
+          <span>SORT</span>
+          <select data-sort>
+            <option value="shared">SHARED IMPACT</option>
+            <option value="price">PRICE</option>
+          </select>
+        </label>
+      </div>
+      <div class="overlap-list" data-overlap-list aria-live="polite"></div>
+    </section>
+
+    <section class="matrix-section" aria-labelledby="matrix-heading">
+      <div class="section-heading matrix-heading">
+        <div>
+          <p>WHO + WHY</p>
+          <h2 id="matrix-heading">MATCHUP BOARD</h2>
+        </div>
+        <span>Hover or focus an item for the full note</span>
+      </div>
+      <div class="matrix-scroll" data-matrix-scroll>
+        <div class="recommendation-matrix" data-recommendation-matrix></div>
+      </div>
+    </section>
+
+    <footer>
+      <span>UNOFFICIAL FAN TOOL - GAME ASSETS &copy; VALVE</span>
+      <a href="https://api.deadlock-api.com/docs" target="_blank" rel="noreferrer">CLIENT 6664 - ASSETS JUL 31, 2026</a>
+    </footer>
+  </main>
+
+  <dialog class="hero-picker" data-hero-picker>
+    <form method="dialog" class="picker-shell">
+      <div class="picker-heading">
+        <div>
+          <p>ENEMY LINEUP</p>
+          <h2>ADD A HERO</h2>
+        </div>
+        <button class="picker-close" type="submit" value="cancel" aria-label="Close hero picker">&times;</button>
+      </div>
+      <label class="hero-search">
+        <span class="sr-only">Search heroes</span>
+        <input type="search" data-hero-search placeholder="SEARCH HEROES" autocomplete="off">
+      </label>
+      <div class="hero-grid" data-hero-grid></div>
+    </form>
+  </dialog>
+
+  <script src="counterbuy.js" defer></script>
+</body>
+</html>
