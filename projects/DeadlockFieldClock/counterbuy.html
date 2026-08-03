@@ -83,10 +83,16 @@
         </div>
         <button class="picker-close" type="submit" value="cancel" aria-label="Close hero picker">&times;</button>
       </div>
-      <label class="hero-search">
-        <span class="sr-only">Search heroes</span>
-        <input type="search" data-hero-search placeholder="SEARCH HEROES" autocomplete="off">
-      </label>
+      <div class="picker-controls">
+        <label class="hero-search">
+          <span class="sr-only">Search heroes; press Enter to select the top result</span>
+          <input type="search" data-hero-search placeholder="SEARCH HEROES · ENTER SELECTS TOP RESULT" autocomplete="off">
+        </label>
+        <label class="auto-add-control">
+          <input type="checkbox" data-auto-add>
+          <span><strong>KEEP ADDING</strong><small>Stay open until all 6 are selected</small></span>
+        </label>
+      </div>
       <div class="hero-grid" data-hero-grid></div>
     </form>
   </dialog>

@@ -329,6 +329,7 @@
   const picker = document.querySelector("[data-hero-picker]");
   const heroSearch = document.querySelector("[data-hero-search]");
   const heroGrid = document.querySelector("[data-hero-grid]");
+  const autoAdd = document.querySelector("[data-auto-add]");
 
   let selected = loadLineup();
   let replaceIndex = null;
@@ -358,27 +359,47 @@
 
     sortSelect.addEventListener("change", renderOverlap);
     heroSearch.addEventListener("input", renderHeroGrid);
+    heroSearch.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" || event.isComposing) return;
+      event.preventDefault();
+      const topChoice = heroGrid.querySelector("[data-hero-choice]:not(:disabled)");
+      if (topChoice) selectHero(topChoice.dataset.heroChoice);
+    });
 
     heroGrid.addEventListener("click", (event) => {
       const choice = event.target.closest("[data-hero-choice]");
       if (!choice || choice.disabled) return;
-      const heroId = choice.dataset.heroChoice;
-
-      if (replaceIndex !== null) {
-        selected[replaceIndex] = heroId;
-      } else if (selected.length < MAX_HEROES) {
-        selected.push(heroId);
-      }
-
-      selected = [...new Set(selected)].slice(0, MAX_HEROES);
-      picker.close();
-      saveAndRender();
+      selectHero(choice.dataset.heroChoice);
     });
 
     picker.addEventListener("close", () => {
       replaceIndex = null;
       heroSearch.value = "";
+      autoAdd.checked = false;
     });
+  }
+
+  function selectHero(heroId) {
+    if (!heroById[heroId] || selected.includes(heroId) && selected[replaceIndex] !== heroId) return;
+
+    if (replaceIndex !== null) {
+      selected[replaceIndex] = heroId;
+    } else if (selected.length < MAX_HEROES) {
+      selected.push(heroId);
+    }
+
+    selected = [...new Set(selected)].slice(0, MAX_HEROES);
+    replaceIndex = null;
+    saveAndRender();
+
+    if (autoAdd.checked && selected.length < MAX_HEROES) {
+      heroSearch.value = "";
+      renderHeroGrid();
+      heroSearch.focus();
+      return;
+    }
+
+    picker.close();
   }
 
   function renderAll() {
@@ -518,10 +539,13 @@
   function renderHeroGrid() {
     const query = heroSearch.value.trim().toLowerCase();
     const filtered = heroes.filter((entry) => entry.name.toLowerCase().includes(query));
+    let enterTargetAssigned = false;
     heroGrid.innerHTML = filtered.map((entry) => {
       const alreadySelected = selected.includes(entry.id) && selected[replaceIndex] !== entry.id;
+      const isEnterTarget = !alreadySelected && !enterTargetAssigned;
+      if (isEnterTarget) enterTargetAssigned = true;
       return `
-        <button class="hero-choice" type="button" data-hero-choice="${entry.id}" ${alreadySelected ? "disabled" : ""} style="--hero-color:${entry.color}">
+        <button class="hero-choice${isEnterTarget ? " is-enter-target" : ""}" type="button" data-hero-choice="${entry.id}" ${alreadySelected ? "disabled" : ""} style="--hero-color:${entry.color}">
           <img src="${entry.image}" alt="">
           <span>${entry.name.toUpperCase()}</span>
         </button>`;
