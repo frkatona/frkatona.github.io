@@ -26,7 +26,7 @@
             <div class="poster-frame" id="poster-frame" title="Click for poster actions or drop an image">
                 <canvas id="poster-canvas" width="1080" height="1350" aria-label="Generated event poster preview"></canvas>
             </div>
-            <input class="image-input" id="image-input" type="file" accept="image/*">
+            <input class="image-input" id="image-input" type="file" accept="image/*,.heic,.heif">
         </section>
 
         <aside class="control-panel" aria-label="Poster controls">
@@ -96,6 +96,16 @@
                             <input id="image-y" type="range" min="-520" max="520" value="0">
                         </div>
                     </div>
+
+                    <div class="control-group checkbox-control">
+                        <label class="checkbox-label" for="blurred-image-background">
+                            <input id="blurred-image-background" type="checkbox">
+                            <span>Blurred image backdrop</span>
+                        </label>
+                        <p class="control-help">Fits the photo over an enlarged, blurred copy.</p>
+                    </div>
+
+                    <p class="image-status" id="image-status" role="status" aria-live="polite"></p>
                 </div>
             </details>
 

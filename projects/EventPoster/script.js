@@ -1,6 +1,12 @@
 const canvas = document.getElementById("poster-canvas");
 const ctx = canvas.getContext("2d");
 const MAX_DATE_TIME_ROWS = 6;
+const POSTER_MARGIN = 72;
+const TITLE_MAX_SIZE = 172;
+const TITLE_STROKE_WIDTH = 18;
+const HEIC_CONVERTER_SRC = "https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js";
+
+let heicConverterPromise = null;
 
 const controls = {
   imageInput: document.getElementById("image-input"),
@@ -14,6 +20,8 @@ const controls = {
   imageScale: document.getElementById("image-scale"),
   imageX: document.getElementById("image-x"),
   imageY: document.getElementById("image-y"),
+  blurredImageBackground: document.getElementById("blurred-image-background"),
+  imageStatus: document.getElementById("image-status"),
   titleY: document.getElementById("title-y"),
   detailsY: document.getElementById("details-y"),
   textColor: document.getElementById("text-color"),
@@ -46,6 +54,8 @@ const state = {
   qrCanvas: null,
   paletteColors: [],
   lastDropAt: 0,
+  imageLoadId: 0,
+  isLoadingImage: false,
 };
 
 const presets = {
@@ -92,6 +102,15 @@ function drawBackground() {
   ctx.beginPath();
   ctx.arc(850, 210, 420, 0, Math.PI * 2);
   ctx.fill();
+
+  if (state.image && controls.blurredImageBackground.checked) {
+    const rect = getImageDrawRect({ fit: "cover", scale: 1.14, offsetX: 0, offsetY: 0 });
+
+    ctx.save();
+    ctx.filter = "blur(34px)";
+    ctx.drawImage(state.image, rect.x, rect.y, rect.width, rect.height);
+    ctx.restore();
+  }
 }
 
 function drawImageCover() {
@@ -100,20 +119,32 @@ function drawImageCover() {
     return;
   }
 
-  const rect = getImageDrawRect();
+  const rect = getImageDrawRect({
+    fit: controls.blurredImageBackground.checked ? "contain" : "cover",
+  });
   ctx.drawImage(state.image, rect.x, rect.y, rect.width, rect.height);
 }
 
-function getImageDrawRect() {
-  const imageScale = Number(controls.imageScale.value) / 100;
-  const imageOffsetX = Number(controls.imageX.value);
-  const imageOffsetY = Number(controls.imageY.value);
+function getImageDrawRect({
+  fit = controls.blurredImageBackground.checked ? "contain" : "cover",
+  scale = Number(controls.imageScale.value) / 100,
+  offsetX = Number(controls.imageX.value),
+  offsetY = Number(controls.imageY.value),
+} = {}) {
   const imageRatio = state.image.width / state.image.height;
   const canvasRatio = canvas.width / canvas.height;
   let drawWidth = canvas.width;
   let drawHeight = canvas.height;
 
-  if (imageRatio > canvasRatio) {
+  if (fit === "contain") {
+    if (imageRatio > canvasRatio) {
+      drawWidth = canvas.width;
+      drawHeight = drawWidth / imageRatio;
+    } else {
+      drawHeight = canvas.height;
+      drawWidth = drawHeight * imageRatio;
+    }
+  } else if (imageRatio > canvasRatio) {
     drawHeight = canvas.height;
     drawWidth = drawHeight * imageRatio;
   } else {
@@ -121,10 +152,10 @@ function getImageDrawRect() {
     drawHeight = drawWidth / imageRatio;
   }
 
-  drawWidth *= imageScale;
-  drawHeight *= imageScale;
-  const x = (canvas.width - drawWidth) / 2 + imageOffsetX;
-  const y = (canvas.height - drawHeight) / 2 + imageOffsetY;
+  drawWidth *= scale;
+  drawHeight *= scale;
+  const x = (canvas.width - drawWidth) / 2 + offsetX;
+  const y = (canvas.height - drawHeight) / 2 + offsetY;
 
   return {
     x,
@@ -171,7 +202,7 @@ function drawText() {
   const accent = controls.accentColor.value;
   const titleY = Number(controls.titleY.value);
   const detailsY = Number(controls.detailsY.value);
-  const margin = 72;
+  const margin = POSTER_MARGIN;
   const scheduleLines = getDateTimeLines();
   const scheduleLayout = getScheduleLayout(scheduleLines.length);
   const scheduleHalfHeight = scheduleLayout.blockHeight / 2;
@@ -189,11 +220,17 @@ function drawText() {
 
   drawPill(540, titleY - 125, controls.subtitle.value, accent, textColor);
 
-  const titleLines = wrapText(controls.title.value.toUpperCase(), 900, "Bebas Neue", 164, 0.92);
-  drawOutlinedLines(titleLines, 540, titleY, {
+  const titleText = controls.title.value.toUpperCase().replace(/\s+/g, " ").trim();
+  const titleSize = getFittedFontSize(titleText, {
     font: "Bebas Neue",
-    size: titleLines.length > 1 ? 146 : 172,
-    lineHeight: titleLines.length > 1 ? 130 : 150,
+    weight: 400,
+    maxSize: TITLE_MAX_SIZE,
+    maxWidth: canvas.width - margin * 2 - TITLE_STROKE_WIDTH,
+  });
+  drawOutlinedLines([titleText], 540, titleY, {
+    font: "Bebas Neue",
+    size: titleSize,
+    lineHeight: titleSize,
     fill: textColor,
     stroke: "rgba(0, 0, 0, 0.6)",
     strokeWidth: 18,
@@ -283,8 +320,8 @@ function drawOutlinedLines(lines, x, y, options) {
 
   lines.forEach((line, index) => {
     const lineY = y - totalHeight / 2 + index * options.lineHeight;
-    ctx.strokeText(line, x, lineY, 960);
-    ctx.fillText(line, x, lineY, 960);
+    ctx.strokeText(line, x, lineY);
+    ctx.fillText(line, x, lineY);
   });
 
   ctx.shadowColor = "transparent";
@@ -343,27 +380,19 @@ function getScheduleLayout(lineCount) {
   };
 }
 
-function wrapText(text, maxWidth, font, size, scale) {
-  ctx.font = `400 ${size}px ${font}, Impact, sans-serif`;
-  const words = text.split(/\s+/).filter(Boolean);
-  const lines = [];
-  let line = "";
-
-  words.forEach((word) => {
-    const next = line ? `${line} ${word}` : word;
-    if (ctx.measureText(next).width * scale > maxWidth && line) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = next;
-    }
-  });
-
-  if (line) {
-    lines.push(line);
+function getFittedFontSize(text, { font, weight, maxSize, maxWidth }) {
+  if (!text) {
+    return maxSize;
   }
 
-  return lines.length ? lines : [""];
+  ctx.font = `${weight} ${maxSize}px ${font}, Impact, sans-serif`;
+  const measuredWidth = ctx.measureText(text).width;
+
+  if (measuredWidth <= maxWidth) {
+    return maxSize;
+  }
+
+  return Math.max(1, Math.floor((maxSize * maxWidth) / measuredWidth));
 }
 
 function roundRect(x, y, width, height, radius) {
@@ -439,24 +468,138 @@ function updateQrCode() {
   draw();
 }
 
-function loadImageFile(file) {
-  if (!file || !file.type.startsWith("image/")) {
+function isHeicFile(file) {
+  return /\.(?:heic|heif)$/i.test(file.name) ||
+    /image\/(?:heic|heif|heic-sequence|heif-sequence)/i.test(file.type);
+}
+
+function setImageStatus(message = "", isError = false) {
+  controls.imageStatus.textContent = message;
+  controls.imageStatus.classList.toggle("is-error", isError);
+}
+
+function setImageLoading(isLoading) {
+  state.isLoadingImage = isLoading;
+  controls.posterFrame.classList.toggle("is-loading", isLoading);
+  controls.download.disabled = isLoading;
+  controls.downloadFromPreview.disabled = isLoading;
+}
+
+function loadHeicConverter() {
+  if (typeof window.heic2any === "function") {
+    return Promise.resolve(window.heic2any);
+  }
+
+  if (heicConverterPromise) {
+    return heicConverterPromise;
+  }
+
+  heicConverterPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = HEIC_CONVERTER_SRC;
+    script.async = true;
+    script.addEventListener("load", () => {
+      if (typeof window.heic2any === "function") {
+        resolve(window.heic2any);
+      } else {
+        reject(new Error("The HEIC converter did not initialize."));
+      }
+    });
+    script.addEventListener("error", () => {
+      heicConverterPromise = null;
+      reject(new Error("The HEIC converter could not be loaded."));
+    });
+    document.head.appendChild(script);
+  });
+
+  return heicConverterPromise;
+}
+
+async function convertHeicFile(file) {
+  const convert = await loadHeicConverter();
+  const result = await convert({
+    blob: file,
+    toType: "image/jpeg",
+    quality: 0.92,
+  });
+  const convertedFile = Array.isArray(result) ? result[0] : result;
+
+  if (!(convertedFile instanceof Blob)) {
+    throw new Error("The HEIC converter returned no image.");
+  }
+
+  return convertedFile;
+}
+
+function decodeImageBlob(blob) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const imageUrl = URL.createObjectURL(blob);
+
+    image.addEventListener("load", () => {
+      URL.revokeObjectURL(imageUrl);
+      resolve(image);
+    }, { once: true });
+    image.addEventListener("error", () => {
+      URL.revokeObjectURL(imageUrl);
+      reject(new Error("The browser could not decode this image."));
+    }, { once: true });
+    image.src = imageUrl;
+  });
+}
+
+async function loadImageFile(file) {
+  const heic = file ? isHeicFile(file) : false;
+
+  if (!file || (!heic && !file.type.startsWith("image/"))) {
+    setImageStatus("Choose a supported image file.", true);
     return;
   }
 
-  const reader = new FileReader();
-  reader.addEventListener("load", () => {
-    const image = new Image();
-    image.addEventListener("load", () => {
-      state.image = image;
-      if (controls.colorDialog.open) {
-        renderImagePalette();
+  const loadId = state.imageLoadId + 1;
+  state.imageLoadId = loadId;
+  setImageLoading(true);
+  setImageStatus(heic ? "Converting HEIC image for reliable export..." : "Loading image...");
+
+  try {
+    let image;
+    let converted = false;
+
+    if (heic) {
+      try {
+        image = await decodeImageBlob(await convertHeicFile(file));
+        converted = true;
+      } catch (conversionError) {
+        image = await decodeImageBlob(file);
       }
-      draw();
-    });
-    image.src = reader.result;
-  });
-  reader.readAsDataURL(file);
+    } else {
+      image = await decodeImageBlob(file);
+    }
+
+    if (loadId !== state.imageLoadId) {
+      return;
+    }
+
+    state.image = image;
+    if (controls.colorDialog.open) {
+      renderImagePalette();
+    }
+    draw();
+    setImageStatus(converted ? "HEIC converted and ready to export." : "");
+  } catch (error) {
+    if (loadId === state.imageLoadId) {
+      setImageStatus(
+        heic
+          ? "This browser could not decode the HEIC image. Try converting it to JPEG first."
+          : "This image could not be loaded. Try a JPEG or PNG instead.",
+        true
+      );
+    }
+  } finally {
+    if (loadId === state.imageLoadId) {
+      setImageLoading(false);
+    }
+  }
 }
 
 function applyPreset(name) {
@@ -782,10 +925,31 @@ function updateDateTimeRows() {
 }
 
 function downloadPoster() {
-  const link = document.createElement("a");
-  link.download = "event-poster.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
+  if (state.isLoadingImage) {
+    return;
+  }
+
+  draw();
+
+  try {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        setImageStatus("The poster could not be exported. Try reloading the image.", true);
+        return;
+      }
+
+      const downloadUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.download = "event-poster.png";
+      link.href = downloadUrl;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+    }, "image/png");
+  } catch (error) {
+    setImageStatus("The poster could not be exported. Try reloading the image.", true);
+  }
 }
 
 controls.imageInput.addEventListener("change", (event) => {
@@ -827,6 +991,7 @@ controls.posterFrame.addEventListener("click", () => {
   controls.imageScale,
   controls.imageX,
   controls.imageY,
+  controls.blurredImageBackground,
   controls.titleY,
   controls.detailsY,
   controls.textColor,
