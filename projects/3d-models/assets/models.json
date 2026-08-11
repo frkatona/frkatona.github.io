@@ -1,0 +1,946 @@
+{
+  "models": [
+    {
+      "id": "npc-bush",
+      "name": "Bush NPC",
+      "category": "characters",
+      "categoryLabel": "Character",
+      "src": "assets/characters/NPC_bush.glb",
+      "thumbnail": "assets/thumbnails/npc-bush.webp",
+      "albedo": null,
+      "description": "Leafy disguised character.",
+      "defaultAnimation": "idle-loop",
+      "bytes": 357216,
+      "triangles": 560,
+      "vertices": 1112,
+      "meshCount": 1,
+      "materialCount": 2,
+      "textureCount": 0,
+      "skinCount": 1,
+      "animations": [
+        {
+          "name": "alert",
+          "duration": 3.958
+        },
+        {
+          "name": "awaken",
+          "duration": 4.167
+        },
+        {
+          "name": "basis",
+          "duration": 0.042
+        },
+        {
+          "name": "chase-loop",
+          "duration": 0.833
+        },
+        {
+          "name": "idle-loop",
+          "duration": 2.5
+        },
+        {
+          "name": "settle",
+          "duration": 4.167
+        },
+        {
+          "name": "sleep-loop",
+          "duration": 4.167
+        },
+        {
+          "name": "walk-loop",
+          "duration": 1.667
+        }
+      ]
+    },
+    {
+      "id": "capy",
+      "name": "Capy",
+      "category": "characters",
+      "categoryLabel": "Character",
+      "src": "assets/characters/capy.glb",
+      "thumbnail": "assets/thumbnails/capy.webp",
+      "albedo": null,
+      "description": "Friendly capybara character.",
+      "defaultAnimation": "Idle.001-loop",
+      "bytes": 1917404,
+      "triangles": 9904,
+      "vertices": 10081,
+      "meshCount": 19,
+      "materialCount": 5,
+      "textureCount": 0,
+      "skinCount": 1,
+      "animations": [
+        {
+          "name": "EdgeGrab-loop",
+          "duration": 1.25
+        },
+        {
+          "name": "Fall",
+          "duration": 0.417
+        },
+        {
+          "name": "Idle.001-loop",
+          "duration": 1.25
+        },
+        {
+          "name": "Jump",
+          "duration": 0.417
+        },
+        {
+          "name": "rigAction",
+          "duration": 0
+        },
+        {
+          "name": "Run",
+          "duration": 0.667
+        },
+        {
+          "name": "WallSlide-loop",
+          "duration": 0.833
+        }
+      ]
+    },
+    {
+      "id": "dolphin",
+      "name": "Dolphin",
+      "category": "characters",
+      "categoryLabel": "Character",
+      "src": "assets/characters/dolphin.glb",
+      "thumbnail": "assets/thumbnails/dolphin.webp",
+      "albedo": null,
+      "description": "Animated low-poly dolphin character.",
+      "defaultAnimation": "idle-loop",
+      "bytes": 141668,
+      "triangles": 262,
+      "vertices": 494,
+      "meshCount": 1,
+      "materialCount": 1,
+      "textureCount": 0,
+      "skinCount": 1,
+      "animations": [
+        {
+          "name": "asdf",
+          "duration": 0.708
+        },
+        {
+          "name": "basis",
+          "duration": 0.042
+        },
+        {
+          "name": "dash",
+          "duration": 1.292
+        },
+        {
+          "name": "finSpoil-loop",
+          "duration": 0.875
+        },
+        {
+          "name": "finTuck-loop",
+          "duration": 0.667
+        },
+        {
+          "name": "idle-loop",
+          "duration": 2.542
+        },
+        {
+          "name": "trick1",
+          "duration": 1.792
+        },
+        {
+          "name": "trick2",
+          "duration": 1.917
+        },
+        {
+          "name": "uTurn",
+          "duration": 1.583
+        }
+      ]
+    },
+    {
+      "id": "snowboarder-character",
+      "name": "Snowboarder Character",
+      "category": "characters",
+      "categoryLabel": "Character",
+      "src": "assets/characters/snowboarderCharacter.glb",
+      "thumbnail": "assets/thumbnails/snowboarder-character.webp",
+      "albedo": null,
+      "description": "Animated downhill snowboarder character.",
+      "defaultAnimation": "idle-loop.001",
+      "bytes": 1458236,
+      "triangles": 395,
+      "vertices": 725,
+      "meshCount": 1,
+      "materialCount": 5,
+      "textureCount": 0,
+      "skinCount": 1,
+      "animations": [
+        {
+          "name": "basis.001",
+          "duration": 0.167
+        },
+        {
+          "name": "idle-loop.001",
+          "duration": 2.542
+        },
+        {
+          "name": "jumpLand",
+          "duration": 0.542
+        },
+        {
+          "name": "jumpLoop-loop",
+          "duration": 0.917
+        },
+        {
+          "name": "jumpStart",
+          "duration": 0.917
+        },
+        {
+          "name": "leanBack",
+          "duration": 0.458
+        },
+        {
+          "name": "leanForward",
+          "duration": 0.458
+        },
+        {
+          "name": "ride1-loop",
+          "duration": 1.625
+        }
+      ]
+    },
+    {
+      "id": "squirrel-lady",
+      "name": "Squirrel Lady",
+      "category": "characters",
+      "categoryLabel": "Character",
+      "src": "assets/characters/squirrelLady.glb",
+      "thumbnail": "assets/thumbnails/squirrel-lady.webp",
+      "albedo": "assets/characters/albedo.png",
+      "description": "Woodland hero with seven animations.",
+      "defaultAnimation": "idle1-loop",
+      "bytes": 3252740,
+      "triangles": 18243,
+      "vertices": 10145,
+      "meshCount": 1,
+      "materialCount": 0,
+      "textureCount": 0,
+      "skinCount": 1,
+      "animations": [
+        {
+          "name": "basis",
+          "duration": 0.042
+        },
+        {
+          "name": "crossbow_aim",
+          "duration": 0.042
+        },
+        {
+          "name": "falling-loop",
+          "duration": 0.875
+        },
+        {
+          "name": "idle1-loop",
+          "duration": 1.667
+        },
+        {
+          "name": "jumpLand",
+          "duration": 0.417
+        },
+        {
+          "name": "jumpStart",
+          "duration": 0.417
+        },
+        {
+          "name": "run-loop",
+          "duration": 0.833
+        }
+      ]
+    },
+    {
+      "id": "character",
+      "name": "Winter Foreman",
+      "category": "characters",
+      "categoryLabel": "Character",
+      "src": "assets/characters/character.glb",
+      "thumbnail": "assets/thumbnails/character.webp",
+      "albedo": null,
+      "description": "Stylized animated winter worker.",
+      "defaultAnimation": "idle",
+      "bytes": 1655784,
+      "triangles": 1148,
+      "vertices": 1099,
+      "meshCount": 4,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 1,
+      "animations": [
+        {
+          "name": "basis",
+          "duration": 0.042
+        },
+        {
+          "name": "foreman-idle-1",
+          "duration": 1.25
+        },
+        {
+          "name": "foreman-idle-2",
+          "duration": 1.25
+        },
+        {
+          "name": "foreman-push-button",
+          "duration": 1.25
+        },
+        {
+          "name": "idle",
+          "duration": 2.542
+        },
+        {
+          "name": "shove",
+          "duration": 0.833
+        },
+        {
+          "name": "shove-loop",
+          "duration": 0.625
+        },
+        {
+          "name": "victory.001",
+          "duration": 1.042
+        },
+        {
+          "name": "walk",
+          "duration": 0.833
+        }
+      ]
+    },
+    {
+      "id": "barrel",
+      "name": "Barrel",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/barrel.glb",
+      "thumbnail": "assets/thumbnails/barrel.webp",
+      "albedo": null,
+      "description": "Curated prop asset.",
+      "defaultAnimation": null,
+      "bytes": 56432,
+      "triangles": 828,
+      "vertices": 1540,
+      "meshCount": 1,
+      "materialCount": 2,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "boat",
+      "name": "Boat",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/boat.glb",
+      "thumbnail": "assets/thumbnails/boat.webp",
+      "albedo": null,
+      "description": "Compact stylized boat prop.",
+      "defaultAnimation": null,
+      "bytes": 57488,
+      "triangles": 864,
+      "vertices": 1534,
+      "meshCount": 3,
+      "materialCount": 1,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "brush-motor",
+      "name": "Brush Motor",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/brushMotor.glb",
+      "thumbnail": "assets/thumbnails/brush-motor.webp",
+      "albedo": null,
+      "description": "Mechanical brush motor assembly.",
+      "defaultAnimation": null,
+      "bytes": 1156132,
+      "triangles": 2566,
+      "vertices": 2595,
+      "meshCount": 8,
+      "materialCount": 8,
+      "textureCount": 3,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "cannon",
+      "name": "Cannon",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/cannon.glb",
+      "thumbnail": "assets/thumbnails/cannon.webp",
+      "albedo": null,
+      "description": "Heavy stylized cannon.",
+      "defaultAnimation": null,
+      "bytes": 444844,
+      "triangles": 12394,
+      "vertices": 11318,
+      "meshCount": 8,
+      "materialCount": 5,
+      "textureCount": 4,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "coffee-cup",
+      "name": "Coffee Cup",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/coffee-cup.glb",
+      "thumbnail": "assets/thumbnails/coffee-cup.webp",
+      "albedo": null,
+      "description": "Detailed coffee cup.",
+      "defaultAnimation": null,
+      "bytes": 545932,
+      "triangles": 23040,
+      "vertices": 12694,
+      "meshCount": 1,
+      "materialCount": 1,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "crossbow",
+      "name": "Crossbow",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/crossbow.glb",
+      "thumbnail": "assets/thumbnails/crossbow.webp",
+      "albedo": "assets/props/albedo.png",
+      "description": "Pixel-textured compact crossbow.",
+      "defaultAnimation": null,
+      "bytes": 73864,
+      "triangles": 1574,
+      "vertices": 1981,
+      "meshCount": 1,
+      "materialCount": 0,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "dalek",
+      "name": "Dalek",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/dalek.glb",
+      "thumbnail": "assets/thumbnails/dalek.webp",
+      "albedo": null,
+      "description": "Detailed science-fiction robot prop.",
+      "defaultAnimation": null,
+      "bytes": 474656,
+      "triangles": 7344,
+      "vertices": 12974,
+      "meshCount": 12,
+      "materialCount": 4,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "desk-battlestation",
+      "name": "Desk Battlestation",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/desk-battlestation.glb",
+      "thumbnail": "assets/thumbnails/desk-battlestation.webp",
+      "albedo": null,
+      "description": "Desktop battle station setup.",
+      "defaultAnimation": null,
+      "bytes": 316832,
+      "triangles": 13050,
+      "vertices": 7148,
+      "meshCount": 10,
+      "materialCount": 6,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "dogbowl",
+      "name": "Dog Bowl",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/dogbowl.glb",
+      "thumbnail": "assets/thumbnails/dogbowl.webp",
+      "albedo": null,
+      "description": "Stylized pet bowl.",
+      "defaultAnimation": null,
+      "bytes": 37612,
+      "triangles": 1344,
+      "vertices": 828,
+      "meshCount": 1,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "fbi-badge",
+      "name": "FBI Badge",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/FBI-badge.glb",
+      "thumbnail": "assets/thumbnails/fbi-badge.webp",
+      "albedo": null,
+      "description": "Detailed federal agent badge.",
+      "defaultAnimation": null,
+      "bytes": 5809856,
+      "triangles": 95964,
+      "vertices": 151815,
+      "meshCount": 1,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "greeble-box",
+      "name": "Greeble Box",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/greeble-box.glb",
+      "thumbnail": "assets/thumbnails/greeble-box.webp",
+      "albedo": null,
+      "description": "Compact sci-fi utility box.",
+      "defaultAnimation": null,
+      "bytes": 170436,
+      "triangles": 4028,
+      "vertices": 2933,
+      "meshCount": 1,
+      "materialCount": 1,
+      "textureCount": 4,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "lab-bench",
+      "name": "Lab Bench",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/lab-bench.glb",
+      "thumbnail": "assets/thumbnails/lab-bench.webp",
+      "albedo": null,
+      "description": "Compact laboratory workstation.",
+      "defaultAnimation": null,
+      "bytes": 49244,
+      "triangles": 1968,
+      "vertices": 1153,
+      "meshCount": 4,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "door",
+      "name": "Lab Door",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/door.glb",
+      "thumbnail": "assets/thumbnails/door.webp",
+      "albedo": null,
+      "description": "Animated mechanical laboratory door.",
+      "defaultAnimation": "open",
+      "bytes": 1010220,
+      "triangles": 20425,
+      "vertices": 27563,
+      "meshCount": 4,
+      "materialCount": 4,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": [
+        {
+          "name": "open",
+          "duration": 2.083
+        }
+      ]
+    },
+    {
+      "id": "lantern",
+      "name": "Lantern",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/lantern.glb",
+      "thumbnail": "assets/thumbnails/lantern.webp",
+      "albedo": null,
+      "description": "Low-poly cavern lantern.",
+      "defaultAnimation": null,
+      "bytes": 14460,
+      "triangles": 196,
+      "vertices": 344,
+      "meshCount": 1,
+      "materialCount": 2,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "lift",
+      "name": "Lift",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/lift.glb",
+      "thumbnail": "assets/thumbnails/lift.webp",
+      "albedo": null,
+      "description": "Animated interactive launch platform.",
+      "defaultAnimation": "launch-circle-1",
+      "bytes": 50480,
+      "triangles": 1308,
+      "vertices": 1113,
+      "meshCount": 4,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": [
+        {
+          "name": "launch-circle-1",
+          "duration": 2.583
+        },
+        {
+          "name": "launch-circle-2",
+          "duration": 2.583
+        },
+        {
+          "name": "launch-circle-3",
+          "duration": 2.583
+        }
+      ]
+    },
+    {
+      "id": "oscilloscope",
+      "name": "Oscilloscope",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/oscilloscope.glb",
+      "thumbnail": "assets/thumbnails/oscilloscope.webp",
+      "albedo": null,
+      "description": "Signal-monitoring laboratory instrument.",
+      "defaultAnimation": null,
+      "bytes": 31124,
+      "triangles": 840,
+      "vertices": 724,
+      "meshCount": 2,
+      "materialCount": 2,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "bridge-rope",
+      "name": "Rope Bridge",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/bridge-rope.glb",
+      "thumbnail": "assets/thumbnails/bridge-rope.webp",
+      "albedo": null,
+      "description": "Modular rope-and-plank bridge.",
+      "defaultAnimation": null,
+      "bytes": 69352,
+      "triangles": 1424,
+      "vertices": 1810,
+      "meshCount": 4,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "round-tree",
+      "name": "Round Tree",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/round-tree.glb",
+      "thumbnail": "assets/thumbnails/round-tree.webp",
+      "albedo": null,
+      "description": "Softly rounded tree prop.",
+      "defaultAnimation": null,
+      "bytes": 36632,
+      "triangles": 496,
+      "vertices": 985,
+      "meshCount": 1,
+      "materialCount": 2,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "head-scared",
+      "name": "Scared Head",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/head-scared.glb",
+      "thumbnail": "assets/thumbnails/head-scared.webp",
+      "albedo": null,
+      "description": "Expressive frightened head sculpt.",
+      "defaultAnimation": null,
+      "bytes": 2122952,
+      "triangles": 116144,
+      "vertices": 58632,
+      "meshCount": 5,
+      "materialCount": 5,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "tensile-mockup",
+      "name": "Tensile Mockup",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/tensile-mockup.glb",
+      "thumbnail": "assets/thumbnails/tensile-mockup.webp",
+      "albedo": null,
+      "description": "Tensile structural mockup.",
+      "defaultAnimation": "Cube.002Action",
+      "bytes": 515456,
+      "triangles": 16304,
+      "vertices": 12238,
+      "meshCount": 7,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": [
+        {
+          "name": "Cube.002Action",
+          "duration": 14.792
+        },
+        {
+          "name": "Cube.006Action",
+          "duration": 14.792
+        },
+        {
+          "name": "Cube.008Action",
+          "duration": 0.792
+        },
+        {
+          "name": "Cube.002Action.002",
+          "duration": 14.875
+        },
+        {
+          "name": "Cube.002Action.003",
+          "duration": 14.792
+        },
+        {
+          "name": "Cube.002Action.004",
+          "duration": 14.875
+        },
+        {
+          "name": "Cube.002Action.001",
+          "duration": 3.25
+        }
+      ]
+    },
+    {
+      "id": "terminal",
+      "name": "Terminal",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/terminal.glb",
+      "thumbnail": "assets/thumbnails/terminal.webp",
+      "albedo": null,
+      "description": "Minimal low-poly control terminal.",
+      "defaultAnimation": null,
+      "bytes": 7300,
+      "triangles": 80,
+      "vertices": 138,
+      "meshCount": 1,
+      "materialCount": 2,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "tree",
+      "name": "Tree",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/tree.glb",
+      "thumbnail": "assets/thumbnails/tree.webp",
+      "albedo": null,
+      "description": "Modular stylized tree.",
+      "defaultAnimation": null,
+      "bytes": 277724,
+      "triangles": 3552,
+      "vertices": 7590,
+      "meshCount": 29,
+      "materialCount": 6,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "trophy",
+      "name": "Trophy",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/trophy.glb",
+      "thumbnail": "assets/thumbnails/trophy.webp",
+      "albedo": null,
+      "description": "Celebratory trophy prop.",
+      "defaultAnimation": null,
+      "bytes": 47820,
+      "triangles": 1728,
+      "vertices": 1075,
+      "meshCount": 1,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "umbrella",
+      "name": "Umbrella",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/umbrella.glb",
+      "thumbnail": "assets/thumbnails/umbrella.webp",
+      "albedo": null,
+      "description": "Colorful stylized umbrella.",
+      "defaultAnimation": null,
+      "bytes": 32260,
+      "triangles": 1172,
+      "vertices": 686,
+      "meshCount": 2,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "wicker-sphere2",
+      "name": "Wicker Sphere",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/wickerSphere2.glb",
+      "thumbnail": "assets/thumbnails/wicker-sphere2.webp",
+      "albedo": null,
+      "description": "Woven spherical prop.",
+      "defaultAnimation": null,
+      "bytes": 3044828,
+      "triangles": 608,
+      "vertices": 459,
+      "meshCount": 1,
+      "materialCount": 1,
+      "textureCount": 3,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "cabin-cabin",
+      "name": "Cabin",
+      "category": "environments",
+      "categoryLabel": "Environment",
+      "src": "assets/environments/cabin/cabin.glb",
+      "thumbnail": "assets/thumbnails/cabin-cabin.webp",
+      "albedo": null,
+      "description": "Detailed textured cabin environment.",
+      "defaultAnimation": null,
+      "bytes": 15923132,
+      "triangles": 38024,
+      "vertices": 30887,
+      "meshCount": 78,
+      "materialCount": 5,
+      "textureCount": 15,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "cathedral-cathedral",
+      "name": "Cathedral",
+      "category": "environments",
+      "categoryLabel": "Environment",
+      "src": "assets/environments/cathedral/cathedral.glb",
+      "thumbnail": "assets/thumbnails/cathedral-cathedral.webp",
+      "albedo": null,
+      "description": "Large textured cathedral environment.",
+      "defaultAnimation": null,
+      "bytes": 21660372,
+      "triangles": 49638,
+      "vertices": 47210,
+      "meshCount": 35,
+      "materialCount": 8,
+      "textureCount": 23,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "rock1",
+      "name": "Cavern Rock",
+      "category": "environments",
+      "categoryLabel": "Environment",
+      "src": "assets/environments/rock1.glb",
+      "thumbnail": "assets/thumbnails/rock1.webp",
+      "albedo": null,
+      "description": "Low-poly subterranean rock.",
+      "defaultAnimation": null,
+      "bytes": 347092,
+      "triangles": 58,
+      "vertices": 146,
+      "meshCount": 1,
+      "materialCount": 1,
+      "textureCount": 1,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "wall",
+      "name": "Gemstone Wall",
+      "category": "environments",
+      "categoryLabel": "Environment",
+      "src": "assets/environments/wall.glb",
+      "thumbnail": "assets/thumbnails/wall.webp",
+      "albedo": null,
+      "description": "Textured modular gemstone wall.",
+      "defaultAnimation": null,
+      "bytes": 3117568,
+      "triangles": 1780,
+      "vertices": 1356,
+      "meshCount": 1,
+      "materialCount": 1,
+      "textureCount": 3,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "the-spinner",
+      "name": "The Spinner",
+      "category": "environments",
+      "categoryLabel": "Environment",
+      "src": "assets/environments/theSpinner.glb",
+      "thumbnail": "assets/thumbnails/the-spinner.webp",
+      "albedo": null,
+      "description": "Large animated obstacle.",
+      "defaultAnimation": "Cylinder.007Action",
+      "bytes": 1600544,
+      "triangles": 17376,
+      "vertices": 13706,
+      "meshCount": 4,
+      "materialCount": 3,
+      "textureCount": 3,
+      "skinCount": 0,
+      "animations": [
+        {
+          "name": "Cylinder.007Action",
+          "duration": 5
+        },
+        {
+          "name": "Cylinder.008Action",
+          "duration": 5
+        },
+        {
+          "name": "Cylinder.007Action.002",
+          "duration": 5
+        }
+      ]
+    }
+  ]
+}
