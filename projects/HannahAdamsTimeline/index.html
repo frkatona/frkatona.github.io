@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Hannah Adams Timeline</title>
-    <link rel="icon" type="image/x-icon" href="../assets/images/icons/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/icons/favicon.ico">
 <style>
     body {
       background: #171923;
@@ -72,13 +72,16 @@
       }
 
     .timeline-horizontal-container {
-      margin-top: 10em;
+      padding-top: 10em;
+      min-height: 24em;
+      position: relative;
     }
     
     .timeline-horizontal {
       display: flex;
       align-items: flex-end;
       position: relative;
+      min-height: 16em;
     }
     
     .timeline-horizontal .line {
@@ -271,6 +274,7 @@
     const totalYears = maxYear - minYear;
 
     // For main timeline
+    const timelineContainer = document.querySelector('.timeline-horizontal-container');
     const timelineEl = document.getElementById('timeline-main');
 
     // --- ZOOM LOGIC ---
@@ -288,7 +292,7 @@
       const majorInterval = 10;
       const minorInterval = 1;
       for(let y = Math.ceil(minYear/majorInterval)*majorInterval; y <= maxYear; y += majorInterval) {
-        const left = ((y - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+        const left = ((y - minYear) / totalYears * 100).toFixed(3) + "%";
         let tick = document.createElement('div');
         tick.className = 'tick major';
         tick.style.left = left;
@@ -303,7 +307,7 @@
       }
       for(let y = minYear; y <= maxYear; y += minorInterval) {
         if (y % majorInterval !== 0) {
-          const left = ((y - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+          const left = ((y - minYear) / totalYears * 100).toFixed(3) + "%";
           let tick = document.createElement('div');
           tick.className = 'tick minor';
           tick.style.left = left;
@@ -313,7 +317,7 @@
 
       // Render events with dot at timeline and desc/year offset vertically by verticalOffset
       timelineEvents.forEach(ev => {
-        const left = ((ev.year - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+        const left = ((ev.year - minYear) / totalYears * 100).toFixed(3) + "%";
         const eventDiv = document.createElement('div');
         eventDiv.className = 'event-horizontal';
         eventDiv.style.left = left;
@@ -373,7 +377,7 @@
       timelineWithControversy.sort((a,b) => a.year-b.year || (a.cat==="controversy"?1:-1));
       timelineWithControversy.forEach((ev, idx) => {
         if (ev.cat !== "controversy") return; // Only render controversy events here
-        const left = ((ev.year - minYear) / totalYears * 100 * zoom).toFixed(3) + "%";
+        const left = ((ev.year - minYear) / totalYears * 100).toFixed(3) + "%";
         const eventDiv = document.createElement('div');
         eventDiv.className = 'event-horizontal controversy';
         eventDiv.style.left = left;
@@ -438,25 +442,40 @@
       // Also set the .line width to match the zoomed width
       const lineEl = timelineEl.querySelector('.line');
       if (lineEl) {
-        lineEl.style.width = (100 * zoom) + "%";
+        lineEl.style.width = "100%";
       }
     }
 
     // Initial render
     renderTimeline();
 
-    // Scroll to zoom
-    timelineEl.addEventListener('wheel', function(e) {
+    // Scroll to zoom anywhere in the timeline area, keeping the year beneath
+    // the pointer fixed in place.
+    timelineContainer.addEventListener('wheel', function(e) {
       if (e.ctrlKey || e.metaKey) return; // allow browser zoom
+
+      const oldRect = timelineEl.getBoundingClientRect();
+      const pointerRatio = Math.max(0, Math.min(1, (e.clientX - oldRect.left) / oldRect.width));
+      const timelineLeft = oldRect.left + window.scrollX;
+      const deltaScale = e.deltaMode === WheelEvent.DOM_DELTA_LINE
+        ? 16
+        : e.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? window.innerHeight
+          : 1;
+      const nextZoom = Math.max(
+        minZoom,
+        Math.min(maxZoom, zoom * Math.exp(-e.deltaY * deltaScale * 0.0015))
+      );
+
+      if (nextZoom === zoom) return;
+
       e.preventDefault();
-      const delta = e.deltaY || e.detail || e.wheelDelta;
-      const zoomStep = 1.05; // Finer zoom increments
-      if (delta < 0) {
-        zoom = Math.min(maxZoom, zoom * zoomStep);
-      } else {
-        zoom = Math.max(minZoom, zoom / zoomStep);
-      }
+      zoom = nextZoom;
       renderTimeline();
+
+      const newWidth = timelineEl.getBoundingClientRect().width;
+      const anchoredX = timelineLeft + pointerRatio * newWidth;
+      window.scrollTo(anchoredX - e.clientX, window.scrollY);
     }, { passive: false });
 
     // Toggle function for controversy events

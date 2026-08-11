@@ -23,6 +23,14 @@ const sourceLabels = {
   "brackeys-2026-strange-places": "Brackeys 2026.1: Strange Places",
 };
 
+// Keep intentionally removed sounds out of generated catalogs without
+// requiring the original source files to be deleted.
+const excludedSoundFiles = new Set([
+  "ld57-depths/dash.mp3",
+  "ld57-depths/grapplinghook.mp3",
+  "ld59-signal/oof.mp3",
+]);
+
 const modelOverrides = {
   squirrelLady: {
     name: "Squirrel Lady",
@@ -298,6 +306,10 @@ async function buildSoundManifest() {
     const directory = path.join(root, source);
     const files = (await listFilesRecursively(directory))
       .filter((file) => /\.(wav|mp3|ogg|flac|m4a|aac|opus)$/i.test(file))
+      .filter((file) => {
+        const relativeFile = toWebPath(source, ...path.relative(directory, file).split(path.sep));
+        return !excludedSoundFiles.has(relativeFile);
+      })
       .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 
     for (const filePath of files) {

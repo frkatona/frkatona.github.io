@@ -116,7 +116,6 @@
         "high": 0.001
       }
     },
-  
     {
       "id": "brackeys-2026-strange-places-audio-sfx-look-mode",
       "name": "Look Mode",
@@ -2957,15 +2956,6 @@
         "low": 0.002,
         "mid": 0.432,
         "high": 0.566
-      }
-    },
-      "spectralCentroid": 1367,
-      "frequencyBand": "mid",
-      "frequencyColor": "hsl(282 78% 60%)",
-      "bandEnergy": {
-        "low": 0.001,
-        "mid": 0.994,
-        "high": 0.004
       }
     },
     {
