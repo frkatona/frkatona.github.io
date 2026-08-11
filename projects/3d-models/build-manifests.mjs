@@ -26,7 +26,7 @@ const sourceLabels = {
 const modelOverrides = {
   squirrelLady: {
     name: "Squirrel Lady",
-    description: "Woodland hero with seven animations.",
+    description: "Woodland hero.",
     albedo: "assets/characters/albedo.png",
     defaultAnimation: "idle1-loop",
   },
