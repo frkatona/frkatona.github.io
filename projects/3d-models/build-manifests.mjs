@@ -134,7 +134,7 @@ const modelOverrides = {
   },
   capy: {
     name: "Capy",
-    description: "Friendly capybara character.",
+    description: "Friendly caped character.",
   },
   cathedral: {
     name: "Cathedral",
