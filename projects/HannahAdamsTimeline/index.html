@@ -5,219 +5,650 @@
   <title>Hannah Adams Timeline</title>
     <link rel="icon" type="image/x-icon" href="../../assets/images/icons/favicon.ico">
 <style>
+    :root {
+      color-scheme: dark;
+      --font-family: "Segoe UI", Arial, sans-serif;
+      --page-bg: #151821;
+      --panel-bg: rgba(27, 31, 44, 0.97);
+      --panel-border: rgba(148, 163, 184, 0.22);
+      --text-color: #e5e7eb;
+      --heading-color: #f8fafc;
+      --muted-color: #aab3c3;
+      --axis-color: #455168;
+      --axis-hover: #6f88b2;
+      --tick-color: #556179;
+      --connector-color: rgba(122, 175, 240, 0.72);
+      --life-color: #2563eb;
+      --publication-color: #059669;
+      --access-color: #ea580c;
+      --memoir-color: #76468d;
+      --controversy-color: #e5484d;
+      --event-font-size: 0.92rem;
+      --event-card-min-width: 7.2em;
+      --event-card-max-width: 10.5em;
+      --event-column-width: 7.5em;
+      --major-label-size: 1rem;
+      --major-label-gap: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { font-size: 100%; }
+
     body {
-      background: #171923;
-      color: #e5e7eb;
-      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--page-bg);
+      color: var(--text-color);
+      font-family: var(--font-family);
       margin: 0;
-      padding: 2rem;
-      box-sizing: border-box;
+      padding: 8.25rem 2rem 3rem;
+      transition: background-color 180ms ease, color 180ms ease;
     }
-    
-    h1 {
+
+    body[data-theme="paper"] {
+      color-scheme: light;
+      --page-bg: #f4f1ea;
+      --panel-bg: rgba(255, 253, 248, 0.98);
+      --panel-border: rgba(71, 85, 105, 0.25);
+      --text-color: #273142;
+      --heading-color: #172033;
+      --muted-color: #5c6677;
+      --axis-color: #8c97a8;
+      --axis-hover: #526c96;
+      --tick-color: #98a2b3;
+      --connector-color: rgba(58, 91, 138, 0.62);
+    }
+
+    body[data-theme="contrast"] {
+      --page-bg: #05070a;
+      --panel-bg: rgba(8, 10, 14, 0.99);
+      --panel-border: rgba(255, 255, 255, 0.58);
+      --text-color: #ffffff;
+      --heading-color: #ffffff;
+      --muted-color: #d5d9e2;
+      --axis-color: #d7deea;
+      --axis-hover: #ffffff;
+      --tick-color: #aeb8c8;
+      --connector-color: rgba(255, 255, 255, 0.78);
+      --life-color: #1769ff;
+      --publication-color: #008f68;
+      --memoir-color: #8d4eaa;
+    }
+
+    .presentation-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      display: grid;
+      grid-template-columns: minmax(3.25rem, 1fr) auto minmax(3.25rem, 1fr);
+      align-items: start;
+      width: 100vw;
+      padding: 0.9rem 1.25rem 0.85rem;
+      border-bottom: 1px solid var(--panel-border);
+      background: linear-gradient(180deg, var(--page-bg) 72%, color-mix(in srgb, var(--page-bg), transparent 12%));
+      box-shadow: 0 10px 28px color-mix(in srgb, var(--page-bg), transparent 30%);
+      backdrop-filter: blur(12px);
+      pointer-events: none;
+    }
+
+    .header-content {
+      grid-column: 2;
+      max-width: calc(100vw - 8rem);
       text-align: center;
-      margin-bottom: 0.5em;
-      color: #f3f4f6;
+      pointer-events: auto;
     }
-    
+
+    h1 {
+      margin: 0 0 0.62rem;
+      color: var(--heading-color);
+      font-size: clamp(1.55rem, 2.15vw, 2rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
     .legend {
       display: flex;
-      gap: 1.5em;
+      gap: 1.15rem;
       justify-content: center;
       align-items: center;
-      margin-bottom: 2em;
       flex-wrap: wrap;
     }
+
     .legend-item {
       display: flex;
       align-items: center;
-      font-size: 1em;
-      gap: 0.3em;
+      gap: 0.42rem;
+      color: var(--text-color);
+      font-size: 0.86rem;
+      white-space: nowrap;
     }
-    .dot {
-      width: 1.2em;
-      height: 1.2em;
-      border-radius: 50%;
-      display: inline-block;
-      border: 1px solid #1a202c;
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.57);
-      background: #fff; /* fallback, overridden by category */
-      z-index: 3;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 8em; /* timeline line level */
-      transition: box-shadow 0.2s;
-    }
-    .life { background: #3b82f6; }
-    .pub { background: #10b981; }
-    .access { background: #f59e42; }
-    .memoir { background:rgb(118, 62, 139); }
 
-    .dot.controversy { 
-      background: #ef4444; 
-      width: 1.2em;
-      height: 1.2em;
-      border-radius: 50%;
-      display: inline-block;
-      border: 1px solid #1a202c;
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.57);
-      z-index: 3;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 8em; /* timeline line level */
-      transition: box-shadow 0.2s;
-      opacity: 0.95;
-      }
+    .settings-wrap {
+      position: relative;
+      grid-column: 3;
+      justify-self: end;
+      pointer-events: auto;
+    }
 
-    .timeline-horizontal-container {
-      padding-top: 10em;
-      min-height: 24em;
+    .menu-toggle {
+      display: grid;
+      place-content: center;
+      width: 2.7rem;
+      height: 2.7rem;
+      padding: 0;
+      border: 1px solid var(--panel-border);
+      border-radius: 0.78rem;
+      background: color-mix(in srgb, var(--panel-bg), transparent 10%);
+      color: var(--heading-color);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    }
+
+    .menu-toggle:hover {
+      border-color: var(--axis-hover);
+      background: color-mix(in srgb, var(--panel-bg), var(--axis-hover) 10%);
+    }
+
+    .menu-toggle:active { transform: scale(0.96); }
+
+    .menu-icon {
       position: relative;
+      display: block;
+      width: 1.18rem;
+      height: 0.85rem;
     }
-    
-    .timeline-horizontal {
-      display: flex;
-      align-items: flex-end;
-      position: relative;
-      min-height: 16em;
-    }
-    
-    .timeline-horizontal .line {
-      position: absolute;
-      left: 0; right: 0; top: 8em;
-      height: 4px;
-      background: #374151;
-      z-index: 1;
-      border-radius: 2px;
-    }
-    .event-horizontal {
+
+    .menu-icon span {
       position: absolute;
       left: 0;
-      width: 6.5em; /* enough for desc box */
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 180ms ease, opacity 180ms ease, top 180ms ease;
+    }
+
+    .menu-icon span:nth-child(1) { top: 0; }
+    .menu-icon span:nth-child(2) { top: calc(50% - 1px); }
+    .menu-icon span:nth-child(3) { top: calc(100% - 2px); }
+    .menu-toggle[aria-expanded="true"] .menu-icon span:nth-child(1) { top: calc(50% - 1px); transform: rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-icon span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] .menu-icon span:nth-child(3) { top: calc(50% - 1px); transform: rotate(-45deg); }
+
+    .settings-panel {
+      position: absolute;
+      top: calc(100% + 0.7rem);
+      right: 0;
+      width: min(22rem, calc(100vw - 2rem));
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+      padding: 1rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 1rem;
+      background: var(--panel-bg);
+      color: var(--text-color);
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.34);
+      text-align: left;
+    }
+
+    .settings-panel[hidden] { display: none; }
+
+    .settings-heading {
+      margin: 0 0 0.85rem;
+      color: var(--heading-color);
+      font-size: 1rem;
+    }
+
+    .settings-grid { display: grid; gap: 0.85rem; }
+
+    .setting {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 0.35rem 0.8rem;
+      color: var(--text-color);
+      font-size: 0.84rem;
+    }
+
+    .setting select,
+    .setting input[type="range"] { grid-column: 1 / -1; }
+
+    .setting select {
+      width: 100%;
+      padding: 0.48rem 0.58rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 0.58rem;
+      background: var(--page-bg);
+      color: var(--text-color);
+      font: inherit;
+    }
+
+    .setting input[type="range"] {
+      width: 100%;
+      accent-color: var(--life-color);
+    }
+
+    .setting output {
+      color: var(--muted-color);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .color-control {
+      width: 2.2rem;
+      height: 1.65rem;
+      padding: 0.12rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 0.5rem;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .toggle-setting {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.84rem;
+    }
+
+    .toggle-setting input {
+      width: 1.05rem;
+      height: 1.05rem;
+      accent-color: var(--life-color);
+    }
+
+    .settings-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+
+    .settings-actions button {
+      padding: 0.52rem 0.6rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 0.6rem;
+      background: color-mix(in srgb, var(--panel-bg), var(--axis-hover) 8%);
+      color: var(--text-color);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    select:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--axis-hover);
+      outline-offset: 2px;
+    }
+
+    .timeline-horizontal-container {
+      position: relative;
+      min-height: 27em;
+      padding-top: 8.5em;
+      cursor: col-resize;
+    }
+
+    .timeline-horizontal {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      min-height: 18em;
+    }
+
+    .timeline-horizontal .line {
+      position: absolute;
+      top: 8em;
+      right: 0;
+      left: 0;
+      z-index: 1;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--axis-color);
+      transition: background-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .timeline-horizontal-container:hover .line {
+      background: var(--axis-hover);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--axis-hover), transparent 72%),
+                  0 0 16px color-mix(in srgb, var(--axis-hover), transparent 64%);
+    }
+
+    .zoom-hint {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 150;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.68rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--panel-bg), transparent 12%);
+      color: var(--muted-color);
+      box-shadow: 0 9px 24px rgba(0, 0, 0, 0.2);
+      font-size: 0.76rem;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      transform: translateY(0.35rem);
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .timeline-horizontal-container:hover .zoom-hint {
+      opacity: 0.82;
+      transform: translateY(0);
+    }
+
+    .settings-open .zoom-hint { opacity: 0 !important; }
+
+    .zoom-symbol {
+      display: grid;
+      place-content: center;
+      width: 1.2rem;
+      height: 1.2rem;
+      border: 1px solid currentColor;
+      border-radius: 0.42rem;
+      font-size: 0.78rem;
+      line-height: 1;
+    }
+
+    .dot {
+      position: absolute;
+      top: calc(8em + 1.5px);
+      left: 50%;
+      z-index: 9;
+      display: inline-block;
+      width: 0.78rem;
+      height: 0.78rem;
+      border: 1px solid color-mix(in srgb, var(--page-bg), white 55%);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--page-bg), black 34%);
+      transform: translate(-50%, -50%);
+      transition: box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .timeline-horizontal-container:hover .dot {
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--page-bg), white 42%);
+    }
+
+    .legend .dot {
+      position: static !important;
+      width: 0.72rem;
+      height: 0.72rem;
+      transform: none;
+    }
+
+    .dot.life { background: var(--life-color); }
+    .dot.pub { background: var(--publication-color); }
+    .dot.access { background: var(--access-color); }
+    .dot.memoir { background: var(--memoir-color); }
+    .dot.controversy { background: var(--controversy-color); opacity: 0.96; }
+
+    .event-horizontal {
+      position: absolute;
+      top: 0;
+      left: 0;
       z-index: 2;
       display: flex;
+      width: var(--event-column-width);
+      height: 100%;
       flex-direction: column;
       align-items: center;
-      pointer-events: auto;
+      transform: translateX(-50%);
+      pointer-events: none;
     }
-    .event-year, .event-desc {
-      pointer-events: auto;
-    }
+
+    .event-year,
+    .event-desc { pointer-events: auto; }
+
     .event-year {
-      font-weight: bold;
-      font-size: 1em;
-      margin-bottom: 0.18em;
-      color: #e0e7ef;
-      white-space: nowrap;
+      z-index: 4;
+      margin-bottom: 0.16em;
+      color: var(--heading-color);
       background: none;
-      z-index: 4;
+      font-size: 0.84rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      white-space: nowrap;
+      text-shadow: 0 1px 2px var(--page-bg);
     }
+
     .event-desc {
-      font-size: 0.98em;
-      line-height: 1.25;
-      background: #23263a;
-      color: #fafafa;
-      border-radius: 0.5em;
-      padding: 0.2em 0.8em;
-      box-shadow: 0 2px 7px 0 #17192366;
-      margin-bottom: 0.3em;
-      min-width: 8em;
-      text-align: center;
-      border: 1px solid #283049;
       z-index: 4;
+      width: max-content;
+      min-width: var(--event-card-min-width);
+      max-width: var(--event-card-max-width);
+      margin-bottom: 0.3em;
+      padding: 0.34em 0.66em;
+      border: 1px solid color-mix(in srgb, white, transparent 84%);
+      border-radius: 0.52em;
+      background: #23263a;
+      box-shadow: 0 3px 10px rgba(8, 11, 19, 0.27);
+      color: #fff;
+      font-size: var(--event-font-size);
+      line-height: 1.22;
+      text-align: center;
+      text-wrap: balance;
     }
-    
-    .event-desc.life { background: #2563eb; }
-    .event-desc.pub { background: #059669; }
-    .event-desc.access { background: #ea580c; }
-    .event-desc.memoir { background: rgb(118, 62, 139); }
+
+    .event-desc.life { background: var(--life-color); }
+    .event-desc.pub { background: var(--publication-color); }
+    .event-desc.access { background: var(--access-color); }
+    .event-desc.memoir { background: var(--memoir-color); }
+    .event-desc.controversy { background: var(--controversy-color); }
+
     .event-connector {
-      width: 2px;
-      background:rgba(122, 175, 240, 0.8);
       position: absolute;
       left: 50%;
+      z-index: 0;
+      width: 1px;
+      background: var(--connector-color);
+      opacity: 0.58;
       transform: translateX(-50%);
-      z-index: -1;
-      opacity: 0.3;
-      /* height and direction set inline */
     }
 
-  .event-horizontal.controversy { display: none; }
-  .event-horizontal.controversy.show { display: flex; }
+    .event-horizontal.controversy { display: none; }
 
-  .event-desc.controversy { background: #ef4444; color: #fff; }
+    .controversy-toggle {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      z-index: 100;
+      display: block;
+      margin: 0;
+      padding: 0.48rem 0.95rem;
+      border: 1px solid color-mix(in srgb, white, transparent 78%);
+      border-radius: 999px;
+      background: var(--controversy-color);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      color: #fff;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transform: translateX(-50%);
+    }
 
-  .controversy-toggle {
-    background: #ef4444;
-    color: #fff;
-    font-weight: bold;
-    padding: 0.2em 1em;
-    border: none;
-    border-radius: 1.2em;
-    cursor: pointer;
-    font-size: 1em;
-    margin-top: 2em;
-    margin-bottom: 0;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    position: fixed;
-    bottom: 2em;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-  }
-  @media (max-width: 700px) {
-    .timeline-horizontal, .timeline-horizontal-controversy { min-width: 900px; }
-    .event-desc { min-width: 6em; font-size: 0.92em;}
-  }
-
-    /* YEAR TICKS */
     .tick {
       position: absolute;
-      top: 8.3em;
-      width: 1px;
-      background: #444b60;
+      top: 8em;
       z-index: 0;
+      width: 1px;
+      background: var(--tick-color);
     }
-    .tick.major { height: 1.5em; background: #f3f4f6; z-index: 5; }
-    .tick.minor { height: 0.7em; background: #444b60; }
+
+    .tick.major {
+      z-index: 5;
+      height: 1.45em;
+      background: var(--heading-color);
+    }
+
+    .tick.minor { height: 0.68em; }
+    .hide-minor-ticks .tick.minor { display: none; }
+
     .tick-label {
       position: absolute;
-      top: 7em;
-      font-size: 0.85em;
-      color: #f3f4f6;
-      white-space: nowrap;
-      text-align: center;
+      top: auto;
+      bottom: calc(100% - 8rem + var(--major-label-gap));
       left: 50%;
-      transform: translateX(-50%);
       z-index: 10;
-      background: #171923;
-      padding: 0 0.25em;
+      padding: 0 0.3em;
+      background: var(--page-bg);
+      color: var(--heading-color);
+      font-size: var(--major-label-size);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      transform: translateX(-50%);
     }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .reduce-motion *,
+    .reduce-motion *::before,
+    .reduce-motion *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.001ms !important;
+      animation-duration: 0.001ms !important;
+    }
+
     @media (max-width: 700px) {
-      body { padding: 0.2em; }
+      body { padding: 10.5rem 0.75rem 3rem; }
+      .presentation-header { grid-template-columns: 1fr; padding-inline: 0.75rem; }
+      .header-content { grid-column: 1; max-width: calc(100vw - 1.5rem); }
+      .settings-wrap { position: absolute; top: 0.75rem; right: 0.75rem; }
+      h1 { padding-inline: 3rem; }
+      .legend { gap: 0.55rem 0.9rem; }
       .timeline-horizontal { min-width: 800px; }
-      .event-desc { min-width: 6em; font-size: 0.92em;}
+      .event-desc { --event-card-min-width: 6em; }
+      .zoom-hint { right: 0.75rem; bottom: 0.75rem; }
+      .controversy-toggle { bottom: 0.75rem; max-width: calc(100vw - 10rem); }
+    }
+
+    @media (hover: none) {
+      .timeline-horizontal-container { cursor: default; }
+      .zoom-hint { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+        animation-duration: 0.001ms !important;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Hannah Adams Timeline</h1>
+  <header class="presentation-header">
+    <div class="header-content">
+      <h1>Hannah Adams Timeline</h1>
 
-  <div class="legend">
-    <div class="legend-item"><span class="dot life" style="position:static;"></span>Life Events</div>
-    <div class="legend-item"><span class="dot pub" style="position:static;"></span>Publications</div>
-    <!-- <div class="legend-item"><span class="dot access" style="position:static;"></span>Correspondence & Access</div> -->
-    <div class="legend-item"><span class="dot memoir" style="position:static;"></span>Memoir/Biography</div>
-  </div>
+      <div class="legend" aria-label="Event categories">
+        <div class="legend-item"><span class="dot life" aria-hidden="true"></span>Life Events</div>
+        <div class="legend-item"><span class="dot pub" aria-hidden="true"></span>Publications</div>
+        <div class="legend-item"><span class="dot memoir" aria-hidden="true"></span>Memoir/Biography</div>
+      </div>
+    </div>
+
+    <div class="settings-wrap">
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="settings-panel">
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="sr-only">Open presentation settings</span>
+      </button>
+
+      <section class="settings-panel" id="settings-panel" aria-label="Presentation settings" hidden>
+        <h2 class="settings-heading">Presentation settings</h2>
+        <div class="settings-grid">
+          <label class="setting" for="font-family">
+            <span>Typeface</span>
+            <select id="font-family">
+              <option value="system">System sans</option>
+              <option value="readable">Readable sans</option>
+              <option value="serif">Book serif</option>
+            </select>
+          </label>
+
+          <label class="setting" for="text-size">
+            <span>Overall text size</span>
+            <output id="text-size-output" for="text-size">100%</output>
+            <input id="text-size" type="range" min="85" max="135" step="5" value="100">
+          </label>
+
+          <label class="setting" for="event-size">
+            <span>Event label size</span>
+            <output id="event-size-output" for="event-size">100%</output>
+            <input id="event-size" type="range" min="85" max="125" step="5" value="100">
+          </label>
+
+          <label class="setting" for="year-label-size">
+            <span>Major year size</span>
+            <output id="year-label-size-output" for="year-label-size">100%</output>
+            <input id="year-label-size" type="range" min="80" max="160" step="5" value="100">
+          </label>
+
+          <label class="setting" for="year-label-gap">
+            <span>Year distance from axis</span>
+            <output id="year-label-gap-output" for="year-label-gap">8 px</output>
+            <input id="year-label-gap" type="range" min="2" max="24" step="1" value="8">
+          </label>
+
+          <label class="setting" for="theme">
+            <span>Color theme</span>
+            <select id="theme">
+              <option value="midnight">Midnight</option>
+              <option value="paper">Warm paper</option>
+              <option value="contrast">High contrast</option>
+            </select>
+          </label>
+
+          <label class="setting" for="text-color">
+            <span>Interface text color</span>
+            <input class="color-control" id="text-color" type="color" value="#e5e7eb">
+          </label>
+
+          <label class="toggle-setting" for="minor-ticks">
+            <span>Show minor year ticks</span>
+            <input id="minor-ticks" type="checkbox" checked>
+          </label>
+
+          <label class="toggle-setting" for="reduce-motion">
+            <span>Reduce interface motion</span>
+            <input id="reduce-motion" type="checkbox">
+          </label>
+        </div>
+
+        <div class="settings-actions">
+          <button id="fit-timeline" type="button">Fit timeline</button>
+          <button id="reset-settings" type="button">Reset appearance</button>
+        </div>
+      </section>
+    </div>
+  </header>
 
   <div class="timeline-horizontal-container">
     <div class="timeline-horizontal" id="timeline-main">
       <div class="line"></div>
       <!-- Events rendered by JS -->
+    </div>
+    <div class="zoom-hint" aria-hidden="true">
+      <span class="zoom-symbol">↕</span>
+      <span>Scroll to zoom · <span id="zoom-level">100%</span></span>
     </div>
   </div>
   <button class="controversy-toggle" onclick="toggleControversy()">Show Adams vs. Morse Controversy</button>
@@ -276,11 +707,211 @@
     // For main timeline
     const timelineContainer = document.querySelector('.timeline-horizontal-container');
     const timelineEl = document.getElementById('timeline-main');
+    const zoomLevelEl = document.getElementById('zoom-level');
 
     // --- ZOOM LOGIC ---
     let zoom = 1.0;
     const minZoom = 0.5;
     const maxZoom = 3.0;
+    let controversyVisible = false;
+
+    // --- PRESENTATION SETTINGS ---
+    const settingsKey = 'hannah-adams-timeline-settings-v1';
+    const fontFamilies = {
+      system: '"Segoe UI", Arial, sans-serif',
+      readable: 'Verdana, Tahoma, sans-serif',
+      serif: 'Georgia, "Times New Roman", serif'
+    };
+    const themeTextColors = {
+      midnight: '#e5e7eb',
+      paper: '#273142',
+      contrast: '#ffffff'
+    };
+    const defaultSettings = {
+      fontFamily: 'system',
+      textSize: 100,
+      eventSize: 100,
+      yearLabelSize: 100,
+      yearLabelGap: 8,
+      theme: 'midnight',
+      textColor: themeTextColors.midnight,
+      minorTicks: true,
+      reduceMotion: false
+    };
+    let presentationSettings = { ...defaultSettings };
+
+    try {
+      const savedSettings = JSON.parse(localStorage.getItem(settingsKey));
+      if (savedSettings && typeof savedSettings === 'object') {
+        presentationSettings = { ...presentationSettings, ...savedSettings };
+      }
+    } catch (error) {
+      // Storage may be unavailable; the controls still work for this session.
+    }
+
+    const settingsElements = {
+      menuToggle: document.getElementById('menu-toggle'),
+      panel: document.getElementById('settings-panel'),
+      fontFamily: document.getElementById('font-family'),
+      textSize: document.getElementById('text-size'),
+      textSizeOutput: document.getElementById('text-size-output'),
+      eventSize: document.getElementById('event-size'),
+      eventSizeOutput: document.getElementById('event-size-output'),
+      yearLabelSize: document.getElementById('year-label-size'),
+      yearLabelSizeOutput: document.getElementById('year-label-size-output'),
+      yearLabelGap: document.getElementById('year-label-gap'),
+      yearLabelGapOutput: document.getElementById('year-label-gap-output'),
+      theme: document.getElementById('theme'),
+      textColor: document.getElementById('text-color'),
+      minorTicks: document.getElementById('minor-ticks'),
+      reduceMotion: document.getElementById('reduce-motion'),
+      fitTimeline: document.getElementById('fit-timeline'),
+      reset: document.getElementById('reset-settings')
+    };
+
+    function saveSettings() {
+      try {
+        localStorage.setItem(settingsKey, JSON.stringify(presentationSettings));
+      } catch (error) {
+        // Ignore storage failures; the current presentation remains customized.
+      }
+    }
+
+    function applySettings(shouldSave = true) {
+      const selectedFamily = fontFamilies[presentationSettings.fontFamily] || fontFamilies.system;
+      const textSize = Math.max(85, Math.min(135, Number(presentationSettings.textSize) || 100));
+      const eventSize = Math.max(85, Math.min(125, Number(presentationSettings.eventSize) || 100));
+      const yearLabelSize = Math.max(80, Math.min(160, Number(presentationSettings.yearLabelSize) || 100));
+      const yearLabelGap = Math.max(2, Math.min(24, Number(presentationSettings.yearLabelGap) || 8));
+      const theme = themeTextColors[presentationSettings.theme] ? presentationSettings.theme : 'midnight';
+      const textColor = /^#[0-9a-f]{6}$/i.test(presentationSettings.textColor)
+        ? presentationSettings.textColor
+        : themeTextColors[theme];
+
+      presentationSettings = {
+        ...presentationSettings,
+        fontFamily: fontFamilies[presentationSettings.fontFamily] ? presentationSettings.fontFamily : 'system',
+        textSize,
+        eventSize,
+        yearLabelSize,
+        yearLabelGap,
+        theme,
+        textColor
+      };
+
+      document.documentElement.style.fontSize = textSize + '%';
+      document.body.dataset.theme = theme;
+      document.body.style.setProperty('--font-family', selectedFamily);
+      document.body.style.setProperty('--text-color', textColor);
+      document.body.style.setProperty('--heading-color', textColor);
+      document.body.style.setProperty('--event-font-size', (0.92 * eventSize / 100).toFixed(3) + 'rem');
+      document.body.style.setProperty('--major-label-size', (yearLabelSize / 100).toFixed(2) + 'rem');
+      document.body.style.setProperty('--major-label-gap', yearLabelGap + 'px');
+      document.body.classList.toggle('hide-minor-ticks', !presentationSettings.minorTicks);
+      document.body.classList.toggle('reduce-motion', presentationSettings.reduceMotion);
+
+      settingsElements.fontFamily.value = presentationSettings.fontFamily;
+      settingsElements.textSize.value = textSize;
+      settingsElements.textSizeOutput.value = textSize + '%';
+      settingsElements.eventSize.value = eventSize;
+      settingsElements.eventSizeOutput.value = eventSize + '%';
+      settingsElements.yearLabelSize.value = yearLabelSize;
+      settingsElements.yearLabelSizeOutput.value = yearLabelSize + '%';
+      settingsElements.yearLabelGap.value = yearLabelGap;
+      settingsElements.yearLabelGapOutput.value = yearLabelGap + ' px';
+      settingsElements.theme.value = theme;
+      settingsElements.textColor.value = textColor;
+      settingsElements.minorTicks.checked = Boolean(presentationSettings.minorTicks);
+      settingsElements.reduceMotion.checked = Boolean(presentationSettings.reduceMotion);
+
+      if (shouldSave) saveSettings();
+    }
+
+    function setMenuOpen(open) {
+      settingsElements.menuToggle.setAttribute('aria-expanded', String(open));
+      settingsElements.menuToggle.querySelector('.sr-only').textContent = open
+        ? 'Close presentation settings'
+        : 'Open presentation settings';
+      settingsElements.panel.hidden = !open;
+      document.body.classList.toggle('settings-open', open);
+    }
+
+    settingsElements.menuToggle.addEventListener('click', () => {
+      setMenuOpen(settingsElements.menuToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    settingsElements.fontFamily.addEventListener('change', (event) => {
+      presentationSettings.fontFamily = event.target.value;
+      applySettings();
+    });
+
+    settingsElements.textSize.addEventListener('input', (event) => {
+      presentationSettings.textSize = Number(event.target.value);
+      applySettings();
+    });
+
+    settingsElements.eventSize.addEventListener('input', (event) => {
+      presentationSettings.eventSize = Number(event.target.value);
+      applySettings();
+    });
+
+    settingsElements.yearLabelSize.addEventListener('input', (event) => {
+      presentationSettings.yearLabelSize = Number(event.target.value);
+      applySettings();
+    });
+
+    settingsElements.yearLabelGap.addEventListener('input', (event) => {
+      presentationSettings.yearLabelGap = Number(event.target.value);
+      applySettings();
+    });
+
+    settingsElements.theme.addEventListener('change', (event) => {
+      presentationSettings.theme = event.target.value;
+      presentationSettings.textColor = themeTextColors[presentationSettings.theme];
+      applySettings();
+    });
+
+    settingsElements.textColor.addEventListener('input', (event) => {
+      presentationSettings.textColor = event.target.value;
+      applySettings();
+    });
+
+    settingsElements.minorTicks.addEventListener('change', (event) => {
+      presentationSettings.minorTicks = event.target.checked;
+      applySettings();
+    });
+
+    settingsElements.reduceMotion.addEventListener('change', (event) => {
+      presentationSettings.reduceMotion = event.target.checked;
+      applySettings();
+    });
+
+    settingsElements.fitTimeline.addEventListener('click', () => {
+      zoom = 1;
+      renderTimeline();
+      window.scrollTo(0, window.scrollY);
+    });
+
+    settingsElements.reset.addEventListener('click', () => {
+      presentationSettings = { ...defaultSettings };
+      applySettings();
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (settingsElements.menuToggle.getAttribute('aria-expanded') === 'true'
+          && !event.target.closest('.settings-wrap')) {
+        setMenuOpen(false);
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && settingsElements.menuToggle.getAttribute('aria-expanded') === 'true') {
+        setMenuOpen(false);
+        settingsElements.menuToggle.focus();
+      }
+    });
+
+    applySettings(false);
 
     function renderTimeline() {
       // Remove all children except the .line
@@ -321,12 +952,10 @@
         const eventDiv = document.createElement('div');
         eventDiv.className = 'event-horizontal';
         eventDiv.style.left = left;
-        eventDiv.style.width = '6.5em';
 
         // Dot is always at 8em (timeline line)
         const dot = document.createElement('span');
         dot.className = `dot ${ev.cat}`;
-        dot.style.top = '8em';
         dot.style.left = '50%';
         dot.style.zIndex = 9;
         eventDiv.appendChild(dot);
@@ -381,13 +1010,11 @@
         const eventDiv = document.createElement('div');
         eventDiv.className = 'event-horizontal controversy';
         eventDiv.style.left = left;
-        eventDiv.style.width = '6.5em';
-        eventDiv.style.display = "none";
+        eventDiv.style.display = controversyVisible ? "flex" : "none";
 
         // Dot is always at 8em (timeline line)
         const dot = document.createElement('span');
         dot.className = 'dot controversy';
-        dot.style.top = '8em';
         dot.style.left = '50%';
         dot.style.zIndex = 9;
         eventDiv.appendChild(dot);
@@ -428,11 +1055,6 @@
         contentDiv.appendChild(yearDiv);
         contentDiv.appendChild(descDiv);
         eventDiv.appendChild(contentDiv);
-        descDiv.style.position = 'absolute';
-        descDiv.style.top = (8 + (ev.verticalOffset || 0) + 1.8) + 'em';
-        descDiv.style.zIndex = 10;
-        descDiv.innerHTML = ev.desc;
-        eventDiv.appendChild(descDiv);
 
         timelineEl.appendChild(eventDiv);
       });
@@ -444,6 +1066,7 @@
       if (lineEl) {
         lineEl.style.width = "100%";
       }
+      zoomLevelEl.textContent = Math.round(zoom * 100) + "%";
     }
 
     // Initial render
@@ -482,16 +1105,11 @@
     function toggleControversy() {
       const btn = document.querySelector('.controversy-toggle');
       const events = document.querySelectorAll('.event-horizontal.controversy');
-      let showing = false;
+      controversyVisible = !controversyVisible;
       events.forEach(ev => {
-        if (ev.style.display === "none") {
-          ev.style.display = "flex";
-          showing = true;
-        } else {
-          ev.style.display = "none";
-        }
+        ev.style.display = controversyVisible ? "flex" : "none";
       });
-      btn.textContent = showing ? "Hide Adams vs. Morse Controversy" : "Show Adams vs. Morse Controversy";
+      btn.textContent = controversyVisible ? "Hide Adams vs. Morse Controversy" : "Show Adams vs. Morse Controversy";
     }
   </script>
 </body>
