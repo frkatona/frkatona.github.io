@@ -21,3 +21,9 @@ recipe additions.
 Values in the interface are estimates per serving. Recipe publishers, ingredient
 brands, local prices, and substitutions can all change them. Update the figures in
 `recipes.js` whenever the ingredient list or serving count changes.
+
+## Possible future improvements
+- add a +/- button to adjust yield and automatically update the ingredients
+- center-align the boxed values
+- bold either the ingredient quantities/volumes or the item
+  - also bold either the ingredients or the verbs in the steps

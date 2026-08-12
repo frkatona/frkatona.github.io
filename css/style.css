@@ -540,6 +540,7 @@ footer {
   aspect-ratio: 1 / 1;
   height: auto;
   object-fit: cover;
+  border: 1px solid #000;
   border-radius: 1vw;
   cursor: pointer;
   margin-top: 5vh;
