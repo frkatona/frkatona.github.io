@@ -1,5 +1,5 @@
-const manifestPath = "../assets/images/portfolio/manifest.json";
-const portfolioBasePath = "../assets/images/portfolio/";
+const portfolioBaseUrl = new URL("../../assets/images/portfolio/", document.baseURI);
+const manifestPath = new URL("manifest.json", portfolioBaseUrl).href;
 const TAG_CATEGORIES = [
   {
     key: "subject",
@@ -165,9 +165,10 @@ async function loadPortfolio() {
     renderGallery();
   } catch (error) {
     console.error(error);
-    renderError(
-      "Couldn't load the photo metadata. This page needs to be served over HTTP to read the manifest and sidecar files."
-    );
+    const message = window.location.protocol === "file:"
+      ? "Couldn't load the photo metadata. Open this page through the website or a local web server."
+      : "Couldn't load the photo metadata. The manifest may be missing or unavailable.";
+    renderError(message);
   }
 }
 
@@ -179,7 +180,7 @@ async function loadPortfolioItem(entry) {
     typeof entry === "string"
       ? `thumbs/${entry}.webp`
       : normalizeAssetPath(entry.thumbnailFileName || `thumbs/${fileName}.webp`);
-  const metadataPath = `${portfolioBasePath}${metadataFileName}`;
+  const metadataPath = new URL(metadataFileName, portfolioBaseUrl).href;
   let metadata = {};
 
   try {
@@ -193,8 +194,8 @@ async function loadPortfolioItem(entry) {
 
   return {
     fileName,
-    imagePath: `${portfolioBasePath}${fileName}`,
-    thumbnailPath: `${portfolioBasePath}${thumbnailFileName}`,
+    imagePath: new URL(fileName, portfolioBaseUrl).href,
+    thumbnailPath: new URL(thumbnailFileName, portfolioBaseUrl).href,
     metadataPath,
     title: metadata.title || deriveTitle(fileName),
     description:

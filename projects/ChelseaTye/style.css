@@ -9,11 +9,12 @@ body {
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    padding-top: 5vh;
 }
 
 .intro {
-    height: 100vh;
+    box-sizing: border-box;
+    min-height: calc(100vh - var(--subpage-nav-height));
+    padding: 2vh 0 1vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,8 +22,8 @@ body {
 }
 
 .artist-image {
-    width: 32vh;
-    height: 32vh;
+    width: clamp(150px, 28vh, 280px);
+    height: clamp(150px, 28vh, 280px);
     border-radius: 75%;
 }
 
@@ -164,5 +165,26 @@ body {
     }
     100% {
         transform: translateY(-10px);
+    }
+}
+
+@media (max-height: 800px) {
+    .artist-image {
+        width: clamp(130px, 23vh, 190px);
+        height: clamp(130px, 23vh, 190px);
+    }
+
+    .links {
+        margin: 1.5vh 0;
+    }
+
+    .link-item {
+        margin-bottom: 0.5vh;
+        font-size: 1.15em;
+    }
+
+    .link-item i {
+        margin-bottom: 4px;
+        font-size: 3.5vh;
     }
 }
