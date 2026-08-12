@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Choose from 15 filling vegetarian and pescetarian meals, then cook from a concise mobile-friendly recipe view.">
+  <meta name="theme-color" content="#17352f">
+  <title>Plate Plan — Dinner, distilled</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#recipe-list">Skip to recipes</a>
+
+  <header class="site-header">
+    <a class="home-link" href="../../index.html" aria-label="Back to Anthony's project portfolio">
+      <span aria-hidden="true">←</span>
+      <span>All projects</span>
+    </a>
+    <div class="wordmark" aria-label="Plate Plan">
+      <span class="wordmark-dot" aria-hidden="true"></span>
+      <strong>PLATE PLAN</strong>
+    </div>
+    <p class="edition">15 reliable meals</p>
+  </header>
+
+  <main>
+    <section class="chooser" aria-label="Recipe chooser">
+      <h1 class="visually-hidden">Plate Plan meal chooser</h1>
+      <form class="filter-bar" data-filter-form>
+        <label class="search-control" for="recipe-search">
+          <span class="visually-hidden">Search meals</span>
+          <span aria-hidden="true">⌕</span>
+          <input id="recipe-search" type="search" placeholder="Search meals or ingredients" autocomplete="off" data-search>
+        </label>
+
+        <fieldset class="diet-filters">
+          <legend class="visually-hidden">Diet</legend>
+          <label><input type="radio" name="diet" value="all" checked><span>All</span></label>
+          <label><input type="radio" name="diet" value="vegetarian"><span>Vegetarian</span></label>
+          <label><input type="radio" name="diet" value="pescetarian"><span>Pescetarian</span></label>
+        </fieldset>
+
+        <div class="filter-actions">
+          <button class="random-action" type="button" data-pick-random>Pick for me</button>
+          <label class="check-filter"><input type="checkbox" data-quick><span>≤ 30 min</span></label>
+          <label class="check-filter"><input type="checkbox" data-meal-prep><span>Meal prep</span></label>
+          <label class="sort-control" for="recipe-sort">
+            <span>Sort</span>
+            <select id="recipe-sort" data-sort>
+              <option value="featured">Featured</option>
+              <option value="fastest">Fastest</option>
+              <option value="protein">Most protein</option>
+              <option value="cost">Lowest cost</option>
+            </select>
+          </label>
+          <span class="info-tip" tabindex="0" aria-describedby="estimate-tip" aria-label="About cost and nutrition estimates">
+            i
+            <span id="estimate-tip" role="tooltip">Cost and nutrition are estimates per serving; brands and local prices vary.</span>
+          </span>
+        </div>
+      </form>
+
+      <div class="app-shell">
+        <section class="library" aria-labelledby="library-title">
+          <div class="library-heading">
+            <h2 id="library-title">Recipes <span data-result-count>15</span></h2>
+            <p aria-live="polite" data-result-summary>Showing every recipe</p>
+          </div>
+
+          <div class="recipe-list" id="recipe-list" data-recipe-list></div>
+
+          <div class="empty-state" data-empty-state hidden>
+            <p>Nothing in the pantry for that one.</p>
+            <button type="button" data-clear-filters>Clear filters</button>
+          </div>
+        </section>
+
+        <aside class="detail-panel" data-detail-panel aria-label="Selected recipe">
+          <div class="detail-placeholder" data-detail-placeholder>
+            <strong>Select a recipe</strong>
+            <p>Ingredients, directions, cost, and nutrition will appear here.</p>
+          </div>
+          <article class="recipe-detail" data-recipe-detail hidden></article>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Costs and nutrition are practical estimates per serving. Brands, portions, and local prices vary.</p>
+    <p>Built for fewer tabs and better leftovers.</p>
+  </footer>
+
+  <noscript>This recipe chooser needs JavaScript enabled to filter and open meals.</noscript>
+  <script src="recipes.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
