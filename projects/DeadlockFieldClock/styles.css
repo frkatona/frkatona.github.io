@@ -102,9 +102,15 @@ a:focus-visible,
   min-width: 0;
 }
 
+.companion-nav {
+  display: flex;
+  align-items: stretch;
+  gap: 7px;
+  margin-left: clamp(2px, 1vw, 18px);
+}
+
 .companion-link {
   min-width: 108px;
-  margin-left: clamp(2px, 1vw, 18px);
   padding: 8px 11px 7px;
   color: var(--muted);
   border: 1px solid rgba(143, 188, 212, 0.22);
@@ -137,6 +143,14 @@ a:focus-visible,
   color: var(--text);
   border-color: var(--cyan);
   background: #11283a;
+}
+
+.companion-link-movement span {
+  color: var(--green);
+}
+
+.companion-link-movement:hover {
+  border-color: var(--green);
 }
 
 .brand-mark {
@@ -1083,7 +1097,7 @@ footer a:hover {
     display: none;
   }
 
-  .companion-link {
+  .companion-nav {
     display: none;
   }
 

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Deadlock dash-speed buckets and an interactive air-strafe and bunnyhop movement trainer.">
+  <title>Movement Lab - Deadlock Companion</title>
+  <link rel="icon" href="icons/bridge-buff.svg">
+  <link rel="stylesheet" href="movement.css">
+</head>
+<body>
+  <main class="movement-app">
+    <header class="movement-header">
+      <a class="back-link" href="index.html" aria-label="Return to Field Clock">
+        <span aria-hidden="true">&larr;</span>
+        <span>FIELD CLOCK</span>
+      </a>
+
+      <div class="movement-brand">
+        <p>DEADLOCK COMPANION</p>
+        <h1>MOVEMENT LAB</h1>
+      </div>
+
+      <nav class="page-nav" aria-label="Deadlock companion tools">
+        <a href="counterbuy.html">COUNTERBUY</a>
+        <a href="#trainer">PRACTICE</a>
+      </nav>
+    </header>
+
+    <section class="bucket-section" aria-labelledby="bucket-heading">
+      <div class="section-heading bucket-heading">
+        <div>
+          <p>GROUND DASH / SAME 10 M DISTANCE</p>
+          <h2 id="bucket-heading">DASH SPEED BUCKETS</h2>
+        </div>
+        <div class="bucket-definition">
+          <span class="info-icon" aria-hidden="true">i</span>
+          <p><strong>Shorter time = faster burst.</strong> The bucket changes dash speed, not walk speed. In air, faster dashes also deliver their impulse sooner.</p>
+        </div>
+      </div>
+
+      <div class="bucket-lanes" data-bucket-lanes></div>
+
+      <div class="bucket-scale" aria-hidden="true">
+        <span>START</span>
+        <div><i></i><i></i><i></i><i></i><i></i></div>
+        <strong>10 M</strong>
+      </div>
+    </section>
+
+    <section class="trainer-section" id="trainer" aria-labelledby="trainer-heading">
+      <div class="trainer-copy">
+        <div class="section-heading trainer-heading">
+          <div>
+            <p>BUILD THE FEEL</p>
+            <h2 id="trainer-heading">MOMENTUM TRAINER</h2>
+          </div>
+          <div class="drill-tabs" role="tablist" aria-label="Movement drill">
+            <button type="button" role="tab" aria-selected="true" data-drill="strafe">AIR STRAFE</button>
+            <button type="button" role="tab" aria-selected="false" data-drill="bhop">SLIDE HOP</button>
+          </div>
+        </div>
+
+        <div class="lesson-card">
+          <span class="lesson-number" data-lesson-number>01</span>
+          <div>
+            <strong data-lesson-title>PAIR THE TURN</strong>
+            <p data-lesson-copy>Release W. Hold A while steering left, or D while steering right. Smooth matching inputs bend your velocity and add a little speed.</p>
+          </div>
+        </div>
+
+        <div class="input-formula" data-input-formula aria-label="Air strafe input sequence">
+          <span class="keycap keycap-muted">W UP</span>
+          <span class="formula-arrow">+</span>
+          <span class="keycap">A</span>
+          <span class="mouse-turn">MOUSE <i>&larr;</i></span>
+          <span class="formula-or">OR</span>
+          <span class="keycap">D</span>
+          <span class="mouse-turn">MOUSE <i>&rarr;</i></span>
+        </div>
+
+        <div class="why-grid" data-why-grid>
+          <div>
+            <span>GOOD SYNC</span>
+            <strong>STRAFE + CAMERA TURN MATCH</strong>
+            <small>Velocity curves cleanly; momentum grows.</small>
+          </div>
+          <div>
+            <span>COMMON LEAK</span>
+            <strong>HOLDING W IN THE AIR</strong>
+            <small>Fights the sideways wish-direction.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="simulator-shell">
+        <div class="simulator-topbar">
+          <div class="live-stat">
+            <span>SPEED</span>
+            <strong><b data-speed>9.8</b> M/S</strong>
+          </div>
+          <div class="live-stat">
+            <span data-quality-label>INPUT SYNC</span>
+            <strong data-quality>WAITING</strong>
+          </div>
+          <div class="live-stat">
+            <span data-chain-label>BEST GAIN</span>
+            <strong data-chain>+0.0</strong>
+          </div>
+          <button class="reset-button" type="button" data-action="reset">RESET</button>
+        </div>
+
+        <div class="canvas-wrap" data-canvas-wrap>
+          <canvas data-movement-canvas aria-label="Interactive movement trajectory showing velocity, camera, wish direction, and the speed-dependent air-acceleration window"></canvas>
+          <div class="canvas-instruction" data-canvas-instruction>
+            <strong>HOLD A OR D</strong>
+            <span>Cursor distance from center sets camera angle</span>
+          </div>
+          <div class="timing-callout" data-timing-callout hidden>
+            <span data-timing-label>SLIDE WINDOW</span>
+            <i></i>
+          </div>
+        </div>
+
+        <div class="sim-controls">
+          <button type="button" class="control-key" data-hold-key="a" aria-label="Hold strafe left">A <small>STRAFE</small></button>
+          <button type="button" class="control-key control-w" data-hold-key="w" aria-label="Hold forward">W <small>FORWARD</small></button>
+          <button type="button" class="control-key" data-hold-key="d" aria-label="Hold strafe right">D <small>STRAFE</small></button>
+          <button type="button" class="control-key jump-key" data-action="jump">SPACE <small data-jump-label>LAUNCH / HOP</small></button>
+        </div>
+
+        <div class="coach-line" aria-live="polite">
+          <span data-coach-state>READY</span>
+          <p data-coach-copy>Use the keyboard or hold the buttons. Move the mouse over the track to steer.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>UNOFFICIAL FAN TOOL - GAME ASSETS &copy; VALVE</span>
+      <span>DASH DATA CHECKED SEP 8, 2026</span>
+      <div>
+        <a href="https://deadlock.wiki/Dashing" target="_blank" rel="noreferrer">DASH SOURCE</a>
+        <a href="https://deadlock.wiki/Air_Strafing" target="_blank" rel="noreferrer">STRAFE SOURCE</a>
+        <a href="https://github.com/SteamTracking/GameTracking-Deadlock/blob/master/DumpSource2/convars.txt" target="_blank" rel="noreferrer">GAME CVARS</a>
+        <a href="https://deadlock.wiki/Bunnyhopping/Slide_Bunnyhopping" target="_blank" rel="noreferrer">BHOP SOURCE</a>
+        <a href="https://youtu.be/lGrzMLOqjzE" target="_blank" rel="noreferrer">LEIF GUIDE</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="movement.js" defer></script>
+</body>
+</html>
