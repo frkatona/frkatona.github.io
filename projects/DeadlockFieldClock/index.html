@@ -117,11 +117,20 @@
         </div>
 
         <div class="preset-grid">
-          <button type="button" class="timer-preset preset-coral" data-timer="boss">
-            <span class="preset-icon"><img src="icons/mid-boss.png" alt="" width="76" height="76"></span>
-            <strong>BOSS DOWN</strong>
-            <small>START 07:00</small>
-          </button>
+          <div class="timer-preset preset-coral select-preset">
+            <button type="button" class="preset-start" data-timer="boss">
+              <span class="preset-icon"><img src="icons/mid-boss.png" alt="" width="76" height="76"></span>
+              <strong>BOSS DOWN</strong>
+            </button>
+            <label>
+              <span class="sr-only">Mid Boss respawn number</span>
+              <select data-boss-select>
+                <option value="0">FIRST · 7:00</option>
+                <option value="1">SECOND · 6:00</option>
+                <option value="2">LATER · 5:00</option>
+              </select>
+            </label>
+          </div>
           <button type="button" class="timer-preset preset-green" data-timer="rejuvenator">
             <span class="preset-icon"><img src="icons/rejuvenator.svg" alt="" width="76" height="76"></span>
             <strong>REJUV CLAIMED</strong>
@@ -132,8 +141,13 @@
             <strong>SINNER CLEARED</strong>
             <small>START 05:00</small>
           </button>
-          <div class="timer-preset preset-cyan camp-preset">
-            <button type="button" class="camp-start" data-timer="camp">
+          <button type="button" class="timer-preset preset-violet" data-timer="rift">
+            <span class="preset-icon"><img src="icons/unstable-rift.svg" alt="" width="76" height="76"></span>
+            <strong>RIFT ENDED</strong>
+            <small>NEXT WINDOW · 6–8M</small>
+          </button>
+          <div class="timer-preset preset-cyan select-preset">
+            <button type="button" class="preset-start" data-timer="camp">
               <span class="preset-icon"><img class="preset-icon-large icon-optical-center" data-camp-icon src="icons/neutral-small.png" alt="" width="76" height="76"></span>
               <strong>CAMP CLEARED</strong>
             </button>
@@ -141,8 +155,8 @@
               <span class="sr-only">Camp timer type</span>
               <select data-camp-select>
                 <option value="0">SMALL · 1:25</option>
-                <option value="1">MEDIUM · 5:00</option>
-                <option value="2">LARGE · 5:30</option>
+                <option value="1">MEDIUM · 4:50</option>
+                <option value="2">LARGE · 5:35</option>
               </select>
             </label>
           </div>
@@ -162,7 +176,7 @@
 
     <footer>
       <span>UNOFFICIAL FAN TOOL · GAME ASSETS © VALVE</span>
-      <a href="https://steamdb.info/patchnotes/24133845/" target="_blank" rel="noreferrer">PATCH 24133845 · UPDATED AUG 1, 2026</a>
+      <a href="https://steamdb.info/patchnotes/25354466/" target="_blank" rel="noreferrer">PATCH 25354466 · UPDATED SEP 26, 2026</a>
     </footer>
   </main>
 

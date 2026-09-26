@@ -12,6 +12,7 @@
   --amber: #ffb219;
   --coral: #ff5a48;
   --green: #61d46c;
+  --violet: #ad8cff;
 }
 
 * {
@@ -777,7 +778,7 @@ a:focus-visible,
 
 .preset-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 11px;
   padding: 22px 22px 16px;
 }
@@ -800,6 +801,12 @@ a:focus-visible,
   text-align: center;
   cursor: pointer;
   transition: background 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+  grid-column: span 2;
+}
+
+.timer-preset:nth-child(n + 4) {
+  min-height: 145px;
+  grid-column: span 3;
 }
 
 .timer-preset:hover {
@@ -811,6 +818,7 @@ a:focus-visible,
 .preset-amber { --preset-color: var(--amber); }
 .preset-cyan { --preset-color: var(--cyan); }
 .preset-green { --preset-color: var(--green); }
+.preset-violet { --preset-color: var(--violet); }
 
 .preset-icon {
   position: relative;
@@ -860,12 +868,12 @@ a:focus-visible,
   letter-spacing: 0.08em;
 }
 
-.camp-preset {
+.select-preset {
   padding: 0;
   overflow: hidden;
 }
 
-.camp-start {
+.preset-start {
   width: 100%;
   flex: 1;
   display: flex;
@@ -880,12 +888,12 @@ a:focus-visible,
   cursor: pointer;
 }
 
-.camp-preset label {
+.select-preset label {
   width: 100%;
   padding: 0 8px 9px;
 }
 
-.camp-preset select {
+.select-preset select {
   width: 100%;
   padding: 5px 4px;
   color: #d8e6e9;
@@ -967,6 +975,7 @@ a:focus-visible,
 .timer-amber { --timer-color: var(--amber); }
 .timer-cyan { --timer-color: var(--cyan); }
 .timer-green { --timer-color: var(--green); }
+.timer-violet { --timer-color: var(--violet); }
 
 .active-timer > img {
   width: 42px;
