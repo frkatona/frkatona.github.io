@@ -15,23 +15,26 @@
       towers: true,
       camps: true,
       economy: true,
+      healing: true,
       creeps: true,
     },
   };
 
   const baseEvents = [
-    event("small-camps", 2 * MINUTE, "02:00", "SMALL CAMPS", "camp", "camps", "icons/neutral-small.png", "JUNGLE ECONOMY", "The first quick neutral farm appears across the map.", [["RESPAWN", "~1:25"], ["SOULS", "UNSECURED"]]),
-    event("breakables", 3 * MINUTE, "03:00", "BOXES + STATUES SPAWN", "economy", "economy", "icons/golden-statue.png", "MAP ECONOMY", "Regular breakable boxes and Golden Statues appear. Boxes grant souls; statues grant a random permanent stat.", [["RESPAWN", "3:00"], ["STATUE BUFF", "PERMANENT"]]),
-    event("medium-camps", 5 * MINUTE, "05:00", "MEDIUM CAMPS", "camp", "camps", "icons/neutral-medium.png", "JUNGLE ECONOMY", "Medium camps become available for the first time.", [["FIRST SPAWN", "05:00"], ["RESPAWN", "4:50"]]),
+    event("small-camps", 2 * MINUTE, "02:00", "SMALL CAMPS", "camp", "camps", "icons/neutral-small.png", "HAUNT CAMPS", "Small Haunt camps become available. Clear every creature to start the return clock.", [["RESPAWN", "1:25"], ["SOULS", "UNSECURED"]]),
+    event("early-camps", 2 * MINUTE, "02:00", "EARLY CAMP EXCEPTIONS", "camp", "camps", "icons/neutral-medium.png", "BODEGA · THEATER · PLAZA", "Bodega upstairs, northeast Theater upstairs, and Plaza rink 01 use a special early schedule. Select EARLY CAMP for their retrigger timer.", [["FIRST SPAWN", "02:00"], ["FULL-CLEAR RETURN", "5:00"]]),
+    event("healing-snacks", 2 * MINUTE + 30, "~02:30", "HEALING SNACKS", "healing", "healing", "icons/healing-snack.svg", "MAP HEALING", "First appearance is approximately 2:30, based on reported match timing; the configured return interval is three minutes. Snacks restore 10% max health over four seconds.", [["FIRST SPAWN", "~02:30"], ["RETURN INTERVAL", "3:00"]]),
+    event("breakables", 3 * MINUTE, "03:00", "BOXES + STAT BUFFS SPAWN", "economy", "economy", "icons/golden-statue.png", "MAP ECONOMY", "Ordinary crates, Tough Crates, and Buff Containers appear. Tough Crates require heavy melee; Buff Containers replace Golden Statues and grant permanent stats.", [["RESPAWN", "3:00"], ["BUFF", "PERMANENT"]]),
+    event("medium-camps", 5 * MINUTE, "05:00", "MEDIUM CAMPS", "camp", "camps", "icons/neutral-medium.png", "HAUNT CAMPS", "Ordinary medium Haunt camps become available; the three early-camp exceptions appeared at 2:00.", [["FIRST SPAWN", "05:00"], ["RESPAWN", "4:50"]]),
     event("tunnel-breakables", 5 * MINUTE, "05:00", "TUNNEL BOXES SPAWN", "economy", "economy", "icons/breakable-box.png", "UNDERGROUND ECONOMY", "Breakables in the underground tunnels use a later schedule than surface boxes.", [["FIRST SPAWN", "05:00"], ["RESPAWN", "5:00"]]),
+    event("five-minute-breakables", 5 * MINUTE, "05:00", "BELL TOWER + LATE BOXES", "economy", "economy", "icons/breakable-box.png", "MAP ECONOMY", "The separate five-minute breakable group, including Bell Tower Tough Crates and Buff Containers, appears. These return faster than tunnel boxes.", [["FIRST SPAWN", "05:00"], ["RESPAWN", "3:00"]]),
     event("tower-t1-zero", 6 * MINUTE, "06:00", "T1 PASSIVE DR HITS 0%", "tower", "towers", "icons/tower-t1.svg", "PUSH WINDOW", "Lane Guardians cross 0% on their time-based damage resistance curve and continue becoming more vulnerable.", [["CURVE", "+50% → −50%"], ["FULL CURVE", "12:00"]]),
-    event("large-camps", 8 * MINUTE, "08:00", "LARGE CAMPS + SINNER’S", "sinner", "camps", "icons/neutral-vault.png", "JUNGLE ECONOMY", "Large camps and Sinner’s Sacrifice enter the map.", [["SINNER", "5:00"], ["LARGE", "5:35"]]),
+    event("large-camps", 8 * MINUTE, "08:00", "LARGE CAMPS + SINNER’S", "sinner", "camps", "icons/neutral-vault.png", "HAUNT CAMPS + SACRIFICES", "Large camps and Sinner’s Sacrifices enter the map, including Bell Tower and Sunken Plaza sacrifices. Finish the whole camp to start its return clock.", [["SINNER", "5:00"], ["LARGE", "5:35"]]),
     event("tower-t2-zero", 9 * MINUTE, "09:00", "T2 PASSIVE DR HITS 0%", "tower", "towers", "icons/tower-t2.svg", "PUSH WINDOW", "Walkers cross 0% on their time-based damage resistance curve and continue toward negative resistance.", [["CURVE", "+65% → −65%"], ["FULL CURVE", "18:00"]]),
     event("mid-boxes", 10 * MINUTE, "10:00", "MID BOXES SPAWN", "economy", "economy", "icons/breakable-box.png", "MAP ECONOMY", "The dense central breakables around the Mid Boss area become available.", [["FIRST SPAWN", "10:00"], ["RESPAWN", "3:00"]]),
-    event("statue-tier-2", 10 * MINUTE, "10:00", "STATUE BUFFS IMPROVE", "economy", "economy", "icons/golden-statue.png", "PERMANENT STATS · TIER 2", "Golden Statue permanent bonuses step up to their second strength tier.", [["TIER", "2 OF 3"], ["NEXT UPGRADE", "30:00"]]),
-    windowEvent("rift-1", 10 * MINUTE, 12 * MINUTE, "10:00–12:00", "FIRST UNSTABLE RIFT", "rift", "rift", "icons/unstable-rift.svg", "VARIABLE OBJECTIVE", "The first Rift appears at 11:00 ±1 minute. Start the Rift retrigger when it ends.", [["GLOBAL CALL", "20s"], ["NEXT RIFT", "6–8m AFTER"]]),
+    event("statue-tier-2", 10 * MINUTE, "10:00", "STAT BUFFS IMPROVE", "economy", "economy", "icons/golden-statue.png", "PERMANENT STATS · TIER 2", "Buff Container bonuses reach their second strength tier. The new pool also includes Bullet Resist, Spirit Resist, ability range, and move speed.", [["TIER", "2 OF 3"], ["NEXT UPGRADE", "30:00"]]),
     event("troopers-20", 20 * MINUTE, "20:00", "TROOPER WAVES SPEED UP", "creeps", "creeps", "icons/trooper.png", "LANE PRESSURE", "Lane Trooper waves become more frequent and their Spirit Resistance begins scaling upward.", [["WAVE INTERVAL", "25s"], ["SPIRIT RESIST", "SCALES UP"]]),
-    event("statue-tier-3", 30 * MINUTE, "30:00", "STATUE BUFFS IMPROVE AGAIN", "economy", "economy", "icons/golden-statue.png", "PERMANENT STATS · TIER 3", "Golden Statue permanent bonuses reach their late-game strength tier.", [["TIER", "3 OF 3"], ["HEALTH ROLL", "+30"]]),
+    event("statue-tier-3", 30 * MINUTE, "30:00", "STAT BUFFS IMPROVE AGAIN", "economy", "economy", "icons/golden-statue.png", "PERMANENT STATS · TIER 3", "Buff Container permanent bonuses reach their late-game strength tier.", [["TIER", "3 OF 3"], ["HEALTH ROLL", "+30"]]),
     event("troopers-35", 35 * MINUTE, "35:00", "TROOPERS EMPOWERED", "creeps", "creeps", "icons/trooper.png", "LATE-GAME LANE PRESSURE", "Lane Troopers grow larger, gain 50% health, and waves arrive more frequently.", [["WAVE INTERVAL", "20s"], ["HEALTH", "+50%"]]),
   ];
 
@@ -45,6 +48,15 @@
 
   function makeEvents() {
     const events = [...baseEvents];
+
+    // Client 6745: 720s initial centre, +/-60s; 420s scheduled advancement.
+    // Existing-objective gates can delay a spawn; capture time is not the anchor.
+    for (let centre = 12 * MINUTE; centre - MINUTE <= TRACKED_DURATION; centre += 7 * MINUTE) {
+      const start = centre - MINUTE;
+      const end = centre + MINUTE;
+      const first = centre === 12 * MINUTE;
+      events.push(windowEvent(`rift-${centre}`, start, end, `${formatTime(start)}–${formatTime(end)}`, first ? "FIRST UNSTABLE RIFT" : "RIFT EXPECTED", "rift", "rift", "icons/unstable-rift.svg", "ESTIMATED SPAWN WINDOW", "Expected spawn window on the match schedule, not a countdown from capture. An existing objective can delay the Rift beyond this window; check the in-game announcement.", [["SCHEDULED STEP", "7:00"], ["GLOBAL CALL", "20s BEFORE"]]));
+    }
 
     for (let time = 5 * MINUTE; time <= TRACKED_DURATION; time += 5 * MINUTE) {
       events.push(event(`bridge-${time}`, time, formatTime(time), "BRIDGE BUFFS", "bridge", "bridge", "icons/bridge-buff.svg", "TEMPORARY POWERUP", "Bridge powerups respawn on the fixed five-minute schedule. Heavy melee to claim one.", [["INTERVAL", "5:00"], ["SCALING", "5:00–40:00"]]));
@@ -64,6 +76,7 @@
     { title: "SMALL CAMP", duration: 85, icon: "icons/neutral-small.png" },
     { title: "MEDIUM CAMP", duration: 4 * MINUTE + 50, icon: "icons/neutral-medium.png" },
     { title: "LARGE CAMP", duration: 5 * MINUTE + 35, icon: "icons/neutral-large.png" },
+    { title: "EARLY CAMP", duration: 5 * MINUTE, icon: "icons/neutral-medium.png" },
   ];
   const bossPresets = [
     { title: "MID BOSS", duration: 7 * MINUTE, icon: "icons/mid-boss.png" },
@@ -183,7 +196,6 @@
     document.querySelector('[data-timer="boss"]').addEventListener("click", () => startTimer({ ...bossPresets[Number(bossSelect.value)], color: "coral" }));
     document.querySelector('[data-timer="rejuvenator"]').addEventListener("click", () => startTimer({ title: "REJUVENATOR", duration: 3 * MINUTE, icon: "icons/rejuvenator.svg", color: "green" }));
     document.querySelector('[data-timer="sinner"]').addEventListener("click", () => startTimer({ title: "SINNER’S", duration: 5 * MINUTE, icon: "icons/neutral-vault.png", color: "amber" }));
-    document.querySelector('[data-timer="rift"]').addEventListener("click", () => startTimer({ title: "RIFT WINDOW", duration: 8 * MINUTE, openAfter: 6 * MINUTE, icon: "icons/unstable-rift.svg", color: "violet" }));
     document.querySelector('[data-timer="camp"]').addEventListener("click", () => startTimer({ ...campPresets[Number(campSelect.value)], color: "cyan" }));
 
     campSelect.addEventListener("change", () => {
@@ -216,7 +228,6 @@
 
   function startTimer(preset) {
     const timer = { ...preset, id: nextTimerId++, targetSecond: seconds + preset.duration };
-    if (preset.openAfter) timer.openSecond = seconds + preset.openAfter;
     timers = [timer, ...timers.filter((item) => item.title !== timer.title)];
     renderTimers();
   }
@@ -225,7 +236,6 @@
     return {
       ...timer,
       targetSecond: timer.targetSecond + delta,
-      ...(timer.openSecond ? { openSecond: timer.openSecond + delta } : {}),
     };
   }
 
@@ -264,8 +274,9 @@
       window.requestAnimationFrame(() => {
         const activeRow = eventRows.querySelector(`[data-event-id="${active.id}"]`);
         if (!activeRow) return;
-        const desiredTop = eventRows.offsetTop + activeRow.offsetTop - eventList.clientHeight * 0.32;
-        eventList.scrollTo({ top: Math.max(0, desiredTop), behavior: "smooth" });
+        const desiredTop = eventList.scrollTop + activeRow.getBoundingClientRect().top - eventList.getBoundingClientRect().top - eventList.clientHeight * 0.32;
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
+        eventList.scrollTo({ top: Math.max(0, desiredTop), behavior });
       });
     }
   }
@@ -277,7 +288,7 @@
     let statusMarkup = "";
 
     if (status === "past") statusMarkup = "<span>PASSED</span>";
-    if (status === "live") statusMarkup = `<strong>${matchEvent.start === matchEvent.end ? "SPAWNED" : "WINDOW OPEN"}</strong>`;
+    if (status === "live") statusMarkup = `<strong>${matchEvent.start === matchEvent.end ? "SPAWNED" : "EXPECTED NOW"}</strong>`;
     if (status === "warning") statusMarkup = `<strong>${formatTime(countdown)}</strong><span>GET READY</span>`;
     if (status === "upcoming" && index === activeIndex) statusMarkup = `<strong>${formatTime(countdown)}</strong><span>UNTIL EVENT</span>`;
 
@@ -302,19 +313,13 @@
     }
 
     activeTimers.innerHTML = timers.map((timer) => {
-      const waitingForWindow = timer.openSecond && seconds < timer.openSecond;
-      const displayTarget = waitingForWindow ? timer.openSecond : timer.targetSecond;
-      const displayDuration = timer.openAfter
-        ? (waitingForWindow ? timer.openAfter : timer.duration - timer.openAfter)
-        : timer.duration;
-      const displayTitle = waitingForWindow ? `${timer.title} OPENS` : timer.title;
-      const remaining = Math.max(0, displayTarget - seconds);
-      const progress = Math.max(0, Math.min(1, remaining / displayDuration));
+      const remaining = Math.max(0, timer.targetSecond - seconds);
+      const progress = Math.max(0, Math.min(1, remaining / timer.duration));
       const largeClass = timer.title.includes("CAMP") || timer.title.includes("SINNER") ? "active-icon-large" : "";
       return `
         <article class="active-timer timer-${timer.color}">
           <img class="${largeClass}" src="${timer.icon}" alt="" width="56" height="56">
-          <div><span>${displayTitle}</span><strong>${formatTime(remaining)}</strong></div>
+          <div><span>${timer.title}</span><strong>${formatTime(remaining)}</strong></div>
           <div class="timer-ring" style="--progress:${progress * 360}deg" aria-hidden="true"></div>
           <button type="button" data-cancel-timer="${timer.id}" aria-label="Cancel ${timer.title} timer">×</button>
         </article>`;
