@@ -595,6 +595,10 @@ a:focus-visible,
   border-right: 1px solid rgba(143, 188, 212, 0.12);
 }
 
+.event-time-window {
+  font-size: clamp(14px, 1.35vw, 23px);
+}
+
 .event-icon {
   width: 54px;
   height: 54px;
@@ -1272,6 +1276,10 @@ footer a:hover {
   .event-time {
     padding-inline: 8px;
     font-size: 15px;
+  }
+
+  .event-time-window {
+    font-size: 12px;
   }
 
   .event-icon {

@@ -294,7 +294,7 @@
 
     return `
       <article class="event-row event-${matchEvent.kind} is-${status} ${index === activeIndex ? "is-focus" : ""}" data-event-id="${matchEvent.id}" tabindex="0">
-        <div class="event-time">${matchEvent.timeLabel}</div>
+        <div class="event-time ${matchEvent.end > matchEvent.start ? "event-time-window" : ""}">${matchEvent.timeLabel}</div>
         <div class="event-icon-wrap"><img class="event-icon event-icon-${matchEvent.kind} ${enlargedIcon ? "event-icon-large" : ""}" src="${matchEvent.icon}" alt="" width="88" height="88"></div>
         <div class="event-copy"><span>${matchEvent.eyebrow}</span><h3>${matchEvent.title}</h3></div>
         <div class="event-status">${statusMarkup}</div>
