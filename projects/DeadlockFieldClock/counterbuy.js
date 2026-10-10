@@ -66,12 +66,22 @@
   }]));
 
   const rec = (item, target, note) => ({ item, target, note });
-  const hero = (id, name, color, recommendations) => ({
+  const hero = (id, name, color, recommendations, portrait = {}) => ({
     id,
     name,
     color,
     image: `counterbuy-assets/heroes/${id}.webp`,
     recommendations,
+    ...portrait,
+  });
+
+  // Original Valve top-bar portraits from client 6774, extracted Oct 10, 2026.
+  // Keep their exact HUD pixels available to the forthcoming lineup scanner.
+  const hudPortrait = (id, gameHeroId, gameClassName) => ({
+    hudImage: `counterbuy-assets/heroes/${id}.webp`,
+    portraitLayout: "vertical",
+    gameHeroId,
+    gameClassName,
   });
 
   const heroes = [
@@ -88,6 +98,7 @@
       rec("counterspell", "Ultimate silence", "Can answer the ultimate before or after its silence lands."),
       rec("spellbreaker", "Spirit burst", "Large spirit resistance blunts his burst window."),
     ]),
+    hero("baba", "Baba", "#df96b7", [], hudPortrait("baba", 88, "hero_baba")),
     hero("bebop", "Bebop", "#d4a86f", [
       rec("warp-stone", "Hook follow-up", "Break line of sight or escape around a corner after the hook."),
       rec("counterspell", "Sticky Bomb", "Block the bomb timing when the target is predictable."),
@@ -116,6 +127,7 @@
       rec("dispel-magic", "Light Eater Sack", "Removing the buff nullifies much of her damage."),
       rec("disarming-hex", "Gun follow-up", "Turns off the weapon damage hidden inside her kit."),
     ]),
+    hero("deadman-danny", "Deadman Danny", "#e6bb57", [], hudPortrait("deadman-danny", 78, "hero_deadpack")),
     hero("the-doorman", "The Doorman", "#7fb5db", [
       rec("silence-wave", "Door setup", "His door is not movement, so use silence or crowd control instead of Slowing Hex."),
       rec("warp-stone", "Ultimate exit", "Reposition after the combo to avoid the prepared follow-up."),
@@ -222,6 +234,7 @@
       rec("indomitable", "Combo", "Automatic control protection in a 1v1 scenario."),
       rec("unstoppable", "Combo", "Reliable immunity when multiple enemy controls justify it."),
     ]),
+    hero("nurse-harrow", "Nurse Harrow", "#82c5ae", [], hudPortrait("nurse-harrow", 87, "hero_nurse")),
     hero("paige", "Paige", "#8eb4f7", [
       rec("dispel-magic", "Root + Knockdown", "Removes both her root and the Knockdown she commonly buys."),
       rec("unstoppable", "Control chain", "Required if repeated roots and purchased control are overwhelming."),
@@ -237,6 +250,7 @@
       rec("cursed-relic", "Escape chain", "A hard disable that prevents Cloak and Satchel escapes."),
       rec("divine-barrier", "Affliction", "Absorbs much of the ultimate when reactions are slower."),
     ]),
+    hero("rat-king", "Rat King", "#bf9675", [], hudPortrait("rat-king", 84, "hero_ratking")),
     hero("rem", "Rem", "#d995c5", [
       rec("slowing-hex", "Ally jump", "Stops the movement ability and can strand both Rem and the intended ally."),
       rec("healbane", "Team healing", "A cheap answer to Rem's high recent healing output."),
@@ -267,6 +281,7 @@
       rec("unstoppable", "Copied crowd control", "Protects against the most dangerous control ultimates he can copy."),
       rec("spellbreaker", "Spirit bolts", "Mitigates the extremely high-damage spirit bolts."),
     ]),
+    hero("solomon", "Solomon", "#72c4c2", [], hudPortrait("solomon", 85, "hero_chessmaster")),
     hero("venator", "Venator", "#95b5e3", [
       rec("metal-skin", "Gun + ultimate", "Blocks both his primary weapon damage and the full ultimate."),
       rec("disarming-hex", "Gun + ultimate", "If he cannot fire, he cannot deliver his core damage."),
@@ -283,6 +298,7 @@
       rec("knockdown", "Flight", "Brings her to the ground and forces a defensive counter purchase."),
       rec("phantom-strike", "Flight", "Hard-engages and ruins her ability to play at aerial range."),
     ]),
+    hero("violet", "Violet", "#b698df", [], hudPortrait("violet", 86, "hero_artist")),
     hero("viscous", "Viscous", "#8ece64", [
       rec("rebuttal", "Puddle Punch", "Parry a Puddle Punch to heal and gain the transcript's noted damage amplification."),
       rec("cursed-relic", "The Cube", "The Cube is a buff; Cursed Relic can remove it."),
@@ -321,6 +337,10 @@
   ];
 
   const heroById = Object.fromEntries(heroes.map((entry) => [entry.id, entry]));
+  // Read-only portrait catalog for recognition without exposing/mutating guide data.
+  window.DeadlockHeroPortraits = Object.freeze(heroes.map(({ id, name, image, hudImage, gameHeroId, gameClassName }) => Object.freeze({
+    id, name, image, hudImage: hudImage || null, gameHeroId: gameHeroId || null, gameClassName: gameClassName || null,
+  })));
   const lineupSlots = document.querySelector("[data-lineup-slots]");
   const lineupCount = document.querySelector("[data-lineup-count]");
   const overlapList = document.querySelector("[data-overlap-list]");
@@ -417,7 +437,7 @@
         slots.push(`
           <div class="hero-slot" style="--hero-color:${entry.color}">
             <button class="hero-slot-main" type="button" data-slot-index="${index}" data-hero-id="${entry.id}" aria-label="Replace ${entry.name}">
-              <img class="hero-slot-image" src="${entry.image}" alt="">
+              <img class="hero-slot-image ${entry.portraitLayout === "vertical" ? "portrait-vertical" : ""}" src="${entry.image}" alt="">
               <span class="hero-slot-copy">
                 <small>ENEMY ${index + 1}</small>
                 <strong>${entry.name.toUpperCase()}</strong>
@@ -438,6 +458,7 @@
   }
 
   function renderOverlap() {
+    overlapList.classList.remove("is-uncovered");
     if (!selected.length) {
       overlapList.innerHTML = '<div class="empty-lineup"><div><strong>NO LINEUP YET</strong><span>Add an enemy to rank shared counter items.</span></div></div>';
       return;
@@ -459,6 +480,12 @@
       }
       return b.heroes.length - a.heroes.length || a.item.cost - b.item.cost || a.item.name.localeCompare(b.item.name);
     });
+
+    if (!sorted.length) {
+      overlapList.classList.add("is-uncovered");
+      overlapList.innerHTML = '<div class="empty-lineup"><div><strong>COUNTER ADVICE NOT ADDED YET</strong><span>These heroes are selectable, but are not covered by the provided video guide.</span></div></div>';
+      return;
+    }
 
     overlapList.innerHTML = sorted.map((entry, index) => {
       const shared = entry.heroes.length > 1;
@@ -491,7 +518,8 @@
     const cells = ['<div class="matrix-corner">SOUL TIER</div>'];
     selected.forEach((heroId) => {
       const entry = heroById[heroId];
-      cells.push(`<div class="matrix-hero" style="--hero-color:${entry.color}"><img src="${entry.image}" alt=""><strong>${entry.name.toUpperCase()}</strong></div>`);
+      const coverageInfo = entry.recommendations.length ? "" : `<button class="coverage-info" type="button" aria-label="${entry.name}: counter advice has not been added"><span aria-hidden="true">i</span><span class="coverage-tooltip" role="tooltip">Portrait available. This hero is not covered by the provided AShires video; counter-item advice has not been added yet.</span></button>`;
+      cells.push(`<div class="matrix-hero" style="--hero-color:${entry.color}"><img class="${entry.portraitLayout === "vertical" ? "portrait-vertical" : ""}" src="${entry.image}" alt=""><strong>${entry.name.toUpperCase()}</strong>${coverageInfo}</div>`);
     });
 
     TIERS.forEach((tier) => {
@@ -500,7 +528,9 @@
         const entry = heroById[heroId];
         const recommendations = entry.recommendations.filter((recommendation) => items[recommendation.item].cost === tier);
         if (!recommendations.length) {
-          cells.push('<div class="recommendation-cell is-empty" aria-label="No recommendation at this tier">-</div>');
+          const noGuide = !entry.recommendations.length;
+          const message = noGuide && tier === TIERS[0] ? "NO GUIDE DATA" : "-";
+          cells.push(`<div class="recommendation-cell is-empty${noGuide ? " is-uncovered" : ""}" aria-label="${noGuide ? `${entry.name}: counter advice has not been added` : "No recommendation at this tier"}">${message}</div>`);
           return;
         }
         cells.push(`<div class="recommendation-cell">${recommendations.map((recommendation) => itemCardHtml(recommendation)).join("")}</div>`);
@@ -546,7 +576,7 @@
       if (isEnterTarget) enterTargetAssigned = true;
       return `
         <button class="hero-choice${isEnterTarget ? " is-enter-target" : ""}" type="button" data-hero-choice="${entry.id}" ${alreadySelected ? "disabled" : ""} style="--hero-color:${entry.color}">
-          <img src="${entry.image}" alt="">
+          <img class="${entry.portraitLayout === "vertical" ? "portrait-vertical" : ""}" src="${entry.image}" alt="">
           <span>${entry.name.toUpperCase()}</span>
         </button>`;
     }).join("");

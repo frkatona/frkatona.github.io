@@ -408,6 +408,17 @@ select:focus-visible,
   scrollbar-color: rgba(76, 215, 245, 0.3) transparent;
 }
 
+.overlap-list.is-uncovered {
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+.overlap-list.is-uncovered .empty-lineup {
+  min-height: 60px;
+  place-items: start;
+  padding: 12px 14px;
+  text-align: left;
+}
+
 .overlap-card {
   --tier-color: var(--tier-3200);
   --type-color: var(--type-spirit);
@@ -573,12 +584,49 @@ select:focus-visible,
 }
 
 .matrix-hero {
+  position: relative;
   min-height: 48px;
   display: flex;
   align-items: center;
   gap: 9px;
   padding: 6px 10px;
   background: rgba(12, 30, 44, 0.58);
+}
+
+.coverage-info {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-left: auto;
+  padding: 0;
+  color: #a1b2bd;
+  border: 1px solid #657b88;
+  border-radius: 50%;
+  background: transparent;
+  font: italic 11px Georgia, serif;
+  cursor: help;
+}
+
+.coverage-tooltip {
+  position: absolute;
+  z-index: 15;
+  top: calc(100% - 2px);
+  right: 8px;
+  width: min(250px, calc(100vw - 40px));
+  padding: 12px 14px;
+  color: var(--text);
+  border: 1px solid var(--hero-color);
+  background: #07131e;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  font: 12px/1.5 var(--font-sans);
+  text-align: left;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.coverage-info:hover .coverage-tooltip,
+.coverage-info:focus .coverage-tooltip {
+  visibility: visible;
 }
 
 .matrix-hero img {
@@ -634,6 +682,20 @@ select:focus-visible,
   color: rgba(98, 124, 139, 0.34);
   font-family: var(--font-mono);
   font-size: 16px;
+}
+
+.recommendation-cell.is-uncovered {
+  color: #8296a3;
+  font: 9px var(--font-sans);
+  letter-spacing: 0.07em;
+}
+
+/* Display a face-sized crop; the source image stays intact for HUD matching. */
+.hero-choice img.portrait-vertical,
+.hero-slot-image.portrait-vertical,
+.matrix-hero img.portrait-vertical {
+  object-fit: cover;
+  object-position: center 30%;
 }
 
 .item-card {
@@ -978,6 +1040,7 @@ footer a:hover {
   }
 
   .counterbuy-header {
+    grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 10px;
     padding-inline: 12px;
   }
@@ -987,7 +1050,16 @@ footer a:hover {
   }
 
   .counterbuy-brand h1 {
-    font-size: 24px;
+    font-size: clamp(16px, 5vw, 24px);
+  }
+
+  .counterbuy-brand {
+    min-width: 0;
+  }
+
+  .video-credit {
+    max-width: 100%;
+    white-space: normal;
   }
 
   .lineup-section,
@@ -997,7 +1069,7 @@ footer a:hover {
   }
 
   .lineup-slots {
-    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .section-heading > span {
@@ -1009,7 +1081,7 @@ footer a:hover {
   }
 
   .hero-grid {
-    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   footer {
