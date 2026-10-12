@@ -150,6 +150,14 @@ a:focus-visible,
   color: var(--green);
 }
 
+/* Keep all companion tools within the existing clock header width. */
+.companion-nav-tools { flex-direction: column; gap: 4px; }
+.companion-nav-tools .companion-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 5px 8px; min-width: 168px; }
+.companion-nav-tools .companion-link span { margin: 0; }
+.menu-tools { display: flex; justify-content: space-between; gap: 10px; padding: 0 0 15px; }
+.menu-tools a { color: var(--cyan); font-size: 10px; text-decoration: none; }
+.menu-tools a:hover { text-decoration: underline; }
+
 .companion-link-movement:hover {
   border-color: var(--green);
 }
