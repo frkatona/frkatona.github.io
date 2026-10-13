@@ -61,18 +61,35 @@
     boons: "https://deadlock.wiki/Boon",
     investment: "https://deadlock.wiki/Items",
     waves: "https://dramalock.org/guides/deadlock-creeps-troopers-lane-guide/",
+    camps: "https://deadlock.wiki/Haunt",
+    campModel: "https://mobalytics.gg/deadlock/guides/jungle-guide",
+    kills: "https://deadlock.wiki/Deadlock:Tools",
+    killDistribution: "https://www.dltimes.com/articles/deadlock-comeback-system",
   };
-  const bounty = (type, minute, { wave = false, run = false, onDrop = false } = {}) => {
+  // Representative composition means, NOT a census weighted by map locations.
+  // Medium: mean of [2S+M, S+2M, 3M]. Large: mean of [L+2M, 3L].
+  const campCompositions = Object.freeze({
+    "small-camp": { start: 2, small: 3, medium: 0, large: 0 },
+    "medium-camp": { start: 5, small: 1, medium: 2, large: 0 },
+    "large-camp": { start: 8, small: 0, medium: 1, large: 2 },
+  });
+  const bounty = (type, minute, { wave = false, run = false, onDrop = false, soloKill = true } = {}) => {
     const t = Math.max(0, minute);
     if (type === "creep") return (100 + 2 * t) * (wave ? 4 : 1);
     if (type === "box") return t < 3 ? null : (23 + 2 * t) * (onDrop ? 1 : 0.6) * (run ? 10 : 1);
     if (type === "sinner") return t < 8 ? null : 310 + 3.35 * t;
+    const camp = campCompositions[type];
+    if (camp) return t < camp.start ? null : camp.small * (41 + 0.44 * t) + camp.medium * (68 + 0.73 * t) + camp.large * (181 + 1.95 * t);
+    // Equal team net worth, victim at killer-team average; no first-kill,
+    // comeback or hero-specific bonus, no dropped haunted souls. Continuous
+    // reward curve (actual per-kill rounding can differ by about one soul).
+    if (type === "hero-kill") return Math.min(2200, 200 + 50 * t) * (soloKill ? 1.25 : 1);
     throw new Error(`Unknown bounty type: ${type}`);
   };
   const waveInterval = minute => minute >= 35 ? 20 : minute >= 20 ? 25 : 30;
   const laneSupply = minute => bounty("creep", minute, { wave: true }) * 60 / waveInterval(minute);
   const milestoneTime = (totalSouls, income) => Math.max(0, (totalSouls - 600) / Math.max(1, income));
-  const api = Object.freeze({ heroes, guides, sources, bounty, waveInterval, laneSupply, milestoneTime });
+  const api = Object.freeze({ heroes, guides, sources, campCompositions, bounty, waveInterval, laneSupply, milestoneTime });
   if (typeof window !== "undefined") window.DeadlockEconomy = api;
   if (typeof module !== "undefined") module.exports = api;
 })();
