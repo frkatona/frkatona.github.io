@@ -16,7 +16,8 @@
   const state = {
     wave: saved.wave === true, run: saved.run === true, onDrop: saved.onDrop === true,
     soloKill: saved.soloKill !== false,
-    hiddenSeries: Array.isArray(saved.hiddenSeries) ? saved.hiddenSeries.filter(id => typeof id === "string") : [],
+    riftTeam: saved.riftTeam === true,
+    hiddenSeries: data.initialHiddenSeries(saved.hiddenSeries),
     end: [30, 45, 60].includes(saved.end) ? saved.end : 45,
     minute: clamp(finite(saved.minute, 10), 0, 60),
     hero: data.heroes.some(hero => hero.id === saved.hero) ? saved.hero : "",
@@ -36,6 +37,8 @@
     { id: "medium-camp", name: "medium camp", color: "#7aa6ff", start: 5, dash: "8 4" },
     { id: "large-camp", name: "large camp", color: "#ea95d0", start: 8, dash: "12 3 2 3" },
     { id: "hero-kill", name: "equal-worth hero kill", color: "#ff806e", start: 0, dash: "2 5", breaks: [40] },
+    { id: "rift", name: "Unstable Rift", color: "#f3f0ba", start: 13, dash: "9 3 2 3" },
+    { id: "urn", name: "Soul Urn", color: "#f49c56", start: 10, step: 5, dash: "6 3" },
   ];
   const visibleTypes = () => types.filter(type => !state.hiddenSeries.includes(type.id));
 
@@ -64,6 +67,7 @@
   function renderControls() {
     $("#time-window").value = state.end;
     $("#on-drop").checked = state.onDrop;
+    document.querySelectorAll("[data-rift]").forEach(button => button.setAttribute("aria-pressed", String(state.riftTeam === (button.dataset.rift === "team"))));
     document.querySelectorAll("[data-series]").forEach(input => {
       input.checked = !state.hiddenSeries.includes(input.dataset.series);
       input.closest(".series-card").classList.toggle("series-muted", !input.checked);
@@ -109,6 +113,7 @@
   function renderValues() {
     for (const type of types) $("#" + type.id + "-value").textContent = format(data.bounty(type.id, state.minute, state));
     $("#box-mode-label").textContent = state.onDrop ? "all drop" : "average";
+    $("#rift-mode-label").textContent = state.riftTeam ? "souls · team total" : "souls · per hero";
     $("#kill-basis-label").textContent = `KILL: ${state.soloKill ? "SOLO ×1.25" : "BASE BOUNTY"} · NO COMEBACK`;
     $("#inspect-time").max = state.end;
     $("#inspect-time").value = state.minute;
@@ -157,7 +162,7 @@
     const x = t => l + t / state.end * (w - l - r);
     const y = value => h - bottom - value / maximum * (h - bottom - top);
     svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
-    let html = '<title id="chart-title">Soul rewards versus match time</title><desc id="chart-desc">Compare Troopers, boxes, Sinner’s, three modeled camp sizes and equal-worth hero kills. Card checkboxes control visible curves. Hero-kill bounty caps at minute 40. Vertical green lines are estimated build milestones. Use the time slider for exact values.</desc>';
+    let html = '<title id="chart-title">Soul rewards versus match time</title><desc id="chart-desc">Compare Troopers, boxes, Sinner’s, three modeled camp sizes, equal-worth hero kills, Rift and Urn. Card checkboxes control visible curves. Urn values step at scheduled spawns. Rift defaults to one sixth of the team bounty. Hero-kill bounty caps at minute 40. Vertical green lines are estimated build milestones. Use the time slider for exact values.</desc>';
     html += grid({ w, h, l, r, top, bottom, maximum, step, x, y });
     markers.forEach((marker, index) => {
       if (marker.early > state.end) return;
@@ -169,7 +174,14 @@
     shown.forEach(type => {
       const begin = data.bounty(type.id, type.start, state);
       const points = [type.start, ...(type.breaks || []).filter(t => t > type.start && t < state.end), state.end];
-      const path = points.map((t, index) => `${index ? "L" : "M"} ${x(t)} ${y(data.bounty(type.id, t, state))}`).join(" ");
+      let path = points.map((t, index) => `${index ? "L" : "M"} ${x(t)} ${y(data.bounty(type.id, t, state))}`).join(" ");
+      if (type.step) {
+        path = `M ${x(type.start)} ${y(begin)}`;
+        for (let t = type.start + type.step; t <= state.end; t += type.step) {
+          path += ` H ${x(t)} V ${y(data.bounty(type.id, t, state))}`;
+        }
+        path += ` H ${x(state.end)}`;
+      }
       html += `<path class="chart-line" data-curve="${type.id}" stroke="${type.color}" ${type.dash ? `stroke-dasharray="${type.dash}"` : ""} d="${path}"/><circle cx="${x(type.start)}" cy="${y(begin)}" r="3" fill="${type.color}"/>`;
     });
     if (!shown.length) html += `<text class="chart-axis" x="${w / 2}" y="${h / 2}" text-anchor="middle">Check a card above to show its curve</text>`;
@@ -233,6 +245,9 @@
   });
   document.querySelectorAll("[data-kill]").forEach(button => button.addEventListener("click", () => {
     state.soloKill = button.dataset.kill === "solo"; update();
+  }));
+  document.querySelectorAll("[data-rift]").forEach(button => button.addEventListener("click", () => {
+    state.riftTeam = button.dataset.rift === "team"; update();
   }));
   document.querySelectorAll("[data-unit]").forEach(button => button.addEventListener("click", () => {
     state[button.dataset.unit === "creep" ? "wave" : "run"] = button.dataset.value === "group"; update();

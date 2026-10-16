@@ -2,7 +2,26 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
-const { bounty, laneSupply, waveInterval, milestoneTime, heroes, guides } = require("./economy-data.js");
+const { bounty, initialHiddenSeries, laneSupply, waveInterval, milestoneTime, heroes, guides } = require("./economy-data.js");
+
+test("Rift shares and spawn-locked Urn rewards exclude bonuses", () => {
+  assert.equal(bounty("rift", 12.999), null);
+  assert.equal(bounty("rift", 13), 247);
+  assert.equal(bounty("rift", 20), 506);
+  assert.equal(bounty("rift", 20, {riftTeam:true}), 3036);
+  assert.equal(bounty("urn", 9.999), null);
+  assert.equal(bounty("urn", 10), 950);
+  assert.equal(bounty("urn", 14.999), 950);
+  assert.equal(bounty("urn", 15), 1300);
+  assert.equal(bounty("urn", 17.5), 1300);
+  assert.equal(bounty("urn", 60), 4450);
+});
+
+test("Rift, Urn and Kill start hidden even with saved opt-ins", () => {
+  assert.deepEqual(initialHiddenSeries(), ["rift", "urn", "hero-kill"]);
+  assert.deepEqual(initialHiddenSeries([]), ["rift", "urn", "hero-kill"]);
+  assert.deepEqual(initialHiddenSeries(["box", "urn", null]), ["box", "urn", "rift", "hero-kill"]);
+});
 
 test("full bounty formulas and independent group toggles", () => {
   assert.equal(bounty("creep", 10), 120);
