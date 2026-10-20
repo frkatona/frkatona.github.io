@@ -1,0 +1,21 @@
+{
+  "title": "Ponyo",
+  "description": "Ponyo shaking off water in the Lemont park",
+  "tags": {
+    "subject": [
+      "ponyo"
+    ],
+    "location": [
+      "Lemont"
+    ],
+    "cameraDetails": [
+      "Sony a6400",
+      "f/1.8"
+    ],
+    "other": []
+  },
+  "captureDate": "2026-10-01",
+  "featured": false,
+  "visible": true,
+  "status": "updated"
+}

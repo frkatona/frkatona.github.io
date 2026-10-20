@@ -1,0 +1,127 @@
+{
+  "models": {
+    "police-lady": {
+      "visible": true,
+      "name": "Police Lady",
+      "description": "Rigged/animated asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "categoryLabel": "Character",
+      "defaultAnimation": "idleCrouch-loop",
+      "albedo": "",
+      "thumbnail": "assets/thumbnails/police-lady-thumbnail-2.png"
+    },
+    "handgun": {
+      "visible": true,
+      "name": "Handgun",
+      "description": "Handgun asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "categoryLabel": "Prop",
+      "defaultAnimation": "",
+      "albedo": "",
+      "thumbnail": "assets/thumbnails/handgun-thumbnail.png"
+    },
+    "wall-unit": {
+      "visible": true,
+      "name": "Compound Wall Unit",
+      "description": "Wall environment asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "categoryLabel": "Environment",
+      "defaultAnimation": "",
+      "albedo": "",
+      "thumbnail": "assets/thumbnails/wall-unit-thumbnail-2.png"
+    },
+    "barrel-pallet": {
+      "visible": true,
+      "name": "Barrel Pallet",
+      "description": "Asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "categoryLabel": "Environment",
+      "defaultAnimation": "",
+      "albedo": "",
+      "thumbnail": "assets/thumbnails/barrel-pallet-thumbnail.png"
+    },
+    "brush-motor": {
+      "name": "Brush Motor",
+      "description": "Mechanical brush motor assembly.",
+      "categoryLabel": "Prop",
+      "defaultAnimation": "",
+      "albedo": "",
+      "visible": false
+    },
+    "smg": {
+      "visible": true,
+      "name": "SMG",
+      "description": "Gun asset modeled after the PPK-20 made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "categoryLabel": "Prop",
+      "defaultAnimation": "",
+      "albedo": "",
+      "thumbnail": "assets/thumbnails/smg-thumbnail.png"
+    },
+    "dresser": {
+      "visible": true,
+      "name": "Dresser",
+      "description": "Furniture asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "categoryLabel": "Environment",
+      "defaultAnimation": "",
+      "albedo": "",
+      "thumbnail": "assets/thumbnails/dresser-thumbnail.png"
+    },
+    "low-poly-mario": {
+      "thumbnail": "assets/thumbnails/low-poly-mario-thumbnail.png"
+    },
+    "wall": {
+      "defaultAnimation": "",
+      "name": "Gemstone Wall",
+      "description": "Textured modular gemstone wall.",
+      "categoryLabel": "Environment",
+      "albedo": "",
+      "visible": false
+    },
+    "head-scared": {
+      "defaultAnimation": "",
+      "name": "Scared Head",
+      "description": "Expressive frightened head sculpt.",
+      "categoryLabel": "Prop",
+      "albedo": "",
+      "visible": false
+    },
+    "tensile-mockup": {
+      "defaultAnimation": "Cube.002Action",
+      "name": "Tensile Mockup",
+      "description": "Tensile structural mockup.",
+      "categoryLabel": "Prop",
+      "albedo": "",
+      "visible": false
+    },
+    "terminal": {
+      "thumbnail": "assets/thumbnails/terminal-thumbnail-5.png"
+    },
+    "fbi-badge": {
+      "thumbnail": "assets/thumbnails/fbi-badge-thumbnail.png"
+    },
+    "character": {
+      "thumbnail": "assets/thumbnails/character-thumbnail-3.png",
+      "defaultAnimation": "shove-loop",
+      "visible": true,
+      "name": "Winter Foreman",
+      "description": "Stylized animated winter worker.",
+      "categoryLabel": "Character",
+      "albedo": ""
+    },
+    "snowboarder-character": {
+      "thumbnail": "assets/thumbnails/snowboarder-character-thumbnail.png",
+      "defaultAnimation": "jumpLand",
+      "visible": true,
+      "name": "Snowboarder Character",
+      "description": "Animated downhill snowboarder character.",
+      "categoryLabel": "Character",
+      "albedo": ""
+    },
+    "squirrel-lady": {
+      "thumbnail": "assets/thumbnails/squirrel-lady-thumbnail.png",
+      "defaultAnimation": "run-loop",
+      "visible": true,
+      "name": "Squirrel Lady",
+      "description": "Woodland hero.",
+      "categoryLabel": "Character",
+      "albedo": "assets/characters/albedo.png"
+    }
+  },
+  "sounds": {}
+}

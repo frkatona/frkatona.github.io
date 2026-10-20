@@ -1007,7 +1007,7 @@
                     const mResp = await fetch(base + 'manifest.json', { cache: 'no-cache' });
                     if (mResp.ok) {
                         const manifest = await mResp.json();
-                        const items = manifest.map((entry, idx) => {
+                        const items = manifest.filter((entry) => entry.visible !== false).map((entry, idx) => {
                             const fname = entry.file || entry.filename || entry.path;
                             // Resolve cover: if it's an absolute URL or root-relative path, use as-is, otherwise resolve against base
                             let coverSrc = undefined;

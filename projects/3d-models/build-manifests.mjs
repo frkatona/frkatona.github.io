@@ -183,8 +183,14 @@ const modelOverrides = {
 };
 
 async function main() {
-  const models = await buildModelManifest();
-  const sounds = await buildSoundManifest();
+  let overrides = { models: {}, sounds: {} };
+  try {
+    overrides = JSON.parse(await readFile(path.join(assetsDirectory, "portfolio-overrides.json"), "utf8"));
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+  const models = (await buildModelManifest()).map((model) => ({ ...model, ...overrides.models?.[model.id] }));
+  const sounds = (await buildSoundManifest()).map((sound) => ({ ...sound, ...overrides.sounds?.[sound.id] }));
 
   await writeFile(
     path.join(assetsDirectory, "models.json"),
@@ -352,7 +358,7 @@ async function analyzeSound(filePath) {
   const probe = spawnSync(
     "ffprobe",
     ["-v", "error", "-select_streams", "a:0", "-show_entries", "stream=sample_rate,channels:format=duration", "-of", "json", filePath],
-    { encoding: "utf8", maxBuffer: 4 * 1024 * 1024 },
+    { encoding: "utf8", maxBuffer: 4 * 1024 * 1024, windowsHide: true, timeout: 60000 },
   );
   if (probe.status !== 0) throw new Error(`ffprobe failed for ${filePath}: ${probe.stderr}`);
 
@@ -361,7 +367,7 @@ async function analyzeSound(filePath) {
   const decode = spawnSync(
     "ffmpeg",
     ["-v", "error", "-i", filePath, "-f", "f32le", "-ac", "1", "-ar", String(audioSampleRate), "pipe:1"],
-    { encoding: null, maxBuffer: 128 * 1024 * 1024 },
+    { encoding: null, maxBuffer: 128 * 1024 * 1024, windowsHide: true, timeout: 60000 },
   );
   if (decode.status !== 0) throw new Error(`ffmpeg failed for ${filePath}: ${decode.stderr?.toString()}`);
 
@@ -535,4 +541,8 @@ function clamp(value, minimum, maximum) {
   return Math.min(Math.max(value, minimum), maximum);
 }
 
-await main();
+export { inspectGlb, analyzeSound };
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await main();
+}

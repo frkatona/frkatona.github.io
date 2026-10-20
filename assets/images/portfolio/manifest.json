@@ -436,6 +436,48 @@
       "thumbnailFileName": "thumbs/tim3.jpg.webp",
       "width": 3148,
       "height": 4990
+    },
+    {
+      "fileName": "DSC01185.png",
+      "metadataFileName": "DSC01185.png.json",
+      "thumbnailFileName": "thumbs/DSC01185.png.webp",
+      "width": 3733,
+      "height": 2382
+    },
+    {
+      "fileName": "APK01414.png",
+      "metadataFileName": "APK01414.png.json",
+      "thumbnailFileName": "thumbs/APK01414.png.webp",
+      "width": 6026,
+      "height": 4024
+    },
+    {
+      "fileName": "APK01415.png",
+      "metadataFileName": "APK01415.png.json",
+      "thumbnailFileName": "thumbs/APK01415.png.webp",
+      "width": 6026,
+      "height": 4024
+    },
+    {
+      "fileName": "APK01786.png",
+      "metadataFileName": "APK01786.png.json",
+      "thumbnailFileName": "thumbs/APK01786.png.webp",
+      "width": 6026,
+      "height": 4024
+    },
+    {
+      "fileName": "DSC01368.png",
+      "metadataFileName": "DSC01368.png.json",
+      "thumbnailFileName": "thumbs/DSC01368.png.webp",
+      "width": 2611,
+      "height": 4256
+    },
+    {
+      "fileName": "DSC01500.png",
+      "metadataFileName": "DSC01500.png.json",
+      "thumbnailFileName": "thumbs/DSC01500.png.webp",
+      "width": 4256,
+      "height": 2708
     }
   ]
 }

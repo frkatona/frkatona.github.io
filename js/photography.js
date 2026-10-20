@@ -155,7 +155,8 @@ async function loadPortfolio() {
     const manifest = await fetchJson(manifestPath);
     const entries = Array.isArray(manifest.items) ? manifest.items : [];
 
-    state.items = await Promise.all(entries.map(loadPortfolioItem));
+    state.items = (await Promise.all(entries.map(loadPortfolioItem)))
+      .filter((item) => item.visible !== false);
 
     photoCount.textContent = String(state.items.length);
     tagCount.textContent = String(getUniqueTags(state.items).length);
@@ -194,6 +195,7 @@ async function loadPortfolioItem(entry) {
 
   return {
     fileName,
+    visible: metadata.visible !== false,
     imagePath: new URL(fileName, portfolioBaseUrl).href,
     thumbnailPath: new URL(thumbnailFileName, portfolioBaseUrl).href,
     metadataPath,

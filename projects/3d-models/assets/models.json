@@ -162,10 +162,10 @@
       "category": "characters",
       "categoryLabel": "Character",
       "src": "assets/characters/snowboarderCharacter.glb",
-      "thumbnail": "assets/thumbnails/snowboarder-character.webp",
-      "albedo": null,
+      "thumbnail": "assets/thumbnails/snowboarder-character-thumbnail.png",
+      "albedo": "",
       "description": "Animated downhill snowboarder character.",
-      "defaultAnimation": "idle-loop.001",
+      "defaultAnimation": "jumpLand",
       "bytes": 1458236,
       "triangles": 395,
       "vertices": 725,
@@ -206,7 +206,8 @@
           "name": "ride1-loop",
           "duration": 1.625
         }
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "squirrel-lady",
@@ -214,10 +215,10 @@
       "category": "characters",
       "categoryLabel": "Character",
       "src": "assets/characters/squirrelLady.glb",
-      "thumbnail": "assets/thumbnails/squirrel-lady.webp",
+      "thumbnail": "assets/thumbnails/squirrel-lady-thumbnail.png",
       "albedo": "assets/characters/albedo.png",
       "description": "Woodland hero.",
-      "defaultAnimation": "idle1-loop",
+      "defaultAnimation": "run-loop",
       "bytes": 3252740,
       "triangles": 18243,
       "vertices": 10145,
@@ -254,7 +255,8 @@
           "name": "run-loop",
           "duration": 0.833
         }
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "low-poly-mario",
@@ -262,7 +264,7 @@
       "category": "characters",
       "categoryLabel": "Character",
       "src": "assets/characters/mario.glb",
-      "thumbnail": "",
+      "thumbnail": "assets/thumbnails/low-poly-mario-thumbnail.png",
       "albedo": "assets/characters/albedo.png",
       "description": "Woodland hero.",
       "defaultAnimation": "idle1-loop",
@@ -310,10 +312,10 @@
       "category": "characters",
       "categoryLabel": "Character",
       "src": "assets/characters/character.glb",
-      "thumbnail": "assets/thumbnails/character.webp",
-      "albedo": null,
+      "thumbnail": "assets/thumbnails/character-thumbnail-3.png",
+      "albedo": "",
       "description": "Stylized animated winter worker.",
-      "defaultAnimation": "idle",
+      "defaultAnimation": "shove-loop",
       "bytes": 1655784,
       "triangles": 1148,
       "vertices": 1099,
@@ -358,7 +360,8 @@
           "name": "walk",
           "duration": 0.833
         }
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "barrel",
@@ -405,9 +408,9 @@
       "categoryLabel": "Prop",
       "src": "assets/props/brushMotor.glb",
       "thumbnail": "assets/thumbnails/brush-motor.webp",
-      "albedo": null,
+      "albedo": "",
       "description": "Mechanical brush motor assembly.",
-      "defaultAnimation": null,
+      "defaultAnimation": "",
       "bytes": 1156132,
       "triangles": 2566,
       "vertices": 2595,
@@ -415,7 +418,8 @@
       "materialCount": 8,
       "textureCount": 3,
       "skinCount": 0,
-      "animations": []
+      "animations": [],
+      "visible": false
     },
     {
       "id": "cannon",
@@ -537,7 +541,7 @@
       "category": "props",
       "categoryLabel": "Prop",
       "src": "assets/props/FBI-badge.glb",
-      "thumbnail": "assets/thumbnails/fbi-badge.webp",
+      "thumbnail": "assets/thumbnails/fbi-badge-thumbnail.png",
       "albedo": null,
       "description": "Detailed federal agent badge.",
       "defaultAnimation": null,
@@ -727,9 +731,9 @@
       "categoryLabel": "Prop",
       "src": "assets/props/head-scared.glb",
       "thumbnail": "assets/thumbnails/head-scared.webp",
-      "albedo": null,
+      "albedo": "",
       "description": "Expressive frightened head sculpt.",
-      "defaultAnimation": null,
+      "defaultAnimation": "",
       "bytes": 2122952,
       "triangles": 116144,
       "vertices": 58632,
@@ -737,7 +741,8 @@
       "materialCount": 5,
       "textureCount": 0,
       "skinCount": 0,
-      "animations": []
+      "animations": [],
+      "visible": false
     },
     {
       "id": "tensile-mockup",
@@ -746,7 +751,7 @@
       "categoryLabel": "Prop",
       "src": "assets/props/tensile-mockup.glb",
       "thumbnail": "assets/thumbnails/tensile-mockup.webp",
-      "albedo": null,
+      "albedo": "",
       "description": "Tensile structural mockup.",
       "defaultAnimation": "Cube.002Action",
       "bytes": 515456,
@@ -785,7 +790,8 @@
           "name": "Cube.002Action.001",
           "duration": 3.25
         }
-      ]
+      ],
+      "visible": false
     },
     {
       "id": "terminal",
@@ -793,7 +799,7 @@
       "category": "props",
       "categoryLabel": "Prop",
       "src": "assets/props/terminal.glb",
-      "thumbnail": "assets/thumbnails/terminal.webp",
+      "thumbnail": "assets/thumbnails/terminal-thumbnail-5.png",
       "albedo": null,
       "description": "Minimal low-poly control terminal.",
       "defaultAnimation": null,
@@ -946,9 +952,9 @@
       "categoryLabel": "Environment",
       "src": "assets/environments/wall.glb",
       "thumbnail": "assets/thumbnails/wall.webp",
-      "albedo": null,
+      "albedo": "",
       "description": "Textured modular gemstone wall.",
-      "defaultAnimation": null,
+      "defaultAnimation": "",
       "bytes": 3117568,
       "triangles": 1780,
       "vertices": 1356,
@@ -956,7 +962,8 @@
       "materialCount": 1,
       "textureCount": 3,
       "skinCount": 0,
-      "animations": []
+      "animations": [],
+      "visible": false
     },
     {
       "id": "the-spinner",
@@ -989,6 +996,219 @@
           "duration": 5
         }
       ]
+    },
+    {
+      "id": "police-lady",
+      "name": "Police Lady",
+      "category": "props",
+      "categoryLabel": "Character",
+      "src": "assets/props/policeLady.glb",
+      "thumbnail": "assets/thumbnails/police-lady-thumbnail-2.png",
+      "albedo": "",
+      "description": "Rigged/animated asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "defaultAnimation": "idleCrouch-loop",
+      "visible": true,
+      "bytes": 735200,
+      "triangles": 838,
+      "vertices": 1525,
+      "meshCount": 1,
+      "materialCount": 5,
+      "textureCount": 0,
+      "skinCount": 1,
+      "animations": [
+        {
+          "name": "basis",
+          "duration": 0.042
+        },
+        {
+          "name": "handBack",
+          "duration": 0.833
+        },
+        {
+          "name": "handDavai",
+          "duration": 0.625
+        },
+        {
+          "name": "handgun_aiming-loop",
+          "duration": 0.667
+        },
+        {
+          "name": "handgun_shoot",
+          "duration": 0.417
+        },
+        {
+          "name": "handPoint",
+          "duration": 0.5
+        },
+        {
+          "name": "handPump",
+          "duration": 0.625
+        },
+        {
+          "name": "handRaise",
+          "duration": 0.5
+        },
+        {
+          "name": "handWave",
+          "duration": 0.833
+        },
+        {
+          "name": "idleCrouch-loop",
+          "duration": 2.5
+        },
+        {
+          "name": "idleStand-loop",
+          "duration": 2.5
+        },
+        {
+          "name": "runCrouch-loop",
+          "duration": 0.625
+        },
+        {
+          "name": "runScared-loop",
+          "duration": 0.708
+        },
+        {
+          "name": "runScared-loop.001",
+          "duration": 0.708
+        },
+        {
+          "name": "runScared-loop.002",
+          "duration": 0.708
+        },
+        {
+          "name": "runScared-loop.004",
+          "duration": 0.708
+        },
+        {
+          "name": "runStanding-loop",
+          "duration": 0.667
+        },
+        {
+          "name": "shieldRaised-loop",
+          "duration": 1.042
+        },
+        {
+          "name": "SMG_aiming-loop",
+          "duration": 1.042
+        },
+        {
+          "name": "SMG_relaxed-loop",
+          "duration": 1.042
+        },
+        {
+          "name": "surrendering-loop",
+          "duration": 1
+        },
+        {
+          "name": "walkCrouch-loop",
+          "duration": 1.25
+        },
+        {
+          "name": "walkStanding-loop",
+          "duration": 1.25
+        }
+      ]
+    },
+    {
+      "id": "handgun",
+      "name": "Handgun",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/handgun.glb",
+      "thumbnail": "assets/thumbnails/handgun-thumbnail.png",
+      "albedo": "",
+      "description": "Handgun asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "defaultAnimation": "",
+      "visible": true,
+      "bytes": 29948,
+      "triangles": 532,
+      "vertices": 793,
+      "meshCount": 1,
+      "materialCount": 1,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "wall-unit",
+      "name": "Compound Wall Unit",
+      "category": "props",
+      "categoryLabel": "Environment",
+      "src": "assets/props/wall-unit.glb",
+      "thumbnail": "assets/thumbnails/wall-unit-thumbnail-2.png",
+      "albedo": "",
+      "description": "Wall environment asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "defaultAnimation": "",
+      "visible": true,
+      "bytes": 1241544,
+      "triangles": 240,
+      "vertices": 266,
+      "meshCount": 3,
+      "materialCount": 2,
+      "textureCount": 3,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "barrel-pallet",
+      "name": "Barrel Pallet",
+      "category": "props",
+      "categoryLabel": "Environment",
+      "src": "assets/props/barrelPallet.glb",
+      "thumbnail": "assets/thumbnails/barrel-pallet-thumbnail.png",
+      "albedo": "",
+      "description": "Asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "defaultAnimation": "",
+      "visible": true,
+      "bytes": 277944,
+      "triangles": 6024,
+      "vertices": 7804,
+      "meshCount": 7,
+      "materialCount": 3,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "smg",
+      "name": "SMG",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/smg.glb",
+      "thumbnail": "assets/thumbnails/smg-thumbnail.png",
+      "albedo": "",
+      "description": "Gun asset modeled after the PPK-20 made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "defaultAnimation": "",
+      "visible": true,
+      "bytes": 23164,
+      "triangles": 554,
+      "vertices": 581,
+      "meshCount": 1,
+      "materialCount": 1,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
+    },
+    {
+      "id": "dresser",
+      "name": "Dresser",
+      "category": "props",
+      "categoryLabel": "Environment",
+      "src": "assets/props/dresser.glb",
+      "thumbnail": "assets/thumbnails/dresser-thumbnail.png",
+      "albedo": "",
+      "description": "Furniture asset made for the October 2026 Godot Wild Jam (Theme: \"Signal\", Wildcard: \"Flashlight\")",
+      "defaultAnimation": "",
+      "visible": true,
+      "bytes": 91904,
+      "triangles": 1344,
+      "vertices": 2520,
+      "meshCount": 4,
+      "materialCount": 2,
+      "textureCount": 0,
+      "skinCount": 0,
+      "animations": []
     }
   ]
 }

@@ -1,16 +1,24 @@
 {
   "title": "Sadia 2",
-  "description": "Placeholder description for Sadia 2. Update this sidecar with a real caption when ready.",
+  "description": "Sadia begrudgingly allowing me to test my new camera outside of the Chemistry building",
   "tags": {
-    "subject": ["Sadia"
+    "subject": [
+      "Sadia"
     ],
-    "location": ["State College", "Pennsylvania"],
-    "cameraDetails": ["Sony a7s II", "telephoto"],
+    "location": [
+      "State College",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Sony a7s II",
+      "telephoto"
+    ],
     "other": [
       "portrait"
     ]
   },
   "captureDate": null,
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

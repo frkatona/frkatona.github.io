@@ -170,12 +170,13 @@ function addGround() {
 async function loadModelCatalog() {
   try {
     const catalog = await fetchJson(MODEL_MANIFEST_URL);
-    modelCatalog = catalog.models || [];
+    modelCatalog = (catalog.models || []).filter((model) => model.visible !== false);
     modelCount.textContent = String(modelCatalog.length);
     librarySummary.textContent = `${modelCatalog.length} models across three asset categories.`;
     renderModelCards();
     const initialModel = modelCatalog.find((model) => model.id === INITIAL_MODEL_ID) || modelCatalog[0];
     if (initialModel) selectModel(initialModel.id);
+    else showViewerError("No models are currently visible.");
   } catch (error) {
     console.error(error);
     modelList.innerHTML = '<p class="library-empty">The model catalog could not be loaded.</p>';

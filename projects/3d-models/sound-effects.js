@@ -23,7 +23,7 @@ async function loadSoundCatalog() {
     const response = await fetch(SOUND_MANIFEST_URL);
     if (!response.ok) throw new Error(`Request failed (${response.status}) for ${SOUND_MANIFEST_URL}`);
     const catalog = await response.json();
-    soundCatalog = catalog.sounds || [];
+    soundCatalog = (catalog.sounds || []).filter((sound) => sound.visible !== false);
     populateSoundSources();
     renderSoundCards();
   } catch (error) {
