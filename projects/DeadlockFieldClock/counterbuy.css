@@ -24,10 +24,63 @@
   box-sizing: border-box;
 }
 
+[hidden] { display: none !important; }
+
 .lineup-actions { display: flex; align-items: center; gap: 14px; }
 .lineup-actions > span { color: #617987; font-size: 9px; }
+.scan-button {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 34px; padding: 8px 12px; color: var(--cyan);
+  border: 1px solid #377f96; background: #0c2532;
+  font-size: 10px; font-weight: 850; letter-spacing: .06em; cursor: pointer;
+}
+.scan-button:hover { border-color: var(--cyan); background: #133644; }
+.scan-button:disabled { opacity: .4; cursor: not-allowed; }
+.scan-button-secondary { color: #a4b9c8; border-color: var(--line); background: #0c1b28; }
+.scan-apply { color: #0a1a15; border-color: #70d99f; background: #70d99f; }
+.scan-apply:hover { color: #0a1a15; background: #94e5b6; border-color: #94e5b6; }
+.lineup-scanner {
+  width: min(1020px, calc(100vw - 36px)); max-height: calc(100vh - 36px);
+  overflow: auto; padding: 0; color: var(--text); border: 1px solid var(--line-strong);
+  background: #07131e; box-shadow: 0 28px 100px #000b;
+}
+.lineup-scanner::backdrop { background: #02070cd9; backdrop-filter: blur(5px); }
+.scanner-shell { display: grid; gap: 12px; }
+.scan-source-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 2px 20px 0; }
+.scan-source-controls > span { color: var(--muted); font-size: 11px; }
+.scan-status { margin: 0; padding: 0 20px; color: #9cbdcb; font-size: 12px; line-height: 1.5; }
+.scan-status.is-error { color: #ffb06b; }
+.scan-crop-stage { padding: 0 20px; }
+.scan-crop-controls { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+.scan-crop-controls > div { display: flex; gap: 6px; }
+.scan-crop-controls label { display: flex; align-items: center; gap: 5px; color: var(--muted); font-size: 11px; }
+.scan-preview { position: relative; overflow: hidden; border: 1px solid var(--line); background: #02070c; cursor: crosshair; touch-action: none; }
+.scan-preview canvas { display: block; width: 100%; height: auto; }
+.scan-preview svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.scan-preview rect { fill: #4cd7f51a; stroke: #65e8ff; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.scan-preview line { stroke: #65e8ffbb; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.scan-crop-hint { margin: 8px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+.scan-review { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding: 0 20px; }
+.scan-result { min-width: 0; padding: 8px; border: 1px solid #38605c; background: #0c2028; }
+.scan-result.needs-review { border-color: #ad8757; background: #231e16; }
+.scan-result.is-duplicate { border-color: var(--danger); }
+.scan-result-images { display: flex; align-items: center; justify-content: center; gap: 8px; height: 70px; }
+.scan-result-images img { width: 45%; height: 66px; object-fit: contain; }
+.scan-result > small { display: block; margin: 7px 0; color: #80d0b5; font-size: 8px; font-weight: 800; letter-spacing: .04em; }
+.scan-result.needs-review > small { color: #f0c58d; }
+.scan-result select { width: 100%; min-width: 0; height: 32px; padding: 0 3px; color: var(--text); border: 1px solid var(--line); background: #09121c; font-size: 11px; }
+.scan-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--line); }
+.scan-footer > span { flex: 1 1 240px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+
 @media (max-width: 820px) {
   .lineup-actions > span { display: none; }
+  .scan-review { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 500px) {
+  .lineup-scanner { width: calc(100vw - 16px); max-height: calc(100vh - 16px); }
+  .scan-review { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .scan-source-controls, .scan-crop-stage, .scan-review { padding-inline: 12px; }
+  .scan-crop-controls .scan-button { padding-inline: 6px; font-size: 9px; }
 }
 
 html,

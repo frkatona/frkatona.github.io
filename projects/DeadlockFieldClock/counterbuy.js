@@ -67,12 +67,14 @@
 
   const rec = (item, target, note) => ({ item, target, note });
   const hero = (id, name, color, recommendations, portrait = {}) => ({
+    ...(window.DeadlockHudPortraits?.[id] || {}),
     id,
     name,
     color,
     image: `counterbuy-assets/heroes/${id}.webp`,
     recommendations,
     ...portrait,
+    hudImage: window.DeadlockHudPortraits?.[id]?.hudImage || portrait.hudImage || null,
   });
 
   // Original Valve top-bar portraits from client 6774, extracted Oct 10, 2026.
@@ -356,6 +358,13 @@
 
   bindEvents();
   renderAll();
+  window.DeadlockLineupScanner?.init({
+    heroes,
+    onAccept(ids) {
+      selected = [...new Set(ids.filter(id => heroById[id]))].slice(0, MAX_HEROES);
+      saveAndRender();
+    },
+  });
 
   function bindEvents() {
     lineupSlots.addEventListener("click", (event) => {

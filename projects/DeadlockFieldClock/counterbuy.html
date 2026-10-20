@@ -33,7 +33,7 @@
           <p>ENEMY TEAM</p>
           <h2 id="lineup-heading">LINEUP</h2>
         </div>
-        <div class="lineup-actions"><span>Click a portrait to replace it</span><a class="plots-link" href="plots.html">SOUL LAB ↗</a></div>
+        <div class="lineup-actions"><span>Click a portrait to replace it</span><a class="plots-link" href="plots.html">SOUL LAB ↗</a><button class="scan-button" type="button" data-action="scan-lineup">SCAN LINEUP</button></div>
       </div>
       <div class="lineup-slots" data-lineup-slots></div>
     </section>
@@ -97,6 +97,41 @@
     </form>
   </dialog>
 
-  <script src="counterbuy.js?v=20261010" defer></script>
+  <dialog class="lineup-scanner" data-scan-dialog aria-labelledby="scan-title">
+    <div class="scanner-shell">
+      <div class="picker-heading">
+        <div><p>LOCAL IMAGE MATCHING</p><h2 id="scan-title">SCAN ENEMY LINEUP</h2></div>
+        <button class="picker-close" type="button" data-scan-close aria-label="Close lineup scanner">&times;</button>
+      </div>
+      <div class="scan-source-controls">
+        <button class="scan-button" type="button" data-scan-capture>SHARE GAME WINDOW</button>
+        <label class="scan-button scan-button-secondary">CHOOSE SCREENSHOT<input type="file" data-scan-file accept="image/png,image/jpeg,image/webp" hidden></label>
+        <span>Or paste a screenshot with Ctrl+V. Nothing is uploaded.</span>
+      </div>
+      <p class="scan-status" data-scan-status role="status">Choose a source. Screen sharing stops after one frame.</p>
+      <section class="scan-crop-stage" data-scan-crop-stage hidden>
+        <div class="scan-crop-controls">
+          <div><button class="scan-button scan-button-secondary" type="button" data-scan-side="left">LEFT TEAM</button><button class="scan-button scan-button-secondary" type="button" data-scan-side="right">RIGHT TEAM</button><button class="scan-button scan-button-secondary" type="button" data-scan-side="whole">WHOLE IMAGE</button></div>
+          <label><input type="checkbox" data-scan-full-image> Show full image</label>
+        </div>
+        <div class="scan-preview" data-scan-preview tabindex="0" role="group" aria-label="Portrait region: drag around exactly six portraits. Arrow keys move the selection; Shift and arrow keys resize it.">
+          <canvas data-scan-canvas aria-hidden="true"></canvas>
+          <svg data-scan-overlay aria-hidden="true"><rect data-scan-rectangle></rect><g data-scan-dividers></g></svg>
+        </div>
+        <p class="scan-crop-hint">Drag around exactly six portraits; leave the soul numbers outside. Arrow keys move the crop; Shift + arrows resize it.</p>
+      </section>
+      <section class="scan-review" data-scan-review hidden aria-label="Review detected heroes"></section>
+      <div class="scan-footer">
+        <span data-scan-review-note>Only the crop position is remembered—not your screenshot.</span>
+        <button class="scan-button" type="button" data-scan-match disabled>MATCH PORTRAITS</button>
+        <button class="scan-button scan-apply" type="button" data-scan-apply hidden disabled>USE LINEUP</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="hud-portraits.js?v=20261010-scan" defer></script>
+  <script src="portrait-matcher.js?v=20261010-scan" defer></script>
+  <script src="lineup-scanner.js?v=20261010-scan" defer></script>
+  <script src="counterbuy.js?v=20261010-scan" defer></script>
 </body>
 </html>

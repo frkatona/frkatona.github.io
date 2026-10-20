@@ -146,29 +146,59 @@
   function getAirControlWindow(speed = state.speed) {
     const speedUps = speed * UNITS_PER_METER;
     const capUps = speedUps < AIR_CONTROL_THRESHOLD_UPS ? AIR_CONTROL_SLOW_UPS : AIR_CONTROL_FAST_UPS;
-    const minimumAngle = speedUps <= capUps ? 0 : Math.acos(clamp(capUps / speedUps, 0, 1)) * 180 / Math.PI;
+    const activationAngle = speedUps <= capUps ? 0 : Math.acos(clamp(capUps / speedUps, 0, 1)) * 180 / Math.PI;
     return {
       speedUps,
       capUps,
-      minimumAngle,
-      width: 90 - minimumAngle,
+      activationAngle,
     };
   }
 
+  function evaluateAngleEffect(window, angleDegrees, frameTime = 1 / 60) {
+    const angle = clamp(Math.abs(angleDegrees), 0, 180) * Math.PI / 180;
+    const alongWish = window.speedUps * Math.cos(angle);
+    const addSpeed = window.capUps - alongWish;
+    if (addSpeed <= 0) return 0;
+    const accelerationUps = Math.min(addSpeed, AIR_ACCELERATE * window.capUps * frameTime);
+    return Math.hypot(
+      window.speedUps + Math.cos(angle) * accelerationUps,
+      Math.sin(angle) * accelerationUps,
+    ) - window.speedUps;
+  }
+
+  function getAirControlProfile(speed = state.speed) {
+    const window = getAirControlWindow(speed);
+    let peakGain = 0;
+    let peakAngle = 90;
+    let largestCost = 0;
+    for (let angle = 0; angle <= 180; angle += 0.5) {
+      const effect = evaluateAngleEffect(window, angle);
+      if (effect > peakGain) {
+        peakGain = effect;
+        peakAngle = angle;
+      }
+      if (effect < largestCost) largestCost = effect;
+    }
+    return { ...window, peakGain, peakAngle, largestCost };
+  }
+
   function getInputGeometry(keySignal) {
-    const window = getAirControlWindow();
+    const window = getAirControlProfile();
     if (keySignal === 0) {
-      return { ...window, wishAngle: null, wishDelta: null, inWindow: false, over: false, capped: false };
+      return { ...window, wishAngle: null, wishDelta: null, effectUps: 0, effectRatio: 0 };
     }
     const wishAngle = normalizeAngle(state.heading + keySignal * Math.PI / 2);
     const wishDelta = Math.abs(normalizeAngle(wishAngle - state.velocityAngle)) * 180 / Math.PI;
+    const effectUps = evaluateAngleEffect(window, wishDelta);
+    const effectRatio = effectUps >= 0
+      ? effectUps / Math.max(0.001, window.peakGain)
+      : effectUps / Math.max(0.001, Math.abs(window.largestCost));
     return {
       ...window,
       wishAngle,
       wishDelta,
-      inWindow: wishDelta >= window.minimumAngle && wishDelta <= 90,
-      over: wishDelta > 90,
-      capped: wishDelta < window.minimumAngle,
+      effectUps,
+      effectRatio: clamp(effectRatio, -1, 1),
     };
   }
 
@@ -192,6 +222,22 @@
     state.speed = clamp(nextSpeedUps / UNITS_PER_METER, 7, 20);
     state.velocityAngle = Math.atan2(nextY, nextX);
     return geometry;
+  }
+
+  function getEffectStatus(geometry) {
+    const ratio = geometry.effectRatio;
+    if (ratio >= 0.9) return { label: "PEAK", tone: "green", quality: 1 };
+    if (ratio >= 0.45) return { label: "STRONG GAIN", tone: "green", quality: ratio };
+    if (ratio >= 0.08) return { label: "SMALL GAIN", tone: "cyan", quality: ratio };
+    if (ratio > -0.08) return { label: "NEAR NEUTRAL", tone: "amber", quality: 0 };
+    if (ratio > -0.5) return { label: "SPEED COST", tone: "coral", quality: 0 };
+    return { label: "HEAVY COST", tone: "coral", quality: 0 };
+  }
+
+  function formatEffectScore(geometry) {
+    const percent = Math.round(Math.abs(geometry.effectRatio) * 100);
+    if (percent < 2) return "0% EFFECT";
+    return geometry.effectRatio > 0 ? `+${percent}% GAIN` : `−${percent}% COST`;
   }
 
   function setPointerAimFromClientX(clientX, trackRate = true) {
@@ -220,6 +266,9 @@
       velocityAngle: -Math.PI / 2,
       x: 0,
       y: 0,
+      forwardDistance: 0,
+      inputQuality: 0,
+      lastEffectUps: 0,
       trail: [],
       sync: 0,
       lastSignal: 0,
@@ -276,7 +325,7 @@
     elements.jumpButton.classList.remove("is-hot");
     updateLesson();
     if (drill === "strafe") {
-      setCoach("READY", "Start centered. Hold A or D, then move the camera that way slowly enough to keep the amber wish arrow in green.");
+      setCoach("READY", "Start centered. Hold A or D, then turn smoothly and guide the amber wish arrow toward the brightest green band.");
     } else {
       setCoach("ALIGN FIRST", "Match the white camera arrow to blue velocity, then hold A or D just before Space.");
     }
@@ -288,15 +337,15 @@
     elements.lessonNumber.textContent = isStrafe ? "01" : "02";
     elements.lessonTitle.textContent = isStrafe ? "PAIR THE TURN" : "ALIGN, THEN CARVE";
     elements.lessonCopy.textContent = isStrafe
-      ? "Blue is velocity; white is your camera; amber is the A/D wish direction. The green acceleration window narrows with speed. Keep amber inside it without crossing 90°."
+      ? "Blue is velocity; white is your camera; amber is the A/D wish direction. The angle field shows a continuum: dim means little change, bright green is peak gain, and red costs speed."
       : "During the slide, align the camera with velocity. Just before jumping hold A or D; as you jump, smoothly turn the camera the same way. Land into slide and realign.";
     elements.inputFormula.innerHTML = isStrafe
       ? `<span class="keycap keycap-muted">W UP</span><span class="formula-arrow">+</span><span class="keycap">A</span><span class="mouse-turn">MOUSE <i>&larr;</i></span><span class="formula-or">OR</span><span class="keycap">D</span><span class="mouse-turn">MOUSE <i>&rarr;</i></span>`
       : `<span class="mouse-turn">CAM <i>&uarr;</i> VELOCITY</span><span class="formula-arrow">THEN</span><span class="keycap">A / D</span><span class="formula-arrow">BEFORE</span><span class="keycap">SPACE</span><span class="formula-arrow">+</span><span class="mouse-turn">TURN</span>`;
     elements.whyGrid.innerHTML = isStrafe
-      ? `<div><span>GOOD SYNC</span><strong>STRAFE + CAMERA TURN MATCH</strong><small>Velocity curves cleanly; momentum grows.</small></div><div><span>COMMON LEAK</span><strong>HOLDING W / TURNING TOO FAST</strong><small>Both reduce useful sideways acceleration.</small></div>`
+      ? `<div><span>MORE BENEFIT</span><strong>FOLLOW THE BRIGHT GREEN PEAK</strong><small>The distance box grows as your angle approaches optimal.</small></div><div><span>MORE COST</span><strong>DIM GREEN → NEUTRAL → RED</strong><small>The effect changes continuously across the angle field.</small></div>`
       : `<div><span>ON THE SLIDE</span><strong>CAMERA ON VELOCITY</strong><small>Turning does not change slide speed; use this phase to realign.</small></div><div><span>AT TAKEOFF</span><strong>A/D FIRST, THEN JUMP + TURN</strong><small>Start the smooth matching turn as you leave the slide.</small></div>`;
-    elements.qualityLabel.textContent = "CAM <> VELOCITY";
+    elements.qualityLabel.textContent = "WISH ANGLE / EFFECT";
     elements.chainLabel.textContent = isStrafe ? "BEST GAIN" : "CLEAN HOPS";
     elements.canvasInstruction.innerHTML = isStrafe
       ? "<strong>CENTER X = CAMERA STRAIGHT AHEAD</strong><span>Cursor distance sets an absolute white camera angle</span>"
@@ -365,6 +414,7 @@
     const keySignal = (keys.d ? 1 : 0) - (keys.a ? 1 : 0);
     alignCameraToCursor();
     let geometry = getInputGeometry(keySignal);
+    let qualityTarget = 0;
 
     if (keys.w) {
       state.speed = Math.max(8.4, state.speed - 0.38 * dt);
@@ -372,32 +422,35 @@
       state.sync = Math.max(0, state.sync - 2.2 * dt);
       setCoach("RELEASE W", "Forward input fights the sideways wish-direction. Let W go in the air.", "coral");
     } else if (keySignal !== 0) {
-      const previousSpeed = state.speed;
       geometry = applyAirAcceleration(dt, keySignal);
-      if (geometry.over) {
+      const status = getEffectStatus(geometry);
+      qualityTarget = status.quality;
+      state.lastEffectUps = geometry.effectUps;
+      if (geometry.effectRatio < -0.08) {
         state.sync = Math.max(0, state.sync - 2.5 * dt);
-        setCoach("OVER 90°", "Amber crossed the velocity-perpendicular line. Turn less sharply or let velocity catch up.", "coral");
-      } else if (geometry.inWindow) {
-        state.sync = Math.min(1, state.sync + 2.5 * dt);
+        setCoach(status.label, "The angle is subtracting speed. Ease the camera back toward the bright green peak.", status.tone);
+      } else if (geometry.effectRatio >= 0.08) {
+        state.sync = Math.min(1, state.sync + (0.8 + geometry.effectRatio * 1.7) * dt);
         state.lastInputAt = state.elapsed;
-        const gain = Math.max(0, state.speed - previousSpeed) * UNITS_PER_METER;
-        setCoach("IN THE GREEN", `Full air-control window. This frame added about ${gain.toFixed(1)} u/s of total speed.`, "green");
+        setCoach(status.label, `${Math.round(geometry.effectRatio * 100)}% of the current peak speed benefit. Follow the brightest green band.`, status.tone);
       } else {
         state.sync = Math.max(0, state.sync - 0.7 * dt);
-        setCoach("CAP-LIMITED", "Amber is too close to velocity. Turn a little farther to move it into the green wedge.", "amber");
+        setCoach(status.label, "This angle has little speed effect. Move amber toward the brighter green band.", status.tone);
       }
     } else {
       state.sync = Math.max(0, state.sync - 0.7 * dt);
       if (state.elapsed - state.lastInputAt > 0.35) {
-        setCoach("ADD A / D", "Hold a side key. Its amber wish arrow shows whether your camera angle is inside the live green window.", "amber");
+        setCoach("ADD A / D", "Hold a side key. Its amber wish arrow shows the live benefit or cost of your camera angle.", "amber");
       }
     }
+    state.inputQuality += (qualityTarget - state.inputQuality) * Math.min(1, dt * 12);
 
     state.bestGain = Math.max(state.bestGain, state.speed - state.startSpeed);
     const scale = 18;
+    state.forwardDistance = Math.max(0, state.forwardDistance - Math.sin(state.velocityAngle) * state.speed * dt);
     state.x += Math.cos(state.velocityAngle) * state.speed * dt * scale;
     state.y += Math.sin(state.velocityAngle) * state.speed * dt * scale;
-    state.trail.push({ x: state.x, y: state.y, tone: geometry.inWindow ? 1 : 0 });
+    state.trail.push({ x: state.x, y: state.y, tone: Math.max(0, geometry.effectRatio) });
     if (state.trail.length > 260) state.trail.shift();
     alignCameraToCursor();
     pointerTurnRate *= Math.pow(0.035, dt);
@@ -409,6 +462,7 @@
     const keySignal = (keys.d ? 1 : 0) - (keys.a ? 1 : 0);
     alignCameraToCursor();
     let geometry = getInputGeometry(keySignal);
+    let qualityTarget = 0;
 
     if (state.phase === "air") {
       state.airTime += dt;
@@ -417,16 +471,19 @@
 
       if (keySignal !== 0 && !keys.w) {
         geometry = applyAirAcceleration(dt, keySignal, state.speed >= AIR_CONTROL_THRESHOLD_UPS / UNITS_PER_METER ? 0.9 : 1);
-        if (geometry.over) {
+        const status = getEffectStatus(geometry);
+        qualityTarget = status.quality;
+        state.lastEffectUps = geometry.effectUps;
+        if (geometry.effectRatio < -0.08) {
           state.overstrafed = true;
-          setCoach("OVER 90°", "Amber crossed past perpendicular. Ease the camera turn so the wish arrow returns to green.", "coral");
-        } else if (geometry.inWindow) {
+          setCoach(status.label, "The current wish angle is costing speed. Ease back toward the bright green peak.", status.tone);
+        } else if (geometry.effectRatio >= 0.08) {
           state.airSync += dt;
           if (state.takeoffClean) {
-            setCoach("CARVING", "Amber is in the live acceleration window. Follow it as the green wedge narrows.", "green");
+            setCoach(status.label, `${Math.round(geometry.effectRatio * 100)}% of peak benefit. Keep amber near the brightest green band.`, status.tone);
           }
         } else {
-          setCoach("FIND THE GREEN", "The wish angle is cap-limited. Turn smoothly until amber reaches the green wedge.", "amber");
+          setCoach(status.label, "The effect is small here. Turn smoothly toward the brighter green band.", status.tone);
         }
       } else if (keys.w) {
         state.speed = Math.max(7, state.speed - 0.16 * dt);
@@ -469,11 +526,15 @@
       } else if (ready) {
         setCoach("PRELOAD A / D", "Camera is aligned. Hold your turn key just before pressing Space.", "amber");
       } else {
+        qualityTarget = clamp(1 - alignment / 24, 0, 1);
         setCoach("SLIDING", "Camera alignment matters now; movement keys do not change slide speed.", "green");
       }
     }
 
+    state.inputQuality += (qualityTarget - state.inputQuality) * Math.min(1, dt * 12);
+
     const scale = 16;
+    state.forwardDistance = Math.max(0, state.forwardDistance - Math.sin(state.velocityAngle) * state.speed * dt);
     state.x += Math.cos(state.velocityAngle) * state.speed * dt * scale;
     state.y += Math.sin(state.velocityAngle) * state.speed * dt * scale;
     state.trail.push({ x: state.x, y: state.y, tone: state.phase === "air" ? 1 : 0 });
@@ -487,19 +548,20 @@
     const alignment = Math.round(alignmentDegrees());
     const keySignal = (keys.d ? 1 : 0) - (keys.a ? 1 : 0);
     const geometry = getInputGeometry(keySignal);
+    const effectStatus = getEffectStatus(geometry);
     if (drill === "strafe") {
       elements.quality.textContent = keySignal === 0
         ? `${alignment}° CAMERA`
-        : `${Math.round(geometry.wishDelta)}° ${geometry.inWindow ? "GREEN" : geometry.over ? "OVER" : "CAPPED"}`;
-      elements.quality.style.color = keySignal === 0 ? colors.amber : geometry.inWindow ? colors.green : geometry.over ? colors.coral : colors.amber;
+        : `${Math.round(geometry.wishDelta)}° · ${formatEffectScore(geometry)}`;
+      elements.quality.style.color = keySignal === 0 ? colors.amber : colors[effectStatus.tone];
       elements.chain.textContent = `+${state.bestGain.toFixed(1)}`;
     } else {
       const showingWish = state.phase === "air" && keySignal !== 0;
       elements.quality.textContent = showingWish
-        ? `${Math.round(geometry.wishDelta)}° ${geometry.inWindow ? "GREEN" : geometry.over ? "OVER" : "CAPPED"}`
+        ? `${Math.round(geometry.wishDelta)}° · ${formatEffectScore(geometry)}`
         : `${alignment}° ${alignment <= 12 ? "ALIGNED" : "OFF"}`;
       elements.quality.style.color = showingWish
-        ? geometry.inWindow ? colors.green : geometry.over ? colors.coral : colors.amber
+        ? colors[effectStatus.tone]
         : alignment <= 12 ? colors.green : alignment <= 45 ? colors.amber : colors.coral;
       elements.chain.textContent = String(state.streak);
       const hot = state.phase === "slide" && state.slideTime >= 0.45 && state.slideTime <= 1.05 && alignment <= 12 && keySignal !== 0 && !keys.w;
@@ -617,65 +679,102 @@
   function drawAirControlCompass(centerX, centerY, keySignal, active = true) {
     const geometry = getInputGeometry(keySignal);
     const velocityAngle = state.velocityAngle;
-    const minimum = geometry.minimumAngle * Math.PI / 180;
     const radius = clamp(Math.min(cssWidth * 0.16, cssHeight * 0.24), 62, 94);
     const innerRadius = 22;
     const alpha = active ? 1 : 0.34;
 
     ctx.save();
     ctx.lineCap = "butt";
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = `rgba(53, 206, 245, ${0.18 * alpha})`;
+    const stepDegrees = 3;
+    for (let degrees = -180; degrees < 180; degrees += stepDegrees) {
+      const sampleAngle = Math.abs(degrees + stepDegrees / 2);
+      const effect = evaluateAngleEffect(geometry, sampleAngle);
+      const ratio = effect >= 0
+        ? effect / Math.max(0.001, geometry.peakGain)
+        : effect / Math.max(0.001, Math.abs(geometry.largestCost));
+      const magnitude = Math.min(1, Math.abs(ratio));
+      const fill = effect > 0.001
+        ? `rgba(97, 212, 108, ${(0.035 + 0.28 * Math.pow(magnitude, 0.7)) * alpha})`
+        : effect < -0.001
+          ? `rgba(255, 102, 86, ${(0.035 + 0.23 * Math.pow(magnitude, 0.7)) * alpha})`
+          : `rgba(53, 206, 245, ${0.035 * alpha})`;
+      drawSector(
+        centerX,
+        centerY,
+        innerRadius,
+        radius - 4,
+        velocityAngle + degrees * Math.PI / 180,
+        velocityAngle + (degrees + stepDegrees + 0.35) * Math.PI / 180,
+        fill,
+      );
+    }
+
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "rgba(143, 188, 212, 0.2)";
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, velocityAngle - Math.PI / 2, velocityAngle + Math.PI / 2);
-    ctx.stroke();
-    ctx.strokeStyle = `rgba(255, 102, 86, ${0.2 * alpha})`;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, velocityAngle + Math.PI / 2, velocityAngle + Math.PI * 1.5);
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
     ctx.stroke();
 
-    drawSector(
-      centerX,
-      centerY,
-      innerRadius,
-      radius - 4,
-      velocityAngle + minimum,
-      velocityAngle + Math.PI / 2,
-      `rgba(97, 212, 108, ${0.19 * alpha})`,
-    );
-    drawSector(
-      centerX,
-      centerY,
-      innerRadius,
-      radius - 4,
-      velocityAngle - Math.PI / 2,
-      velocityAngle - minimum,
-      `rgba(97, 212, 108, ${0.19 * alpha})`,
-    );
-
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = `rgba(97, 212, 108, ${0.9 * alpha})`;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius - 2, velocityAngle + minimum, velocityAngle + Math.PI / 2);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius - 2, velocityAngle - Math.PI / 2, velocityAngle - minimum);
-    ctx.stroke();
+    [-1, 1].forEach((side) => {
+      const peak = velocityAngle + side * geometry.peakAngle * Math.PI / 180;
+      ctx.strokeStyle = `rgba(97, 212, 108, ${0.95 * alpha})`;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(centerX + Math.cos(peak) * (radius - 9), centerY + Math.sin(peak) * (radius - 9));
+      ctx.lineTo(centerX + Math.cos(peak) * (radius + 5), centerY + Math.sin(peak) * (radius + 5));
+      ctx.stroke();
+    });
 
     const labelX = 18;
     const labelY = Math.max(144, centerY - radius - 15);
     ctx.font = "700 8px Consolas";
     ctx.textAlign = "left";
     ctx.fillStyle = active ? colors.green : colors.muted;
-    ctx.fillText(active ? "GREEN = AIR ACCELERATION WINDOW" : "AIR WINDOW PAUSED DURING SLIDE", labelX, labelY);
+    ctx.fillText(active ? "ANGLE EFFECT · BRIGHT GREEN = PEAK · RED = COST" : "ANGLE EFFECT PAUSED DURING SLIDE", labelX, labelY);
     ctx.fillStyle = "rgba(240, 234, 220, 0.62)";
     ctx.fillText(
-      `${Math.round(geometry.speedUps)} u/s · ${geometry.capUps} u/s CONTROL · ${geometry.minimumAngle.toFixed(1)}–90° WISH`,
+      `${Math.round(geometry.speedUps)} u/s · PEAK ${geometry.peakAngle.toFixed(1)}° · ${geometry.capUps} u/s CONTROL`,
       labelX,
       labelY + 13,
     );
     ctx.fillStyle = "rgba(143, 162, 173, 0.52)";
     ctx.fillText("CONTROL DROPS 80→50 u/s AT 450 u/s (11.4 m/s)", labelX, labelY + 26);
+    ctx.restore();
+  }
+
+  function drawDistanceBoxcar(centerX, centerY, keySignal) {
+    const quality = clamp(state.inputQuality, 0, 1);
+    const geometry = getInputGeometry(keySignal);
+    const growth = 1 + 0.12 * quality * quality;
+    const width = 112;
+    const height = 38;
+    const x = clamp(centerX - 78, 12 + width * growth / 2, cssWidth - 12 - width * growth / 2);
+    const y = clamp(centerY + 62, 12 + height * growth / 2, cssHeight - 25 - height * growth / 2);
+    const tone = keySignal !== 0 && geometry.effectRatio < -0.08
+      ? colors.coral
+      : geometry.effectRatio > 0.08 || quality > 0.3
+        ? colors.green
+        : colors.cyan;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(growth, growth);
+    ctx.shadowBlur = 8 + quality * 20;
+    ctx.shadowColor = tone;
+    ctx.fillStyle = "rgba(5, 14, 22, 0.94)";
+    ctx.strokeStyle = tone;
+    ctx.lineWidth = 1.5;
+    ctx.fillRect(-width / 2, -height / 2, width, height);
+    ctx.strokeRect(-width / 2, -height / 2, width, height);
+    ctx.shadowBlur = 0;
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = "rgba(143, 162, 173, 0.8)";
+    ctx.font = "700 7px Arial";
+    ctx.fillText("FORWARD DISTANCE", -width / 2 + 8, -5);
+    ctx.fillStyle = colors.text;
+    ctx.font = "700 16px Consolas";
+    ctx.fillText(`${state.forwardDistance.toFixed(1)} m`, -width / 2 + 8, 13);
     ctx.restore();
   }
 
@@ -741,9 +840,10 @@
       ctx.fillText(keySignal < 0 ? "A WISH" : "D WISH", centerX + Math.cos(cameraDisplay + keySignal * Math.PI / 2) * 41, centerY + Math.sin(cameraDisplay + keySignal * Math.PI / 2) * 41);
     }
 
+    drawDistanceBoxcar(centerX, centerY, keySignal);
+
     ctx.fillStyle = "rgba(143, 162, 173, 0.45)";
     ctx.font = "700 9px Consolas";
-    ctx.fillText("FORWARD TRAVEL  ↑", 18, cssHeight - 20);
     ctx.textAlign = "right";
     ctx.fillText("SLOWER TURN AS SPEED RISES", cssWidth - 18, cssHeight - 20);
     ctx.textAlign = "left";
@@ -813,6 +913,8 @@
       ctx.fillStyle = colors.amber;
       ctx.fillText(keySignal < 0 ? "A WISH" : "D WISH", centerX + Math.cos(cameraDisplay + keySignal * Math.PI / 2) * 41, centerY + Math.sin(cameraDisplay + keySignal * Math.PI / 2) * 41);
     }
+
+    drawDistanceBoxcar(centerX, centerY, keySignal);
 
     const labels = ["ALIGN", "A / D", "JUMP + TURN", "LAND / SLIDE"];
     let activePhase = 0;
