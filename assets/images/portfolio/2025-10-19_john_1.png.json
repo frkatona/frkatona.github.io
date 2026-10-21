@@ -1,13 +1,24 @@
 {
-  "title": "John 1",
+  "title": "John in the Groove",
   "description": "John playing acoustic guitar at My Cafe Buzz's open mic event in fall",
   "tags": {
-    "subject": ["John"],
-    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
-    "other": ["open mic"]
+    "subject": [
+      "John"
+    ],
+    "location": [
+      "My Cafe Buzz",
+      "Bellefonte",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
+    "other": [
+      "open mic"
+    ]
   },
   "captureDate": "2025-10-19",
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

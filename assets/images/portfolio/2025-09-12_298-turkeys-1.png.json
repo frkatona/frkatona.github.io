@@ -3,13 +3,19 @@
   "description": "group of friendly turkeys that casually wander through the neighbors yard and around Lemont, captured from my window",
   "tags": {
     "subject": [],
-    "location": ["Lemont", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
+    "location": [
+      "Lemont",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
     "other": [
       "wildlife"
     ]
   },
   "captureDate": "2025-09-12",
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": false
 }

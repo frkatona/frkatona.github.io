@@ -1,10 +1,18 @@
 {
-  "title": "Mary 1",
+  "title": "Mary HDR",
   "description": "Mary singing and playing acoustic guitar at My Cafe Buzz's open mic event, captured from an up-close, low angle, with a wide-angle lens and high dynamic range",
   "tags": {
-    "subject": ["Mary"],
-    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
+    "subject": [
+      "Mary"
+    ],
+    "location": [
+      "My Cafe Buzz",
+      "Bellefonte",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
     "other": [
       "open mic",
       "fall"
@@ -12,5 +20,6 @@
   },
   "captureDate": "2025-10-19",
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

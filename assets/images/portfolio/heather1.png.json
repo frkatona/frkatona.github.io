@@ -1,15 +1,24 @@
 {
-  "title": "Heather 1",
+  "title": "Heather on the Duck",
   "description": "Heather at Big Springs Brewery open mic event",
   "tags": {
-    "subject": ["Heather"],
-    "location": ["Big Springs Brewery", "Bellefonte", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
+    "subject": [
+      "Heather"
+    ],
+    "location": [
+      "Big Springs Brewery",
+      "Bellefonte",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
     "other": [
       "open mic"
     ]
   },
   "captureDate": null,
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

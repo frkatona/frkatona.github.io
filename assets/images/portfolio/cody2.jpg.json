@@ -1,15 +1,24 @@
 {
-  "title": "Coconut Wolf 2",
+  "title": "Coconut Wolf in the Pocket",
   "description": "Coconut Wolf rapping at My Cafe Buzz's open mic event",
   "tags": {
-    "subject": ["Coconut Wolf"],
-    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
+    "subject": [
+      "Coconut Wolf"
+    ],
+    "location": [
+      "My Cafe Buzz",
+      "Bellefonte",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
     "other": [
       "open mic"
     ]
   },
   "captureDate": "2025-06-01",
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

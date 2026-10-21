@@ -1,10 +1,18 @@
 {
-  "title": "Cole",
+  "title": "Cole Intensity",
   "description": "Cole singing and playing acoustic guitar at My Cafe Buzz's open mic event",
   "tags": {
-    "subject": ["Cole"],
-    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
+    "subject": [
+      "Cole"
+    ],
+    "location": [
+      "My Cafe Buzz",
+      "Bellefonte",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
     "other": [
       "open mic",
       "fall"
@@ -12,5 +20,6 @@
   },
   "captureDate": "2025-11-17",
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

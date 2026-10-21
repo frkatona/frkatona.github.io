@@ -1,10 +1,15 @@
 {
-  "title": "Window Sir",
+  "title": "Sir Clair Obscur",
   "description": "Sir sitting in the window with a curious Ponyo",
   "tags": {
     "subject": [],
-    "location": ["Lemont", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
+    "location": [
+      "Lemont",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
     "other": [
       "pet",
       "cat"
@@ -12,5 +17,6 @@
   },
   "captureDate": null,
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

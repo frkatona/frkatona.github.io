@@ -1,15 +1,24 @@
 {
-  "title": "Autumn 1",
+  "title": "Autumn Alpine River",
   "description": "Autumn singing and playing acoustic guitar at My Cafe Buzz's open mic event",
   "tags": {
-    "subject": ["Autumn"],
-    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
+    "subject": [
+      "Autumn"
+    ],
+    "location": [
+      "My Cafe Buzz",
+      "Bellefonte",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
     "other": [
       "open mic"
     ]
   },
   "captureDate": null,
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

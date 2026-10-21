@@ -2,14 +2,23 @@
   "title": "Seamus",
   "description": "Seamus at the bar waiting to play at Big Springs Brewery open mic event",
   "tags": {
-    "subject": ["Seamus"],
-    "location": ["Big Springs Brewery", "Bellefonte", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
+    "subject": [
+      "Seamus"
+    ],
+    "location": [
+      "Big Springs Brewery",
+      "Bellefonte",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
     "other": [
       "open mic"
     ]
   },
   "captureDate": null,
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": false
 }

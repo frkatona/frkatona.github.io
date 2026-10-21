@@ -1,16 +1,23 @@
 {
-  "title": "Firefighter Group",
+  "title": "Firefighter Debriefing",
   "description": "Firefighters after handling the Chemistry Building fire at Penn State",
   "tags": {
-    "subject": [
+    "subject": [],
+    "location": [
+      "Penn State",
+      "State College",
+      "Pennsylvania"
     ],
-    "location": ["Penn State", "State College", "Pennsylvania"],
-    "cameraDetails": ["Sony a6400", "telephoto"],
+    "cameraDetails": [
+      "Sony a6400",
+      "telephoto"
+    ],
     "other": [
       "photojournalism"
     ]
   },
   "captureDate": null,
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

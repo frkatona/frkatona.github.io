@@ -1,16 +1,21 @@
 {
-  "title": "Sunset 1",
+  "title": "Shadowbeam Sunset",
   "description": "High contrast sun fading beaneath clouds near the horizon",
   "tags": {
-    "subject": [
+    "subject": [],
+    "location": [
+      "Lemont",
+      "Pennsylvania"
     ],
-    "location": ["Lemont", "Pennsylvania"],
-    "cameraDetails": ["Sony a6400"],
+    "cameraDetails": [
+      "Sony a6400"
+    ],
     "other": [
       "landscape"
     ]
   },
   "captureDate": null,
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

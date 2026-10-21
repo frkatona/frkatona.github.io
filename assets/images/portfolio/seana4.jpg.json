@@ -1,15 +1,24 @@
 {
-  "title": "Seana 4",
+  "title": "Seana on Deck",
   "description": "Seana singing and playing acoustic guitar at the My Cafe Buzz open mic event",
   "tags": {
-    "subject": ["Seana"],
-    "location": ["My Cafe Buzz", "Bellefonte", "Pennsylvania"],
-    "cameraDetails": ["Pixel 8 Pro"],
+    "subject": [
+      "Seana"
+    ],
+    "location": [
+      "My Cafe Buzz",
+      "Bellefonte",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
     "other": [
       "open mic"
     ]
   },
   "captureDate": null,
   "featured": false,
-  "status": "updated"
+  "status": "updated",
+  "visible": true
 }

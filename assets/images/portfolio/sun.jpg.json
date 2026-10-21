@@ -1,16 +1,21 @@
 {
-  "title": "Sun",
+  "title": "Steady Sunset",
   "description": "Me probably destroying my camera sensor",
   "tags": {
-    "subject": [
+    "subject": [],
+    "location": [
+      "Lemont",
+      "Pennsylvania"
     ],
-    "location": ["Lemont", "Pennsylvania"],
-    "cameraDetails": ["Sony a7s II"],
+    "cameraDetails": [
+      "Sony a7s II"
+    ],
     "other": [
       "landscape"
     ]
   },
   "captureDate": null,
   "featured": false,
-  "status": "placeholder"
+  "status": "placeholder",
+  "visible": true
 }
