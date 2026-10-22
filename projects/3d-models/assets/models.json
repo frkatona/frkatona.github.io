@@ -1001,7 +1001,7 @@
     {
       "id": "police-lady",
       "name": "Police Lady",
-      "category": "props",
+      "category": "characters",
       "categoryLabel": "Character",
       "src": "assets/props/policeLady.glb",
       "thumbnail": "assets/thumbnails/police-lady-thumbnail-2.png",
@@ -1134,7 +1134,7 @@
     {
       "id": "wall-unit",
       "name": "Compound Wall Unit",
-      "category": "props",
+      "category": "environments",
       "categoryLabel": "Environment",
       "src": "assets/props/wall-unit.glb",
       "thumbnail": "assets/thumbnails/wall-unit-thumbnail-2.png",
@@ -1154,7 +1154,7 @@
     {
       "id": "barrel-pallet",
       "name": "Barrel Pallet",
-      "category": "props",
+      "category": "environments",
       "categoryLabel": "Environment",
       "src": "assets/props/barrelPallet.glb",
       "thumbnail": "assets/thumbnails/barrel-pallet-thumbnail.png",
@@ -1194,7 +1194,7 @@
     {
       "id": "dresser",
       "name": "Dresser",
-      "category": "props",
+      "category": "environments",
       "categoryLabel": "Environment",
       "src": "assets/props/dresser.glb",
       "thumbnail": "assets/thumbnails/dresser-thumbnail.png",
@@ -1271,7 +1271,7 @@
     {
       "id": "squirrel-lady-2-2",
       "name": "Squirrel Lady",
-      "category": "props",
+      "category": "characters",
       "categoryLabel": "Character",
       "src": "assets/props/squirrelLady-2-2.glb",
       "thumbnail": "assets/thumbnails/squirrel-lady-2-2-thumbnail.png",

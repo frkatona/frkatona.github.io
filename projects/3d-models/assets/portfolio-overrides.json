@@ -7,7 +7,8 @@
       "categoryLabel": "Character",
       "defaultAnimation": "idleCrouch-loop",
       "albedo": "",
-      "thumbnail": "assets/thumbnails/police-lady-thumbnail-2.png"
+      "thumbnail": "assets/thumbnails/police-lady-thumbnail-2.png",
+      "category": "characters"
     },
     "handgun": {
       "visible": true,
@@ -25,7 +26,8 @@
       "categoryLabel": "Environment",
       "defaultAnimation": "",
       "albedo": "",
-      "thumbnail": "assets/thumbnails/wall-unit-thumbnail-2.png"
+      "thumbnail": "assets/thumbnails/wall-unit-thumbnail-2.png",
+      "category": "environments"
     },
     "barrel-pallet": {
       "visible": true,
@@ -34,7 +36,8 @@
       "categoryLabel": "Environment",
       "defaultAnimation": "",
       "albedo": "",
-      "thumbnail": "assets/thumbnails/barrel-pallet-thumbnail.png"
+      "thumbnail": "assets/thumbnails/barrel-pallet-thumbnail.png",
+      "category": "environments"
     },
     "brush-motor": {
       "name": "Brush Motor",
@@ -60,7 +63,8 @@
       "categoryLabel": "Environment",
       "defaultAnimation": "",
       "albedo": "",
-      "thumbnail": "assets/thumbnails/dresser-thumbnail.png"
+      "thumbnail": "assets/thumbnails/dresser-thumbnail.png",
+      "category": "environments"
     },
     "low-poly-mario": {
       "thumbnail": "assets/thumbnails/low-poly-mario-thumbnail.png"
@@ -141,7 +145,8 @@
       "defaultAnimation": "run-loop",
       "name": "Squirrel Lady",
       "description": "Custom, animated anthropomorphic squirrel character.",
-      "categoryLabel": "Character"
+      "categoryLabel": "Character",
+      "category": "characters"
     }
   },
   "sounds": {}
