@@ -116,11 +116,32 @@
     "squirrel-lady": {
       "thumbnail": "assets/thumbnails/squirrel-lady-thumbnail.png",
       "defaultAnimation": "run-loop",
-      "visible": true,
+      "visible": false,
       "name": "Squirrel Lady",
       "description": "Woodland hero.",
       "categoryLabel": "Character",
       "albedo": "assets/characters/albedo.png"
+    },
+    "squirrel-lady-2": {
+      "visible": false
+    },
+    "dolphin": {
+      "thumbnail": "assets/thumbnails/dolphin-thumbnail-2.png",
+      "defaultAnimation": "dash",
+      "visible": true,
+      "name": "Dolphin",
+      "description": "Animated low-poly dolphin character.",
+      "categoryLabel": "Character",
+      "albedo": ""
+    },
+    "squirrel-lady-2-2": {
+      "visible": true,
+      "albedo": "assets/textures/albedo.png",
+      "thumbnail": "assets/thumbnails/squirrel-lady-2-2-thumbnail.png",
+      "defaultAnimation": "run-loop",
+      "name": "Squirrel Lady",
+      "description": "Custom, animated anthropomorphic squirrel character.",
+      "categoryLabel": "Character"
     }
   },
   "sounds": {}

@@ -106,10 +106,10 @@
       "category": "characters",
       "categoryLabel": "Character",
       "src": "assets/characters/dolphin.glb",
-      "thumbnail": "assets/thumbnails/dolphin.webp",
-      "albedo": null,
+      "thumbnail": "assets/thumbnails/dolphin-thumbnail-2.png",
+      "albedo": "",
       "description": "Animated low-poly dolphin character.",
-      "defaultAnimation": "idle-loop",
+      "defaultAnimation": "dash",
       "bytes": 141668,
       "triangles": 262,
       "vertices": 494,
@@ -154,7 +154,8 @@
           "name": "uTurn",
           "duration": 1.583
         }
-      ]
+      ],
+      "visible": true
     },
     {
       "id": "snowboarder-character",
@@ -256,7 +257,7 @@
           "duration": 0.833
         }
       ],
-      "visible": true
+      "visible": false
     },
     {
       "id": "low-poly-mario",
@@ -1209,6 +1210,120 @@
       "textureCount": 0,
       "skinCount": 0,
       "animations": []
+    },
+    {
+      "id": "squirrel-lady-2",
+      "name": "squirrelLady 2",
+      "category": "props",
+      "categoryLabel": "Prop",
+      "src": "assets/props/squirrelLady-2.glb",
+      "thumbnail": "",
+      "albedo": null,
+      "description": "",
+      "defaultAnimation": "",
+      "visible": false,
+      "bytes": 3985188,
+      "triangles": 18243,
+      "vertices": 10145,
+      "meshCount": 1,
+      "materialCount": 0,
+      "textureCount": 0,
+      "skinCount": 1,
+      "animations": [
+        {
+          "name": "basis",
+          "duration": 0.042
+        },
+        {
+          "name": "crossbow_aim",
+          "duration": 0.042
+        },
+        {
+          "name": "falling-loop",
+          "duration": 0.875
+        },
+        {
+          "name": "jumpLand",
+          "duration": 0.417
+        },
+        {
+          "name": "jumpStart",
+          "duration": 0.417
+        },
+        {
+          "name": "run-loop",
+          "duration": 0.833
+        },
+        {
+          "name": "sliding-loop",
+          "duration": 1.667
+        },
+        {
+          "name": "wallHolding-loop",
+          "duration": 1.042
+        },
+        {
+          "name": "zipping-loop",
+          "duration": 0.625
+        }
+      ]
+    },
+    {
+      "id": "squirrel-lady-2-2",
+      "name": "Squirrel Lady",
+      "category": "props",
+      "categoryLabel": "Character",
+      "src": "assets/props/squirrelLady-2-2.glb",
+      "thumbnail": "assets/thumbnails/squirrel-lady-2-2-thumbnail.png",
+      "albedo": "assets/textures/albedo.png",
+      "description": "Custom, animated anthropomorphic squirrel character.",
+      "defaultAnimation": "run-loop",
+      "visible": true,
+      "bytes": 3985188,
+      "triangles": 18243,
+      "vertices": 10145,
+      "meshCount": 1,
+      "materialCount": 0,
+      "textureCount": 0,
+      "skinCount": 1,
+      "animations": [
+        {
+          "name": "basis",
+          "duration": 0.042
+        },
+        {
+          "name": "crossbow_aim",
+          "duration": 0.042
+        },
+        {
+          "name": "falling-loop",
+          "duration": 0.875
+        },
+        {
+          "name": "jumpLand",
+          "duration": 0.417
+        },
+        {
+          "name": "jumpStart",
+          "duration": 0.417
+        },
+        {
+          "name": "run-loop",
+          "duration": 0.833
+        },
+        {
+          "name": "sliding-loop",
+          "duration": 1.667
+        },
+        {
+          "name": "wallHolding-loop",
+          "duration": 1.042
+        },
+        {
+          "name": "zipping-loop",
+          "duration": 0.625
+        }
+      ]
     }
   ]
 }
