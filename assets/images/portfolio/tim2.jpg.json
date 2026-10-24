@@ -1,0 +1,24 @@
+{
+  "title": "Tim Serenade",
+  "description": "Tim playing guitar and singing at the Big Springs Brewery open mic",
+  "tags": {
+    "subject": [
+      "Tim"
+    ],
+    "location": [
+      "Big Springs Brewery",
+      "State College",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Pixel 8 Pro"
+    ],
+    "other": [
+      "open mic"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated",
+  "visible": true
+}

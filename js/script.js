@@ -1,181 +1,229 @@
-document.addEventListener("DOMContentLoaded", function() {
-    
-    // On-hover effect for thumbnails
-    const thumbnailContainers = document.querySelectorAll(".thumbnail-container");
+document.addEventListener("DOMContentLoaded", () => {
+  const heading = document.getElementById("shadow");
+  const resumeIcon = document.getElementById("resume-icon");
+  const pdfContainer = document.getElementById("pdf-container");
+  const minimizeBtn = document.getElementById("minimize-btn");
+  const projectGrid = document.getElementById("project-grid");
+  const extraProjectCardsTemplate = document.getElementById("extra-project-cards");
+  const projectFilterInput = document.querySelector("[data-project-filter]");
+  const projectPagination = document.querySelector("[data-project-pagination]");
+  const projectPageSelect = document.querySelector("[data-page-select]");
+  const projectEmptyMessage = document.querySelector("[data-project-empty]");
 
-    thumbnailContainers.forEach(function(thumbnailContainer) {
-        thumbnailContainer.addEventListener("mouseenter", function() {
-            this.style.transform = "scale(1.05)";
-            this.style.transition = "transform 0.3s";
+  if (heading) {
+    const shadowMaxDistance = 400;
+    const shadowMaxLength = 10;
+
+    document.addEventListener("mousemove", (event) => {
+      const rect = heading.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const deltaX = event.clientX - centerX;
+      const deltaY = event.clientY - centerY;
+      const distance = Math.hypot(deltaX, deltaY);
+      const angle = Math.atan2(deltaY, deltaX);
+      const shadowLength =
+        Math.min(distance / shadowMaxDistance, 1) * shadowMaxLength;
+      const shadowX = -Math.cos(angle) * shadowLength;
+      const shadowY = -Math.sin(angle) * shadowLength;
+
+      heading.style.textShadow = `${shadowX}px ${shadowY}px 3px rgba(0, 0, 0, 0.5)`;
+    });
+  }
+
+  if (projectGrid) {
+    const projectsPerPage = Number(projectGrid.dataset.projectsPerPage) || 8;
+    const visibleProjectCards = Array.from(projectGrid.querySelectorAll(":scope > .card"));
+    const extraProjectCards = extraProjectCardsTemplate
+      ? Array.from(extraProjectCardsTemplate.content.querySelectorAll(".card"))
+      : [];
+    const projectCards = [...visibleProjectCards, ...extraProjectCards].map((card) => {
+      const title = card.querySelector("h3")?.textContent.trim() || "";
+
+      return {
+        element: card.cloneNode(true),
+        title,
+        searchableTitle: title.toLowerCase(),
+      };
+    });
+    let filteredProjectCards = projectCards;
+    let currentProjectPage = 0;
+
+    function renderProjectPagination(pageCount) {
+      if (!projectPagination || !projectPageSelect) {
+        return;
+      }
+
+      projectPagination.hidden = filteredProjectCards.length === 0;
+      projectPageSelect.replaceChildren();
+
+      for (let pageIndex = 0; pageIndex < pageCount; pageIndex += 1) {
+        const option = document.createElement("option");
+        option.value = String(pageIndex);
+        option.textContent = `${pageIndex + 1} of ${pageCount}`;
+        option.selected = pageIndex === currentProjectPage;
+        projectPageSelect.appendChild(option);
+      }
+
+      projectPageSelect.disabled = pageCount <= 1;
+
+      projectPagination.querySelectorAll("[data-page-action]").forEach((button) => {
+        const action = button.dataset.pageAction;
+        const isFirstPage = currentProjectPage === 0;
+        const isLastPage = currentProjectPage >= pageCount - 1;
+
+        if (action === "previous") {
+          button.disabled = isFirstPage;
+        }
+
+        if (action === "next") {
+          button.disabled = isLastPage;
+        }
+      });
+    }
+
+    function createProjectPlaceholderCard() {
+      const placeholder = document.createElement("div");
+      placeholder.className = "card card-placeholder";
+      placeholder.setAttribute("aria-hidden", "true");
+      return placeholder;
+    }
+
+    function renderProjectPage({ preserveScrollPosition = false } = {}) {
+      const scrollX = window.scrollX;
+      const scrollY = window.scrollY;
+      const pageCount = Math.max(Math.ceil(filteredProjectCards.length / projectsPerPage), 1);
+      currentProjectPage = Math.min(currentProjectPage, pageCount - 1);
+      const startIndex = currentProjectPage * projectsPerPage;
+      const pageCards = filteredProjectCards.slice(startIndex, startIndex + projectsPerPage);
+      const fragment = document.createDocumentFragment();
+
+      pageCards.forEach((project) => {
+        fragment.appendChild(project.element.cloneNode(true));
+      });
+
+      if (pageCount > 1) {
+        const placeholderCount = projectsPerPage - pageCards.length;
+
+        for (let index = 0; index < placeholderCount; index += 1) {
+          fragment.appendChild(createProjectPlaceholderCard());
+        }
+      }
+
+      projectGrid.replaceChildren(fragment);
+
+      if (projectEmptyMessage) {
+        projectEmptyMessage.hidden = filteredProjectCards.length > 0;
+      }
+
+      renderProjectPagination(pageCount);
+
+      if (preserveScrollPosition) {
+        window.scrollTo(scrollX, scrollY);
+        requestAnimationFrame(() => {
+          window.scrollTo(scrollX, scrollY);
         });
+      }
+    }
 
-        thumbnailContainer.addEventListener("mouseleave", function() {
-            this.style.transform = "scale(1)";
-            this.style.transition = "transform 0.3s";
-        });
-    });
+    function applyProjectFilter() {
+      const query = projectFilterInput?.value.trim().toLowerCase() || "";
+      filteredProjectCards = query
+        ? projectCards.filter((project) => project.searchableTitle.includes(query))
+        : projectCards;
+      currentProjectPage = 0;
+      renderProjectPage();
+    }
 
-    // Parallax scrolling effect
-    const banner = document.querySelector(".banner");
-    window.addEventListener("scroll", function() {
-        let scrollPos = window.pageYOffset;
-        banner.style.backgroundPositionY = -scrollPos * 0.5 + "px";
-    });
+    if (projectFilterInput) {
+      projectFilterInput.addEventListener("input", applyProjectFilter);
+    }
 
-    // Shadow effect
-    const heading = document.getElementById("shadow");
-    const shadowMaxDistance = 400; // Maximum distance (in pixels) for shadow effect
-    const shadowMaxLength = 10;    // Maximum length (in pixels) of the shadow
+    if (projectPageSelect) {
+      projectPageSelect.addEventListener("change", () => {
+        currentProjectPage = Number(projectPageSelect.value);
+        renderProjectPage();
+      });
+    }
 
-    document.addEventListener('mousemove', (e) => {
-    const rect = heading.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
+    if (projectPagination) {
+      projectPagination.addEventListener("pointerdown", (event) => {
+        if (event.target.closest("[data-page-action]")) {
+          event.preventDefault();
+        }
+      });
 
-    const deltaX = mouseX - centerX;
-    const deltaY = mouseY - centerY;
-    const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
-    const angle = Math.atan2(deltaY, deltaX);
+      projectPagination.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-page-action]");
 
-    const shadowLength = Math.min(distance / shadowMaxDistance, 1) * shadowMaxLength;
-    const shadowX = -Math.cos(angle) * shadowLength;
-    const shadowY = -Math.sin(angle) * shadowLength;
+        if (!button || button.disabled) {
+          return;
+        }
 
-    heading.style.textShadow = `${shadowX}px ${shadowY}px 3px rgba(0, 0, 0, 0.5)`;
-    });
+        const pageCount = Math.max(Math.ceil(filteredProjectCards.length / projectsPerPage), 1);
+        button.blur();
 
-    // Resume unveiling
-    const resumeIcon = document.getElementById('resume-icon');
-    const pdfContainer = document.getElementById('pdf-container');
-    const minimizeBtn = document.getElementById('minimize-btn');
+        if (button.dataset.pageAction === "previous") {
+          currentProjectPage -= 1;
+        }
 
-    // Store the initial position of the resume icon
-    const resumeIconInitialDisplay = window.getComputedStyle(resumeIcon).display;
+        if (button.dataset.pageAction === "next") {
+          currentProjectPage += 1;
+        }
 
-    resumeIcon.addEventListener('click', () => {
-    pdfContainer.style.display = 'block';
-    minimizeBtn.style.display = 'block';
+        currentProjectPage = Math.max(0, Math.min(currentProjectPage, pageCount - 1));
+        renderProjectPage({ preserveScrollPosition: true });
+      });
+    }
 
-    // Hide the resume icon when clicked
-    resumeIcon.style.display = 'none';
-    });
+    renderProjectPage();
+  }
 
-    minimizeBtn.addEventListener('click', () => {
-    pdfContainer.style.display = 'none';
-    minimizeBtn.style.display = 'none';
+  if (!resumeIcon || !pdfContainer || !minimizeBtn) {
+    return;
+  }
 
-    // Restore the initial position of the resume icon after minimizing
+  const resumeIconInitialDisplay =
+    window.getComputedStyle(resumeIcon).display || "block";
+  const pdfSrc = pdfContainer.dataset.pdfSrc;
+  let resumeLoaded = false;
+
+  function ensureResumeEmbed() {
+    if (resumeLoaded || !pdfSrc) {
+      return;
+    }
+
+    const object = document.createElement("object");
+    object.data = pdfSrc;
+    object.type = "application/pdf";
+    object.width = "100%";
+    object.height = "100%";
+    object.innerHTML = `
+      <p>
+        It appears you don't have a PDF plugin for this browser.
+        Please <a href="${pdfSrc}">download the PDF file</a>.
+      </p>
+    `;
+
+    pdfContainer.appendChild(object);
+    resumeLoaded = true;
+  }
+
+  function showResume() {
+    ensureResumeEmbed();
+    pdfContainer.hidden = false;
+    pdfContainer.setAttribute("aria-hidden", "false");
+    minimizeBtn.hidden = false;
+    resumeIcon.style.display = "none";
+  }
+
+  function hideResume() {
+    pdfContainer.hidden = true;
+    pdfContainer.setAttribute("aria-hidden", "true");
+    minimizeBtn.hidden = true;
     resumeIcon.style.display = resumeIconInitialDisplay;
-    });
+  }
 
-    let angle = 0;
-    const speed = 0.03;
-    circleX = 950;
-    circleY = 300;
-    const radius = 100;
-    const amplitude = 75;
-
-    function moveDot(dotId, angleOffset) {
-        const dot = document.getElementById(dotId);
-
-        const oscillation = amplitude * Math.sin(angle + angleOffset); // The sinusoidal oscillation
-        const center = { x: circleX, y: circleY };
-        const x = center.x + (radius + oscillation) * Math.cos(angle + angleOffset);
-        const y = center.y + (radius + oscillation) * Math.sin(angle + angleOffset);
-
-        dot.style.left = `${x}px`;
-        dot.style.top = `${y}px`;
-    }
-
-    function animate() {
-        moveDot('dot1', 0);
-        moveDot('dot2', (2 * Math.PI) / 3);
-        moveDot('dot3', (4 * Math.PI) / 3);
-        angle += speed;
-        requestAnimationFrame(animate);
-    }
-
-    animate();
+  resumeIcon.addEventListener("click", showResume);
+  minimizeBtn.addEventListener("click", hideResume);
 });
-
-//     // Timeline scroll animation
-
-//     // Initialize ScrollMagic
-//     const controller = new ScrollMagic.Controller({ globalSceneOptions: { triggerHook: 0.9 } });
-
-//     // Get all elements with data-animation attribute
-//     const timelinePoints = document.querySelectorAll(".timeline-point[data-animation]");
-
-//     // Loop through each element and create a scene
-//     timelinePoints.forEach((point) => {
-//         const animation = point.getAttribute("data-animation");
-
-//         // Create a GSAP timeline for the animation
-//         const timeline = gsap.timeline();
-//         timeline.from(point, { duration: 1, y: 50, autoAlpha: 0 });
-
-//         // Create a ScrollMagic scene
-//         const scene = new ScrollMagic.Scene({
-//             triggerElement: point,
-//             reverse: false,
-//             offset: -100, //
-//         })
-//             .setTween(timeline)
-//             .addTo(controller);
-//     });
-
-//     // Dots animation
-//     var canvas = document.getElementById('dotCanvas');
-//     var ctx = canvas.getContext('2d');
-
-//     function setCanvasSize() {
-//         canvas.width = window.innerWidth;
-//         canvas.height = window.innerHeight;
-//     }
-
-//     setCanvasSize();
-//     window.addEventListener('resize', setCanvasSize);
-
-//     var dots = [];
-
-//     function Dot() {
-//         this.x = Math.random() * canvas.width;
-//         this.y = Math.random() * canvas.height;
-//         this.dx = Math.random() - 0.5;
-//         this.dy = Math.random() - 0.5;
-
-//         this.draw = function() {
-//             ctx.beginPath();
-//             ctx.arc(this.x, this.y, 2, 0, Math.PI * 2, false);
-//             ctx.fillStyle = 'white';
-//             ctx.fill();
-//         }
-
-//         this.update = function() {
-//             this.x += this.dx;
-//             this.y += this.dy;
-
-//             if (this.x < 0 || this.x > canvas.width) this.dx = -this.dx;
-//             if (this.y < 0 || this.y > canvas.height) this.dy = -this.dy;
-
-//             this.draw();
-//         }
-//     }
-
-//     for (var i = 0; i < 100; i++) {
-//         dots.push(new Dot());
-//     }
-
-//     function animate() {
-//         requestAnimationFrame(animate);
-//         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-//         for (var i = 0; i < dots.length; i++) {
-//             dots[i].update();
-//         }
-//     }
-
-//     animate();
-// });

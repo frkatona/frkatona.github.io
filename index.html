@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AK Homepage</title>
     <link rel="icon" type="image/x-icon" href="assets/images/icons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +19,8 @@
             <span>&#x25C0;</span>
         </div>
         <div class="bio">
-            <img src="assets/images/profile/thumbnail_face.png" alt="Profile picture">
+            <img src="assets/images/index/profile/thumbnail-face.webp" alt="Profile picture" width="160" height="160"
+                decoding="async">
             <h3>Hey hi hello it's me yes hi</h3>
         </div>
     </div>
@@ -27,30 +30,37 @@
                 <h1>Anthony's WIP</h1>
                 <p>professional portfolio and personal playground</p>
                 <div class="social-media">
-                    <a class="icon" href="https://github.com/frkatona" target="_blank"><i class="fab fa-github"></i></a>
-                    <a class="icon" href="https://akatona.itch.io/" target="_blank"><i class="fab fa-unity"></i></a>
-                    <a class="icon" href="https://www.deviantart.com/frkatona" target="_blank"><i
-                            class="fab fa-deviantart"></i></a>
-                    <a class="icon" href="https://www.youtube.com/@frkatona" target="_blank"><i
-                            class="fab fa-youtube"></i></a>
+                    <a class="icon" href="https://github.com/frkatona" target="_blank" rel="noopener noreferrer"
+                        aria-label="GitHub" data-tooltip="GitHub"><i class="fab fa-github"
+                            aria-hidden="true"></i></a>
+                    <a class="icon" href="https://akatona.itch.io/" target="_blank" rel="noopener noreferrer"
+                        aria-label="Itch.io" data-tooltip="Itch.io"><i class="fab fa-unity"
+                            aria-hidden="true"></i></a>
+                    <a class="icon" href="https://www.deviantart.com/frkatona" target="_blank"
+                        rel="noopener noreferrer" aria-label="DeviantArt" data-tooltip="DeviantArt"><i
+                            class="fab fa-deviantart" aria-hidden="true"></i></a>
+                    <a class="icon" href="https://www.youtube.com/@frkatona" target="_blank"
+                        rel="noopener noreferrer" aria-label="YouTube" data-tooltip="YouTube"><i
+                            class="fab fa-youtube" aria-hidden="true"></i></a>
                     <a class="icon"
                         href="https://open.spotify.com/artist/3y4NQcSLdOR1YGWKhEbmHy?si=8fVnoXfCRl61DnbVYepZFA"
-                        target="_blank"><i class="fab fa-spotify"></i></a>
-                    <a class="icon" href="https://soundcloud.com/anthony-phillip-katona/" target="_blank"><i
-                            class="fab fa-soundcloud"></i></a>
+                        target="_blank" rel="noopener noreferrer" aria-label="Spotify" data-tooltip="Spotify"><i
+                            class="fab fa-spotify" aria-hidden="true"></i></a>
+                    <a class="icon" href="https://soundcloud.com/anthony-phillip-katona/" target="_blank"
+                        rel="noopener noreferrer" aria-label="SoundCloud" data-tooltip="SoundCloud"><i
+                            class="fab fa-soundcloud" aria-hidden="true"></i></a>
                     <a class="icon" href="https://scholar.google.com/citations?user=qmKID2MAAAAJ&hl=en&oi=ao"
-                        target="_blank"><i class="fas fa-file-alt"></i></a>
-                    <a class="icon" href="https://www.linkedin.com/in/akatona8/" target="_blank"><i
-                            class="fab fa-linkedin-in"></i></a>
-
+                        target="_blank" rel="noopener noreferrer" aria-label="Google Scholar"
+                        data-tooltip="Google Scholar"><i class="fas fa-file-alt" aria-hidden="true"></i></a>
+                    <a class="icon" href="https://www.linkedin.com/in/akatona8/" target="_blank"
+                        rel="noopener noreferrer" aria-label="LinkedIn" data-tooltip="LinkedIn"><i
+                            class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                 </div>
-                <img src="assets/images/icons/resume.png" alt="Resume Icon" id="resume-icon" style:"cursor: pointer;">
-                <div id="pdf-container">
-                    <button id="minimize-btn">Minimize</button>
-                    <object data="assets/documents/APK_Resume.pdf" type="application/pdf" width="100%" height="100%">
-                        <p>It appears you don't have a PDF plugin for this browser. Please <a
-                                href="assets/documents/APK_Resume.pdf">download the PDF file</a>.</p>
-                    </object>
+                <button id="resume-icon" type="button" aria-label="Open resume">
+                    <img src="assets/images/icons/resume.png" alt="" class="resume-icon-image">
+                </button>
+                <div id="pdf-container" data-pdf-src="assets/documents/APK_Resume.pdf" aria-hidden="true" hidden>
+                    <button id="minimize-btn" type="button" hidden>Minimize</button>
                 </div>
             </div>
         </section>
@@ -58,7 +68,8 @@
             <h2 class="centered-head">About Me</h2>
             <div class="about-container">
                 <div class="profile">
-                    <img src="assets/images/profile/apk-headshot.png" alt="Profile Picture">
+                    <img src="assets/images/index/profile/apk-headshot.webp" alt="Profile Picture" width="512"
+                        height="512" loading="lazy" decoding="async">
                     <p1>
                         Hey there! Anthony Katona is my name, chemistry is my game. But sometimes games are my game and
                         I also enjoy coding, electronics, and making 3D art and music.
@@ -71,102 +82,279 @@
         </div>
     </div>
     <h2 class="centered-head">Recent Projects</h2>
-    <section class="thumbnails">
-        <div class="card">
-            <a href="projects/VocalWarmup/VocalWarmup">
-                <h3>Interactive Vocal Warmup</h3>
-                <img src="assets/images/thumbnails/vocal-warmup.png"
-                    alt="Activities to streamline vocal warmups for beginners">
-            </a>
-        </div>
-        <div class="card">
-            <a href="projects/SongPlayer/portfolio.html?artist=admin">
-                <h3>Music Portfolio Demo</h3>
-                <img src="projects/SongPlayer/songs/Marko.jpg"
-                    alt="Song player used for demo'ing artists' song portfolios">
-            </a>
-        </div>
+    <div class="project-browser">
+        <label class="project-filter" for="project-filter-input">
+            <span class="visually-hidden">Filter projects</span>
+            <input id="project-filter-input" type="search" placeholder="Filter projects..." autocomplete="off"
+                data-project-filter>
+        </label>
+    </div>
+    <section class="thumbnails" id="project-grid" aria-live="polite" data-projects-per-page="8">
 
         <div class="card">
             <a href="projects/OriginalSongHelper/songwritingmarkdown">
                 <h3>Songwriting Markdown</h3>
-                <img src="assets/images/thumbnails/songwriting.png"
-                    alt="Lyric-writing visual assistant tool for somewhat streamlined formatting of sections, chords, and lyrics">
+                <img src="assets/images/index/cards/songwriting.webp"
+                    alt="Lyric-writing visual assistant tool for somewhat streamlined formatting of sections, chords, and lyrics"
+                    loading="lazy" decoding="async">
+            </a>
+        </div>
+            <div class="card">
+            <a href="projects/SongPlayer/portfolio.html?artist=admin">
+                <h3>Demo Recordings Portfolio</h3>
+                <img src="assets/images/index/cards/music-portfolio.webp"
+                    alt="Song player used for demo'ing artists' song portfolios" loading="lazy" decoding="async">
             </a>
         </div>
         <div class="card">
-            <a href="projects/SophiaCircle/wheel">
-                <h3>Sophia Wheel</h3>
-                <img src="projects/SophiaCircle/spinner.png" alt="Sophia's interactive wheel of fifths and modes">
+            <a href="projects/photography/">
+                <h3>Photography Portfolio</h3>
+                <img src="assets/images/index/cards/photography.webp"
+                    alt="Photography portfolio gallery with portraits and lifestyle work" loading="lazy"
+                    decoding="async">
             </a>
         </div>
         <div class="card">
-            <a href="projects/0_unlisted/PalettePreview/PalettePreview">
-                <h3>Data Palette Previewer</h3>
-                <img src="assets/images/thumbnails/palette.png"
-                    alt="Color palette previewer for various color schemes collected through the Adobe Color harmony tool">
+            <a href="projects/3d-models/index.html">
+                <h3>3D Model Archive</h3>
+                <img src="projects/3d-models/assets/thumbnails/squirrel-lady.webp"
+                    alt="Squirrel Lady character from the interactive 3D model portfolio" loading="lazy"
+                    decoding="async">
             </a>
         </div>
         <div class="card">
-            <a href="projects/0_unlisted/WordAssociationNetwork/WordAssociation">
-                <h3>Word Association Graph</h3>
-                <img src="assets/images/thumbnails/wordnetwork.png"
-                    alt="word association through the datamuse API graphed into a network with the d3js library">
+            <a href="projects/EventPoster/index.html">
+                <h3>Event Poster Maker</h3>
+                <img src="assets/images/thumbnails/poster.png"
+                    alt="stylized event poster maker placeholder with photo block and overlaid text"
+                    loading="lazy" decoding="async">
             </a>
         </div>
         <div class="card">
-            <a href="projects/ChordNetwork/chordnetwork">
-                <h3>Chord Network Tool</h3>
-                <img src="assets/images/thumbnails/chordnetwork.png"
-                    alt="chord network diagram and dynamic chord progression generator">
-            </a>
-        </div>
-        <div class="card">
-            <a href="projects/heatFlow_sim/heatequation">
-                <h3>2D Heat Flow</h3>
-                <img src="assets/images/thumbnails/heatsim.png" alt="2D heat simulation">
+            <a href="projects/Pole-Cart-Godot/index.html">
+                <h3>Godot Genetic Algorithm</h3>
+                <img src="assets/images/thumbnails/pole-cart.png"
+                    alt="cart-pole genetic algorithm visualization with a balancing cart and DNA helix"
+                    loading="lazy" decoding="async">
             </a>
         </div>
         <div class="card">
             <a href="projects/CapoConverter/capoconverter">
                 <h3>Capo Chord Converter Tool</h3>
-                <img src="assets/images/thumbnails/capo.png" alt="guitar capo position determining tool">
+                <img src="assets/images/index/cards/capoconverter.png" alt="guitar capo position determining tool" loading="lazy"
+                    decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/mediapipe-web/" target="_blank"
+                rel="noopener noreferrer">
+                <h3>Webcam Browser MIDI</h3>
+                <img src="assets/images/thumbnails/mediapipe.png"
+                    alt="browser-based mediapipe implementation for webcam-based MIDI hand position/gesture control"
+                    loading="lazy" decoding="async">
+            </a>
+        </div>      
+        <div class="card">
+            <a href="https://frkatona.github.io/idiom-network/idiom-dictionary-network/" target="_blank"
+                rel="noopener noreferrer">
+                <h3>Songwriting Tool: Idiom Phonetics</h3>
+                <img src="assets/images/thumbnails/idiom.png"
+                    alt="idiom phonetics explorer network with clustered phrase nodes and phoneme labels"
+                    loading="lazy" decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/DeadlockFieldClock/index.html">
+                <h3>Deadlock Field Clock</h3>
+                <img src="assets/images/index/cards/deadlock-field-clock.png"
+                    alt="Blue Deadlock timing dashboard with match events and retrigger timers"
+                    loading="lazy" decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="https://frkatona.github.io/lens-equations-vis-webpage/" target="_blank"
+                rel="noopener noreferrer">
+                <h3>Lens Equation Atlas</h3>
+                <img src="assets/images/thumbnails/lens.png"
+                    alt="thin lens optics visualization with rays and depth of field graph" loading="lazy"
+                    decoding="async">
+            </a>
+        </div>
+                <div class="card">
+            <a href="projects/MealChooser/index.html">
+                <h3>Vibe Recipes</h3>
+                <img src="assets/images/index/cards/meal-chooser.webp"
+                    alt="Overhead meal prep spread with a chickpea bowl, shrimp and broccoli, broccoli cheddar soup, and a tuna melt"
+                    loading="lazy" decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/ChordNetwork/chordnetwork">
+                <h3>Chord Network Tool</h3>
+                <img src="assets/images/index/cards/chordnetwork.png"
+                    alt="chord network diagram and dynamic chord progression generator" loading="lazy"
+                    decoding="async">
+            </a>
+        </div>
+    </section>
+    <nav class="project-pagination" aria-label="Project pages" data-project-pagination hidden>
+        <button class="project-page-control" type="button" data-page-action="previous" aria-label="Previous page"
+            title="Previous page"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+        <div class="project-page-picker">
+            <select class="project-page-select" id="project-page-select" aria-label="Page" data-page-select></select>
+        </div>
+        <button class="project-page-control" type="button" data-page-action="next" aria-label="Next page"
+            title="Next page"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+    </nav>
+    <p class="project-empty" data-project-empty hidden>No projects match that title.</p>
+    <template id="extra-project-cards">
+        <div class="card">
+            <a href="projects/VocalWarmup/VocalWarmup">
+                <h3>Interactive Vocal Warmup</h3>
+                <img src="assets/images/index/cards/vocal-warmup.webp"
+                    alt="Activities to streamline vocal warmups for beginners" loading="lazy" decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/EQ-game/index">
+                <h3>Interactive EQ Game</h3>
+                <img src="assets/images/index/cards/eq-game.png"
+                    alt="Interactive game for learning equalization techniques" loading="lazy" decoding="async">
+            </a>
+        </div>
+
+        <div class="card">
+            <a href="projects/0_unlisted/PalettePreview/PalettePreview">
+                <h3>Data Palette Previewer</h3>
+                <img src="assets/images/thumbnails/palette3.png"
+                    alt="Color palette previewer for various color schemes collected through the Adobe Color harmony tool"
+                    loading="lazy" decoding="async">
             </a>
         </div>
         <div class="card">
             <a href="projects/ChelseaTye/index">
                 <h3>Chelsea Tye Landing Page</h3>
-                <img src="assets/images/thumbnails/singer.png"
-                    alt="Chelsea Tye artist landing page and lyrics/chord library">
+                <img src="assets/images/index/cards/singer.webp"
+                    alt="Chelsea Tye artist landing page and lyrics/chord library" loading="lazy"
+                    decoding="async">
             </a>
         </div>
         <div class="card">
+            <a href="projects/TEM2/TEM2.html">
+                <h3>TEM Training Simulator</h3>
+                <img src="assets/images/thumbnails/talosx2.png"
+                    alt="transmission electron microscope training simulator interface" loading="lazy"
+                    decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="https://frkatona.github.io/FRK-ClearDarkSky/" target="_blank" rel="noopener noreferrer">
+                <h3>ClearDarkSky Re-skin</h3>
+                <img src="assets/images/thumbnails/astrophotography-score.png"
+                    alt="astrophotography clear sky dashboard with night forecast blocks" loading="lazy"
+                    decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/TempoTapper/tempo.html">
+                <h3>Pocket Tempo Vibrator</h3>
+                <img src="assets/images/thumbnails/tempotapper.png"
+                    alt="phone tempo vibrator interface with pulse waves" loading="lazy" decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/0_unlisted/WordAssociationNetwork/WordAssociation">
+                <h3>Word Association Graph</h3>
+                <img src="assets/images/index/cards/wordnetwork.webp"
+                    alt="word association through the datamuse API graphed into a network with the d3js library"
+                    loading="lazy" decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/WebTerrainTest/TerrainWebGame.html">
+                <h3>Web Terrain Test</h3>
+                <img src="assets/images/thumbnails/terrain.png"
+                    alt="low-poly web terrain game test with isometric green terrain" loading="lazy"
+                    decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/HannahAdamsTimeline/">
+                <h3>Hannah Adams Timeline</h3>
+                <img src="assets/images/thumbnails/hannahadamstimeline.png"
+                    alt="Hannah Adams events timeline with colored milestone nodes" loading="lazy"
+                    decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/SpaceShaders/index.html">
+                <h3>Atmosphere Space Shader</h3>
+                <img src="assets/images/thumbnails/atmosphere.png"
+                    alt="planetary atmosphere shader preview with glowing planet limb and stars" loading="lazy"
+                    decoding="async">
+            </a>
+        </div>
+    <!--    <div class="card">
+            <a href="projects/heatFlow_sim/heatequation">
+                <h3>2D Heat Flow</h3>
+                <img src="assets/images/index/cards/heatsim.webp" alt="2D heat simulation" loading="lazy"
+                    decoding="async">
+            </a>
+        </div> -->
+        <div class="card">
             <a href="projects/boxclicker/boxclicker">
                 <h3>Box Clicker Game</h3>
-                <img src="assets/images/thumbnails/boxclick.png" alt="little clicker activity with soft piano feedback">
+                <img src="assets/images/thumbnails/boxclicker.png" alt="little clicker activity with soft piano feedback"
+                    loading="lazy" decoding="async">
+            </a>
+        </div>
+        <div class="card">
+            <a href="projects/SophiaCircle/wheel">
+                <h3>Sophia Wheel</h3>
+                <img src="assets/images/index/cards/sophia-wheel.webp" alt="Sophia's interactive wheel of fifths and modes"
+                    loading="lazy" decoding="async">
             </a>
         </div>
         <div class="card">
             <a href="projects/oscilloscope/oscilloscope">
                 <h3>Oscilloscope Sine Sweeper</h3>
-                <img src="assets/images/thumbnails/oscilloscope.png" alt="sine audio generator and oscilloscope GUI">
+                <img src="assets/images/thumbnails/oscilloscope2.png" alt="sine audio generator and oscilloscope GUI"
+                    loading="lazy" decoding="async">
+            </a>
+        </div>
+                <div class="card">
+            <a href="https://frkatona.github.io/team-page-draft/" target="_blank" rel="noopener noreferrer">
+                <h3>MURI Team Page Demo</h3>
+                <img src="assets/images/thumbnails/MURI-demo.png"
+                    alt="team page draft layout with profile cards" loading="lazy" decoding="async">
             </a>
         </div>
         <div class="card">
-            <a href="projects/terrain/terrain_testbench">
-                <h3>Noise Generator</h3>
-                <img src="assets/images/thumbnails/perlin.png" alt="coherent noise generator for building terrain">
+            <a href="https://frkatona.github.io/Product-Manager-Report/" target="_blank" rel="noopener noreferrer">
+                <h3>Product Manager Report</h3>
+                <img src="assets/images/thumbnails/projectManager-demo.png"
+                    alt="pre-launch product manager report dashboard with timeline and approval check"
+                    loading="lazy" decoding="async">
             </a>
         </div>
+        <!-- <div class="card">
+            <a href="projects/terrain/terrain_testbench">
+                <h3>Noise Generator</h3>
+                <img src="assets/images/index/cards/perlin.webp" alt="coherent noise generator for building terrain"
+                    loading="lazy" decoding="async">
+            </a>
+        </div>-->
         <div class="card">
             <a href="projects/KneeMRIViewer/MRI-player">
                 <h3>2007 Knee MRI Player</h3>
-                <img src="assets/images/thumbnails/knee-icon.png" alt="2007 Knee MRI Player">
+                <img src="assets/images/index/cards/knee-icon.webp" alt="2007 Knee MRI Player" loading="lazy"
+                    decoding="async">
             </a>
         </div>
-    </section>
+    </template>
     <footer>
-        <p>&copy; 2025 Weeb Tony. All rights reserved. <a href="projects/TempoTapper/tempo">[testbench]</a></p>
+        <p>animated card borders by <a href="https://codepen.io/rudraroyy">rudraroyy</a> <br>
+        </p>
     </footer>
     <script src="js/script.js"></script>
 </body>

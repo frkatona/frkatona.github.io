@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A glanceable Deadlock counter-item guide that ranks shared value against an enemy lineup.">
+  <title>Counterbuy Guide - Deadlock Item Guide</title>
+  <link rel="icon" href="counterbuy-assets/items/slowing-hex.webp">
+  <link rel="stylesheet" href="counterbuy.css?v=20261012-plots">
+</head>
+<body>
+  <main class="counterbuy-app">
+    <header class="counterbuy-header">
+      <a class="back-link" href="index.html" aria-label="Return to Field Clock">
+        <span aria-hidden="true">&larr;</span>
+        <span>FIELD CLOCK</span>
+      </a>
+
+      <div class="counterbuy-brand">
+        <h1>COUNTERBUY GUIDE</h1>
+        <a class="video-credit" href="https://youtu.be/Re9kWOCJXMY" target="_blank" rel="noreferrer">ITEMIZATION AND COMMENTARY FROM ASHIRES COUNTERBUYING GUIDE VIDEO</a>
+      </div>
+
+      <div class="header-actions">
+        <span class="lineup-count" data-lineup-count>0 / 6 SELECTED</span>
+        <button type="button" data-action="clear-lineup">CLEAR</button>
+      </div>
+    </header>
+
+    <section class="lineup-section" aria-labelledby="lineup-heading">
+      <div class="section-heading compact-heading">
+        <div>
+          <p>ENEMY TEAM</p>
+          <h2 id="lineup-heading">LINEUP</h2>
+        </div>
+        <div class="lineup-actions"><span>Click a portrait to replace it</span><a class="plots-link" href="plots.html">SOUL LAB ↗</a><button class="scan-button" type="button" data-action="scan-lineup">SCAN LINEUP</button></div>
+      </div>
+      <div class="lineup-slots" data-lineup-slots></div>
+    </section>
+
+    <section class="overlap-section" aria-labelledby="overlap-heading">
+      <div class="section-heading overlap-heading">
+        <div>
+          <p>CONSOLIDATED BUY ORDER</p>
+          <h2 id="overlap-heading">BEST OVERLAP</h2>
+        </div>
+        <label class="sort-control">
+          <span>SORT</span>
+          <select data-sort>
+            <option value="shared">SHARED IMPACT</option>
+            <option value="price">PRICE</option>
+          </select>
+        </label>
+      </div>
+      <div class="overlap-list" data-overlap-list aria-live="polite"></div>
+    </section>
+
+    <section class="matrix-section" aria-labelledby="matrix-heading">
+      <div class="section-heading matrix-heading">
+        <div>
+          <p>WHO + WHY</p>
+          <h2 id="matrix-heading">MATCHUP BOARD</h2>
+        </div>
+        <span>Hover or focus an item for the full note</span>
+      </div>
+      <div class="matrix-scroll" data-matrix-scroll>
+        <div class="recommendation-matrix" data-recommendation-matrix></div>
+      </div>
+    </section>
+
+    <footer>
+      <span>UNOFFICIAL FAN TOOL - GAME ASSETS &copy; VALVE</span>
+      <a href="https://www.playdeadlock.com/cityneversleeps" target="_blank" rel="noreferrer">CITY NEVER SLEEPS PORTRAITS · CLIENT 6774 · OCT 10, 2026</a>
+    </footer>
+  </main>
+
+  <dialog class="hero-picker" data-hero-picker>
+    <form method="dialog" class="picker-shell">
+      <div class="picker-heading">
+        <div>
+          <p>ENEMY LINEUP</p>
+          <h2>ADD A HERO</h2>
+        </div>
+        <button class="picker-close" type="submit" value="cancel" aria-label="Close hero picker">&times;</button>
+      </div>
+      <div class="picker-controls">
+        <label class="hero-search">
+          <span class="sr-only">Search heroes; press Enter to select the top result</span>
+          <input type="search" data-hero-search placeholder="SEARCH HEROES · ENTER SELECTS TOP RESULT" autocomplete="off">
+        </label>
+        <label class="auto-add-control">
+          <input type="checkbox" data-auto-add>
+          <span><strong>KEEP ADDING</strong><small>Stay open until all 6 are selected</small></span>
+        </label>
+      </div>
+      <div class="hero-grid" data-hero-grid></div>
+    </form>
+  </dialog>
+
+  <dialog class="lineup-scanner" data-scan-dialog aria-labelledby="scan-title">
+    <div class="scanner-shell">
+      <div class="picker-heading">
+        <div><p>LOCAL IMAGE MATCHING</p><h2 id="scan-title">SCAN ENEMY LINEUP</h2></div>
+        <button class="picker-close" type="button" data-scan-close aria-label="Close lineup scanner">&times;</button>
+      </div>
+      <div class="scan-source-controls">
+        <button class="scan-button" type="button" data-scan-capture>SHARE GAME WINDOW</button>
+        <label class="scan-button scan-button-secondary">CHOOSE SCREENSHOT<input type="file" data-scan-file accept="image/png,image/jpeg,image/webp" hidden></label>
+        <span>Or paste a screenshot with Ctrl+V. Nothing is uploaded.</span>
+      </div>
+      <p class="scan-status" data-scan-status role="status">Choose a source. Screen sharing stops after one frame.</p>
+      <section class="scan-crop-stage" data-scan-crop-stage hidden>
+        <div class="scan-crop-controls">
+          <div><button class="scan-button scan-button-secondary" type="button" data-scan-side="left">LEFT TEAM</button><button class="scan-button scan-button-secondary" type="button" data-scan-side="right">RIGHT TEAM</button><button class="scan-button scan-button-secondary" type="button" data-scan-side="whole">WHOLE IMAGE</button></div>
+          <label><input type="checkbox" data-scan-full-image> Show full image</label>
+        </div>
+        <div class="scan-preview" data-scan-preview tabindex="0" role="group" aria-label="Portrait region: drag around exactly six portraits. Arrow keys move the selection; Shift and arrow keys resize it.">
+          <canvas data-scan-canvas aria-hidden="true"></canvas>
+          <svg data-scan-overlay aria-hidden="true"><rect data-scan-rectangle></rect><g data-scan-dividers></g></svg>
+        </div>
+        <p class="scan-crop-hint">Drag around exactly six portraits; leave the soul numbers outside. Arrow keys move the crop; Shift + arrows resize it.</p>
+      </section>
+      <section class="scan-review" data-scan-review hidden aria-label="Review detected heroes"></section>
+      <div class="scan-footer">
+        <span data-scan-review-note>Only the crop position is remembered—not your screenshot.</span>
+        <button class="scan-button" type="button" data-scan-match disabled>MATCH PORTRAITS</button>
+        <button class="scan-button scan-apply" type="button" data-scan-apply hidden disabled>USE LINEUP</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="hud-portraits.js?v=20261010-scan" defer></script>
+  <script src="portrait-matcher.js?v=20261010-scan" defer></script>
+  <script src="lineup-scanner.js?v=20261010-scan" defer></script>
+  <script src="counterbuy.js?v=20261010-scan" defer></script>
+</body>
+</html>

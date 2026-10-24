@@ -1,0 +1,15 @@
+{
+  "title": "Garden Tomatoes",
+  "description": "Some tomatoes in the garden with a nice ripeness gradient down the stem",
+  "tags": {
+    "subject": [],
+    "location": ["Lemont", "Pennsylvania"],
+    "cameraDetails": ["Pixel 8 Pro"],
+    "other": [
+      "macro"
+    ]
+  },
+  "captureDate": "2025-08-12",
+  "featured": false,
+  "status": "placeholder"
+}

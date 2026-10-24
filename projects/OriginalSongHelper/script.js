@@ -1,16 +1,80 @@
+const ALL_ARTISTS = '__all__';
+const PREFERENCES_STORAGE_KEY = 'originalSongHelper.preferences';
+const HOTKEY_STORAGE_KEY = 'originalSongHelper.hotkeys';
+const SONG_TRANSPOSE_STORAGE_KEY = 'originalSongHelper.songTranspose';
+const HOTKEY_ACTIONS = {
+    fontSizeIncrease: {
+        label: 'Font size increase',
+        defaultKey: 'a',
+        run: () => updateFontSize(2)
+    },
+    fontSizeDecrease: {
+        label: 'Font size decrease',
+        defaultKey: 's',
+        run: () => updateFontSize(-2)
+    },
+    scrollSpeedIncrease: {
+        label: 'Scroll speed increase',
+        defaultKey: 'z',
+        run: () => updateSpeed(0.25)
+    },
+    scrollSpeedDecrease: {
+        label: 'Scroll speed decrease',
+        defaultKey: 'x',
+        run: () => updateSpeed(-0.25)
+    }
+};
+const MOBILE_CONTROL_CONFIG = {
+    transpose: {
+        min: -12,
+        max: 12,
+        step: 1,
+        getValue: () => state.transpose,
+        setValue: value => setTranspose(value),
+        format: value => value > 0 ? `+${value}` : `${value}`
+    },
+    speed: {
+        min: 0.5,
+        max: 6,
+        step: 0.5,
+        getValue: () => state.scrollSpeed,
+        setValue: value => setSpeed(value),
+        format: value => value.toFixed(1)
+    },
+    font: {
+        min: 10,
+        max: 60,
+        step: 2,
+        getValue: () => state.fontSize,
+        setValue: value => setFontSize(value),
+        format: value => `${value}`
+    }
+};
+
 // --- State ---
 const state = {
     transpose: 0,
     scrollSpeed: 1.0,
     isScrolling: false,
+    isAtBottom: false,
     scrollInterval: null,
     fontSize: 16,
     alignment: 'center',
     isEditMode: false,
-    currentSong: null, // Track current song filename
+    currentSong: null, // Track current artist-relative song path
     bpm: 0,
     tapTimes: [],
-    pulseInterval: null
+    pulseInterval: null,
+    songs: [],
+    selectedArtists: new Set([ALL_ARTISTS]),
+    songSort: 'artist-title',
+    expandedFooter: false,
+    dynamicLineStart: 0.08,
+    dynamicLineStop: 0.33,
+    showStarterHints: false,
+    hotkeys: Object.fromEntries(Object.entries(HOTKEY_ACTIONS).map(([action, config]) => [action, config.defaultKey])),
+    songTranspose: {},
+    initialTranspose: null
 };
 
 // --- Elements ---
@@ -28,15 +92,33 @@ const els = {
     speedUp: document.getElementById('speedUp'),
     speedValue: document.getElementById('speedValue'),
     playBtn: document.getElementById('playBtn'),
+    mobileControlsBtn: document.getElementById('mobileControlsBtn'),
+    mobileControlOverlay: document.getElementById('mobileControlOverlay'),
+    mobileControlPanel: document.getElementById('mobileControlPanel'),
+    mobileControlClose: document.getElementById('mobileControlClose'),
+    mobileTransposeValue: document.getElementById('mobileTransposeValue'),
+    mobileSpeedValue: document.getElementById('mobileSpeedValue'),
+    mobileFontValue: document.getElementById('mobileFontValue'),
     menuBtn: document.getElementById('menuBtn'),
+    hotkeyBtn: document.getElementById('hotkeyBtn'),
+    fullscreenBtn: document.getElementById('fullscreenBtn'),
+    hotkeyModal: document.getElementById('hotkeyModal'),
+    hotkeyStatus: document.getElementById('hotkeyStatus'),
     songListBtn: document.getElementById('songListBtn'),
+    mobileSongListBtn: document.getElementById('mobileSongListBtn'),
     songListModal: document.getElementById('songListModal'),
     menuModal: document.getElementById('menuModal'),
+    songSortSelect: document.getElementById('songSortSelect'),
+    artistFilterContainer: document.getElementById('artistFilterContainer'),
     songListContainer: document.getElementById('songListContainer'),
     fontDown: document.getElementById('fontDown'),
     fontUp: document.getElementById('fontUp'),
     fontValue: document.getElementById('fontValue'),
     alignToggle: document.getElementById('alignToggle'),
+    footerLayoutToggle: document.getElementById('footerLayoutToggle'),
+    dynamicLineStartInput: document.getElementById('dynamicLineStartInput'),
+    dynamicLineStopInput: document.getElementById('dynamicLineStopInput'),
+    dynamicLineRangeValue: document.getElementById('dynamicLineRangeValue'),
     downloadBtn: document.getElementById('downloadBtn'),
     uploadBtn: document.getElementById('uploadBtn'),
     fileInput: document.getElementById('fileInput'),
@@ -53,40 +135,63 @@ const els = {
 
 // --- Initialization ---
 function init() {
+    syncVisualViewport();
+
     // Parse URL params
     const params = new URLSearchParams(window.location.search);
     const songParam = params.get('song');
     const speedParam = params.get('speed');
     const transParam = params.get('transpose');
+    state.showStarterHints = !songParam && !speedParam && !transParam;
+
+    loadPreferences();
+    loadHotkeys();
+    loadSongTranspose();
 
     if (speedParam) {
-        state.scrollSpeed = parseFloat(speedParam);
-        els.speedValue.textContent = state.scrollSpeed.toFixed(1);
+        const parsedSpeed = parseFloat(speedParam);
+        if (Number.isFinite(parsedSpeed)) {
+            state.scrollSpeed = clamp(parsedSpeed, 0.5, 10);
+        }
     }
 
     if (transParam) {
-        state.transpose = parseInt(transParam, 10);
-        els.transValue.textContent = state.transpose > 0 ? `+${state.transpose}` : state.transpose;
+        const parsedTranspose = parseInt(transParam, 10);
+        if (Number.isFinite(parsedTranspose)) {
+            state.initialTranspose = Math.round(clamp(parsedTranspose, -12, 12));
+        }
     }
 
-    // Load initial song
-    if (songParam) {
-        loadSongFile(songParam);
-    } else if (!els.songInput.value.trim()) {
-        els.songInput.value = "Amazing Grace\n\n[G]Amazing grace how [C]sweet the [G]sound\nThat [G]saved a wretch like [D]me\nI [G]once was lost but [C]now am [G]found\nWas [Em]blind but [D]now I [G]see";
-        renderSong();
-    } else {
-        renderSong();
-    }
-
+    els.speedValue.textContent = state.scrollSpeed.toFixed(1);
+    renderHotkeyInputs();
     updateUI();
-    loadSongList();
+    updateTransposeDisplay();
+    loadSongList(songParam);
+}
+
+function syncVisualViewport() {
+    const viewport = window.visualViewport;
+    const offsetTop = viewport ? Math.max(0, viewport.offsetTop) : 0;
+    const visibleHeight = viewport ? viewport.height : window.innerHeight;
+    const bottomInset = Math.max(0, window.innerHeight - visibleHeight - offsetTop);
+
+    document.documentElement.style.setProperty('--visual-viewport-top', `${offsetTop}px`);
+    document.documentElement.style.setProperty('--visual-viewport-bottom', `${bottomInset}px`);
+}
+
+window.addEventListener('resize', syncVisualViewport, { passive: true });
+window.addEventListener('orientationchange', syncVisualViewport, { passive: true });
+if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncVisualViewport, { passive: true });
+    window.visualViewport.addEventListener('scroll', syncVisualViewport, { passive: true });
 }
 
 // --- Event Listeners ---
 els.songInput.addEventListener('input', renderSong);
+els.songView.addEventListener('scroll', handleSongViewScroll, { passive: true });
 
 els.editToggleBtn.addEventListener('click', () => {
+    dismissStarterHints();
     state.isEditMode = !state.isEditMode;
     els.editorPanel.classList.toggle('hidden', !state.isEditMode);
     els.editToggleBtn.classList.toggle('active', state.isEditMode);
@@ -104,20 +209,63 @@ els.speedUp.addEventListener('click', () => updateSpeed(0.25));
 // Play/Pause
 els.playBtn.addEventListener('click', toggleScroll);
 
+// Mobile Controls
+els.mobileControlsBtn.addEventListener('click', toggleMobileControls);
+els.mobileControlClose.addEventListener('click', closeMobileControls);
+els.mobileControlOverlay.addEventListener('click', (e) => {
+    if (e.target === els.mobileControlOverlay) closeMobileControls();
+});
+document.querySelectorAll('.mobile-control-lane').forEach(lane => {
+    lane.addEventListener('pointerdown', handleMobileControlPointerDown);
+    lane.addEventListener('pointermove', handleMobileControlPointerMove);
+    lane.addEventListener('pointerup', handleMobileControlPointerEnd);
+    lane.addEventListener('pointercancel', handleMobileControlPointerEnd);
+});
+
 // Menu & Modals
 els.menuBtn.addEventListener('click', () => openModal(els.menuModal));
-els.songListBtn.addEventListener('click', () => openModal(els.songListModal));
+els.hotkeyBtn.addEventListener('click', () => openModal(els.hotkeyModal));
+els.fullscreenBtn.addEventListener('click', toggleFullscreen);
+function openSongListModal() {
+    dismissStarterHints();
+    openModal(els.songListModal);
+}
+els.songListBtn.addEventListener('click', openSongListModal);
+els.mobileSongListBtn.addEventListener('click', openSongListModal);
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', closeModalOnBackdropClick);
+});
+els.songSortSelect.addEventListener('change', () => {
+    state.songSort = els.songSortSelect.value;
+    renderSongList();
+});
+els.artistFilterContainer.addEventListener('click', handleArtistFilterClick);
+document.querySelectorAll('.hotkey-input').forEach(input => {
+    input.addEventListener('keydown', handleHotkeyInputKeydown);
+    input.addEventListener('focus', () => {
+        els.hotkeyStatus.textContent = 'Press a key to assign it. Backspace clears the selected shortcut.';
+    });
+});
 
 // Font
-els.fontDown.addEventListener('click', () => { state.fontSize = Math.max(10, state.fontSize - 2); updateUI(); });
-els.fontUp.addEventListener('click', () => { state.fontSize = Math.min(60, state.fontSize + 2); updateUI(); });
+els.fontDown.addEventListener('click', () => updateFontSize(-2));
+els.fontUp.addEventListener('click', () => updateFontSize(2));
 
 // Alignment
 els.alignToggle.addEventListener('click', () => {
     state.alignment = state.alignment === 'center' ? 'left' : 'center';
-    els.alignToggle.textContent = state.alignment === 'center' ? 'Center' : 'Left';
     updateUI();
+    savePreferences();
 });
+
+els.footerLayoutToggle.addEventListener('click', () => {
+    state.expandedFooter = !state.expandedFooter;
+    closeMobileControls();
+    updateUI();
+    savePreferences();
+});
+els.dynamicLineStartInput.addEventListener('input', handleDynamicLineRangeInput);
+els.dynamicLineStopInput.addEventListener('input', handleDynamicLineRangeInput);
 
 // File Ops
 els.downloadBtn.addEventListener('click', downloadSong);
@@ -133,12 +281,8 @@ els.tapBtn.addEventListener('click', tapTempo);
 els.resetBpmBtn.addEventListener('click', resetBpm);
 
 // Global Keys
-document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'TEXTAREA') return; // Ignore if typing
-    if (e.code === 'Space') { e.preventDefault(); toggleScroll(); }
-    if (e.code === 'ArrowUp') { els.songView.scrollTop -= 50; }
-    if (e.code === 'ArrowDown') { els.songView.scrollTop += 50; }
-});
+document.addEventListener('keydown', handleGlobalKeydown);
+document.addEventListener('fullscreenchange', updateFullscreenUI);
 
 // --- Core Logic ---
 
@@ -151,20 +295,21 @@ function renderSong() {
     if (lines.length > 0) {
         const title = lines[0].trim();
         els.headerTitle.textContent = title || 'Untitled Song';
-        html += `<div class="song-title-render">${escapeHtml(title)}</div>`;
         lines.shift();
     }
 
     // Metadata Parsing
-    let metadataHtml = '<div class="song-metadata" style="color: #888; font-size: 0.9em; margin-bottom: 1rem;">';
+    const metadataItems = [];
     while (lines.length > 0) {
         const line = lines[0].trim();
         // Check for "key: value" format
         const match = line.match(/^([a-zA-Z]+):\s*(.+)$/);
         if (match) {
             const key = match[1].toLowerCase();
-            const value = match[2];
-            metadataHtml += `<span style="margin: 0 10px;">${escapeHtml(key.toUpperCase())}: ${escapeHtml(value)}</span>`;
+            const value = match[2].trim();
+            if (isMeaningfulMetadataValue(value)) {
+                metadataItems.push(`<span style="margin: 0 10px;">${escapeHtml(key.toUpperCase())}: ${escapeHtml(value)}</span>`);
+            }
             lines.shift();
         } else if (line === '') {
             lines.shift(); // Skip empty lines between title/metadata and song
@@ -172,13 +317,21 @@ function renderSong() {
             break; // Stop at first non-metadata line
         }
     }
-    metadataHtml += '</div>';
-    html += metadataHtml;
+
+    if (metadataItems.length > 0) {
+        html += `<div class="song-metadata" style="color: #888; font-size: 0.9em; margin-bottom: 1rem;">${metadataItems.join('')}</div>`;
+    }
 
     lines.forEach(line => {
         const trimmed = line.trim();
         if (!trimmed) {
             html += '<br>';
+            return;
+        }
+
+        const bracketSection = getBracketSectionHeader(trimmed);
+        if (bracketSection) {
+            html += `<div class="section-header">${escapeHtml(bracketSection)}</div>`;
             return;
         }
 
@@ -190,181 +343,140 @@ function renderSong() {
 
         // Lyric/Chord Line
         const processed = processLine(line);
-        const isChordOnly = processed.lyrics.trim().length === 0;
-        const lineClass = isChordOnly ? 'song-line chord-only' : 'song-line';
+        const lineClasses = ['song-line'];
+        if (processed.hasChords) lineClasses.push('has-chords');
+        if (!processed.hasLyrics) lineClasses.push('chord-only');
+        if (processed.dynamics.length > 0) lineClasses.push('has-dynamics');
 
-        html += `<div class="${lineClass}">
-                    <div class="chord-line">${processed.chords}</div>
-                    <div class="lyric-line">${processed.lyrics}</div>
-                 </div>`;
+        const dynamicHtml = processed.dynamics.length > 0
+            ? `<span class="dynamic-marker">${processed.dynamics.map(escapeHtml).join(' ')}</span>`
+            : '';
+        html += `<div class="${lineClasses.join(' ')}">${dynamicHtml}<span class="song-line-content">${processed.html}</span></div>`;
     });
 
     els.songView.innerHTML = html;
     applyTranspose(); // Re-apply current transpose
+    updateSongBottomState();
 }
 
 function processLine(line) {
-    // New logic: We want chords to be on their own line visually, but aligned.
-    // Actually, the previous logic of "chord line" + "lyric line" works well for fixed width fonts.
-    // But for variable width, we might want inline chords or positioned chords.
-    // Let's stick to the "Chord Line above Lyric Line" approach but use monospace for spacing alignment if possible,
-    // OR use the "inline chord" approach where chords are floating above the word.
-    // The previous code did a complex spacing calculation.
-    // Let's try a simpler "inline block" approach for robustness.
-    // We will split the line by chords [C].
+    const dynamicResult = extractDynamicMarkers(line);
+    line = dynamicResult.line;
 
-    // Actually, the most robust way for "Songbook Pro" style is often "Chords above text".
-    // Let's try to map chords to their position.
+    const chordRegex = /\[([^\]]+)\]/g;
+    const matches = [...line.matchAll(chordRegex)];
+    const cleanLine = line.replace(chordRegex, '');
 
-    // Simple approach:
-    // 1. Extract chords and their indices.
-    // 2. Build a chord line string with spaces.
-    // 3. Build a lyric line string.
-
-    let chordLine = '';
-    let lyricLine = '';
-    let lastIdx = 0;
-    let chordOffset = 0; // Adjust for removed brackets
-
-    const regex = /\[([^\]]+)\]/g;
-    let match;
-    let chords = [];
-
-    // Pass 1: Get all chords and their "lyric index"
-    let cleanLine = line.replace(regex, '');
-
-    // We need to reconstruct the chord line to match the visual width of the clean line.
-    // This is hard with variable width fonts. 
-    // Alternative: Use HTML structure <span class="chord-wrapper"><span class="chord">C</span>Word</span>
-    // This binds the chord to the word.
-
-    let resultHtml = '';
-    let currentIndex = 0;
-
-    // Reset regex
-    regex.lastIndex = 0;
-
-    // We will rebuild the line as a sequence of text nodes and chord-wrappers.
-    // But wait, the previous code separated them into two lines.
-    // Let's try the wrapper approach, it handles variable width fonts better.
-
-    // However, the prompt asked for "Songbook Pro" style. 
-    // Songbook Pro often does "Chords above lyrics".
-    // Let's stick to the previous logic's output structure but refined.
-    // Actually, the previous logic was:
-    // <div class="chord-line">...</div> <div class="lyric-line">...</div>
-    // This relies on monospace to align.
-
-    // Let's switch to the "Inline Block" method which is superior for responsive text.
-    // We iterate through the string. When we see [Chord], we start a wrapper.
-
-    let parts = line.split(/(\[[^\]]+\])/);
-    let finalHtml = '';
-
-    // This is tricky because [C] usually applies to the *following* syllable.
-    // Example: Am[C]azing -> Am [C] azing.
-    // If we want [C] above 'a', we need to wrap 'azing'.
-
-    // Let's go with a simpler approximation:
-    // Just replace [Chord] with <span class="chord">Chord</span> and let CSS position it.
-    // If we make .song-line relative, and .chord absolute? No, that overlaps.
-    // If we make .chord inline-block with negative margin?
-
-    // Let's use the "Chord over text" trick:
-    // <span class="pair"><span class="chord">C</span><span class="text">Text</span></span>
-    // But we don't know how much text the chord covers.
-
-    // FALLBACK: Use the previous "Monospace Spacing" logic but render it cleaner.
-    // It worked well enough.
-
-    // Let's reuse the previous logic's core idea but simplified.
-
-    let chordLineHtml = '';
-    let lyricLineHtml = '';
-    let plain = line.replace(regex, '');
-
-    // We will use &nbsp; for spaces in chord line.
-    // To make this work with variable width fonts, we really should use a monospace font for the song view
-    // OR use the wrapper method.
-    // Let's enforce Monospace for the song view for now to ensure alignment.
-    // It's the safest bet for a text-based format.
-    // I set --font-chord to monospace. I should set --font-song to monospace too if I want perfect alignment.
-    // Songbook Pro allows variable width, but it parses the song into objects.
-    // Given I'm working with raw text, Monospace is the robust choice.
-
-    // Let's stick to the previous implementation's logic for `processLine` as it was decent,
-    // but I'll clean it up.
-
-    let buffer = '';
-    let chordBuffer = '';
-    let textIndex = 0;
-
-    // Re-implementing the "Space padding" logic
-    let chordsMap = []; // {pos: 5, chord: "C"}
-
-    let cleanLen = 0;
-    let match2;
-    const r2 = /\[([^\]]+)\]/g;
-    while ((match2 = r2.exec(line)) !== null) {
-        // Position in clean text is match.index minus length of all previous brackets
-        let pre = line.substring(0, match2.index);
-        let preClean = pre.replace(/\[[^\]]+\]/g, '');
-        chordsMap.push({ pos: preClean.length, chord: match2[1] });
+    if (matches.length === 0) {
+        return {
+            html: `<span class="lyric-text">${escapeHtml(line)}</span>`,
+            hasChords: false,
+            hasLyrics: line.trim().length > 0,
+            dynamics: dynamicResult.dynamics
+        };
     }
 
-    let clean = line.replace(r2, '');
+    let html = '';
+    let cursor = 0;
 
-    // Build chord line
-    let cLine = '';
-    let lastPos = 0;
+    matches.forEach((match, index) => {
+        const chord = match[1].trim();
+        const chordStart = match.index;
+        const lyricStart = chordStart + match[0].length;
+        const nextChordStart = matches[index + 1] ? matches[index + 1].index : line.length;
 
-    chordsMap.forEach(c => {
-        // Add spaces
-        while (cLine.length < c.pos) cLine += ' ';
-        // If overlap, just append (simple collision handling)
-        if (cLine.length > c.pos) {
-            // cLine += ' '; // Force space?
+        appendLyricText(line.slice(cursor, chordStart));
+
+        const lyricSegment = line.slice(lyricStart, nextChordStart);
+        const anchorParts = splitChordAnchorText(lyricSegment);
+        const preserveLeadingSpace = html.length > 0;
+
+        if (preserveLeadingSpace) {
+            appendLyricText(anchorParts.leading);
         }
-        // Add chord marker
-        // We wrap it in a span for transposition
-        cLine += `___CHORD___${c.chord}___END___`;
+
+        html += renderChordAnchor(chord, anchorParts.anchor);
+        appendLyricText(anchorParts.tail);
+        cursor = nextChordStart;
     });
 
-    // Replace markers with HTML
-    // We need to handle the length of the chord string vs the length of the space it takes.
-    // In a monospace view, [C] takes 3 chars in source, but we want it to sit above the char.
-    // The `cLine` string length now is "virtual".
-    // This is getting complicated.
-
-    // SIMPLIFIED APPROACH:
-    // Just return the clean text and a chord line that attempts to align.
-    // We will rely on the user putting chords roughly where they want them.
-    // Actually, the previous code did:
-    // Iterate chars of plain text. If chord at index, insert chord span. Else insert space.
-
-    let chordSpans = [];
-    let cMap = new Map();
-    chordsMap.forEach(c => cMap.set(c.pos, c.chord));
-
-    for (let i = 0; i < clean.length + 5; i++) { // +5 for trailing chords
-        if (cMap.has(i)) {
-            chordSpans.push(`<span class="chord-root" data-root="${cMap.get(i)}">${cMap.get(i)}</span>`);
-        } else {
-            if (i < clean.length) chordSpans.push('&nbsp;');
-        }
-    }
+    appendLyricText(line.slice(cursor));
 
     return {
-        chords: chordSpans.join(''),
-        lyrics: escapeHtml(clean)
+        html,
+        hasChords: true,
+        hasLyrics: cleanLine.trim().length > 0,
+        dynamics: dynamicResult.dynamics
+    };
+
+    function appendLyricText(text) {
+        if (!text) return;
+        html += `<span class="lyric-text">${escapeHtml(text)}</span>`;
+    }
+}
+
+function extractDynamicMarkers(line) {
+    const dynamics = [];
+    const strippedLine = line.replace(/\{([^{}]+)\}/g, (_, dynamicText) => {
+        const value = dynamicText.trim();
+        if (value) dynamics.push(value);
+        return '';
+    });
+
+    return {
+        dynamics,
+        line: dynamics.length > 0 ? strippedLine.replace(/^\s+/, '') : strippedLine
     };
 }
 
+function splitChordAnchorText(text) {
+    const leading = text.match(/^\s*/)[0];
+    const rest = text.slice(leading.length);
+
+    if (!rest) {
+        return { leading, anchor: '', tail: '' };
+    }
+
+    const anchor = rest.match(/^\S+/)[0];
+    return {
+        leading,
+        anchor,
+        tail: rest.slice(anchor.length)
+    };
+}
+
+function renderChordAnchor(chord, lyricAnchor) {
+    const chordClass = lyricAnchor ? 'chord-anchor' : 'chord-anchor chord-anchor-empty';
+    const lyricHtml = lyricAnchor
+        ? escapeHtml(lyricAnchor)
+        : '<span class="chord-lyric-spacer" aria-hidden="true">&nbsp;</span>';
+
+    return `<span class="${chordClass}"><span class="chord-root" data-root="${escapeHtml(chord)}">${escapeHtml(chord)}</span><span class="chord-lyric">${lyricHtml}</span></span>`;
+}
+
+function getBracketSectionHeader(line) {
+    const match = line.match(/^\[([^\]]+)\]$/);
+    if (!match) return '';
+
+    const label = match[1].trim();
+    return containsChordSymbol(label) ? '' : label;
+}
+
 function updateTranspose(amount) {
-    state.transpose += amount;
-    els.transValue.textContent = state.transpose > 0 ? `+${state.transpose}` : state.transpose;
+    setTranspose(state.transpose + amount);
+}
+
+function setTranspose(value) {
+    state.transpose = Math.round(clamp(value, -12, 12));
+    updateTransposeDisplay();
+    saveCurrentSongTranspose();
     applyTranspose();
     updateURLState();
+    updateMobileControlUI();
+}
+
+function updateTransposeDisplay() {
+    els.transValue.textContent = formatTranspose(state.transpose);
 }
 
 function applyTranspose() {
@@ -379,61 +491,165 @@ function applyTranspose() {
 }
 
 const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const CHORD_SYMBOL_SOURCE = '[A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add|m|M)\\d*)?(?:\\d+)?(?:[#b]\\d+)*(?:\\/[A-G](?:#|b)?)?';
+const CHORD_SYMBOL_REGEX = new RegExp(`(^|[^A-Za-z])(${CHORD_SYMBOL_SOURCE})(?![A-Za-z])`, 'g');
+
+function containsChordSymbol(text) {
+    return new RegExp(`(^|[^A-Za-z])(${CHORD_SYMBOL_SOURCE})(?![A-Za-z])`).test(text);
+}
+
 function transposeChord(chord, semitones) {
-    // Split root from suffix (e.g. C#m7 -> C#, m7)
-    let match = chord.match(/^([A-G][#b]?)(.*)$/);
-    if (!match) return chord;
+    if (semitones === 0) return chord;
 
-    let root = match[1];
-    let suffix = match[2];
+    return chord.replace(CHORD_SYMBOL_REGEX, (match, prefix, token) => {
+        return prefix + transposeChordToken(token, semitones);
+    });
+}
 
+function transposeChordToken(token, semitones) {
+    const match = token.match(/^([A-G][#b]?)(.*)$/);
+    if (!match) return token;
+
+    const root = transposeRoot(match[1], semitones);
+    const suffix = match[2].replace(/\/([A-G][#b]?)/g, (_, bassRoot) => `/${transposeRoot(bassRoot, semitones)}`);
+
+    return root + suffix;
+}
+
+function transposeRoot(root, semitones) {
     // Normalize flats to sharps for simplicity
     const flatMap = { 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#' };
     if (flatMap[root]) root = flatMap[root];
 
     let idx = NOTES.indexOf(root);
-    if (idx === -1) return chord;
+    if (idx === -1) return root;
 
     let newIdx = (idx + semitones) % 12;
     if (newIdx < 0) newIdx += 12;
 
-    return NOTES[newIdx] + suffix;
+    return NOTES[newIdx];
 }
 
 function updateSpeed(amount) {
-    state.scrollSpeed = Math.max(0.5, Math.min(10, state.scrollSpeed + amount));
+    setSpeed(state.scrollSpeed + amount);
+}
+
+function setSpeed(value) {
+    state.scrollSpeed = clamp(Number(value), 0.5, 10);
     els.speedValue.textContent = state.scrollSpeed.toFixed(1);
+    savePreferences();
     if (state.isScrolling) {
         clearInterval(state.scrollInterval);
-        state.scrollInterval = setInterval(() => {
-            els.songView.scrollTop += 1;
-        }, 50 / state.scrollSpeed);
+        state.scrollInterval = setInterval(stepAutoScroll, 50 / state.scrollSpeed);
     }
     updateURLState();
+    updateMobileControlUI();
+}
+
+function updateFontSize(amount) {
+    setFontSize(state.fontSize + amount);
+}
+
+function setFontSize(value) {
+    state.fontSize = clamp(Math.round(value), 10, 60);
+    updateUI();
+    savePreferences();
 }
 
 function toggleScroll() {
-    if (state.isScrolling) {
-        clearInterval(state.scrollInterval);
-        state.isScrolling = false;
-        els.playBtn.textContent = '▶';
-        els.playBtn.classList.remove('playing');
-        els.playBtn.classList.remove('pulsing');
-    } else {
-        state.scrollInterval = setInterval(() => {
-            els.songView.scrollTop += 1;
-        }, 50 / state.scrollSpeed); // Simple speed logic
-        state.isScrolling = true;
-        els.playBtn.textContent = '❚❚';
-        els.playBtn.classList.add('playing');
+    if (state.isAtBottom) {
+        returnSongToTop();
+        return;
+    }
 
-        if (state.bpm > 0) {
-            els.playBtn.classList.add('pulsing');
-            // Set pulse duration based on BPM
-            // 60 BPM = 1 beat per second
-            const duration = 60 / state.bpm;
-            els.playBtn.style.setProperty('--pulse-duration', `${duration}s`);
-        }
+    if (state.isScrolling) {
+        pauseAutoScroll();
+    } else {
+        startAutoScroll();
+    }
+}
+
+function startAutoScroll() {
+    if (isSongViewAtBottom()) {
+        updateSongBottomState();
+        return;
+    }
+
+    clearInterval(state.scrollInterval);
+    state.scrollInterval = setInterval(stepAutoScroll, 50 / state.scrollSpeed);
+    state.isScrolling = true;
+    updatePlayButtonUI();
+}
+
+function pauseAutoScroll() {
+    clearInterval(state.scrollInterval);
+    state.scrollInterval = null;
+    state.isScrolling = false;
+    updatePlayButtonUI();
+}
+
+function stepAutoScroll() {
+    els.songView.scrollTop += 1;
+
+    if (isSongViewAtBottom()) {
+        updateSongBottomState();
+        pauseAutoScroll();
+    }
+}
+
+function returnSongToTop() {
+    pauseAutoScroll();
+    els.songView.scrollTop = 0;
+    updateSongBottomState();
+}
+
+function handleSongViewScroll() {
+    updateSongBottomState();
+
+    if (state.isScrolling && state.isAtBottom) {
+        pauseAutoScroll();
+    }
+}
+
+function updateSongBottomState() {
+    const wasAtBottom = state.isAtBottom;
+    state.isAtBottom = isSongViewAtBottom();
+
+    if (wasAtBottom !== state.isAtBottom || state.isAtBottom) {
+        updatePlayButtonUI();
+    }
+}
+
+function isSongViewAtBottom() {
+    const threshold = 2;
+    const hasScrollableContent = els.songView.scrollHeight > els.songView.clientHeight + threshold;
+    if (!hasScrollableContent) return false;
+
+    return els.songView.scrollHeight - els.songView.clientHeight - els.songView.scrollTop <= threshold;
+}
+
+function updatePlayButtonUI() {
+    els.playBtn.classList.toggle('playing', state.isScrolling);
+    els.playBtn.classList.toggle('return-top', state.isAtBottom);
+
+    if (state.isAtBottom) {
+        els.playBtn.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
+        els.playBtn.setAttribute('aria-label', 'Return to top');
+        els.playBtn.title = 'Return to top';
+        els.playBtn.classList.remove('pulsing');
+        return;
+    }
+
+    els.playBtn.textContent = state.isScrolling ? '❚❚' : '▶';
+    els.playBtn.setAttribute('aria-label', state.isScrolling ? 'Pause auto-scroll' : 'Start auto-scroll');
+    els.playBtn.title = state.isScrolling ? 'Pause auto-scroll' : 'Start auto-scroll';
+
+    if (state.isScrolling && state.bpm > 0) {
+        els.playBtn.classList.add('pulsing');
+        const duration = 60 / state.bpm;
+        els.playBtn.style.setProperty('--pulse-duration', `${duration}s`);
+    } else {
+        els.playBtn.classList.remove('pulsing');
     }
 }
 
@@ -441,6 +657,50 @@ function updateUI() {
     els.songView.style.fontSize = `${state.fontSize}px`;
     els.songView.style.textAlign = state.alignment;
     els.fontValue.textContent = state.fontSize;
+    els.alignToggle.dataset.alignment = state.alignment;
+    els.alignToggle.setAttribute('aria-pressed', state.alignment === 'center' ? 'true' : 'false');
+    document.body.classList.toggle('expanded-footer', state.expandedFooter);
+    els.footerLayoutToggle.dataset.footerLayout = state.expandedFooter ? 'expanded' : 'compact';
+    els.footerLayoutToggle.setAttribute('aria-pressed', state.expandedFooter ? 'true' : 'false');
+    updateDynamicLineControls();
+    updateMobileControlUI();
+    updateSongBottomState();
+}
+
+function handleDynamicLineRangeInput(e) {
+    const minGap = 0.01;
+    const startInput = Number(els.dynamicLineStartInput.value) / 100;
+    const stopInput = Number(els.dynamicLineStopInput.value) / 100;
+
+    if (e.target === els.dynamicLineStartInput) {
+        state.dynamicLineStart = clamp(startInput, 0, state.dynamicLineStop - minGap);
+    } else {
+        state.dynamicLineStop = clamp(stopInput, state.dynamicLineStart + minGap, 1);
+    }
+
+    updateDynamicLineControls();
+    savePreferences();
+}
+
+function updateDynamicLineControls() {
+    const minGap = 0.01;
+    if (!Number.isFinite(Number(state.dynamicLineStart))) state.dynamicLineStart = 0.08;
+    if (!Number.isFinite(Number(state.dynamicLineStop))) state.dynamicLineStop = 0.33;
+    state.dynamicLineStart = clamp(Number(state.dynamicLineStart), 0, 1 - minGap);
+    state.dynamicLineStop = clamp(Number(state.dynamicLineStop), state.dynamicLineStart + minGap, 1);
+
+    const startPercent = Math.round(state.dynamicLineStart * 100);
+    const stopPercent = Math.round(state.dynamicLineStop * 100);
+    els.dynamicLineStartInput.value = startPercent;
+    els.dynamicLineStopInput.value = stopPercent;
+    els.dynamicLineRangeValue.textContent = `${startPercent}% - ${stopPercent}%`;
+    document.documentElement.style.setProperty('--dynamic-line-start', `${state.dynamicLineStart * 100}vw`);
+    document.documentElement.style.setProperty('--dynamic-line-stop', `${state.dynamicLineStop * 100}vw`);
+
+    const track = document.querySelector('.dual-range-track');
+    if (track) {
+        track.style.background = `linear-gradient(90deg, #262626 0%, #262626 ${startPercent}%, rgba(192, 132, 252, 0.48) ${startPercent}%, rgba(192, 132, 252, 0.48) ${stopPercent}%, #262626 ${stopPercent}%, #262626 100%)`;
+    }
 }
 
 // --- Helpers ---
@@ -453,6 +713,88 @@ function escapeHtml(text) {
         .replace(/'/g, "&#039;");
 }
 
+function isMeaningfulMetadataValue(value) {
+    return value.trim() !== '' && value.trim() !== '?';
+}
+
+function loadPreferences() {
+    try {
+        const stored = getStoredJson(PREFERENCES_STORAGE_KEY, {});
+        if (Number.isFinite(stored.fontSize)) {
+            state.fontSize = clamp(Math.round(stored.fontSize), 10, 60);
+        }
+        if (stored.alignment === 'left' || stored.alignment === 'center') {
+            state.alignment = stored.alignment;
+        }
+        state.expandedFooter = stored.expandedFooter === true;
+        if (Number.isFinite(stored.dynamicLineStart)) {
+            state.dynamicLineStart = clamp(Number(stored.dynamicLineStart), 0, 0.99);
+        }
+        if (Number.isFinite(stored.dynamicLineStop)) {
+            state.dynamicLineStop = clamp(Number(stored.dynamicLineStop), state.dynamicLineStart + 0.01, 1);
+        }
+        if (Number.isFinite(stored.scrollSpeed)) {
+            state.scrollSpeed = clamp(Number(stored.scrollSpeed), 0.5, 10);
+            els.speedValue.textContent = state.scrollSpeed.toFixed(1);
+        }
+    } catch (error) {
+        console.warn('Preferences could not be loaded.', error);
+    }
+}
+
+function savePreferences() {
+    setStoredJson(PREFERENCES_STORAGE_KEY, {
+        fontSize: state.fontSize,
+        alignment: state.alignment,
+        expandedFooter: state.expandedFooter,
+        dynamicLineStart: state.dynamicLineStart,
+        dynamicLineStop: state.dynamicLineStop,
+        scrollSpeed: state.scrollSpeed
+    }, 'Preferences could not be saved.');
+}
+
+function loadSongTranspose() {
+    try {
+        const stored = getStoredJson(SONG_TRANSPOSE_STORAGE_KEY, {});
+        state.songTranspose = typeof stored === 'object' && stored ? stored : {};
+    } catch (error) {
+        console.warn('Song transpose settings could not be loaded.', error);
+    }
+}
+
+function saveCurrentSongTranspose() {
+    if (!state.currentSong) return;
+
+    if (state.transpose === 0) {
+        delete state.songTranspose[state.currentSong];
+    } else {
+        state.songTranspose[state.currentSong] = state.transpose;
+    }
+
+    setStoredJson(SONG_TRANSPOSE_STORAGE_KEY, state.songTranspose, 'Song transpose settings could not be saved.');
+}
+
+function getStoredSongTranspose(songPath) {
+    const stored = state.songTranspose[songPath];
+    return Number.isFinite(stored) ? Math.round(clamp(stored, -12, 12)) : 0;
+}
+
+function getStoredJson(key, fallback) {
+    if (!window.localStorage) return fallback;
+    const value = window.localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+}
+
+function setStoredJson(key, value, warning) {
+    try {
+        if (window.localStorage) {
+            window.localStorage.setItem(key, JSON.stringify(value));
+        }
+    } catch (error) {
+        console.warn(warning, error);
+    }
+}
+
 function openModal(modal) {
     modal.classList.add('active');
 }
@@ -462,42 +804,480 @@ function closeModals() {
 }
 window.closeModals = closeModals; // Expose to HTML
 
-function loadSongList() {
-    // Mock or fetch
-    fetch('songs/index.json')
-        .then(r => r.json())
-        .then(songs => {
-            els.songListContainer.innerHTML = '';
-            songs.forEach(song => {
-                const div = document.createElement('div');
-                div.className = 'song-list-item';
-                div.textContent = song.replace('.txt', '');
-                div.onclick = () => {
-                    state.transpose = 0;
-                    els.transValue.textContent = '0';
-                    // Pause if playing
-                    if (state.isScrolling) toggleScroll();
-                    loadSongFile(song);
-                    closeModals();
+function closeModalOnBackdropClick(e) {
+    if (e.button === 0 && e.target === e.currentTarget) {
+        e.currentTarget.classList.remove('active');
+    }
+}
 
-                };
-                els.songListContainer.appendChild(div);
-            });
+function toggleFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+        return;
+    }
+
+    if (document.body.classList.contains('app-fullscreen')) {
+        setFallbackFullscreen(false);
+        return;
+    }
+
+    const target = document.documentElement;
+    if (target.requestFullscreen) {
+        target.requestFullscreen().catch(error => {
+            console.warn('Fullscreen could not be enabled.', error);
+            setFallbackFullscreen(true);
+        });
+    } else {
+        setFallbackFullscreen(!document.body.classList.contains('app-fullscreen'));
+    }
+}
+
+function updateFullscreenUI() {
+    const isFullscreen = Boolean(document.fullscreenElement);
+    document.body.classList.toggle('app-fullscreen', isFullscreen);
+    els.fullscreenBtn.classList.toggle('active', isFullscreen);
+    els.fullscreenBtn.textContent = isFullscreen ? '⇱' : '⛶';
+    els.fullscreenBtn.title = isFullscreen ? 'Exit fullscreen' : 'Toggle fullscreen';
+}
+
+function setFallbackFullscreen(isFullscreen) {
+    document.body.classList.toggle('app-fullscreen', isFullscreen);
+    els.fullscreenBtn.classList.toggle('active', isFullscreen);
+    els.fullscreenBtn.textContent = isFullscreen ? '⇱' : '⛶';
+    els.fullscreenBtn.title = isFullscreen ? 'Exit fullscreen' : 'Toggle fullscreen';
+}
+
+function toggleMobileControls() {
+    if (els.mobileControlOverlay.classList.contains('active')) {
+        closeMobileControls();
+    } else {
+        openMobileControls();
+    }
+}
+
+function openMobileControls() {
+    els.mobileControlOverlay.classList.add('active');
+    els.mobileControlOverlay.setAttribute('aria-hidden', 'false');
+    els.mobileControlsBtn.classList.add('active');
+    updateMobileControlUI();
+}
+
+function closeMobileControls() {
+    els.mobileControlOverlay.classList.remove('active');
+    els.mobileControlOverlay.setAttribute('aria-hidden', 'true');
+    els.mobileControlsBtn.classList.remove('active');
+    document.querySelectorAll('.mobile-control-lane').forEach(lane => lane.classList.remove('dragging'));
+}
+
+function handleMobileControlPointerDown(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('dragging');
+    if (e.currentTarget.setPointerCapture) {
+        e.currentTarget.setPointerCapture(e.pointerId);
+    }
+    updateMobileControlFromPointer(e);
+}
+
+function handleMobileControlPointerMove(e) {
+    if (!e.currentTarget.classList.contains('dragging')) return;
+    e.preventDefault();
+    updateMobileControlFromPointer(e);
+}
+
+function handleMobileControlPointerEnd(e) {
+    e.currentTarget.classList.remove('dragging');
+    if (e.currentTarget.releasePointerCapture) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+}
+
+function updateMobileControlFromPointer(e) {
+    const control = e.currentTarget.dataset.mobileControl;
+    const config = MOBILE_CONTROL_CONFIG[control];
+    if (!config) return;
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const percent = rect.width ? clamp((e.clientX - rect.left) / rect.width, 0, 1) : 0;
+    const rawValue = config.min + percent * (config.max - config.min);
+    const steppedValue = quantize(rawValue, config.step, config.min);
+
+    config.setValue(clamp(steppedValue, config.min, config.max));
+}
+
+function updateMobileControlUI() {
+    document.querySelectorAll('.mobile-control-lane').forEach(lane => {
+        const control = lane.dataset.mobileControl;
+        const config = MOBILE_CONTROL_CONFIG[control];
+        if (!config) return;
+
+        const value = clamp(config.getValue(), config.min, config.max);
+        const percent = ((value - config.min) / (config.max - config.min)) * 100;
+        lane.style.setProperty('--mobile-control-level', `${percent}%`);
+    });
+
+    els.mobileTransposeValue.textContent = formatTranspose(state.transpose);
+    els.mobileSpeedValue.textContent = state.scrollSpeed.toFixed(1);
+    els.mobileFontValue.textContent = state.fontSize;
+}
+
+function formatTranspose(value) {
+    return value > 0 ? `+${value}` : `${value}`;
+}
+
+function quantize(value, step, min = 0) {
+    return min + Math.round((value - min) / step) * step;
+}
+
+function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+}
+
+function loadHotkeys() {
+    try {
+        const stored = getStoredJson(HOTKEY_STORAGE_KEY, {});
+        Object.keys(HOTKEY_ACTIONS).forEach(action => {
+            if (typeof stored[action] === 'string') {
+                state.hotkeys[action] = stored[action];
+            }
+        });
+    } catch (error) {
+        console.warn('Hotkey settings could not be loaded.', error);
+    }
+}
+
+function saveHotkeys() {
+    setStoredJson(HOTKEY_STORAGE_KEY, state.hotkeys, 'Hotkey settings could not be saved.');
+}
+
+function renderHotkeyInputs() {
+    document.querySelectorAll('.hotkey-input').forEach(input => {
+        const action = input.dataset.hotkeyAction;
+        input.value = formatShortcutKey(state.hotkeys[action]);
+        input.setAttribute('aria-label', `${HOTKEY_ACTIONS[action].label} hotkey`);
+    });
+}
+
+function handleHotkeyInputKeydown(e) {
+    e.preventDefault();
+
+    const action = e.target.dataset.hotkeyAction;
+    if (!HOTKEY_ACTIONS[action]) return;
+
+    if (e.key === 'Backspace' || e.key === 'Delete') {
+        state.hotkeys[action] = '';
+        saveHotkeys();
+        renderHotkeyInputs();
+        els.hotkeyStatus.textContent = `${HOTKEY_ACTIONS[action].label} hotkey cleared.`;
+        return;
+    }
+
+    const key = normalizeShortcutKey(e);
+    if (!key) {
+        els.hotkeyStatus.textContent = 'Choose a letter, number, punctuation key, or named key.';
+        return;
+    }
+
+    Object.keys(state.hotkeys).forEach(existingAction => {
+        if (existingAction !== action && state.hotkeys[existingAction] === key) {
+            state.hotkeys[existingAction] = '';
+        }
+    });
+
+    state.hotkeys[action] = key;
+    saveHotkeys();
+    renderHotkeyInputs();
+    els.hotkeyStatus.textContent = `${HOTKEY_ACTIONS[action].label} set to ${formatShortcutKey(key)}.`;
+}
+
+function handleGlobalKeydown(e) {
+    if (shouldIgnoreHotkeys(e)) return;
+
+    if (e.code === 'Space') {
+        e.preventDefault();
+        toggleScroll();
+        return;
+    }
+
+    if (e.code === 'ArrowUp') {
+        e.preventDefault();
+        els.songView.scrollTop -= 50;
+        return;
+    }
+
+    if (e.code === 'ArrowDown') {
+        e.preventDefault();
+        els.songView.scrollTop += 50;
+        return;
+    }
+
+    const key = normalizeShortcutKey(e);
+    const action = Object.keys(state.hotkeys).find(actionName => state.hotkeys[actionName] === key);
+    if (!action) return;
+
+    e.preventDefault();
+    HOTKEY_ACTIONS[action].run();
+}
+
+function shouldIgnoreHotkeys(e) {
+    if (state.isEditMode) return true;
+    if (!e.target) return false;
+
+    const tagName = e.target.tagName;
+    return e.target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(tagName);
+}
+
+function normalizeShortcutKey(e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return '';
+    const key = e.key === ' ' ? 'space' : e.key.toLowerCase();
+    if (['shift', 'control', 'alt', 'meta', 'tab', 'escape'].includes(key)) return '';
+    return key;
+}
+
+function formatShortcutKey(key) {
+    if (!key) return '';
+    const names = {
+        space: 'Space',
+        arrowup: 'Arrow Up',
+        arrowdown: 'Arrow Down',
+        arrowleft: 'Arrow Left',
+        arrowright: 'Arrow Right'
+    };
+    return names[key] || (key.length === 1 ? key.toUpperCase() : key);
+}
+
+function showStarterHints() {
+    if (state.showStarterHints) {
+        document.body.classList.add('show-starter-hints');
+    }
+}
+
+function dismissStarterHints() {
+    if (!state.showStarterHints) return;
+    state.showStarterHints = false;
+    document.body.classList.remove('show-starter-hints');
+}
+
+function loadSongList(initialSong = null) {
+    els.songListContainer.innerHTML = '<div class="song-list-empty">Loading songs...</div>';
+
+    fetch('songs/index.json')
+        .then(r => {
+            if (!r.ok) throw new Error('Song index could not be loaded.');
+            return r.json();
         })
-        .catch(() => {
-            els.songListContainer.innerHTML = '<div style="padding:10px; color:#666;">No songs found or index.json missing.</div>';
+        .then(songs => {
+            state.songs = songs.map(normalizeSongEntry).filter(Boolean);
+            renderArtistFilters();
+            renderSongList();
+
+            if (initialSong) {
+                return loadSongFile(initialSong).catch(() => loadDefaultSong());
+            } else if (!els.songInput.value.trim()) {
+                loadDefaultSong();
+            } else {
+                renderSong();
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            els.songListContainer.innerHTML = '<div class="song-list-empty">No songs found or index.json missing.</div>';
+
+            if (initialSong) {
+                loadSongFile(initialSong).catch(() => loadDefaultSong());
+            } else if (!els.songInput.value.trim()) {
+                loadDefaultSong();
+            }
         });
 }
 
+function normalizeSongEntry(entry) {
+    const rawPath = typeof entry === 'string' ? entry : entry.path || entry.file || entry.filename;
+    if (!rawPath || !/\.txt$/i.test(rawPath)) return null;
+
+    const path = normalizeSongPath(rawPath);
+    const parts = path.split('/');
+    const fileName = parts.pop();
+    const artist = typeof entry === 'object' && entry.artist ? entry.artist : parts[0] || 'Unknown Artist';
+    const title = typeof entry === 'object' && entry.title ? entry.title : fileName.replace(/\.txt$/i, '');
+
+    return { path, fileName, artist, title };
+}
+
+function normalizeSongPath(path) {
+    return path.replace(/\\/g, '/').replace(/^songs\//, '').replace(/^\/+/, '');
+}
+
+function renderArtistFilters() {
+    const artists = [...new Set(state.songs.map(song => song.artist))]
+        .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+    els.artistFilterContainer.innerHTML = '';
+    els.artistFilterContainer.appendChild(createArtistFilterPill(ALL_ARTISTS, 'All', state.selectedArtists.has(ALL_ARTISTS)));
+
+    artists.forEach(artist => {
+        const checked = !state.selectedArtists.has(ALL_ARTISTS) && state.selectedArtists.has(artist);
+        els.artistFilterContainer.appendChild(createArtistFilterPill(artist, artist, checked));
+    });
+}
+
+function createArtistFilterPill(value, label, selected) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'artist-filter-pill';
+    button.dataset.artistFilter = value;
+    button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+    button.textContent = label;
+    return button;
+}
+
+function handleArtistFilterClick(e) {
+    const button = e.target.closest('.artist-filter-pill');
+    if (!button) return;
+
+    const value = button.dataset.artistFilter;
+    const isSelected = button.getAttribute('aria-pressed') === 'true';
+
+    toggleArtistFilter(value, isSelected);
+
+    renderArtistFilters();
+    renderSongList();
+}
+
+function toggleArtistFilter(value, isSelected) {
+    if (value === ALL_ARTISTS) {
+        state.selectedArtists = new Set([ALL_ARTISTS]);
+        return;
+    }
+
+    state.selectedArtists.delete(ALL_ARTISTS);
+
+    if (isSelected) {
+        state.selectedArtists.delete(value);
+    } else {
+        state.selectedArtists.add(value);
+    }
+
+    if (state.selectedArtists.size === 0) {
+        state.selectedArtists.add(ALL_ARTISTS);
+    }
+}
+
+function renderSongList() {
+    const showAll = state.selectedArtists.has(ALL_ARTISTS);
+    const visibleSongs = showAll
+        ? state.songs
+        : state.songs.filter(song => state.selectedArtists.has(song.artist));
+    const sortedSongs = sortSongs(visibleSongs);
+
+    els.songListContainer.innerHTML = '';
+
+    if (sortedSongs.length === 0) {
+        els.songListContainer.innerHTML = '<div class="song-list-empty">No songs match the selected artists.</div>';
+        return;
+    }
+
+    sortedSongs.forEach(song => {
+        const div = document.createElement('div');
+        div.className = 'song-list-item';
+        if (state.currentSong === song.path) {
+            div.classList.add('selected');
+            div.setAttribute('aria-current', 'true');
+        }
+
+        const title = document.createElement('span');
+        title.className = 'song-list-title';
+        title.textContent = song.title;
+
+        const artist = document.createElement('span');
+        artist.className = 'song-list-artist';
+        artist.textContent = song.artist;
+
+        div.append(title, artist);
+        div.onclick = () => {
+            if (state.isScrolling) toggleScroll();
+            loadSongFile(song.path);
+            closeModals();
+        };
+        els.songListContainer.appendChild(div);
+    });
+}
+
+function sortSongs(songs) {
+    const sorted = [...songs];
+    const compareTitle = (a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' });
+    const compareArtist = (a, b) => a.artist.localeCompare(b.artist, undefined, { sensitivity: 'base' });
+
+    switch (state.songSort) {
+        case 'title-asc':
+            return sorted.sort((a, b) => compareTitle(a, b) || compareArtist(a, b));
+        case 'title-desc':
+            return sorted.sort((a, b) => compareTitle(b, a) || compareArtist(a, b));
+        case 'artist-desc':
+            return sorted.sort((a, b) => compareArtist(b, a) || compareTitle(a, b));
+        case 'artist-title':
+        default:
+            return sorted.sort((a, b) => compareArtist(a, b) || compareTitle(a, b));
+    }
+}
+
+function resolveSongPath(songPath) {
+    const normalized = normalizeSongPath(songPath);
+    const exactMatch = state.songs.find(song => song.path.toLowerCase() === normalized.toLowerCase());
+    if (exactMatch) return exactMatch.path;
+
+    const fileName = normalized.split('/').pop().toLowerCase();
+    const fileNameMatches = state.songs.filter(song => song.fileName.toLowerCase() === fileName);
+
+    return fileNameMatches.length === 1 ? fileNameMatches[0].path : normalized;
+}
+
 function loadSongFile(filename) {
-    fetch('songs/' + filename)
-        .then(r => r.text())
+    const songPath = resolveSongPath(filename);
+
+    return fetch('songs/' + encodeURI(songPath))
+        .then(r => {
+            if (!r.ok) throw new Error(`Song file could not be loaded: ${songPath}`);
+            return r.text();
+        })
         .then(text => {
             els.songInput.value = text;
-            state.currentSong = filename;
+            state.currentSong = songPath;
+            applySongTransposePreference(songPath);
             renderSong();
+            els.songView.scrollTop = 0;
+            updateSongBottomState();
             updateURLState();
+        })
+        .catch(error => {
+            console.error(error);
+            throw error;
         });
+}
+
+function applySongTransposePreference(songPath) {
+    if (state.initialTranspose !== null) {
+        state.transpose = state.initialTranspose;
+        state.initialTranspose = null;
+        saveCurrentSongTranspose();
+    } else {
+        state.transpose = getStoredSongTranspose(songPath);
+    }
+
+    updateTransposeDisplay();
+    updateMobileControlUI();
+}
+
+function loadDefaultSong() {
+    els.songInput.value = "Amazing Grace\n\n[G]Amazing grace how [C]sweet the [G]sound\nThat [G]saved a wretch like [D]me\nI [G]once was lost but [C]now am [G]found\nWas [Em]blind but [D]now I [G]see";
+    state.currentSong = null;
+    state.transpose = 0;
+    state.initialTranspose = null;
+    updateTransposeDisplay();
+    updateMobileControlUI();
+    renderSong();
+    els.songView.scrollTop = 0;
+    updateSongBottomState();
+    showStarterHints();
 }
 
 function updateURLState() {
@@ -506,7 +1286,8 @@ function updateURLState() {
     if (state.scrollSpeed !== 1.0) params.set('speed', state.scrollSpeed);
     if (state.transpose !== 0) params.set('transpose', state.transpose);
 
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    const query = params.toString();
+    const newUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
     window.history.replaceState({}, '', newUrl);
 }
 
@@ -772,6 +1553,7 @@ function tapTempo() {
         const bpm = Math.round(60000 / avgInterval);
         state.bpm = bpm;
         els.bpmDisplay.textContent = `BPM: ${bpm}`;
+        updatePlayButtonUI();
     }
 }
 
@@ -779,6 +1561,7 @@ function resetBpm() {
     state.bpm = 0;
     state.tapTimes = [];
     els.bpmDisplay.textContent = `BPM: --`;
+    updatePlayButtonUI();
 }
 
 // Run

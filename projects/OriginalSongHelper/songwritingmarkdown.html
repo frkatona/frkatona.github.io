@@ -6,19 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Added viewport for mobile responsiveness -->
     <title>SongHelper Pro</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/icons/favicon.ico">
+<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../css/subpage_nav.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body>
+<body class="has-subpage-nav">
+    <nav class="subpage-nav">
+        <a class="subpage-nav__link" href="../../index.html">
+            <i class="fas fa-home" aria-hidden="true"></i>
+            <span>Home</span>
+        </a>
+    </nav>
 
     <div class="app-header">
         <div class="header-controls">
             <button class="icon-btn" id="menuBtn" title="Menu">☰</button>
-            <button class="icon-btn" id="songListBtn" title="Songs">♪</button>
+            <div class="header-action starter-hint-target starter-song-hint">
+                <button class="icon-btn" id="songListBtn" title="Songs">♪</button>
+                <div class="starter-hint-label">select song</div>
+            </div>
         </div>
         <div class="header-title" id="headerTitle">Untitled Song</div>
         <div class="header-controls">
-            <button class="icon-btn" id="editToggleBtn" title="Toggle Edit Mode">✎</button>
+            <button class="icon-btn" id="hotkeyBtn" title="Hotkeys">?</button>
+            <button class="icon-btn" id="fullscreenBtn" title="Toggle fullscreen">⛶</button>
+            <div class="header-action starter-hint-target starter-hint-target-right starter-edit-hint">
+                <button class="icon-btn" id="editToggleBtn" title="Toggle Edit Mode">✎</button>
+                <div class="starter-hint-label">edit lyrics and chords</div>
+            </div>
         </div>
     </div>
 
@@ -34,7 +51,9 @@ Title
 
     <div class="app-footer">
         <div class="control-group">
-            <div class="control-label">Transpose</div>
+            <div class="control-label" title="Transpose" aria-label="Transpose">
+                <i class="fas fa-right-left" aria-hidden="true"></i>
+            </div>
             <div class="control-buttons">
                 <button class="control-btn" id="transDown">-</button>
                 <div class="control-value" id="transValue">0</div>
@@ -42,7 +61,9 @@ Title
             </div>
         </div>
         <div class="control-group">
-            <div class="control-label">Speed</div>
+            <div class="control-label" title="Speed" aria-label="Speed">
+                <i class="fas fa-gauge-high" aria-hidden="true"></i>
+            </div>
             <div class="control-buttons">
                 <button class="control-btn" id="speedDown">-</button>
                 <div class="control-value" id="speedValue">1.0</div>
@@ -50,14 +71,54 @@ Title
             </div>
         </div>
 
+        <div class="mobile-song-action starter-hint-target starter-song-hint">
+            <button class="mobile-song-btn" id="mobileSongListBtn" type="button" aria-label="Songs">♪</button>
+            <div class="starter-hint-label">select song</div>
+        </div>
         <button class="play-btn" id="playBtn">▶</button>
+        <button class="mobile-controls-btn" id="mobileControlsBtn" type="button" aria-label="Controls">⚙</button>
 
         <div class="control-group">
-            <div class="control-label">Font</div>
+            <div class="control-label" title="Font" aria-label="Font">
+                <i class="fas fa-font" aria-hidden="true"></i>
+            </div>
             <div class="control-buttons">
                 <button class="control-btn" id="fontDown">A-</button>
                 <div class="control-value" id="fontValue">16</div>
                 <button class="control-btn" id="fontUp">A+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-control-overlay" id="mobileControlOverlay" aria-hidden="true">
+        <div class="mobile-control-panel" id="mobileControlPanel">
+            <div class="mobile-control-header">
+                <div>
+                    <div class="mobile-control-title">Controls</div>
+                    <div class="mobile-control-subtitle">Drag across any row to change it</div>
+                </div>
+                <button class="mobile-control-close" id="mobileControlClose" type="button" aria-label="Close controls">×</button>
+            </div>
+            <div class="mobile-control-lane" data-mobile-control="transpose">
+                <div class="mobile-control-copy">
+                    <span>Transpose</span>
+                    <strong id="mobileTransposeValue">0</strong>
+                </div>
+                <div class="mobile-control-track"><div class="mobile-control-fill"></div></div>
+            </div>
+            <div class="mobile-control-lane" data-mobile-control="speed">
+                <div class="mobile-control-copy">
+                    <span>Speed</span>
+                    <strong id="mobileSpeedValue">1.0</strong>
+                </div>
+                <div class="mobile-control-track"><div class="mobile-control-fill"></div></div>
+            </div>
+            <div class="mobile-control-lane" data-mobile-control="font">
+                <div class="mobile-control-copy">
+                    <span>Font</span>
+                    <strong id="mobileFontValue">16</strong>
+                </div>
+                <div class="mobile-control-track"><div class="mobile-control-fill"></div></div>
             </div>
         </div>
     </div>
@@ -103,7 +164,30 @@ Title
             </div>
             <div class="menu-item">
                 <span>Alignment</span>
-                <button id="alignToggle" style="padding:5px 10px;">Center</button>
+                <button class="alignment-switch" id="alignToggle" type="button" aria-label="Toggle alignment">
+                    <span data-align-option="left">Left</span>
+                    <span data-align-option="center">Center</span>
+                </button>
+            </div>
+            <div class="menu-item">
+                <span>Footer controls</span>
+                <button class="footer-layout-switch" id="footerLayoutToggle" type="button" aria-label="Toggle footer controls">
+                    <span data-footer-layout-option="compact">Compact</span>
+                    <span data-footer-layout-option="expanded">Full</span>
+                </button>
+            </div>
+            <div class="menu-item menu-item-stacked">
+                <div class="menu-item-heading">
+                    <span>Dynamics line</span>
+                    <span class="range-value" id="dynamicLineRangeValue">8% - 33%</span>
+                </div>
+                <div class="dual-range" aria-label="Dynamics indicator line range">
+                    <div class="dual-range-track"></div>
+                    <input id="dynamicLineStartInput" type="range" min="0" max="100" step="1" value="8"
+                        aria-label="Dynamics line start">
+                    <input id="dynamicLineStopInput" type="range" min="0" max="100" step="1" value="33"
+                        aria-label="Dynamics line stop">
+                </div>
             </div>
             <div class="menu-item">
                 <span>BPM Tapper</span>
@@ -116,13 +200,54 @@ Title
         </div>
     </div>
 
+    <!-- Hotkeys Modal -->
+    <div class="modal-overlay" id="hotkeyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Hotkeys</div>
+                <button class="close-btn" onclick="closeModals()">×</button>
+            </div>
+            <div class="hotkey-list">
+                <label class="hotkey-row">
+                    <span>Font size increase</span>
+                    <input class="hotkey-input" data-hotkey-action="fontSizeIncrease" readonly>
+                </label>
+                <label class="hotkey-row">
+                    <span>Font size decrease</span>
+                    <input class="hotkey-input" data-hotkey-action="fontSizeDecrease" readonly>
+                </label>
+                <label class="hotkey-row">
+                    <span>Scroll speed increase</span>
+                    <input class="hotkey-input" data-hotkey-action="scrollSpeedIncrease" readonly>
+                </label>
+                <label class="hotkey-row">
+                    <span>Scroll speed decrease</span>
+                    <input class="hotkey-input" data-hotkey-action="scrollSpeedDecrease" readonly>
+                </label>
+            </div>
+            <div class="hotkey-status" id="hotkeyStatus">Select a shortcut field, then press a key.</div>
+        </div>
+    </div>
+
     <!-- Song List Modal -->
     <div class="modal-overlay" id="songListModal">
-        <div class="modal-content">
+        <div class="modal-content song-list-modal-content">
             <div class="modal-header">
                 <div class="modal-title">Songs</div>
                 <button class="close-btn" onclick="closeModals()">×</button>
             </div>
+            <div class="song-selector-controls">
+                <label class="song-sort-control" for="songSortSelect">
+                    <span>Sort</span>
+                    <select id="songSortSelect">
+                        <option value="artist-title">Artist, A-Z</option>
+                        <option value="title-asc">Title, A-Z</option>
+                        <option value="title-desc">Title, Z-A</option>
+                        <option value="artist-desc">Artist, Z-A</option>
+                    </select>
+                </label>
+            </div>
+            <div class="artist-filter" id="artistFilterContainer"></div>
             <div id="songListContainer"></div>
         </div>
     </div>

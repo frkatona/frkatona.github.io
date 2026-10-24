@@ -2,6 +2,7 @@
     {
         "artist": "Whitney Houston",
         "song": "I Have Nothing",
+        "youtube": "https://youtu.be/FxYw0XPEoKE?t=214",
         "section": "Final Chorus/Key Change",
         "weight_texture": [
             "belty",
@@ -24,11 +25,10 @@
             "proud/anthemic",
             "yearning/soulful"
         ],
-        "delivery": [
-            "urgent"
-        ],
+        "delivery": "urgent",
         "articulation": [
-            "precise"
+            "precise",
+            "hard attack"
         ],
         "register": [
             "head voice",
@@ -42,6 +42,7 @@
     {
         "artist": "Billie Eilish",
         "song": "Everything I Wanted",
+        "youtube": "https://youtu.be/EgBJmlPo8Xw?t=37",
         "section": "Opening Verse",
         "weight_texture": [
             "breathy",
@@ -65,22 +66,21 @@
             "laid-back"
         ],
         "articulation": [
-            "soft"
+            "floating",
+            "falling off"
         ],
         "register": [
-            "chest/fry mix"
+            "chest"
         ],
-        "onset_offset": [
-            "vocal fry",
-            "falling off"
-        ]
+        "year": 2019
     },
     {
         "artist": "Olivia Rodrigo",
         "song": "brutal",
+        "youtube": "https://youtu.be/hM2U8cb8lhI?t=21",
         "section": "Verses",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "thin"
         ],
         "power": [
@@ -91,16 +91,13 @@
             "nasally",
             "twangy"
         ],
-        "skillfulness": [
-            "distortion"
-        ],
         "expressiveness": [
             "bratty/playful",
-            "whiny/pleading"
+            "whiny/pleading",
+            "distorted"
         ],
         "delivery": [
-            "urgent",
-            "frenetic"
+            "urgent"
         ],
         "articulation": [
             "sprechgesang"
@@ -108,13 +105,12 @@
         "rhythmic_phrasing": [
             "staccato"
         ],
-        "onset_offset": [
-            "glottal attack"
-        ]
+        "year": 2021
     },
     {
         "artist": "Queen (Freddie Mercury)",
         "song": "Bohemian Rhapsody",
+        "youtube": "https://youtu.be/fJ9rUzIMcZQ?t=186",
         "section": "Operatic Section ('Galileo')",
         "weight_texture": [
             "bright",
@@ -133,7 +129,7 @@
         ],
         "expressiveness": [
             "theatrical",
-            "playful"
+            "bratty/playful"
         ],
         "delivery": [
             "urgent"
@@ -148,14 +144,16 @@
         ],
         "rhythmic_phrasing": [
             "staccato"
-        ]
+        ],
+        "year": 1975
     },
     {
-        "artist": "Janis Joplin",
+        "artist": "Big Brother and the Holding Company (Janis Joplin)",
         "song": "Piece of My Heart",
+        "youtube": "https://youtu.be/3SL0oRcD7t0?t=52",
         "section": "Chorus",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "heavy"
         ],
         "power": [
@@ -165,29 +163,29 @@
             "throaty"
         ],
         "skillfulness": [
-            "distortion",
             "runs"
         ],
         "expressiveness": [
             "raw/vulnerable",
-            "yearning/soulful"
+            "yearning/soulful",
+            "distorted"
         ],
         "delivery": [
             "urgent"
         ],
         "articulation": [
-            "slurred"
+            "slurred",
+            "scooped"
         ],
         "register": [
             "chest belt"
         ],
-        "onset_offset": [
-            "scooping"
-        ]
+        "year": 1968
     },
     {
         "artist": "Daveed Diggs (Hamilton)",
         "song": "Guns and Ships",
+        "youtube": "https://youtu.be/0D3zz6byFT4?t=32",
         "section": "Lafayette's fast verse",
         "weight_texture": [
             "crisp",
@@ -198,7 +196,6 @@
             "dynamic"
         ],
         "resonance_placement": [
-            "forward",
             "nasally"
         ],
         "skillfulness": [
@@ -217,11 +214,13 @@
         "rhythmic_phrasing": [
             "syncopated",
             "staccato"
-        ]
+        ],
+        "year": 2015
     },
     {
         "artist": "Kate Bush",
         "song": "Wuthering Heights",
+        "youtube": "https://youtu.be/-1pMMIe4hb4?t=42",
         "section": "Chorus",
         "weight_texture": [
             "silky",
@@ -234,7 +233,7 @@
             "head voice"
         ],
         "skillfulness": [
-            "glides",
+            "gliding",
             "range"
         ],
         "expressiveness": [
@@ -245,19 +244,19 @@
             "urgent"
         ],
         "articulation": [
-            "ethereal/floating"
+            "floating",
+            "scooped"
         ],
         "register": [
             "head voice",
             "falsetto"
         ],
-        "onset_offset": [
-            "scooping"
-        ]
+        "year": 1978
     },
     {
         "artist": "Mariah Carey",
         "song": "Emotions",
+        "youtube": "https://youtu.be/NrJEFrth27Q?t=226",
         "section": "Final high notes",
         "weight_texture": [
             "piercing",
@@ -271,8 +270,7 @@
         ],
         "skillfulness": [
             "range",
-            "runs",
-            "whistle register"
+            "runs"
         ],
         "expressiveness": [
             "proud/anthemic",
@@ -287,18 +285,16 @@
         "register": [
             "whistle register"
         ],
-        "onset_offset": [
-            "glottal attack"
-        ]
+        "year": 1991
     },
     {
         "artist": "Louis Armstrong",
         "song": "What a Wonderful World",
+        "youtube": "https://youtu.be/rBrd_3VMC3c?t=5",
         "section": "Full Song",
         "weight_texture": [
-            "raspy",
-            "warm/rich",
-            "gravelly"
+            "raspy/gravelly",
+            "warm/rich"
         ],
         "power": [
             "intimate"
@@ -308,12 +304,12 @@
             "chesty"
         ],
         "skillfulness": [
-            "vibrato",
-            "distortion"
+            "vibrato"
         ],
         "expressiveness": [
             "yearning/soulful",
-            "optimistic"
+            "optimistic",
+            "distorted"
         ],
         "delivery": [
             "laid-back"
@@ -321,15 +317,13 @@
         "articulation": [
             "relaxed"
         ],
-        "rhythmic_phrasing": [
-            "rubato",
-            "behind the beat"
-        ]
+        "year": 1967
     },
     {
         "artist": "Jeff Buckley",
         "song": "Hallelujah",
-        "section": "Verse 1 (The 'secret chord')",
+        "youtube": "https://youtu.be/y8AWFf7EAc4?t=80",
+        "section": "Verse 1",
         "weight_texture": [
             "breathy",
             "warm/rich"
@@ -343,31 +337,31 @@
         ],
         "skillfulness": [
             "vibrato",
-            "glides"
+            "gliding"
         ],
         "expressiveness": [
             "raw/vulnerable",
-            "yearning/soulful"
+            "yearning/soulful",
+            "ethereal"
         ],
         "delivery": [
             "uncertain/halting"
         ],
         "articulation": [
-            "ethereal/floating"
+            "floating"
         ],
         "rhythmic_phrasing": [
             "legato"
         ],
-        "onset_offset": [
-            "long decay"
-        ]
+        "year": 1994
     },
     {
-        "artist": "Chester Bennington (Linkin Park)",
+        "artist": "Linkin Park (Chester Bennington)",
         "song": "Given Up",
+        "youtube": "https://youtu.be/0xyxtzD54rM?t=142",
         "section": "The 17-second scream",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "harsh"
         ],
         "power": [
@@ -377,33 +371,30 @@
             "throaty"
         ],
         "skillfulness": [
-            "distortion",
             "stamina"
         ],
         "expressiveness": [
             "raw/vulnerable",
-            "aggressive"
+            "aggressive",
+            "distorted"
         ],
         "delivery": [
             "urgent"
         ],
         "articulation": [
-            "raw"
-        ],
-        "register": [
-            "fry scream"
-        ],
-        "onset_offset": [
+            "raw",
             "hard attack"
-        ]
+        ],
+        "year": 2007
     },
     {
         "artist": "Björk",
         "song": "It's Oh So Quiet",
+        "youtube": "https://youtu.be/htobTBlCvUU?t=66",
         "section": "Chorus explosion ('ZING BOOM!')",
         "weight_texture": [
             "belty",
-            "raspy"
+            "raspy/gravelly"
         ],
         "power": [
             "intense",
@@ -414,7 +405,6 @@
             "nasally"
         ],
         "skillfulness": [
-            "growl",
             "range"
         ],
         "expressiveness": [
@@ -427,13 +417,12 @@
         "articulation": [
             "theatrical"
         ],
-        "onset_offset": [
-            "glottal attack"
-        ]
+        "year": 1995
     },
     {
         "artist": "Frank Sinatra",
         "song": "Fly Me To The Moon",
+        "youtube": "https://youtu.be/JYuyWrkwpok?t=7",
         "section": "Opening Verse",
         "weight_texture": [
             "warm/rich",
@@ -448,11 +437,10 @@
             "resonant"
         ],
         "skillfulness": [
-            "glides"
+            "gliding"
         ],
         "expressiveness": [
-            "proud/anthemic",
-            "romantic"
+            "proud/anthemic"
         ],
         "delivery": [
             "laid-back"
@@ -461,17 +449,18 @@
             "precise"
         ],
         "rhythmic_phrasing": [
-            "legato",
-            "rubato"
-        ]
+            "legato"
+        ],
+        "year": 1964
     },
     {
         "artist": "Kendrick Lamar",
         "song": "u",
+        "youtube": "https://youtu.be/xqS2di2QdhQ?t=144",
         "section": "Second half (drunken sobbing flow)",
         "weight_texture": [
             "cracking",
-            "raspy"
+            "raspy/gravelly"
         ],
         "power": [
             "intimate",
@@ -479,9 +468,6 @@
         ],
         "resonance_placement": [
             "throaty"
-        ],
-        "skillfulness": [
-            "voice acting"
         ],
         "expressiveness": [
             "raw/vulnerable",
@@ -494,13 +480,12 @@
         "articulation": [
             "slurred"
         ],
-        "onset_offset": [
-            "cracking"
-        ]
+        "year": 2015
     },
     {
-        "artist": "Florence Welch (Florence + The Machine)",
+        "artist": "Florence + The Machine (Florence Welch)",
         "song": "Dog Days Are Over",
+        "youtube": "https://youtu.be/iWOyfLBYtuU?t=170",
         "section": "Final Chorus",
         "weight_texture": [
             "belty",
@@ -522,22 +507,17 @@
             "proud/anthemic",
             "yearning/soulful"
         ],
-        "delivery": [
-            "urgent"
-        ],
-        "articulation": [
-            "precise"
-        ],
+        "delivery": "urgent",
+        "articulation": "precise",
         "register": [
             "mix belt"
         ],
-        "onset_offset": [
-            "glottal attack"
-        ]
+        "year": 2008
     },
     {
-        "artist": "Thom Yorke (Radiohead)",
+        "artist": "Radiohead (Thom Yorke)",
         "song": "Nude",
+        "youtube": "https://youtu.be/BbWBRnDK_AE?t=47",
         "section": "Intro vocalization",
         "weight_texture": [
             "silky",
@@ -552,32 +532,27 @@
             "nasally"
         ],
         "skillfulness": [
-            "glides",
+            "gliding",
             "vibrato"
         ],
         "expressiveness": [
             "yearning/soulful",
-            "melancholy"
+            "melancholy",
+            "ethereal"
         ],
-        "delivery": [
-            "laid-back"
-        ],
-        "articulation": [
-            "ethereal/floating"
-        ],
-        "register": [
-            "falsetto"
-        ],
-        "rhythmic_phrasing": [
-            "legato"
-        ]
+        "delivery": "laid-back",
+        "articulation": "floating",
+        "register": "falsetto",
+        "rhythmic_phrasing": "legato",
+        "year": 2007
     },
     {
-        "artist": "Chris Cornell (Soundgarden)",
+        "artist": "Soundgarden (Chris Cornell)",
         "song": "Black Hole Sun",
+        "youtube": "https://youtu.be/3mbBbFH9fAg?t=270",
         "section": "Final Chorus",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "warm/rich"
         ],
         "power": [
@@ -588,33 +563,28 @@
             "mixed"
         ],
         "skillfulness": [
-            "distortion",
             "range"
         ],
         "expressiveness": [
             "yearning/soulful",
-            "dark"
+            "dark",
+            "distorted"
         ],
-        "delivery": [
-            "laid-back"
-        ],
+        "delivery": "laid-back",
         "articulation": [
-            "slurred"
+            "slurred",
+            "scooped"
         ],
-        "register": [
-            "mixed voice"
-        ],
-        "onset_offset": [
-            "scooping"
-        ]
+        "register": "mixed voice",
+        "year": 1994
     },
     {
         "artist": "Tom Waits",
         "song": "God's Away on Business",
+        "youtube": "https://youtu.be/W9mhsW5aWJM?t=12",
         "section": "Verse 1",
         "weight_texture": [
-            "raspy",
-            "gravelly"
+            "raspy/gravelly"
         ],
         "power": [
             "intense"
@@ -622,30 +592,26 @@
         "resonance_placement": [
             "throaty"
         ],
-        "skillfulness": [
-            "distortion"
-        ],
         "expressiveness": [
             "theatrical",
-            "dark"
+            "dark",
+            "distorted"
         ],
         "delivery": [
             "heavy",
             "stomping"
         ],
         "articulation": [
-            "theatrical"
-        ],
-        "register": [
-            "sub-harmonic/growl"
-        ],
-        "onset_offset": [
+            "theatrical",
             "hard attack"
-        ]
+        ],
+        "register": "sub-harmonic",
+        "year": 2002
     },
     {
         "artist": "Karen Carpenter",
         "song": "Superstar",
+        "youtube": "https://youtu.be/SJmmaIGiGBg?t=26",
         "section": "Opening Verse",
         "weight_texture": [
             "warm/rich",
@@ -666,26 +632,20 @@
             "yearning/soulful",
             "sad"
         ],
-        "delivery": [
-            "laid-back"
-        ],
-        "articulation": [
-            "precise"
-        ],
-        "register": [
-            "chest voice"
-        ],
-        "rhythmic_phrasing": [
-            "legato"
-        ]
+        "delivery": "laid-back",
+        "articulation": "precise",
+        "register": "chest voice",
+        "rhythmic_phrasing": "legato",
+        "year": 1971
     },
     {
-        "artist": "Axl Rose (Guns N' Roses)",
+        "artist": "Guns N' Roses (Axl Rose)",
         "song": "Welcome to the Jungle",
-        "section": "Opening Scream/Verse",
+        "youtube": "https://youtu.be/o1tj2zJ2Wvg?t=45",
+        "section": "Verse",
         "weight_texture": [
             "piercing",
-            "raspy"
+            "raspy/gravelly"
         ],
         "power": [
             "intense"
@@ -696,33 +656,26 @@
             "heady"
         ],
         "skillfulness": [
-            "distortion",
             "range"
         ],
         "expressiveness": [
             "bratty/playful",
-            "aggressive"
+            "aggressive",
+            "distorted"
         ],
-        "delivery": [
-            "urgent"
-        ],
-        "articulation": [
-            "sharp"
-        ],
-        "register": [
-            "pharyngeal mix"
-        ],
-        "onset_offset": [
-            "scream onset"
-        ]
+        "delivery": "urgent",
+        "articulation": "sharp",
+        "register": "pharyngeal mix",
+        "year": 1987
     },
     {
         "artist": "Johnny Cash",
         "song": "Hurt",
+        "youtube": "https://youtu.be/8AHCfZTRGiI?t=106",
         "section": "Final Verse",
         "weight_texture": [
-            "frail",
-            "dry"
+            "dry",
+            "frail"
         ],
         "power": [
             "intimate",
@@ -732,25 +685,22 @@
             "chesty"
         ],
         "skillfulness": [
-            "vibrato (tremulous)"
+            "vibrato"
         ],
         "expressiveness": [
-            "raw/vulnerable",
-            "weary"
+            "raw/vulnerable"
         ],
-        "delivery": [
-            "uncertain/halting"
-        ],
+        "delivery": "uncertain/halting",
         "articulation": [
-            "sprechgesang"
-        ],
-        "onset_offset": [
+            "sprechgesang",
             "falling off"
-        ]
+        ],
+        "year": 2002
     },
     {
         "artist": "Luciano Pavarotti",
         "song": "Nessun Dorma",
+        "youtube": "https://youtu.be/cWc7vYjgnTs?t=161",
         "section": "The final 'Vincero'",
         "weight_texture": [
             "belty",
@@ -767,15 +717,11 @@
         ],
         "skillfulness": [
             "vibrato",
-            "range",
-            "projection"
+            "range"
         ],
         "expressiveness": [
             "proud/anthemic",
             "triumphant"
-        ],
-        "delivery": [
-            "anticipatory"
         ],
         "articulation": [
             "operatic"
@@ -783,14 +729,13 @@
         "register": [
             "chest/head mix"
         ],
-        "rhythmic_phrasing": [
-            "rubato"
-        ]
+        "year": 1990
     },
     {
         "artist": "Sia",
         "song": "Chandelier",
-        "section": "Chorus ('I'm gonna swing...')",
+        "youtube": "https://youtu.be/2vjPBrBU-TM?t=42",
+        "section": "Chorus",
         "weight_texture": [
             "cracking",
             "belty"
@@ -803,9 +748,6 @@
             "throaty",
             "nasally"
         ],
-        "skillfulness": [
-            "voice cracks (stylized)"
-        ],
         "expressiveness": [
             "raw/vulnerable",
             "yearning/soulful"
@@ -816,13 +758,12 @@
         "articulation": [
             "slurred"
         ],
-        "onset_offset": [
-            "intentional cracking"
-        ]
+        "year": 2014
     },
     {
         "artist": "The Weeknd",
         "song": "Blinding Lights",
+        "youtube": "https://youtu.be/4NRXx6U8ABQ?t=82",
         "section": "Chorus",
         "weight_texture": [
             "bright",
@@ -852,12 +793,14 @@
         ],
         "rhythmic_phrasing": [
             "syncopated"
-        ]
+        ],
+        "year": 2019
     },
     {
         "artist": "Aretha Franklin",
         "song": "Respect",
-        "section": "The 'R-E-S-P-E-C-T' break",
+        "youtube": "https://youtu.be/A134hShx_gw?t=109",
+        "section": "'R-E-S-P-E-C-T' break",
         "weight_texture": [
             "belty",
             "warm/rich"
@@ -869,13 +812,9 @@
             "chesty",
             "mixed"
         ],
-        "skillfulness": [
-            "runs",
-            "agility"
-        ],
         "expressiveness": [
             "proud/anthemic",
-            "sassy"
+            "bratty/playful"
         ],
         "delivery": [
             "urgent"
@@ -885,14 +824,16 @@
         ],
         "rhythmic_phrasing": [
             "staccato"
-        ]
+        ],
+        "year": 1967
     },
     {
-        "artist": "Kurt Cobain (Nirvana)",
+        "artist": "Nirvana (Kurt Cobain)",
         "song": "Where Did You Sleep Last Night",
-        "section": "Final scream/shout",
+        "youtube": "https://youtu.be/CISzg6yi8YE?t=224",
+        "section": "Final screams/shouts",
         "weight_texture": [
-            "raspy",
+            "raspy/gravelly",
             "strained"
         ],
         "power": [
@@ -901,12 +842,10 @@
         "resonance_placement": [
             "throaty"
         ],
-        "skillfulness": [
-            "distortion"
-        ],
         "expressiveness": [
             "raw/vulnerable",
-            "pained"
+            "pained",
+            "distorted"
         ],
         "delivery": [
             "frenetic"
@@ -914,17 +853,15 @@
         "articulation": [
             "raw"
         ],
-        "onset_offset": [
-            "breath gasp"
-        ]
+        "year": 1994
     },
     {
         "artist": "Imogen Heap",
         "song": "Hide and Seek",
-        "section": "Bridge ('Ransom notes keep falling...')",
+        "youtube": "https://youtu.be/UYIAfiVGluk?t=202",
+        "section": "Bridge ('Ransom notes...')",
         "weight_texture": [
-            "breathy",
-            "digital"
+            "breathy"
         ],
         "power": [
             "flat",
@@ -934,28 +871,30 @@
             "airy"
         ],
         "skillfulness": [
-            "glides"
+            "gliding"
         ],
         "expressiveness": [
             "melancholy",
-            "detached"
+            "ethereal"
         ],
         "delivery": [
             "laid-back"
         ],
         "articulation": [
-            "ethereal/floating"
+            "floating"
         ],
         "register": [
             "head voice"
         ],
         "rhythmic_phrasing": [
             "legato"
-        ]
+        ],
+        "year": 2005
     },
     {
         "artist": "Ella Fitzgerald",
         "song": "Mack the Knife (Live in Berlin)",
+        "youtube": "https://youtu.be/6vXAtVbZbkI?t=182",
         "section": "The Scat Solo",
         "weight_texture": [
             "bright",
@@ -970,7 +909,7 @@
         ],
         "skillfulness": [
             "runs",
-            "glides",
+            "gliding",
             "agility"
         ],
         "expressiveness": [
@@ -986,47 +925,34 @@
         ],
         "rhythmic_phrasing": [
             "syncopated",
-            "swing"
-        ]
+            "swung"
+        ],
+        "year": 1960
     },
     {
-        "artist": "Chino Moreno (Deftones)",
+        "artist": "Deftones (Chino Moreno)",
         "song": "Digital Bath",
-        "section": "Verse vs Chorus transition",
-        "weight_texture": [
-            "breathy",
-            "then raspy"
-        ],
-        "power": [
-            "intimate",
-            "then intense"
-        ],
-        "resonance_placement": [
-            "airy",
-            "then throaty"
-        ],
+        "youtube": "https://youtu.be/O_IIAYZL1R4?t=61",
+        "section": "Chorus",
+        "weight_texture": "breathy",
+        "power": "intimate",
+        "resonance_placement": "airy",
         "skillfulness": [
-            "glides",
-            "distortion"
+            "gliding"
         ],
         "expressiveness": [
             "yearning/soulful",
-            "ethereal"
+            "ethereal",
+            "distorted"
         ],
-        "delivery": [
-            "laid-back",
-            "then urgent"
-        ],
-        "articulation": [
-            "ethereal/floating"
-        ],
-        "onset_offset": [
-            "vocal fry"
-        ]
+        "delivery": "laid-back",
+        "articulation": "floating",
+        "year": 2000
     },
     {
         "artist": "Julie Andrews",
         "song": "The Sound of Music",
+        "youtube": "https://youtu.be/6f0T6UV-HiI?t=23",
         "section": "The Hills Are Alive (opening)",
         "weight_texture": [
             "silky",
@@ -1047,15 +973,1841 @@
             "joyful",
             "proud/anthemic"
         ],
-        "delivery": [
-            "laid-back"
-        ],
+        "delivery": "laid-back",
         "articulation": [
             "crisp/precise/clipped",
             "theatrical"
         ],
         "rhythmic_phrasing": [
             "legato"
-        ]
+        ],
+        "year": 1965
+    },
+    {
+        "artist": "Céline Dion",
+        "song": "It's All Coming Back to Me Now",
+        "youtube": "https://youtu.be/j8fHNdrZTSI?t=312",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "belty",
+            "warm/rich"
+        ],
+        "power": [
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "resonant"
+        ],
+        "skillfulness": [
+            "vibrato",
+            "range"
+        ],
+        "expressiveness": [
+            "proud/anthemic",
+            "yearning/soulful"
+        ],
+        "delivery": "urgent",
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "mix belt"
+        ],
+        "year": 1996
+    },
+    {
+        "artist": "Beyoncé",
+        "song": "Listen",
+        "youtube": "https://youtu.be/y4gimHC7fKs?t=161",
+        "section": "Bridge and Final Chorus",
+        "weight_texture": [
+            "belty",
+            "warm/rich"
+        ],
+        "power": [
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "resonant"
+        ],
+        "skillfulness": [
+            "range",
+            "control"
+        ],
+        "expressiveness": [
+            "proud/anthemic",
+            "raw/vulnerable"
+        ],
+        "delivery": "urgent",
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "mix belt"
+        ],
+        "year": 2006
+    },
+    {
+        "artist": "Lily Allen",
+        "song": "Smile",
+        "youtube": "https://youtu.be/0WxDrVUrSvI?t=22",
+        "section": "Verse",
+        "weight_texture": [
+            "thin"
+        ],
+        "power": [
+            "flat"
+        ],
+        "resonance_placement": [
+            "nasally"
+        ],
+        "expressiveness": [
+            "bratty/playful"
+        ],
+        "delivery": [
+            "laid-back"
+        ],
+        "articulation": [
+            "sprechgesang"
+        ],
+        "rhythmic_phrasing": [
+            "staccato"
+        ],
+        "year": 2006
+    },
+    {
+        "artist": "Gwen Stefani",
+        "song": "Hollaback Girl",
+        "youtube": "https://youtu.be/Kgjkth6BRRY?t=48",
+        "section": "Spoken Verses",
+        "weight_texture": [
+            "thin"
+        ],
+        "power": [
+            "flat"
+        ],
+        "resonance_placement": [
+            "nasally"
+        ],
+        "expressiveness": [
+            "bratty/playful"
+        ],
+        "delivery": [
+            "urgent"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "rhythmic_phrasing": [
+            "staccato",
+            "syncopated"
+        ],
+        "year": 2005
+    },
+    {
+        "artist": "Nick Cave",
+        "song": "Into My Arms",
+        "youtube": "https://youtu.be/LnHoqHscTKE?t=42",
+        "section": "Verse",
+        "weight_texture": [
+            "dry"
+        ],
+        "power": [
+            "intimate",
+            "flat"
+        ],
+        "resonance_placement": [
+            "chesty"
+        ],
+        "expressiveness": [
+            "raw/vulnerable"
+        ],
+        "articulation": [
+            "sprechgesang"
+        ],
+        "year": 1997
+    },
+    {
+        "artist": "Bob Dylan",
+        "song": "Not Dark Yet",
+        "youtube": "https://youtu.be/Rb7R7x2x6eA?t=60",
+        "section": "Verse",
+        "weight_texture": [
+            "dry",
+            "frail",
+            "thin"
+        ],
+        "power": [
+            "flat",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "chesty"
+        ],
+        "expressiveness": [
+            "raw/vulnerable"
+        ],
+        "delivery": "uncertain/halting",
+        "articulation": [
+            "sprechgesang",
+            "slurred"
+        ],
+        "year": 1997
+    },
+    {
+        "artist": "Eminem",
+        "song": "Rap God",
+        "youtube": "https://youtu.be/XbGs_qK2PQA?t=220",
+        "section": "High-Speed Mid-Verse",
+        "weight_texture": [
+            "crisp",
+            "punchy"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "nasally"
+        ],
+        "skillfulness": [
+            "agility"
+        ],
+        "delivery": [
+            "frenetic"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "rhythmic_phrasing": [
+            "staccato",
+            "syncopated"
+        ],
+        "year": 2013
+    },
+    {
+        "artist": "Jacob Collier",
+        "song": "All Night Long",
+        "youtube": "https://youtu.be/nspqYGz-Z1s?t=123",
+        "section": "Live Scat Improvisation",
+        "weight_texture": [
+            "bright"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "resonant",
+            "mixed"
+        ],
+        "skillfulness": [
+            "runs",
+            "gliding",
+            "agility"
+        ],
+        "expressiveness": [
+            "bratty/playful",
+            "joyful"
+        ],
+        "delivery": [
+            "frenetic"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "rhythmic_phrasing": [
+            "syncopated"
+        ],
+        "year": 2016
+    },
+    {
+        "artist": "Leonard Cohen",
+        "song": "You Want It Darker",
+        "youtube": "https://youtu.be/YD6fvzGIBfQ?t=27",
+        "section": "Verse",
+        "weight_texture": [
+            "raspy/gravelly"
+        ],
+        "power": [
+            "flat",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "chesty"
+        ],
+        "expressiveness": [
+            "dark"
+        ],
+        "articulation": [
+            "sprechgesang"
+        ],
+        "year": 2016
+    },
+    {
+        "artist": "Nick Cave",
+        "song": "Red Right Hand",
+        "youtube": "https://youtu.be/RrxePKps87k?t=7",
+        "section": "Verse",
+        "weight_texture": [
+            "raspy/gravelly"
+        ],
+        "power": [
+            "intense"
+        ],
+        "resonance_placement": [
+            "throaty"
+        ],
+        "expressiveness": [
+            "theatrical",
+            "dark",
+            "distorted"
+        ],
+        "articulation": [
+            "hard attack"
+        ],
+        "year": 1994
+    },
+    {
+        "artist": "Minnie Riperton",
+        "song": "Lovin' You",
+        "youtube": "https://youtu.be/9I3UTG1dSTc?t=70",
+        "section": "Chorus",
+        "weight_texture": [
+            "bright",
+            "piercing"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice"
+        ],
+        "skillfulness": [
+            "range"
+        ],
+        "expressiveness": [
+            "joyful"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "year": 1975
+    },
+    {
+        "artist": "Ariana Grande",
+        "song": "Dangerous Woman",
+        "youtube": "https://youtu.be/9WbCfHutDSE?t=189",
+        "section": "Chorus + Ad-Libs",
+        "weight_texture": [
+            "belty"
+        ],
+        "power": [
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "heady"
+        ],
+        "skillfulness": [
+            "runs",
+            "range"
+        ],
+        "expressiveness": [
+            "proud/anthemic"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "mix belt"
+        ],
+        "year": 2016
+    },
+    {
+        "artist": "Tori Kelly",
+        "song": "Nobody Love",
+        "youtube": "https://youtu.be/MPX3qz1ve7M?t=140",
+        "section": "Final Chorus + Ad-Libs",
+        "weight_texture": [
+            "bright"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "resonant"
+        ],
+        "skillfulness": [
+            "runs",
+            "agility",
+            "range"
+        ],
+        "expressiveness": [
+            "joyful"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "year": 2015
+    },
+    {
+        "artist": "Adele",
+        "song": "Someone Like You",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "breathy",
+            "smooth",
+            "warm/rich"
+        ],
+        "power": [
+            "restrained",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "mixed",
+            "resonant"
+        ],
+        "skillfulness": [
+            "control"
+        ],
+        "expressiveness": [
+            "melancholy",
+            "vulnerable",
+            "sad",
+            "yearning/soulful"
+        ],
+        "delivery": [
+            "laid-back"
+        ],
+        "articulation": [
+            "relaxed",
+            "floating",
+            "falling off",
+            "scooped"
+        ],
+        "register": [
+            "chest",
+            "chest/head mix"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 2011
+    },
+    {
+        "artist": "Chet Baker",
+        "song": "My Funny Valentine",
+        "section": "Opening Verse",
+        "weight_texture": [
+            "breathy",
+            "frail",
+            "thin",
+            "dry"
+        ],
+        "power": [
+            "restrained",
+            "intimate",
+            "flat"
+        ],
+        "resonance_placement": [
+            "airy",
+            "chesty"
+        ],
+        "skillfulness": [
+            "control"
+        ],
+        "expressiveness": [
+            "melancholy",
+            "vulnerable",
+            "sad"
+        ],
+        "delivery": [
+            "laid-back",
+            "uncertain/halting"
+        ],
+        "articulation": [
+            "relaxed",
+            "falling off",
+            "floating"
+        ],
+        "register": [
+            "chest"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 1954
+    },
+    {
+        "artist": "Bon Iver (Justin Vernon)",
+        "song": "Skinny Love",
+        "section": "Chorus",
+        "weight_texture": [
+            "cracking",
+            "frail",
+            "strained"
+        ],
+        "power": [
+            "restrained",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "airy",
+            "head voice"
+        ],
+        "skillfulness": [
+            "control",
+            "gliding"
+        ],
+        "expressiveness": [
+            "pained",
+            "vulnerable",
+            "raw/vulnerable"
+        ],
+        "delivery": [
+            "uncertain/halting"
+        ],
+        "articulation": [
+            "raw",
+            "falling off",
+            "slurred"
+        ],
+        "register": [
+            "falsetto",
+            "head voice"
+        ],
+        "year": 2007
+    },
+    {
+        "artist": "Radiohead (Thom Yorke)",
+        "song": "Creep",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "cracking",
+            "strained",
+            "harsh"
+        ],
+        "power": [
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "mixed",
+            "throaty"
+        ],
+        "skillfulness": [
+            "stamina",
+            "range"
+        ],
+        "expressiveness": [
+            "pained",
+            "aggressive",
+            "raw/vulnerable"
+        ],
+        "delivery": [
+            "urgent",
+            "heavy"
+        ],
+        "articulation": [
+            "raw",
+            "hard attack"
+        ],
+        "register": [
+            "chest belt",
+            "mix belt"
+        ],
+        "year": 1992
+    },
+    {
+        "artist": "Aerosmith (Steven Tyler)",
+        "song": "Dream On",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "piercing",
+            "strained"
+        ],
+        "power": [
+            "piercing",
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "heady",
+            "mixed"
+        ],
+        "skillfulness": [
+            "range",
+            "stamina"
+        ],
+        "expressiveness": [
+            "pained",
+            "triumphant"
+        ],
+        "delivery": [
+            "urgent"
+        ],
+        "articulation": [
+            "hard attack",
+            "scooped"
+        ],
+        "register": [
+            "falsetto/mix",
+            "mix belt"
+        ],
+        "year": 1973
+    },
+    {
+        "artist": "James Brown",
+        "song": "I Got You (I Feel Good)",
+        "section": "Opening Hook",
+        "weight_texture": [
+            "punchy",
+            "crisp",
+            "bright"
+        ],
+        "power": [
+            "piercing",
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "twangy",
+            "nasally"
+        ],
+        "skillfulness": [
+            "agility",
+            "stamina"
+        ],
+        "expressiveness": [
+            "joyful",
+            "optimistic"
+        ],
+        "delivery": [
+            "exuberant",
+            "stomping"
+        ],
+        "articulation": [
+            "crisp/precise/clipped",
+            "hard attack"
+        ],
+        "register": [
+            "chest belt"
+        ],
+        "rhythmic_phrasing": [
+            "syncopated",
+            "staccato",
+            "swung"
+        ],
+        "year": 1965
+    },
+    {
+        "artist": "Little Richard",
+        "song": "Tutti Frutti",
+        "section": "Chorus",
+        "weight_texture": [
+            "harsh",
+            "punchy",
+            "raspy/gravelly"
+        ],
+        "power": [
+            "piercing",
+            "intense"
+        ],
+        "resonance_placement": [
+            "twangy",
+            "throaty"
+        ],
+        "skillfulness": [
+            "stamina"
+        ],
+        "expressiveness": [
+            "aggressive",
+            "bratty/playful"
+        ],
+        "delivery": [
+            "exuberant",
+            "stomping"
+        ],
+        "articulation": [
+            "raw",
+            "crisp/precise/clipped"
+        ],
+        "register": [
+            "chest belt"
+        ],
+        "rhythmic_phrasing": [
+            "swung"
+        ],
+        "year": 1955
+    },
+    {
+        "artist": "Maria Callas",
+        "song": "Habanera",
+        "section": "Verse",
+        "weight_texture": [
+            "warm/rich",
+            "smooth"
+        ],
+        "power": [
+            "restrained",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice",
+            "resonant"
+        ],
+        "skillfulness": [
+            "vibrato",
+            "control"
+        ],
+        "expressiveness": [
+            "theatrical",
+            "dark"
+        ],
+        "delivery": [
+            "laid-back"
+        ],
+        "articulation": [
+            "operatic",
+            "crisp/precise/clipped"
+        ],
+        "register": [
+            "chest/head mix",
+            "head voice"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 1964
+    },
+    {
+        "artist": "Julie Andrews",
+        "song": "I Could Have Danced All Night",
+        "section": "Final Verse",
+        "weight_texture": [
+            "bright",
+            "piercing"
+        ],
+        "power": [
+            "dynamic",
+            "piercing"
+        ],
+        "resonance_placement": [
+            "head voice",
+            "resonant"
+        ],
+        "skillfulness": [
+            "range",
+            "vibrato"
+        ],
+        "expressiveness": [
+            "optimistic",
+            "triumphant",
+            "theatrical"
+        ],
+        "delivery": [
+            "exuberant"
+        ],
+        "articulation": [
+            "operatic",
+            "crisp/precise/clipped"
+        ],
+        "register": [
+            "head voice",
+            "chest/head mix"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 1956
+    },
+    {
+        "artist": "Idina Menzel",
+        "song": "Defying Gravity",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "belty",
+            "piercing",
+            "heavy"
+        ],
+        "power": [
+            "intense",
+            "dynamic",
+            "piercing"
+        ],
+        "resonance_placement": [
+            "mixed",
+            "chesty"
+        ],
+        "skillfulness": [
+            "stamina",
+            "range"
+        ],
+        "expressiveness": [
+            "triumphant",
+            "proud/anthemic",
+            "theatrical"
+        ],
+        "delivery": [
+            "urgent"
+        ],
+        "articulation": [
+            "theatrical",
+            "hard attack"
+        ],
+        "register": [
+            "mix belt",
+            "chest belt"
+        ],
+        "year": 2003
+    },
+    {
+        "artist": "Nina Simone",
+        "song": "Feeling Good",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "heavy",
+            "warm/rich"
+        ],
+        "power": [
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "resonant"
+        ],
+        "skillfulness": [
+            "vibrato",
+            "control"
+        ],
+        "expressiveness": [
+            "triumphant",
+            "dark",
+            "theatrical"
+        ],
+        "delivery": [
+            "heavy",
+            "stomping"
+        ],
+        "articulation": [
+            "theatrical",
+            "hard attack"
+        ],
+        "register": [
+            "chest belt"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 1965
+    },
+    {
+        "artist": "Billie Eilish",
+        "song": "bad guy",
+        "section": "Verse",
+        "weight_texture": [
+            "breathy",
+            "dry",
+            "thin"
+        ],
+        "power": [
+            "flat",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "airy"
+        ],
+        "expressiveness": [
+            "dark",
+            "bratty/playful"
+        ],
+        "delivery": [
+            "laid-back"
+        ],
+        "articulation": [
+            "relaxed",
+            "sprechgesang",
+            "falling off"
+        ],
+        "register": [
+            "chest"
+        ],
+        "rhythmic_phrasing": [
+            "syncopated"
+        ],
+        "year": 2019
+    },
+    {
+        "artist": "Lorde",
+        "song": "Royals",
+        "section": "Verse",
+        "weight_texture": [
+            "dry",
+            "crisp",
+            "thin"
+        ],
+        "power": [
+            "flat",
+            "restrained"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "mixed"
+        ],
+        "skillfulness": [
+            "control"
+        ],
+        "expressiveness": [
+            "bratty/playful",
+            "dark"
+        ],
+        "delivery": [
+            "laid-back"
+        ],
+        "articulation": [
+            "relaxed",
+            "crisp/precise/clipped"
+        ],
+        "register": [
+            "chest"
+        ],
+        "rhythmic_phrasing": [
+            "syncopated"
+        ],
+        "year": 2013
+    },
+    {
+        "artist": "Bob Marley",
+        "song": "Three Little Birds",
+        "section": "Chorus",
+        "weight_texture": [
+            "smooth",
+            "warm/rich"
+        ],
+        "power": [
+            "flat",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "resonant"
+        ],
+        "expressiveness": [
+            "optimistic",
+            "joyful"
+        ],
+        "delivery": [
+            "laid-back"
+        ],
+        "articulation": [
+            "relaxed"
+        ],
+        "register": [
+            "chest"
+        ],
+        "rhythmic_phrasing": [
+            "swung"
+        ],
+        "year": 1977
+    },
+    {
+        "artist": "Stevie Wonder",
+        "song": "Sir Duke",
+        "section": "Chorus",
+        "weight_texture": [
+            "punchy",
+            "bright",
+            "smooth"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "resonant",
+            "chesty"
+        ],
+        "skillfulness": [
+            "agility"
+        ],
+        "expressiveness": [
+            "optimistic",
+            "joyful"
+        ],
+        "delivery": [
+            "exuberant"
+        ],
+        "articulation": [
+            "precise",
+            "crisp/precise/clipped"
+        ],
+        "register": [
+            "chest/head mix"
+        ],
+        "rhythmic_phrasing": [
+            "swung",
+            "syncopated"
+        ],
+        "year": 1976
+    },
+    {
+        "artist": "Ella Fitzgerald",
+        "song": "It Don't Mean a Thing (If It Ain't Got That Swing)",
+        "section": "Scat Chorus",
+        "weight_texture": [
+            "crisp",
+            "bright",
+            "punchy"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "resonant"
+        ],
+        "skillfulness": [
+            "agility"
+        ],
+        "expressiveness": [
+            "joyful",
+            "bratty/playful"
+        ],
+        "delivery": [
+            "improvisational",
+            "exuberant"
+        ],
+        "articulation": [
+            "crisp/precise/clipped",
+            "precise"
+        ],
+        "rhythmic_phrasing": [
+            "swung",
+            "syncopated"
+        ],
+        "year": 1957
+    },
+    {
+        "artist": "Sarah Vaughan",
+        "song": "Misty",
+        "section": "Opening Verse",
+        "weight_texture": [
+            "smooth",
+            "breathy",
+            "warm/rich"
+        ],
+        "power": [
+            "intimate",
+            "restrained"
+        ],
+        "resonance_placement": [
+            "airy",
+            "resonant"
+        ],
+        "skillfulness": [
+            "control",
+            "vibrato"
+        ],
+        "expressiveness": [
+            "melancholy",
+            "yearning/soulful",
+            "vulnerable"
+        ],
+        "delivery": [
+            "laid-back"
+        ],
+        "articulation": [
+            "floating",
+            "scooped",
+            "relaxed"
+        ],
+        "register": [
+            "chest"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 1959
+    },
+    {
+        "artist": "Prince",
+        "song": "Kiss",
+        "section": "Chorus",
+        "weight_texture": [
+            "thin",
+            "piercing",
+            "bright"
+        ],
+        "power": [
+            "piercing",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice",
+            "twangy"
+        ],
+        "skillfulness": [
+            "range",
+            "agility"
+        ],
+        "expressiveness": [
+            "bratty/playful",
+            "joyful"
+        ],
+        "delivery": [
+            "exuberant"
+        ],
+        "articulation": [
+            "precise",
+            "crisp/precise/clipped"
+        ],
+        "register": [
+            "falsetto",
+            "falsetto/mix"
+        ],
+        "rhythmic_phrasing": [
+            "syncopated"
+        ],
+        "year": 1986
+    },
+    {
+        "artist": "Bee Gees (Barry Gibb)",
+        "song": "Stayin' Alive",
+        "section": "Chorus",
+        "weight_texture": [
+            "piercing",
+            "bright",
+            "thin"
+        ],
+        "power": [
+            "piercing",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice",
+            "heady"
+        ],
+        "skillfulness": [
+            "stamina"
+        ],
+        "expressiveness": [
+            "optimistic",
+            "joyful"
+        ],
+        "delivery": [
+            "stomping",
+            "exuberant"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "falsetto",
+            "falsetto/mix"
+        ],
+        "rhythmic_phrasing": [
+            "syncopated"
+        ],
+        "year": 1977
+    },
+    {
+        "artist": "Michael Jackson",
+        "song": "Don't Stop 'Til You Get Enough",
+        "section": "Chorus",
+        "weight_texture": [
+            "piercing",
+            "bright",
+            "smooth"
+        ],
+        "power": [
+            "piercing",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice",
+            "heady"
+        ],
+        "skillfulness": [
+            "agility",
+            "stamina"
+        ],
+        "expressiveness": [
+            "optimistic",
+            "joyful"
+        ],
+        "delivery": [
+            "exuberant"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "falsetto",
+            "falsetto/mix"
+        ],
+        "rhythmic_phrasing": [
+            "syncopated"
+        ],
+        "year": 1979
+    },
+    {
+        "artist": "Mariah Carey",
+        "song": "Vision of Love",
+        "section": "Outro Ad-Libs",
+        "weight_texture": [
+            "smooth",
+            "piercing"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice",
+            "resonant"
+        ],
+        "skillfulness": [
+            "runs",
+            "range",
+            "control"
+        ],
+        "expressiveness": [
+            "joyful",
+            "triumphant"
+        ],
+        "delivery": [
+            "improvisational"
+        ],
+        "articulation": [
+            "scooped",
+            "precise"
+        ],
+        "register": [
+            "whistle register",
+            "head voice"
+        ],
+        "year": 1990
+    },
+    {
+        "artist": "Ariana Grande",
+        "song": "Imagine",
+        "section": "Whistle Ad-Libs",
+        "weight_texture": [
+            "smooth",
+            "breathy",
+            "piercing"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice",
+            "heady"
+        ],
+        "skillfulness": [
+            "runs",
+            "range"
+        ],
+        "expressiveness": [
+            "ethereal",
+            "joyful"
+        ],
+        "delivery": [
+            "improvisational"
+        ],
+        "articulation": [
+            "floating",
+            "precise"
+        ],
+        "register": [
+            "whistle register",
+            "head voice"
+        ],
+        "year": 2018
+    },
+    {
+        "artist": "Minnie Riperton",
+        "song": "Inside My Love",
+        "section": "High Ad-Libs",
+        "weight_texture": [
+            "breathy",
+            "silky",
+            "smooth"
+        ],
+        "power": [
+            "intimate"
+        ],
+        "resonance_placement": [
+            "airy",
+            "head voice"
+        ],
+        "skillfulness": [
+            "range",
+            "gliding"
+        ],
+        "expressiveness": [
+            "ethereal",
+            "vulnerable"
+        ],
+        "delivery": [
+            "laid-back"
+        ],
+        "articulation": [
+            "floating",
+            "relaxed"
+        ],
+        "register": [
+            "whistle register",
+            "head voice"
+        ],
+        "year": 1975
+    },
+    {
+        "artist": "Mariah Carey",
+        "song": "All in Your Mind",
+        "section": "Outro",
+        "weight_texture": [
+            "piercing",
+            "bright"
+        ],
+        "power": [
+            "piercing",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice"
+        ],
+        "skillfulness": [
+            "runs",
+            "range"
+        ],
+        "expressiveness": [
+            "joyful"
+        ],
+        "delivery": [
+            "improvisational",
+            "exuberant"
+        ],
+        "articulation": [
+            "precise",
+            "scooped"
+        ],
+        "register": [
+            "whistle register"
+        ],
+        "year": 1990
+    },
+    {
+        "artist": "Ariana Grande",
+        "song": "The Way",
+        "section": "Whistle Outro",
+        "weight_texture": [
+            "bright",
+            "piercing"
+        ],
+        "power": [
+            "piercing",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "head voice"
+        ],
+        "skillfulness": [
+            "range",
+            "runs"
+        ],
+        "expressiveness": [
+            "joyful",
+            "bratty/playful"
+        ],
+        "delivery": [
+            "improvisational",
+            "exuberant"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "whistle register",
+            "falsetto/mix"
+        ],
+        "year": 2013
+    },
+    {
+        "artist": "System of a Down (Serj Tankian)",
+        "song": "Chop Suey!",
+        "section": "Chorus",
+        "weight_texture": [
+            "harsh",
+            "strained",
+            "heavy"
+        ],
+        "power": [
+            "intense",
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "throaty"
+        ],
+        "skillfulness": [
+            "stamina"
+        ],
+        "expressiveness": [
+            "aggressive",
+            "pained",
+            "distorted"
+        ],
+        "delivery": [
+            "heavy",
+            "frenetic",
+            "urgent"
+        ],
+        "articulation": [
+            "raw",
+            "hard attack"
+        ],
+        "register": [
+            "chest belt"
+        ],
+        "rhythmic_phrasing": [
+            "staccato"
+        ],
+        "year": 2001
+    },
+    {
+        "artist": "Black Sabbath (Ozzy Osbourne)",
+        "song": "War Pigs",
+        "section": "Verse",
+        "weight_texture": [
+            "heavy",
+            "harsh"
+        ],
+        "power": [
+            "intense"
+        ],
+        "resonance_placement": [
+            "throaty",
+            "chesty"
+        ],
+        "expressiveness": [
+            "dark",
+            "aggressive"
+        ],
+        "delivery": [
+            "heavy",
+            "stomping"
+        ],
+        "articulation": [
+            "hard attack",
+            "theatrical"
+        ],
+        "register": [
+            "chest"
+        ],
+        "rhythmic_phrasing": [
+            "staccato"
+        ],
+        "year": 1970
+    },
+    {
+        "artist": "Rage Against the Machine (Zack de la Rocha)",
+        "song": "Killing in the Name",
+        "section": "Final Chant",
+        "weight_texture": [
+            "harsh",
+            "heavy"
+        ],
+        "power": [
+            "intense"
+        ],
+        "resonance_placement": [
+            "throaty"
+        ],
+        "expressiveness": [
+            "aggressive",
+            "distorted"
+        ],
+        "delivery": [
+            "heavy",
+            "stomping",
+            "urgent"
+        ],
+        "articulation": [
+            "raw",
+            "hard attack"
+        ],
+        "register": [
+            "chest belt"
+        ],
+        "rhythmic_phrasing": [
+            "staccato"
+        ],
+        "year": 1992
+    },
+    {
+        "artist": "Elliott Smith",
+        "song": "Between the Bars",
+        "section": "Verse",
+        "weight_texture": [
+            "breathy",
+            "frail",
+            "thin",
+            "dry",
+            "crisp"
+        ],
+        "power": [
+            "restrained",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "airy"
+        ],
+        "skillfulness": [
+            "control"
+        ],
+        "expressiveness": [
+            "melancholy",
+            "vulnerable",
+            "pained",
+            "sad"
+        ],
+        "delivery": [
+            "uncertain/halting",
+            "laid-back"
+        ],
+        "articulation": [
+            "falling off",
+            "relaxed"
+        ],
+        "register": [
+            "chest"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 1997
+    },
+    {
+        "artist": "Joni Mitchell",
+        "song": "River",
+        "section": "Verse",
+        "weight_texture": [
+            "frail",
+            "breathy",
+            "warm/rich"
+        ],
+        "power": [
+            "restrained",
+            "intimate"
+        ],
+        "resonance_placement": [
+            "chesty"
+        ],
+        "skillfulness": [
+            "control"
+        ],
+        "expressiveness": [
+            "melancholy",
+            "vulnerable",
+            "pained",
+            "sad"
+        ],
+        "delivery": [
+            "uncertain/halting"
+        ],
+        "articulation": [
+            "floating",
+            "falling off"
+        ],
+        "register": [
+            "chest"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 1971
+    },
+    {
+        "artist": "Andrea Bocelli & Sarah Brightman",
+        "song": "Time to Say Goodbye",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "smooth",
+            "warm/rich"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "resonant",
+            "head voice"
+        ],
+        "skillfulness": [
+            "vibrato",
+            "range"
+        ],
+        "expressiveness": [
+            "theatrical",
+            "triumphant"
+        ],
+        "delivery": [
+            "exuberant"
+        ],
+        "articulation": [
+            "operatic"
+        ],
+        "register": [
+            "chest/head mix",
+            "head voice"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 1996
+    },
+    {
+        "artist": "Josh Groban",
+        "song": "You Raise Me Up",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "warm/rich",
+            "belty"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "resonant",
+            "chesty"
+        ],
+        "skillfulness": [
+            "vibrato",
+            "stamina"
+        ],
+        "expressiveness": [
+            "triumphant",
+            "proud/anthemic"
+        ],
+        "delivery": [
+            "exuberant"
+        ],
+        "articulation": [
+            "operatic",
+            "precise"
+        ],
+        "register": [
+            "chest/head mix"
+        ],
+        "year": 2003
+    },
+    {
+        "artist": "Taylor Swift",
+        "song": "You Belong with Me",
+        "section": "Chorus",
+        "weight_texture": [
+            "bright",
+            "thin"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "nasally",
+            "twangy"
+        ],
+        "expressiveness": [
+            "whiny/pleading",
+            "optimistic",
+            "bratty/playful"
+        ],
+        "delivery": [
+            "urgent"
+        ],
+        "articulation": [
+            "precise"
+        ],
+        "register": [
+            "chest/head mix"
+        ],
+        "year": 2008
+    },
+    {
+        "artist": "Alanis Morissette",
+        "song": "You Oughta Know",
+        "section": "Chorus",
+        "weight_texture": [
+            "raspy/gravelly",
+            "strained"
+        ],
+        "power": [
+            "intense"
+        ],
+        "resonance_placement": [
+            "twangy",
+            "throaty"
+        ],
+        "skillfulness": [
+            "stamina"
+        ],
+        "expressiveness": [
+            "whiny/pleading",
+            "aggressive",
+            "raw/vulnerable"
+        ],
+        "delivery": [
+            "urgent"
+        ],
+        "articulation": [
+            "raw",
+            "hard attack"
+        ],
+        "register": [
+            "chest belt"
+        ],
+        "year": 1995
+    },
+    {
+        "artist": "The Smiths (Morrissey)",
+        "song": "Please, Please, Please, Let Me Get What I Want",
+        "section": "Verse",
+        "weight_texture": [
+            "thin",
+            "frail"
+        ],
+        "power": [
+            "restrained",
+            "flat"
+        ],
+        "resonance_placement": [
+            "chesty"
+        ],
+        "expressiveness": [
+            "whiny/pleading",
+            "melancholy",
+            "vulnerable",
+            "sad"
+        ],
+        "delivery": [
+            "uncertain/halting",
+            "laid-back"
+        ],
+        "articulation": [
+            "falling off",
+            "relaxed"
+        ],
+        "register": [
+            "chest"
+        ],
+        "rhythmic_phrasing": [
+            "legato"
+        ],
+        "year": 1984
+    },
+    {
+        "artist": "Lesley Gore",
+        "song": "You Don't Own Me",
+        "section": "Verse",
+        "weight_texture": [
+            "bright",
+            "belty"
+        ],
+        "power": [
+            "dynamic"
+        ],
+        "resonance_placement": [
+            "chesty",
+            "mixed"
+        ],
+        "skillfulness": [
+            "vibrato"
+        ],
+        "expressiveness": [
+            "whiny/pleading",
+            "triumphant"
+        ],
+        "delivery": [
+            "urgent"
+        ],
+        "articulation": [
+            "scooped",
+            "precise"
+        ],
+        "register": [
+            "chest/head mix"
+        ],
+        "year": 1963
+    },
+    {
+        "artist": "Lewis Capaldi",
+        "song": "Someone You Loved",
+        "section": "Chorus",
+        "weight_texture": [
+            "cracking",
+            "strained",
+            "raspy/gravelly"
+        ],
+        "power": [
+            "intense"
+        ],
+        "resonance_placement": [
+            "throaty",
+            "chesty"
+        ],
+        "skillfulness": [
+            "stamina"
+        ],
+        "expressiveness": [
+            "pained",
+            "raw/vulnerable"
+        ],
+        "delivery": [
+            "urgent"
+        ],
+        "articulation": [
+            "raw",
+            "hard attack"
+        ],
+        "register": [
+            "chest belt"
+        ],
+        "year": 2018
+    },
+    {
+        "artist": "Kelly Clarkson",
+        "song": "Piece by Piece (Idol Version)",
+        "section": "Final Chorus",
+        "weight_texture": [
+            "cracking",
+            "frail",
+            "breathy"
+        ],
+        "power": [
+            "intimate",
+            "restrained"
+        ],
+        "resonance_placement": [
+            "chesty"
+        ],
+        "skillfulness": [
+            "control"
+        ],
+        "expressiveness": [
+            "vulnerable",
+            "pained",
+            "raw/vulnerable"
+        ],
+        "delivery": [
+            "uncertain/halting"
+        ],
+        "articulation": [
+            "raw",
+            "falling off"
+        ],
+        "register": [
+            "chest"
+        ],
+        "year": 2016
     }
 ]

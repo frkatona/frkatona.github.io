@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hannah Adams Timeline</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/images/icons/favicon.ico">
+<style>
+    :root {
+      color-scheme: dark;
+      --font-family: "Segoe UI", Arial, sans-serif;
+      --page-bg: #151821;
+      --panel-bg: rgba(27, 31, 44, 0.97);
+      --panel-border: rgba(148, 163, 184, 0.22);
+      --text-color: #e5e7eb;
+      --heading-color: #f8fafc;
+      --muted-color: #aab3c3;
+      --axis-color: #455168;
+      --axis-hover: #6f88b2;
+      --tick-color: #556179;
+      --connector-color: rgba(122, 175, 240, 0.72);
+      --life-color: #2563eb;
+      --publication-color: #059669;
+      --access-color: #ea580c;
+      --memoir-color: #76468d;
+      --controversy-color: #e5484d;
+      --event-font-size: 0.92rem;
+      --event-card-min-width: 7.2em;
+      --event-card-max-width: 10.5em;
+      --event-column-width: 7.5em;
+      --major-label-size: 1rem;
+      --major-label-gap: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { font-size: 100%; }
+
+    body {
+      background: var(--page-bg);
+      color: var(--text-color);
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 8.25rem 2rem 3rem;
+      transition: background-color 180ms ease, color 180ms ease;
+    }
+
+    body[data-theme="paper"] {
+      color-scheme: light;
+      --page-bg: #f4f1ea;
+      --panel-bg: rgba(255, 253, 248, 0.98);
+      --panel-border: rgba(71, 85, 105, 0.25);
+      --text-color: #273142;
+      --heading-color: #172033;
+      --muted-color: #5c6677;
+      --axis-color: #8c97a8;
+      --axis-hover: #526c96;
+      --tick-color: #98a2b3;
+      --connector-color: rgba(58, 91, 138, 0.62);
+    }
+
+    body[data-theme="contrast"] {
+      --page-bg: #05070a;
+      --panel-bg: rgba(8, 10, 14, 0.99);
+      --panel-border: rgba(255, 255, 255, 0.58);
+      --text-color: #ffffff;
+      --heading-color: #ffffff;
+      --muted-color: #d5d9e2;
+      --axis-color: #d7deea;
+      --axis-hover: #ffffff;
+      --tick-color: #aeb8c8;
+      --connector-color: rgba(255, 255, 255, 0.78);
+      --life-color: #1769ff;
+      --publication-color: #008f68;
+      --memoir-color: #8d4eaa;
+    }
+
+    .presentation-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      display: grid;
+      grid-template-columns: minmax(3.25rem, 1fr) auto minmax(3.25rem, 1fr);
+      align-items: start;
+      width: 100vw;
+      padding: 0.9rem 1.25rem 0.85rem;
+      border-bottom: 1px solid var(--panel-border);
+      background: linear-gradient(180deg, var(--page-bg) 72%, color-mix(in srgb, var(--page-bg), transparent 12%));
+      box-shadow: 0 10px 28px color-mix(in srgb, var(--page-bg), transparent 30%);
+      backdrop-filter: blur(12px);
+      pointer-events: none;
+    }
+
+    .header-content {
+      grid-column: 2;
+      max-width: calc(100vw - 8rem);
+      text-align: center;
+      pointer-events: auto;
+    }
+
+    h1 {
+      margin: 0 0 0.62rem;
+      color: var(--heading-color);
+      font-size: clamp(1.55rem, 2.15vw, 2rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .legend {
+      display: flex;
+      gap: 1.15rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.42rem;
+      color: var(--text-color);
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    .settings-wrap {
+      position: relative;
+      grid-column: 3;
+      justify-self: end;
+      pointer-events: auto;
+    }
+
+    .menu-toggle {
+      display: grid;
+      place-content: center;
+      width: 2.7rem;
+      height: 2.7rem;
+      padding: 0;
+      border: 1px solid var(--panel-border);
+      border-radius: 0.78rem;
+      background: color-mix(in srgb, var(--panel-bg), transparent 10%);
+      color: var(--heading-color);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    }
+
+    .menu-toggle:hover {
+      border-color: var(--axis-hover);
+      background: color-mix(in srgb, var(--panel-bg), var(--axis-hover) 10%);
+    }
+
+    .menu-toggle:active { transform: scale(0.96); }
+
+    .menu-icon {
+      position: relative;
+      display: block;
+      width: 1.18rem;
+      height: 0.85rem;
+    }
+
+    .menu-icon span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 180ms ease, opacity 180ms ease, top 180ms ease;
+    }
+
+    .menu-icon span:nth-child(1) { top: 0; }
+    .menu-icon span:nth-child(2) { top: calc(50% - 1px); }
+    .menu-icon span:nth-child(3) { top: calc(100% - 2px); }
+    .menu-toggle[aria-expanded="true"] .menu-icon span:nth-child(1) { top: calc(50% - 1px); transform: rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-icon span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] .menu-icon span:nth-child(3) { top: calc(50% - 1px); transform: rotate(-45deg); }
+
+    .settings-panel {
+      position: absolute;
+      top: calc(100% + 0.7rem);
+      right: 0;
+      width: min(22rem, calc(100vw - 2rem));
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+      padding: 1rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 1rem;
+      background: var(--panel-bg);
+      color: var(--text-color);
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.34);
+      text-align: left;
+    }
+
+    .settings-panel[hidden] { display: none; }
+
+    .settings-heading {
+      margin: 0 0 0.85rem;
+      color: var(--heading-color);
+      font-size: 1rem;
+    }
+
+    .settings-grid { display: grid; gap: 0.85rem; }
+
+    .setting {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 0.35rem 0.8rem;
+      color: var(--text-color);
+      font-size: 0.84rem;
+    }
+
+    .setting select,
+    .setting input[type="range"] { grid-column: 1 / -1; }
+
+    .setting select {
+      width: 100%;
+      padding: 0.48rem 0.58rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 0.58rem;
+      background: var(--page-bg);
+      color: var(--text-color);
+      font: inherit;
+    }
+
+    .setting input[type="range"] {
+      width: 100%;
+      accent-color: var(--life-color);
+    }
+
+    .setting output {
+      color: var(--muted-color);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .color-control {
+      width: 2.2rem;
+      height: 1.65rem;
+      padding: 0.12rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 0.5rem;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .toggle-setting {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.84rem;
+    }
+
+    .toggle-setting input {
+      width: 1.05rem;
+      height: 1.05rem;
+      accent-color: var(--life-color);
+    }
+
+    .settings-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+
+    .settings-actions button {
+      padding: 0.52rem 0.6rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 0.6rem;
+      background: color-mix(in srgb, var(--panel-bg), var(--axis-hover) 8%);
+      color: var(--text-color);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    select:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--axis-hover);
+      outline-offset: 2px;
+    }
+
+    .timeline-horizontal-container {
+      position: relative;
+      min-height: 27em;
+      padding-top: 8.5em;
+      cursor: col-resize;
+    }
+
+    .timeline-horizontal {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      min-height: 18em;
+    }
+
+    .timeline-horizontal .line {
+      position: absolute;
+      top: 8em;
+      right: 0;
+      left: 0;
+      z-index: 1;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--axis-color);
+      transition: background-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .timeline-horizontal-container:hover .line {
+      background: var(--axis-hover);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--axis-hover), transparent 72%),
+                  0 0 16px color-mix(in srgb, var(--axis-hover), transparent 64%);
+    }
+
+    .zoom-hint {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 150;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.68rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--panel-bg), transparent 12%);
+      color: var(--muted-color);
+      box-shadow: 0 9px 24px rgba(0, 0, 0, 0.2);
+      font-size: 0.76rem;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      transform: translateY(0.35rem);
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .timeline-horizontal-container:hover .zoom-hint {
+      opacity: 0.82;
+      transform: translateY(0);
+    }
+
+    .settings-open .zoom-hint { opacity: 0 !important; }
+
+    .zoom-symbol {
+      display: grid;
+      place-content: center;
+      width: 1.2rem;
+      height: 1.2rem;
+      border: 1px solid currentColor;
+      border-radius: 0.42rem;
+      font-size: 0.78rem;
+      line-height: 1;
+    }
+
+    .dot {
+      position: absolute;
+      top: calc(8em + 1.5px);
+      left: 50%;
+      z-index: 9;
+      display: inline-block;
+      width: 0.78rem;
+      height: 0.78rem;
+      border: 1px solid color-mix(in srgb, var(--page-bg), white 55%);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--page-bg), black 34%);
+      transform: translate(-50%, -50%);
+      transition: box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .timeline-horizontal-container:hover .dot {
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--page-bg), white 42%);
+    }
+
+    .legend .dot {
+      position: static !important;
+      width: 0.72rem;
+      height: 0.72rem;
+      transform: none;
+    }
+
+    .dot.life { background: var(--life-color); }
+    .dot.pub { background: var(--publication-color); }
+    .dot.access { background: var(--access-color); }
+    .dot.memoir { background: var(--memoir-color); }
+    .dot.controversy { background: var(--controversy-color); opacity: 0.96; }
+
+    .event-horizontal {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      display: flex;
+      width: var(--event-column-width);
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .event-year,
+    .event-desc { pointer-events: auto; }
+
+    .event-year {
+      z-index: 4;
+      margin-bottom: 0.16em;
+      color: var(--heading-color);
+      background: none;
+      font-size: 0.84rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      white-space: nowrap;
+      text-shadow: 0 1px 2px var(--page-bg);
+    }
+
+    .event-desc {
+      z-index: 4;
+      width: max-content;
+      min-width: var(--event-card-min-width);
+      max-width: var(--event-card-max-width);
+      margin-bottom: 0.3em;
+      padding: 0.34em 0.66em;
+      border: 1px solid color-mix(in srgb, white, transparent 84%);
+      border-radius: 0.52em;
+      background: #23263a;
+      box-shadow: 0 3px 10px rgba(8, 11, 19, 0.27);
+      color: #fff;
+      font-size: var(--event-font-size);
+      line-height: 1.22;
+      text-align: center;
+      text-wrap: balance;
+    }
+
+    .event-desc.life { background: var(--life-color); }
+    .event-desc.pub { background: var(--publication-color); }
+    .event-desc.access { background: var(--access-color); }
+    .event-desc.memoir { background: var(--memoir-color); }
+    .event-desc.controversy { background: var(--controversy-color); }
+
+    .event-connector {
+      position: absolute;
+      left: 50%;
+      z-index: 0;
+      width: 1px;
+      background: var(--connector-color);
+      opacity: 0.58;
+      transform: translateX(-50%);
+    }
+
+    .event-horizontal.controversy { display: none; }
+
+    .controversy-toggle {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      z-index: 100;
+      display: block;
+      margin: 0;
+      padding: 0.48rem 0.95rem;
+      border: 1px solid color-mix(in srgb, white, transparent 78%);
+      border-radius: 999px;
+      background: var(--controversy-color);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      color: #fff;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transform: translateX(-50%);
+    }
+
+    .tick {
+      position: absolute;
+      top: 8em;
+      z-index: 0;
+      width: 1px;
+      background: var(--tick-color);
+    }
+
+    .tick.major {
+      z-index: 5;
+      height: 1.45em;
+      background: var(--heading-color);
+    }
+
+    .tick.minor { height: 0.68em; }
+    .hide-minor-ticks .tick.minor { display: none; }
+
+    .tick-label {
+      position: absolute;
+      top: auto;
+      bottom: calc(100% - 8rem + var(--major-label-gap));
+      left: 50%;
+      z-index: 10;
+      padding: 0 0.3em;
+      background: var(--page-bg);
+      color: var(--heading-color);
+      font-size: var(--major-label-size);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .reduce-motion *,
+    .reduce-motion *::before,
+    .reduce-motion *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.001ms !important;
+      animation-duration: 0.001ms !important;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 10.5rem 0.75rem 3rem; }
+      .presentation-header { grid-template-columns: 1fr; padding-inline: 0.75rem; }
+      .header-content { grid-column: 1; max-width: calc(100vw - 1.5rem); }
+      .settings-wrap { position: absolute; top: 0.75rem; right: 0.75rem; }
+      h1 { padding-inline: 3rem; }
+      .legend { gap: 0.55rem 0.9rem; }
+      .timeline-horizontal { min-width: 800px; }
+      .event-desc { --event-card-min-width: 6em; }
+      .zoom-hint { right: 0.75rem; bottom: 0.75rem; }
+      .controversy-toggle { bottom: 0.75rem; max-width: calc(100vw - 10rem); }
+    }
+
+    @media (hover: none) {
+      .timeline-horizontal-container { cursor: default; }
+      .zoom-hint { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+        animation-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="presentation-header">
+    <div class="header-content">
+      <h1>Hannah Adams Timeline</h1>
+
+      <div class="legend" aria-label="Event categories">
+        <div class="legend-item"><span class="dot life" aria-hidden="true"></span>Life Events</div>
+        <div class="legend-item"><span class="dot pub" aria-hidden="true"></span>Publications</div>
+        <div class="legend-item"><span class="dot memoir" aria-hidden="true"></span>Memoir/Biography</div>
+      </div>
+    </div>
+
+    <div class="settings-wrap">
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="settings-panel">
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="sr-only">Open presentation settings</span>
+      </button>
+
+      <section class="settings-panel" id="settings-panel" aria-label="Presentation settings" hidden>
+        <h2 class="settings-heading">Presentation settings</h2>
+        <div class="settings-grid">
+          <label class="setting" for="font-family">
+            <span>Typeface</span>
+            <select id="font-family">
+              <option value="system">System sans</option>
+              <option value="readable">Readable sans</option>
+              <option value="serif">Book serif</option>
+            </select>
+          </label>
+
+          <label class="setting" for="text-size">
+            <span>Overall text size</span>
+            <output id="text-size-output" for="text-size">100%</output>
+            <input id="text-size" type="range" min="85" max="135" step="5" value="100">
+          </label>
+
+          <label class="setting" for="event-size">
+            <span>Event label size</span>
+            <output id="event-size-output" for="event-size">100%</output>
+            <input id="event-size" type="range" min="85" max="125" step="5" value="100">
+          </label>
+
+          <label class="setting" for="year-label-size">
+            <span>Major year size</span>
+            <output id="year-label-size-output" for="year-label-size">100%</output>
+            <input id="year-label-size" type="range" min="80" max="160" step="5" value="100">
+          </label>
+
+          <label class="setting" for="year-label-gap">
+            <span>Year distance from axis</span>
+            <output id="year-label-gap-output" for="year-label-gap">8 px</output>
+            <input id="year-label-gap" type="range" min="2" max="24" step="1" value="8">
+          </label>
+
+          <label class="setting" for="theme">
+            <span>Color theme</span>
+            <select id="theme">
+              <option value="midnight">Midnight</option>
+              <option value="paper">Warm paper</option>
+              <option value="contrast">High contrast</option>
+            </select>
+          </label>
+
+          <label class="setting" for="text-color">
+            <span>Interface text color</span>
+            <input class="color-control" id="text-color" type="color" value="#e5e7eb">
+          </label>
+
+          <label class="toggle-setting" for="minor-ticks">
+            <span>Show minor year ticks</span>
+            <input id="minor-ticks" type="checkbox" checked>
+          </label>
+
+          <label class="toggle-setting" for="reduce-motion">
+            <span>Reduce interface motion</span>
+            <input id="reduce-motion" type="checkbox">
+          </label>
+        </div>
+
+        <div class="settings-actions">
+          <button id="fit-timeline" type="button">Fit timeline</button>
+          <button id="reset-settings" type="button">Reset appearance</button>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <div class="timeline-horizontal-container">
+    <div class="timeline-horizontal" id="timeline-main">
+      <div class="line"></div>
+      <!-- Events rendered by JS -->
+    </div>
+    <div class="zoom-hint" aria-hidden="true">
+      <span class="zoom-symbol">↕</span>
+      <span>Scroll to zoom · <span id="zoom-level">100%</span></span>
+    </div>
+  </div>
+  <button class="controversy-toggle" onclick="toggleControversy()">Show Adams vs. Morse Controversy</button>
+
+  <script>
+    // Main timeline events, now with custom verticalOffset (em units, positive = down from line, negative = up)
+    const timelineEvents = [
+      { year: 1755, desc: "Hannah Adams <b>born</b> in Medfield, MA", cat: "life", verticalOffset: -7 },
+      { year: 1784, desc: "Alphabetical Compendium<br><small>(later <em>View of Religions</em>)</small>", cat: "pub", verticalOffset: 5 },
+      { year: 1791, desc: "<em>View of Religions</em>, 2nd edition", cat: "pub", verticalOffset: -7 },
+      { year: 1799, desc: "<em>Summary History of New-England</em>", cat: "pub", verticalOffset: 3 },
+      { year: 1801, desc: "<em>View of Religions</em>, 3rd edition", cat: "pub", verticalOffset: -7 },
+      { year: 1804, desc: "<em>Truth and Excellence of the Christian Religion</em>", cat: "pub", verticalOffset: 10 },
+      { year: 1805, desc: "<em>An Abridgment of the History of New-England</em>", cat: "pub", verticalOffset: -15 },
+      { year: 1807, desc: "<em>An Abridgment of the History of New-England</em>, 2nd edition", cat: "pub", verticalOffset: 3 },
+      { year: 1809, desc: "<b>Annuity</b> bestowed on Adams", cat: "life", verticalOffset: -9 },
+      { year: 1810, desc: "Adams moves from Medfield to <b>Boston</b>", cat: "life", verticalOffset: 13 },
+      { year: 1812, desc: "<em>History of the Jews</em>, Vol. I", cat: "pub", verticalOffset: -15 },
+      { year: 1814, desc: "<em>History of the Jews</em>, Vol. II", cat: "pub", verticalOffset: 3 },
+      { year: 1815, desc: "<em>Narrative of the Controversy</em>", cat: "pub", verticalOffset: -10 },
+      { year: 1817, desc: "<em>Dictionary of All Religions</em><br><small>(4th ed. of <em>View of Religions</em>)</small>", cat: "pub", verticalOffset: 8 },
+      { year: 1824, desc: "<em>Letters on the Gospels</em>", cat: "pub", verticalOffset: -7 },
+      { year: 1826, desc: "<em>Letters on the Gospels</em>, 2nd edition", cat: "pub", verticalOffset: 3 },
+      { year: 1829, desc: "Adams is granted access to the <b>Boston Athenaeum</b>", cat: "life", verticalOffset: -14 },
+      { year: 1831, desc: "Adams <b>dies</b> in Brookline, MA", cat: "life", verticalOffset: 10 },
+      { year: 1832, desc: "<em>A Memoir of Miss Hannah Adams</em>", cat: "memoir", verticalOffset: -7 }
+    ];
+
+    const controversyEvents = [
+      // { year: 1799, desc: "Adams publishes <em>Summary History of New-England</em>", verticalOffset: 5 },
+      { year: 1804, desc: "Morse & Parish publish <em>Compendious History of New-England</em><br>— Adams approaches Morse at his Thursday sermon", verticalOffset: 20 },
+      { year: 1805, desc: "Morse publishes <em>True Reasons for the Election of Henry Ware</em><br>— Adams discovers Morse & Parish plan to publish an abridgment<br>— Adams meets Stephen Higginson<br>— Higginson confronts Morse, Morse agrees to delay<br>— Adams publishes <em>An Abridgment of the History of New-England</em>", verticalOffset: 35 },
+      { year: 1806, desc: "Orthodox Eliphalet Pearson resigns as Harvard acting president, replaced by liberal Samuel Webber", verticalOffset: 65 },
+      // { year: 1807, desc: "Adams publishes <em>An Abridgment of the History of New-England</em>, 2nd edition", verticalOffset: 8 },
+      { year: 1808, desc: "Adams discovers Morse & Parish are moving forward with their abridgment<br>— Morse offers to bring dispute before referees", verticalOffset: 20 },
+      { year: 1809, desc: "Dispute brought before referees, who decide in Adams’s favor<br>— Abridgment of <em>Compendious History</em> published<br>— Morse attempts to meet Adams, she declines", verticalOffset: 33 },
+      { year: 1814, desc: "Morse discovers William Shaw has been circulating Adams's plagiarism accusations since 1805<br>— Morse publishes his account in the Centinel; Adams responds", verticalOffset: 20 },
+      { year: 1815, desc: "Morse publishes <em>An Appeal to the Public</em><br>— Adams publishes <em>Narrative of the Controversy</em>", verticalOffset: 38 }
+    ];
+
+    //  controversy events to main timeline as well (but flagged)
+    const timelineWithControversy = timelineEvents.concat(
+      controversyEvents.map(e => ({
+        year: e.year,
+        desc: e.desc,
+        cat: "controversy",
+        controversy: true,
+        verticalOffset: e.verticalOffset // Copy verticalOffset
+      }))
+    );
+
+    // Year range for proportional spacing
+    const minYear = 1748, maxYear = 1840;
+    const totalYears = maxYear - minYear;
+
+    // For main timeline
+    const timelineContainer = document.querySelector('.timeline-horizontal-container');
+    const timelineEl = document.getElementById('timeline-main');
+    const zoomLevelEl = document.getElementById('zoom-level');
+
+    // --- ZOOM LOGIC ---
+    let zoom = 1.0;
+    const minZoom = 0.5;
+    const maxZoom = 3.0;
+    let controversyVisible = false;
+
+    // --- PRESENTATION SETTINGS ---
+    const settingsKey = 'hannah-adams-timeline-settings-v1';
+    const fontFamilies = {
+      system: '"Segoe UI", Arial, sans-serif',
+      readable: 'Verdana, Tahoma, sans-serif',
+      serif: 'Georgia, "Times New Roman", serif'
+    };
+    const themeTextColors = {
+      midnight: '#e5e7eb',
+      paper: '#273142',
+      contrast: '#ffffff'
+    };
+    const defaultSettings = {
+      fontFamily: 'system',
+      textSize: 100,
+      eventSize: 100,
+      yearLabelSize: 100,
+      yearLabelGap: 8,
+      theme: 'midnight',
+      textColor: themeTextColors.midnight,
+      minorTicks: true,
+      reduceMotion: false
+    };
+    let presentationSettings = { ...defaultSettings };
+
+    try {
+      const savedSettings = JSON.parse(localStorage.getItem(settingsKey));
+      if (savedSettings && typeof savedSettings === 'object') {
+        presentationSettings = { ...presentationSettings, ...savedSettings };
+      }
+    } catch (error) {
+      // Storage may be unavailable; the controls still work for this session.
+    }
+
+    const settingsElements = {
+      menuToggle: document.getElementById('menu-toggle'),
+      panel: document.getElementById('settings-panel'),
+      fontFamily: document.getElementById('font-family'),
+      textSize: document.getElementById('text-size'),
+      textSizeOutput: document.getElementById('text-size-output'),
+      eventSize: document.getElementById('event-size'),
+      eventSizeOutput: document.getElementById('event-size-output'),
+      yearLabelSize: document.getElementById('year-label-size'),
+      yearLabelSizeOutput: document.getElementById('year-label-size-output'),
+      yearLabelGap: document.getElementById('year-label-gap'),
+      yearLabelGapOutput: document.getElementById('year-label-gap-output'),
+      theme: document.getElementById('theme'),
+      textColor: document.getElementById('text-color'),
+      minorTicks: document.getElementById('minor-ticks'),
+      reduceMotion: document.getElementById('reduce-motion'),
+      fitTimeline: document.getElementById('fit-timeline'),
+      reset: document.getElementById('reset-settings')
+    };
+
+    function saveSettings() {
+      try {
+        localStorage.setItem(settingsKey, JSON.stringify(presentationSettings));
+      } catch (error) {
+        // Ignore storage failures; the current presentation remains customized.
+      }
+    }
+
+    function applySettings(shouldSave = true) {
+      const selectedFamily = fontFamilies[presentationSettings.fontFamily] || fontFamilies.system;
+      const textSize = Math.max(85, Math.min(135, Number(presentationSettings.textSize) || 100));
+      const eventSize = Math.max(85, Math.min(125, Number(presentationSettings.eventSize) || 100));
+      const yearLabelSize = Math.max(80, Math.min(160, Number(presentationSettings.yearLabelSize) || 100));
+      const yearLabelGap = Math.max(2, Math.min(24, Number(presentationSettings.yearLabelGap) || 8));
+      const theme = themeTextColors[presentationSettings.theme] ? presentationSettings.theme : 'midnight';
+      const textColor = /^#[0-9a-f]{6}$/i.test(presentationSettings.textColor)
+        ? presentationSettings.textColor
+        : themeTextColors[theme];
+
+      presentationSettings = {
+        ...presentationSettings,
+        fontFamily: fontFamilies[presentationSettings.fontFamily] ? presentationSettings.fontFamily : 'system',
+        textSize,
+        eventSize,
+        yearLabelSize,
+        yearLabelGap,
+        theme,
+        textColor
+      };
+
+      document.documentElement.style.fontSize = textSize + '%';
+      document.body.dataset.theme = theme;
+      document.body.style.setProperty('--font-family', selectedFamily);
+      document.body.style.setProperty('--text-color', textColor);
+      document.body.style.setProperty('--heading-color', textColor);
+      document.body.style.setProperty('--event-font-size', (0.92 * eventSize / 100).toFixed(3) + 'rem');
+      document.body.style.setProperty('--major-label-size', (yearLabelSize / 100).toFixed(2) + 'rem');
+      document.body.style.setProperty('--major-label-gap', yearLabelGap + 'px');
+      document.body.classList.toggle('hide-minor-ticks', !presentationSettings.minorTicks);
+      document.body.classList.toggle('reduce-motion', presentationSettings.reduceMotion);
+
+      settingsElements.fontFamily.value = presentationSettings.fontFamily;
+      settingsElements.textSize.value = textSize;
+      settingsElements.textSizeOutput.value = textSize + '%';
+      settingsElements.eventSize.value = eventSize;
+      settingsElements.eventSizeOutput.value = eventSize + '%';
+      settingsElements.yearLabelSize.value = yearLabelSize;
+      settingsElements.yearLabelSizeOutput.value = yearLabelSize + '%';
+      settingsElements.yearLabelGap.value = yearLabelGap;
+      settingsElements.yearLabelGapOutput.value = yearLabelGap + ' px';
+      settingsElements.theme.value = theme;
+      settingsElements.textColor.value = textColor;
+      settingsElements.minorTicks.checked = Boolean(presentationSettings.minorTicks);
+      settingsElements.reduceMotion.checked = Boolean(presentationSettings.reduceMotion);
+
+      if (shouldSave) saveSettings();
+    }
+
+    function setMenuOpen(open) {
+      settingsElements.menuToggle.setAttribute('aria-expanded', String(open));
+      settingsElements.menuToggle.querySelector('.sr-only').textContent = open
+        ? 'Close presentation settings'
+        : 'Open presentation settings';
+      settingsElements.panel.hidden = !open;
+      document.body.classList.toggle('settings-open', open);
+    }
+
+    settingsElements.menuToggle.addEventListener('click', () => {
+      setMenuOpen(settingsElements.menuToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    settingsElements.fontFamily.addEventListener('change', (event) => {
+      presentationSettings.fontFamily = event.target.value;
+      applySettings();
+    });
+
+    settingsElements.textSize.addEventListener('input', (event) => {
+      presentationSettings.textSize = Number(event.target.value);
+      applySettings();
+    });
+
+    settingsElements.eventSize.addEventListener('input', (event) => {
+      presentationSettings.eventSize = Number(event.target.value);
+      applySettings();
+    });
+
+    settingsElements.yearLabelSize.addEventListener('input', (event) => {
+      presentationSettings.yearLabelSize = Number(event.target.value);
+      applySettings();
+    });
+
+    settingsElements.yearLabelGap.addEventListener('input', (event) => {
+      presentationSettings.yearLabelGap = Number(event.target.value);
+      applySettings();
+    });
+
+    settingsElements.theme.addEventListener('change', (event) => {
+      presentationSettings.theme = event.target.value;
+      presentationSettings.textColor = themeTextColors[presentationSettings.theme];
+      applySettings();
+    });
+
+    settingsElements.textColor.addEventListener('input', (event) => {
+      presentationSettings.textColor = event.target.value;
+      applySettings();
+    });
+
+    settingsElements.minorTicks.addEventListener('change', (event) => {
+      presentationSettings.minorTicks = event.target.checked;
+      applySettings();
+    });
+
+    settingsElements.reduceMotion.addEventListener('change', (event) => {
+      presentationSettings.reduceMotion = event.target.checked;
+      applySettings();
+    });
+
+    settingsElements.fitTimeline.addEventListener('click', () => {
+      zoom = 1;
+      renderTimeline();
+      window.scrollTo(0, window.scrollY);
+    });
+
+    settingsElements.reset.addEventListener('click', () => {
+      presentationSettings = { ...defaultSettings };
+      applySettings();
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (settingsElements.menuToggle.getAttribute('aria-expanded') === 'true'
+          && !event.target.closest('.settings-wrap')) {
+        setMenuOpen(false);
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && settingsElements.menuToggle.getAttribute('aria-expanded') === 'true') {
+        setMenuOpen(false);
+        settingsElements.menuToggle.focus();
+      }
+    });
+
+    applySettings(false);
+
+    function renderTimeline() {
+      // Remove all children except the .line
+      Array.from(timelineEl.children).forEach(child => {
+        if (!child.classList.contains('line')) timelineEl.removeChild(child);
+      });
+
+      // Add major and minor ticks
+      const majorInterval = 10;
+      const minorInterval = 1;
+      for(let y = Math.ceil(minYear/majorInterval)*majorInterval; y <= maxYear; y += majorInterval) {
+        const left = ((y - minYear) / totalYears * 100).toFixed(3) + "%";
+        let tick = document.createElement('div');
+        tick.className = 'tick major';
+        tick.style.left = left;
+        tick.style.zIndex = 8;
+        timelineEl.appendChild(tick);
+        let label = document.createElement('div');
+        label.className = 'tick-label';
+        label.textContent = y;
+        label.style.left = left;
+        label.style.zIndex = 11;
+        timelineEl.appendChild(label);
+      }
+      for(let y = minYear; y <= maxYear; y += minorInterval) {
+        if (y % majorInterval !== 0) {
+          const left = ((y - minYear) / totalYears * 100).toFixed(3) + "%";
+          let tick = document.createElement('div');
+          tick.className = 'tick minor';
+          tick.style.left = left;
+          timelineEl.appendChild(tick);
+        }
+      }
+
+      // Render events with dot at timeline and desc/year offset vertically by verticalOffset
+      timelineEvents.forEach(ev => {
+        const left = ((ev.year - minYear) / totalYears * 100).toFixed(3) + "%";
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'event-horizontal';
+        eventDiv.style.left = left;
+
+        // Dot is always at 8em (timeline line)
+        const dot = document.createElement('span');
+        dot.className = `dot ${ev.cat}`;
+        dot.style.left = '50%';
+        dot.style.zIndex = 9;
+        eventDiv.appendChild(dot);
+
+        // If needed, add connector line
+        if(ev.verticalOffset && ev.verticalOffset !== 0) {
+          const connector = document.createElement('div');
+          connector.className = 'event-connector';
+          if (ev.verticalOffset > 0) {
+            connector.style.top = '8em';
+          } else {
+            // Start a little lower (e.g., 0.5em below the line)
+            connector.style.top = (8 + ev.verticalOffset + 1.3) + 'em';
+          }
+          connector.style.height = Math.abs(ev.verticalOffset) + 'em';
+          eventDiv.appendChild(connector);
+        }
+
+        // Year and description box, offset vertically
+        const contentDiv = document.createElement('div');
+        contentDiv.style.position = 'absolute';
+        contentDiv.style.left = '50%';
+        contentDiv.style.transform = 'translateX(-50%)';
+        contentDiv.style.top = (8 + ev.verticalOffset) + 'em';
+        contentDiv.style.display = 'flex';
+        contentDiv.style.flexDirection = 'column';
+        contentDiv.style.alignItems = 'center';
+        contentDiv.style.zIndex = 10;
+
+        const yearDiv = document.createElement('div');
+        yearDiv.className = 'event-year';
+        yearDiv.innerHTML = ev.year;
+
+        const descDiv = document.createElement('div');
+        descDiv.className = `event-desc ${ev.cat}`;
+        descDiv.innerHTML = ev.desc;
+        descDiv.style.marginTop = '0.5em';
+
+        contentDiv.appendChild(yearDiv);
+        contentDiv.appendChild(descDiv);
+        eventDiv.appendChild(contentDiv);
+
+        timelineEl.appendChild(eventDiv);
+      });
+
+      // --- Controversy timeline logic ---
+      // Render controversy events (hidden by default)
+      timelineWithControversy.sort((a,b) => a.year-b.year || (a.cat==="controversy"?1:-1));
+      timelineWithControversy.forEach((ev, idx) => {
+        if (ev.cat !== "controversy") return; // Only render controversy events here
+        const left = ((ev.year - minYear) / totalYears * 100).toFixed(3) + "%";
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'event-horizontal controversy';
+        eventDiv.style.left = left;
+        eventDiv.style.display = controversyVisible ? "flex" : "none";
+
+        // Dot is always at 8em (timeline line)
+        const dot = document.createElement('span');
+        dot.className = 'dot controversy';
+        dot.style.left = '50%';
+        dot.style.zIndex = 9;
+        eventDiv.appendChild(dot);
+
+        // If needed, add connector line
+        if(ev.verticalOffset && ev.verticalOffset !== 0) {
+          const connector = document.createElement('div');
+          connector.className = 'event-connector';
+          if (ev.verticalOffset > 0) {
+            connector.style.top = '8em';
+          } else {
+            connector.style.top = (8 + ev.verticalOffset + 1.3) + 'em';
+          }
+          connector.style.height = Math.abs(ev.verticalOffset) + 'em';
+          connector.style.zIndex = 0; // Ensure controversy connectors are always behind
+          eventDiv.appendChild(connector);
+        }
+        // Year and description box, offset vertically
+        const contentDiv = document.createElement('div');
+        contentDiv.style.position = 'absolute';
+        contentDiv.style.left = '50%';
+        contentDiv.style.transform = 'translateX(-50%)';
+        contentDiv.style.top = (8 + (ev.verticalOffset || 0)) + 'em';
+        contentDiv.style.display = 'flex';
+        contentDiv.style.flexDirection = 'column';
+        contentDiv.style.alignItems = 'center';
+        contentDiv.style.zIndex = 10;
+
+        const yearDiv = document.createElement('div');
+        yearDiv.className = 'event-year';
+        yearDiv.innerHTML = ev.year;
+
+        const descDiv = document.createElement('div');
+        descDiv.className = 'event-desc controversy';
+        descDiv.innerHTML = ev.desc;
+        descDiv.style.marginTop = '0.5em';
+
+        contentDiv.appendChild(yearDiv);
+        contentDiv.appendChild(descDiv);
+        eventDiv.appendChild(contentDiv);
+
+        timelineEl.appendChild(eventDiv);
+      });
+
+      // Set timeline width for zoom
+      timelineEl.style.width = (100 * zoom) + "%";
+      // Also set the .line width to match the zoomed width
+      const lineEl = timelineEl.querySelector('.line');
+      if (lineEl) {
+        lineEl.style.width = "100%";
+      }
+      zoomLevelEl.textContent = Math.round(zoom * 100) + "%";
+    }
+
+    // Initial render
+    renderTimeline();
+
+    // Scroll to zoom anywhere in the timeline area, keeping the year beneath
+    // the pointer fixed in place.
+    timelineContainer.addEventListener('wheel', function(e) {
+      if (e.ctrlKey || e.metaKey) return; // allow browser zoom
+
+      const oldRect = timelineEl.getBoundingClientRect();
+      const pointerRatio = Math.max(0, Math.min(1, (e.clientX - oldRect.left) / oldRect.width));
+      const timelineLeft = oldRect.left + window.scrollX;
+      const deltaScale = e.deltaMode === WheelEvent.DOM_DELTA_LINE
+        ? 16
+        : e.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? window.innerHeight
+          : 1;
+      const nextZoom = Math.max(
+        minZoom,
+        Math.min(maxZoom, zoom * Math.exp(-e.deltaY * deltaScale * 0.0015))
+      );
+
+      if (nextZoom === zoom) return;
+
+      e.preventDefault();
+      zoom = nextZoom;
+      renderTimeline();
+
+      const newWidth = timelineEl.getBoundingClientRect().width;
+      const anchoredX = timelineLeft + pointerRatio * newWidth;
+      window.scrollTo(anchoredX - e.clientX, window.scrollY);
+    }, { passive: false });
+
+    // Toggle function for controversy events
+    function toggleControversy() {
+      const btn = document.querySelector('.controversy-toggle');
+      const events = document.querySelectorAll('.event-horizontal.controversy');
+      controversyVisible = !controversyVisible;
+      events.forEach(ev => {
+        ev.style.display = controversyVisible ? "flex" : "none";
+      });
+      btn.textContent = controversyVisible ? "Hide Adams vs. Morse Controversy" : "Show Adams vs. Morse Controversy";
+    }
+  </script>
+</body>
+</html>

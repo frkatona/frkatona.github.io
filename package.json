@@ -2,16 +2,23 @@
   "dependencies": {
     "@types/three": "^0.161.2",
     "firebase": "^10.12.5",
+    "three": "^0.161.0",
     "vite": "^7.1.7"
   },
   "name": "my-vite-app",
-      "version": "1.0.0",
-      "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview"
-      },
-      "devDependencies": {
-        "vite": "^5.0.0" 
-      }
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "3d-assets:build": "node projects/3d-models/build-manifests.mjs",
+    "3d-assets:thumbnails": "node projects/3d-models/render-thumbnails.mjs",
+    "portfolio:check": "node scripts/sync-portfolio.js --check",
+    "portfolio:sync": "node scripts/sync-portfolio.js",
+    "portfolio:sync:clean": "node scripts/sync-portfolio.js --prune-stale"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5",
+    "vite": "^5.0.0"
+  }
 }

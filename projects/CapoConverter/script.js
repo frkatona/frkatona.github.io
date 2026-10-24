@@ -26,6 +26,22 @@ var chordGroups = {
     'G': ['G', 'Gm', 'G#', 'G#m'],
 };
 
+function getChordAccent(chord) {
+    var chordIndex = keyList.indexOf(chord);
+    var hue = Math.round(((chordIndex >= 0 ? chordIndex : 0) * 137.508 + 190) % 360);
+
+    return {
+        color: 'hsl(' + hue + ', 84%, 64%)',
+        glow: 'hsla(' + hue + ', 84%, 64%, 0.42)'
+    };
+}
+
+function setChordAccent(element, chord) {
+    var accent = getChordAccent(chord);
+    element.style.setProperty('--chord-color', accent.color);
+    element.style.setProperty('--chord-glow', accent.glow);
+}
+
 // Generate chords in the HTML
 var chordContainer = document.getElementById('chordContainer');
 
@@ -43,6 +59,7 @@ for (let group in chordGroups) {
         var div = document.createElement('div');
         div.className = 'chord';
         div.innerText = chord;
+        div.dataset.chord = chord;
         div.onclick = function() {
             this.classList.toggle('selected');
             getValidPositions();
@@ -53,63 +70,92 @@ for (let group in chordGroups) {
     chordContainer.appendChild(groupDiv);
 }
 
-// Function to get valid capo positions and new shapes
-function getValidPositions() {
-    var selectedChords = Array.from(document.querySelectorAll('.chord.selected')).map(function(chord) {
-        return chord.innerText;
-    });
-
-    var output = document.getElementById('output');
-    output.innerHTML = ''; // Clear the output area
-
-    for (var position in capoPositions) {
-        if (selectedChords.every(chord => capoPositions[position].includes(chord))) {
-            var positionOutput = document.createElement('div');
-            positionOutput.innerText = 'Capo position: ' + position;
-            output.appendChild(positionOutput);
-
-            var newShapeOutput = document.createElement('div');
-            selectedChords.forEach(function(chord) {
-                var firstPositionIndex = keyList.indexOf(chord);
-                var newShape = keyList[(firstPositionIndex - parseInt(position) * 2) % keyList.length];
-                newShapeOutput.innerText += chord + ' -> ' + newShape + '\n';
-            });
-
-            output.appendChild(newShapeOutput);
-        }
-    }
-}
-
 // Function to get valid capo positions and the new chord shapes for each
 function getValidPositions() {
-    var selectedChords = Array.from(document.querySelectorAll('.chord.selected')).map(function(chord) {
-        return chord.innerText;
+    var selectedChordElements = Array.from(document.querySelectorAll('.chord.selected'));
+    var selectedChords = selectedChordElements.map(function(chord) {
+        return chord.dataset.chord;
     });
+    var output = document.getElementById('output');
+
+    document.querySelectorAll('.chord').forEach(function(chord) {
+        chord.style.removeProperty('--chord-color');
+        chord.style.removeProperty('--chord-glow');
+    });
+
+    selectedChordElements.forEach(function(chord) {
+        setChordAccent(chord, chord.dataset.chord);
+    });
+
+    if (selectedChords.length == 0) {
+        output.innerHTML = '';
+        return;
+    }
+
     var validPositions = [];
     for (var position in capoPositions) {
         if (selectedChords.every(chord => capoPositions[position].includes(chord))) {
             // Find the new chord shapes for this position
-            var newShapes = selectedChords.map(function(chord) {
-                var index = keyList.indexOf(chord);
-                var newIndex = (index - position * 2 + keyList.length) % keyList.length;
-                return keyList[newIndex];
+            var chordMappings = selectedChords.map(function(chord) {
+                var keyIndex = keyList.indexOf(chord);
+                var newIndex = (keyIndex - position * 2 + keyList.length) % keyList.length;
+                var accent = getChordAccent(chord);
+                return {
+                    original: chord,
+                    shape: keyList[newIndex],
+                    color: accent.color
+                };
             });
             // Add the position and new shapes to the list
             validPositions.push({
                 position: position,
-                newShapes: newShapes
+                chordMappings: chordMappings
             });
         }
     }
 
     // Display valid capo positions and the new chord shapes
-    var output = document.getElementById('output');
-    output.innerHTML = validPositions.map(function(position) {
-        return 'Capo Position: ' + position.position + '<br>' + position.newShapes.join(', ');
-    }).join('<br><br>');
+    output.innerHTML = '';
 
-    if (selectedChords.length == 0){
-        output.innerHTML = '';
+    validPositions.forEach(function(position) {
+        var positionCard = document.createElement('div');
+        positionCard.className = 'capo-position';
+
+        var heading = document.createElement('h3');
+        heading.innerText = 'Capo Position: ' + position.position;
+        positionCard.appendChild(heading);
+
+        position.chordMappings.forEach(function(mapping) {
+            var row = document.createElement('div');
+            row.className = 'chord-mapping';
+            row.style.setProperty('--chord-color', mapping.color);
+
+            var originalChord = document.createElement('span');
+            originalChord.className = 'mapped-chord original-chord';
+            originalChord.innerText = mapping.original;
+
+            var arrow = document.createElement('span');
+            arrow.className = 'mapping-arrow';
+            arrow.innerText = '->';
+
+            var newChord = document.createElement('span');
+            newChord.className = 'mapped-chord new-chord';
+            newChord.innerText = mapping.shape;
+
+            row.appendChild(originalChord);
+            row.appendChild(arrow);
+            row.appendChild(newChord);
+            positionCard.appendChild(row);
+        });
+
+        output.appendChild(positionCard);
+    });
+
+    if (validPositions.length == 0) {
+        var emptyState = document.createElement('div');
+        emptyState.className = 'output-empty-state';
+        emptyState.innerText = 'no valid capo positions found for current selection';
+        output.appendChild(emptyState);
     }
 }
 

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare Deadlock soul rewards over time and model hero build milestones at your farming pace.">
+  <title>Soul Lab — Deadlock Companion</title>
+  <link rel="icon" href="icons/neutral-vault.png">
+  <link rel="stylesheet" href="plots.css?v=20261015-objectives">
+  <script src="economy-data.js?v=20261015-objectives" defer></script>
+  <script src="plots.js?v=20261015-objectives" defer></script>
+</head>
+<body>
+  <main class="plots-app">
+    <header class="app-header">
+      <div class="page-brand"><span class="brand-symbol" aria-hidden="true">↗</span><div><p>DEADLOCK COMPANION</p><h1>SOUL LAB</h1></div></div>
+      <nav aria-label="Deadlock companion tools"><a href="index.html">FIELD CLOCK</a><a href="counterbuy.html">COUNTERBUY</a><a href="movement.html">MOVEMENT</a><a class="current" href="plots.html" aria-current="page">PLOTS</a></nav>
+    </header>
+
+    <div class="workspace">
+      <div class="plot-column">
+      <section class="panel bounty-panel" aria-labelledby="bounty-title">
+        <div class="panel-heading"><div><p>FARM + FIGHT VALUE</p><h2 id="bounty-title">SOULS PER CLEAR / KILL</h2></div>
+          <div class="heading-controls"><label class="compact-select">WINDOW <select id="time-window"><option value="30">30 MIN</option><option value="45" selected>45 MIN</option><option value="60">60 MIN</option></select></label>
+            <span class="help-wrap"><button class="info" aria-label="About soul values" aria-describedby="bounty-help">i</button><span class="tooltip" id="bounty-help" role="tooltip">Full rewards before sharing, except Rift defaults to a six-player team's per-hero share. Camp averages are composition estimates. No comeback bonuses. Rift, Urn and Kill start unchecked on every page load; check their cards to compare. Curves are value models, not live objective trackers.</span></span>
+          </div>
+        </div>
+
+        <div class="series-cards extra-series">
+          <div class="series-card small-camp"><div class="series-title"><span class="camp-icon"><img src="icons/neutral-small.png" alt=""></span><span>SMALL CAMP</span></div><div class="value-line"><strong id="small-camp-value">136.2</strong><span>souls</span></div><div class="unit-caption"><span>3 small creeps</span></div></div>
+          <div class="series-card medium-camp"><div class="series-title"><span class="camp-icon"><img src="icons/neutral-medium.png" alt=""></span><span>MEDIUM CAMP</span></div><div class="value-line"><strong id="medium-camp-value">196</strong><span>souls</span></div><div class="unit-caption"><span>Est. average <span class="help-wrap"><button class="info" aria-label="Medium camp average assumptions" aria-describedby="medium-help">i</button><span class="tooltip" id="medium-help" role="tooltip">Equal-weight mean of three 3-creep layouts: 2 small + 1 medium, 1 small + 2 medium, and 3 medium. Equivalent to 1 small + 2 medium. This is a representative estimate, not the actual map-wide average; camp counts and compositions vary.</span></span></span></div></div>
+          <div class="series-card large-camp"><div class="series-title"><span class="camp-icon"><img src="icons/neutral-large.png" alt=""></span><span>LARGE CAMP</span></div><div class="value-line"><strong id="large-camp-value">476.3</strong><span>souls</span></div><div class="unit-caption"><span>Est. average <span class="help-wrap"><button class="info" aria-label="Large camp average assumptions" aria-describedby="large-help">i</button><span class="tooltip" id="large-help" role="tooltip">Equal-weight mean of the two wiki-documented layouts: 1 large + 2 medium, and 3 large. Equivalent to 2 large + 1 medium. Not weighted by the number of locations. Sinner’s machines and their accompanying creeps are excluded.</span></span></span></div></div>
+          <div class="series-card hero-kill"><div class="series-title"><span class="kill-symbol" aria-hidden="true">⚔</span><span>EVEN-WORTH KILL</span></div><div class="value-line"><strong id="hero-kill-value">875</strong><span>souls</span></div><div class="segmented" role="group" aria-label="Hero kill reward basis"><button data-kill="solo" aria-pressed="true">SOLO</button><button data-kill="base" aria-pressed="false">BASE</button></div></div>
+          <div class="series-card rift"><div class="series-title"><img src="icons/unstable-rift.svg" alt=""><span>UNSTABLE RIFT</span><span class="help-wrap"><button class="info" aria-label="Rift reward assumptions" aria-describedby="rift-help">i</button><span class="tooltip" id="rift-help" role="tooltip">Team bounty: 1,482 + 222 per minute after 13:00, split six ways. Per hero shows your share; Team shows all six shares combined. Curve begins at nominal 13:00; actual first Rift timing varies. No comeback bonus or Rift Trooper value.</span></span></div><div class="value-line"><strong id="rift-value">—</strong><span id="rift-mode-label">souls · per hero</span></div><div class="segmented" role="group" aria-label="Rift reward basis"><button data-rift="hero" aria-pressed="true">PER HERO</button><button data-rift="team" aria-pressed="false">TEAM</button></div></div>
+          <div class="series-card urn"><div class="series-title"><img src="icons/soul-urn.png" alt=""><span>SOUL URN</span><span class="help-wrap"><button class="info" aria-label="Urn reward assumptions" aria-describedby="urn-help">i</button><span class="tooltip" id="urn-help" role="tooltip">Courier bounty: 250 + 70 × spawn minute. Locked at spawn, so this curve steps at scheduled 10:00, 15:00, 20:00… spawns. Assumes an on-time new urn, no decay, denies, orb sharing or comeback bonus. A delayed or still-carried urn can differ. Permanent buffs are not valued.</span></span></div><div class="value-line"><strong id="urn-value">950</strong><span>souls · courier</span></div><div class="unit-caption"><span>Latest scheduled spawn</span></div></div>
+        </div>
+        <div class="comparison-key"><span>CHECK A CARD TO SHOW ITS LINE</span><span class="help-wrap"><button class="info" aria-label="Equal-worth hero kill assumptions" aria-describedby="kill-help">i</button><span class="tooltip" id="kill-help" role="tooltip">Base bounty = 200 + 50 per minute, capped at 2,200 at 40:00. Solo credit pays 125% of that (up to 2,750). Equal team net worth and victim at your team’s average; no assist split, first-kill bonus, comeback bonus, dropped souls or hero-specific rewards. Base is a reference value, not an assisted killer’s payout.</span></span><span id="kill-basis-label">KILL: SOLO · NO COMEBACK</span></div>
+
+        <div class="series-cards">
+          <div class="series-card creep"><div class="series-title"><img src="icons/trooper.png" alt=""><span>LANE TROOPER</span></div><div class="value-line"><strong id="creep-value">120</strong><span>souls</span></div><div class="segmented" role="group" aria-label="Trooper quantity"><button data-unit="creep" data-value="single" aria-pressed="true">1 CREEP</button><button data-unit="creep" data-value="group" aria-pressed="false">WAVE ×4</button></div></div>
+          <div class="series-card box"><div class="series-title"><img src="icons/breakable-box.png" alt=""><span>NORMAL BOX</span></div><div class="value-line"><strong id="box-value">25.8</strong><span>souls · <span id="box-mode-label">average</span></span></div><div class="segmented" role="group" aria-label="Box quantity"><button data-unit="box" data-value="single" aria-pressed="true">1 BOX</button><button data-unit="box" data-value="group" aria-pressed="false">RUN ×10</button></div></div>
+          <div class="series-card sinner"><div class="series-title"><span class="sinner-icon"><img src="icons/neutral-vault.png" alt=""></span><span>SINNER’S SACRIFICE</span></div><div class="value-line"><strong id="sinner-value">343.5</strong><span>souls</span></div><span class="unit-caption">1 FULL MACHINE <span>+ permanent buff</span></span></div>
+        </div>
+
+        <div class="chart-meta"><span>SOULS</span><div class="drop-setting"><label><input type="checkbox" id="on-drop"> Box payout on successful drops only</label><span class="help-wrap"><button class="info" aria-label="About box drop chance" aria-describedby="drop-help" type="button">i</button><span class="tooltip" id="drop-help" role="tooltip">Unchecked: expected yield at 60% chance per box. A 10-box run averages 6 drops. Checked: assumes every selected box drops souls, which is not a typical run.</span></span></div></div>
+        <div class="chart-wrap" id="bounty-chart-wrap"><svg id="bounty-chart" role="img" aria-labelledby="chart-title chart-desc"><title id="chart-title">Soul rewards versus match time</title><desc id="chart-desc">Use the time slider below for exact values and the quantity buttons to compare waves and box runs.</desc></svg></div>
+        <div class="time-scrubber"><label for="inspect-time">INSPECT <output id="inspect-time-label" for="inspect-time">10:00</output></label><input id="inspect-time" type="range" min="0" max="45" step="0.1" value="10" aria-valuetext="10 minutes"><span>MATCH TIME</span></div>
+        <div class="chart-footnote"><span id="selection-caption">1 creep · 1 box (expected) · 1 Sinner’s</span><span id="overlay-caption">Select a hero to overlay milestones</span></div>
+      </section>
+
+      <section class="panel lane-panel" aria-labelledby="lane-title">
+        <div class="panel-heading"><div><p>LANE ECONOMY</p><h2 id="lane-title">POTENTIAL SOULS / MIN</h2></div><div class="lane-readout"><strong id="lane-value">960</strong><span id="lane-interval">30s / wave</span></div></div>
+        <svg id="lane-chart" role="img" aria-label="Potential lane soul income per minute; waves speed up at 20 and 35 minutes"></svg>
+        <p class="small-note">One lane · four Troopers per wave · every orb secured · before sharing. Supply rate, not guaranteed personal income.</p>
+      </section>
+
+      <section class="panel notes-panel" aria-labelledby="notes-title">
+        <div class="panel-heading"><div><p>READ THE CURVES</p><h2 id="notes-title">AT A GLANCE</h2></div></div>
+        <div class="insight" id="comparison-insight"></div>
+        <div class="investment-note"><span class="investment-mark">4.8k</span><div><strong>Investment spike</strong><p>In one item category, not total net worth. Weapon +46% damage · Vitality +38% health · Spirit +38 power.</p><a href="https://deadlock.wiki/Items" target="_blank" rel="noreferrer">Investment table ↗</a></div></div>
+      </section>
+      </div>
+
+      <div class="sidebar-column">
+      <aside class="panel spike-panel" aria-labelledby="spike-title">
+        <div class="panel-heading"><div><p>BUILD TIMING</p><h2 id="spike-title">HERO OVERLAY</h2></div><span class="help-wrap"><button class="info" aria-label="How milestone timings are estimated" aria-describedby="spike-help">i</button><span class="tooltip" id="spike-help" role="tooltip">Guides identify useful purchases, not fixed timings. Minute marks use (soul target − 600 starting souls) ÷ your average souls/min. Shaded windows model a 20% faster/slower pace; they are not statistical confidence intervals.</span></span></div>
+        <label class="field-label" for="hero-select">HERO <span id="coverage-label"></span></label>
+        <select id="hero-select"><option value="">No hero overlay</option></select>
+        <div class="hero-identity" id="hero-identity" hidden><img id="hero-portrait" alt=""><div><strong id="hero-name"></strong><span id="hero-status"></span></div><label class="overlay-switch"><input type="checkbox" id="show-overlay" checked><span>SHOW</span></label></div>
+        <div class="pace-control"><label for="income">AVERAGE SOULS / MIN <output for="income" id="income-label">700</output></label><input id="income" type="range" min="300" max="1800" step="50" value="700"><div class="range-labels"><span>300 · SLOW</span><span>1,800 · FAST</span></div></div>
+        <p class="model-note">Planning estimate, not a fixed game timing.</p>
+        <div id="milestone-cards" class="milestone-cards"><p class="empty-note">Pick any hero for shared ability milestones. Guide-backed heroes also get a build-specific target.</p></div>
+        <div id="target-controls" hidden>
+          <label class="field-label" for="earlier-spend" id="spend-label">OTHER SPENDING <span>EXCLUDES THE TARGET</span></label>
+          <div class="number-field"><input type="number" id="earlier-spend" min="0" max="50000" step="800" value="3200"><span>SOULS</span></div>
+          <p class="input-note" id="budget-note">Adjust for the rest of your build. Target components are already included.</p>
+        </div>
+        <details class="custom-target"><summary>Custom soul target</summary><label class="field-label" for="custom-souls">TOTAL SOULS</label><div class="number-field"><input id="custom-souls" type="number" min="600" max="100000" step="100" value="10000"><span>SOULS</span></div><label class="check-label"><input id="custom-enabled" type="checkbox"> Show custom marker</label></details>
+        <div id="guide-source" class="guide-source" hidden></div>
+      </aside>
+
+      </div>
+    </div>
+
+    <details class="sources-panel"><summary>FORMULAS, SOURCES &amp; ASSUMPTIONS <span>OBJECTIVES CHECKED OCT 15, 2026</span></summary><div class="source-grid">
+      <div><h3>Rift &amp; Urn</h3><p><a href="https://deadlock.wiki/Unstable_Rift" target="_blank" rel="noreferrer">Unstable Rift</a>: team bounty 1,482 + 222 × (t − 13), scaling from 13:00. Per-hero view divides by six. The curve starts at nominal 13:00, not the earliest possible claim; actual timing varies.</p><p><a href="https://deadlock.wiki/Soul_Urn" target="_blank" rel="noreferrer">Soul Urn</a>: 250 + 70 × spawn minute, locked at spawn. Model uses the latest scheduled five-minute spawn starting at 10:00. A delayed or carried urn may differ. Full courier reward, before decay, sharing or denies. Neither objective includes comeback bonuses, permanent buffs or Rift Trooper value. Objective values checked October 15; other research remains the October 12 snapshot.</p></div>
+      <div><h3>Reward curves</h3><p>Let t = match minutes. <a href="https://deadlock.wiki/Trooper" target="_blank" rel="noreferrer">Trooper</a>: 100 + 2t. A normal wave has 4. <a href="https://deadlock.wiki/Crates" target="_blank" rel="noreferrer">Normal box</a>: 23 + 2t per drop, with 60% drop chance. <a href="https://deadlock.wiki/Sinner" target="_blank" rel="noreferrer">Sinner’s</a>: 310 + 3.35t for a whole machine. Expected 10-box yield = 10 × 0.6 × (23 + 2t).</p><p>Scaling begins at match start. Normal boxes first appear at 3:00; Sinner’s at 8:00. Curves are continuous approximations; the game may round individual payouts.</p></div>
+      <div><h3>Camp averages</h3><p><a href="https://deadlock.wiki/Haunt" target="_blank" rel="noreferrer">Per-creep rewards</a>: small S = 41 + 0.44t; medium M = 68 + 0.73t; large L = 181 + 1.95t. Small camp: 3S. Medium estimate: mean of 2S+M, S+2M and 3M, or S+2M. Large estimate: mean of L+2M and 3L, or 2L+M.</p><p>These are equal-weight composition models, not map-weighted averages. <a href="https://mobalytics.gg/deadlock/guides/jungle-guide" target="_blank" rel="noreferrer">Three-creep camp model</a> is from an older guide; the current wiki notes additional medium variants. Curves start at normal 2:00 / 5:00 / 8:00 spawns; early exceptions are omitted. All camp souls go to one player; no sharing or Sinner’s machines.</p></div>
+      <div><h3>Equal-worth hero kills</h3><p><a href="https://deadlock.wiki/Deadlock:Tools" target="_blank" rel="noreferrer">Base bounty</a> = min(2,200, 200 + 50t). <a href="https://www.dltimes.com/articles/deadlock-comeback-system" target="_blank" rel="noreferrer">Solo credit</a> multiplies it by 1.25, reaching 2,750 at 40:00. Base mode removes that multiplier; it is not a forecast of an assisted kill’s personal share.</p><p>Assumes equal team net worth and victim net worth equal to the killer-team average. No first-kill bonus, comeback adjustment, assist split, dropped haunted souls, or hero-specific rewards. Continuous lines may differ from per-kill rounding by about one soul.</p></div>
+      <div><h3>What is not included</h3><p>No soul sharing, denies, super/Rift Troopers, tough crates, travel/clear time, or Sinner’s permanent buffs. A run means ten ordinary boxes. Box averages are not guaranteed. Camps, boxes and Sinner’s grant haunted souls.</p><p><a href="https://dramalock.org/guides/deadlock-creeps-troopers-lane-guide/" target="_blank" rel="noreferrer">Four-Trooper wave composition</a> · <a href="https://deadlock.wiki/The_Cursed_Apple" target="_blank" rel="noreferrer">Spawn times and wave intervals</a></p></div>
+      <div><h3>Milestones, not predictions</h3><p><a href="https://deadlock.wiki/Boon" target="_blank" rel="noreferrer">Ability thresholds</a>: ultimate unlock at 3,800 total souls; first possible maxed ability at 6,600 (8 AP all spent on one ability). These apply to all heroes, but are not equally important to every build.</p><p>For item/investment targets, earlier spending is a user-adjustable assumption. Item prices include components. No selling, unspent cash, or purchase delay is modeled. The pace is constant; shaded ranges use ±20% income, not match statistics.</p></div>
+      <div><h3>Guide coverage</h3><p>All 44 roster heroes have shared milestones. Nine have a selected, linked Mobalytics author-build milestone. Older guide dates stay visible; this is not a current-patch tier list. The remaining heroes, including newly released heroes, have no invented build-specific spike.</p><p>The guide identifies the milestone; this page estimates its time. Change earlier spending for late-game targets and use a custom target for your own build. Game and guide data are a dated snapshot, not automatically refreshed.</p></div>
+    </div></details>
+    <footer><span>UNOFFICIAL FAN TOOL · GAME ASSETS © VALVE</span><span>ECONOMY RESEARCH · OCT 12, 2026</span></footer>
+    <noscript><p class="no-script">Enable JavaScript for the interactive plots. Reward formulas and source links remain available above.</p></noscript>
+  </main>
+</body>
+</html>

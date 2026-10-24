@@ -1,0 +1,24 @@
+{
+  "title": "Sadia Like This?",
+  "description": "Sadia begrudgingly allowing me to test my new camera outside of the Chemistry building",
+  "tags": {
+    "subject": [
+      "Sadia"
+    ],
+    "location": [
+      "State College",
+      "Pennsylvania"
+    ],
+    "cameraDetails": [
+      "Sony a7s II",
+      "telephoto"
+    ],
+    "other": [
+      "portrait"
+    ]
+  },
+  "captureDate": null,
+  "featured": false,
+  "status": "updated",
+  "visible": true
+}
