@@ -1,0 +1,22 @@
+{
+  "title": "Abi Deal",
+  "description": "Abi considering a Deal or No Deal",
+  "tags": {
+    "subject": [
+      "Abi"
+    ],
+    "location": [
+      "Pennsylvania",
+      "Philadelphia"
+    ],
+    "cameraDetails": [
+      "Sony a6400",
+      "f/1.8"
+    ],
+    "other": []
+  },
+  "captureDate": "2026-10-24",
+  "featured": false,
+  "visible": true,
+  "status": "updated"
+}

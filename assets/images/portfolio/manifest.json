@@ -478,6 +478,20 @@
       "thumbnailFileName": "thumbs/DSC01500.png.webp",
       "width": 4256,
       "height": 2708
+    },
+    {
+      "fileName": "abi.png",
+      "metadataFileName": "abi.png.json",
+      "thumbnailFileName": "thumbs/abi.png.webp",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "fileName": "alar.png",
+      "metadataFileName": "alar.png.json",
+      "thumbnailFileName": "thumbs/alar.png.webp",
+      "width": 1534,
+      "height": 1025
     }
   ]
 }
