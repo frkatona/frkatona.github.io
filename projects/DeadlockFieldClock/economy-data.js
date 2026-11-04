@@ -1,4 +1,5 @@
-/* Research snapshot: 2026-10-12. No live API or game connection is required.
+/* Economy reviewed: 2026-11-04, through the 2026-10-30 gameplay patch.
+ * Curated hero-guide snapshot: 2026-10-12. No live API or game connection.
  * Formulas are full, unshared bounties. Fractions are retained for plotting.
  * Guide milestones are editorial build advice; their minute marks are our model,
  * NOT timings claimed by the guide authors. See plots.html for assumptions.
@@ -67,6 +68,7 @@
     killDistribution: "https://www.dltimes.com/articles/deadlock-comeback-system",
     rift: "https://deadlock.wiki/Unstable_Rift",
     urn: "https://deadlock.wiki/Soul_Urn",
+    patch: "https://store.steampowered.com/news/app/1422450/view/680765564125186045",
   };
   // Representative composition means, NOT a census weighted by map locations.
   // Medium: mean of [2S+M, S+2M, 3M]. Large: mean of [L+2M, 3L].
@@ -83,14 +85,15 @@
   const bounty = (type, minute, { wave = false, run = false, onDrop = false, soloKill = true, riftTeam = false } = {}) => {
     const t = Math.max(0, minute);
     if (type === "creep") return (100 + 2 * t) * (wave ? 4 : 1);
-    if (type === "box") return t < 3 ? null : (23 + 2 * t) * (onDrop ? 1 : 0.6) * (run ? 10 : 1);
+    if (type === "box") return t < 3 ? null : (23 + 1.8 * t) * (onDrop ? 1 : 0.6) * (run ? 10 : 1);
     if (type === "sinner") return t < 8 ? null : 310 + 3.35 * t;
     // Nominal first Rift; actual availability varies. No comeback bonus.
     if (type === "rift") return t < 13 ? null : (1482 + 222 * (t - 13)) / (riftTeam ? 1 : 6);
     // Latest scheduled Urn spawn, not a tracked live urn. No decay or sharing.
     if (type === "urn") return t < 10 ? null : 250 + 70 * (Math.floor(t / 5) * 5);
     const camp = campCompositions[type];
-    if (camp) return t < camp.start ? null : camp.small * (41 + 0.44 * t) + camp.medium * (68 + 0.73 * t) + camp.large * (181 + 1.95 * t);
+    // Published post-Oct-30 tier coefficients; curves retain fractions.
+    if (camp) return t < camp.start ? null : camp.small * (45 + 0.49 * t) + camp.medium * (75 + 0.81 * t) + camp.large * (199 + 2.15 * t);
     // Equal team net worth, victim at killer-team average; no first-kill,
     // comeback or hero-specific bonus, no dropped haunted souls. Continuous
     // reward curve (actual per-kill rounding can differ by about one soul).

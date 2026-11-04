@@ -6,7 +6,8 @@
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
   const finite = (value, fallback) => Number.isFinite(Number(value)) ? Number(value) : fallback;
   const escape = value => String(value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
-  const format = value => value == null ? "—" : value.toLocaleString("en-US", { maximumFractionDigits: 1 });
+  // Remove arithmetic noise before display rounding (e.g. 51.24999999999999%).
+  const format = value => value == null ? "—" : Number(value.toPrecision(14)).toLocaleString("en-US", { maximumFractionDigits: 1 });
   const clock = minute => {
     const seconds = Math.round(minute * 60);
     return `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
