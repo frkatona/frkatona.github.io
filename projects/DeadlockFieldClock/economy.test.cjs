@@ -2,8 +2,36 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
-const { bounty, initialHiddenSeries, laneSupply, waveInterval, milestoneTime, heroes, guides } = require("./economy-data.js");
+const { bounty, bountyRange, laneRange, initialHiddenSeries, laneSupply, waveInterval, milestoneTime, heroes, guides } = require("./economy-data.js");
 const close = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-8, `${actual} != ${expected}`);
+
+test("modeled payout bands respect sharing, drop modes and dedicated bonus rules", () => {
+  close(bountyRange("creep", 10).min, 19.2);
+  close(bountyRange("creep", 10, {wave:true}).max, 624);
+  close(bountyRange("hero-kill", 10).min, 700 * 0.498 * 2.2 / 7.2);
+  close(bountyRange("hero-kill", 10).max, 700 * 2.1725);
+  assert.ok(bountyRange("hero-kill", 8).max > bountyRange("hero-kill", 7.999).max);
+  close(bountyRange("rift", 20).max, 506 * 17 / 7);
+  close(bountyRange("rift", 20, {riftTeam:true}).max, 3036 * 17 / 7);
+  close(bountyRange("box", 10, {run:true}).min, 0);
+  close(bountyRange("box", 10, {run:true}).max, 410);
+  close(bountyRange("box", 10, {onDrop:true}).min, 41);
+  close(bountyRange("box", 10, {onDrop:true}).max, 41);
+  assert.equal(bountyRange("urn", 9), null);
+  close(bountyRange("urn", 10).max, 950); // Special Urn bonus is deliberately unbounded here.
+  close(laneRange(20).max, laneSupply(20) * 1.3);
+  close(laneRange(20).min, laneSupply(20) * .16);
+});
+
+test("every modeled band contains its reference line across spawn and cap boundaries", () => {
+  for (const type of ["creep", "box", "sinner", "small-camp", "medium-camp", "large-camp", "hero-kill", "rift", "urn"])
+    for (const minute of [0, 2, 3, 5, 7.999, 8, 10, 13, 15, 20, 35, 40, 60]) {
+      const reference = bounty(type, minute);
+      const range = bountyRange(type, minute);
+      if (reference == null) assert.equal(range, null);
+      else assert.ok(range.min <= reference && reference <= range.max, `${type} at ${minute}`);
+    }
+});
 
 test("Rift shares and spawn-locked Urn rewards exclude bonuses", () => {
   assert.equal(bounty("rift", 12.999), null);

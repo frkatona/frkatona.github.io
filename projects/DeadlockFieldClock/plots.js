@@ -18,6 +18,7 @@
     wave: saved.wave === true, run: saved.run === true, onDrop: saved.onDrop === true,
     soloKill: saved.soloKill !== false,
     riftTeam: saved.riftTeam === true,
+    ranges: saved.ranges !== false,
     hiddenSeries: data.initialHiddenSeries(saved.hiddenSeries),
     end: [30, 45, 60].includes(saved.end) ? saved.end : 45,
     minute: clamp(finite(saved.minute, 10), 0, 60),
@@ -37,7 +38,7 @@
     { id: "small-camp", name: "small camp", color: "#77dca4", start: 2, dash: "4 3" },
     { id: "medium-camp", name: "medium camp", color: "#7aa6ff", start: 5, dash: "8 4" },
     { id: "large-camp", name: "large camp", color: "#ea95d0", start: 8, dash: "12 3 2 3" },
-    { id: "hero-kill", name: "equal-worth hero kill", color: "#ff806e", start: 0, dash: "2 5", breaks: [40] },
+    { id: "hero-kill", name: "hero kill", color: "#ff806e", start: 0, dash: "2 5", breaks: [8, 40] },
     { id: "rift", name: "Unstable Rift", color: "#f3f0ba", start: 13, dash: "9 3 2 3" },
     { id: "urn", name: "Soul Urn", color: "#f49c56", start: 10, step: 5, dash: "6 3" },
   ];
@@ -68,6 +69,7 @@
   function renderControls() {
     $("#time-window").value = state.end;
     $("#on-drop").checked = state.onDrop;
+    $("#show-ranges").checked = state.ranges;
     document.querySelectorAll("[data-rift]").forEach(button => button.setAttribute("aria-pressed", String(state.riftTeam === (button.dataset.rift === "team"))));
     document.querySelectorAll("[data-series]").forEach(input => {
       input.checked = !state.hiddenSeries.includes(input.dataset.series);
@@ -112,14 +114,22 @@
   }
 
   function renderValues() {
-    for (const type of types) $("#" + type.id + "-value").textContent = format(data.bounty(type.id, state.minute, state));
+    for (const type of types) {
+      $("#" + type.id + "-value").textContent = format(data.bounty(type.id, state.minute, state));
+      const range = data.bountyRange(type.id, state.minute, state);
+      const readout = $("#" + type.id + "-range");
+      readout.textContent = state.ranges && !state.hiddenSeries.includes(type.id) && range
+        ? `RANGE ${format(range.min)}–${format(range.max)}` : "";
+      readout.title = range?.note || "";
+    }
     $("#box-mode-label").textContent = state.onDrop ? "all drop" : "average";
     $("#rift-mode-label").textContent = state.riftTeam ? "souls · team total" : "souls · per hero";
-    $("#kill-basis-label").textContent = `KILL: ${state.soloKill ? "SOLO ×1.25" : "BASE BOUNTY"} · NO COMEBACK`;
-    $("#inspect-time").max = state.end;
-    $("#inspect-time").value = state.minute;
-    $("#inspect-time").setAttribute("aria-valuetext", `${clock(state.minute)} match time`);
+    $("#kill-basis-label").textContent = `KILL LINE: ${state.soloKill ? "SOLO ×1.25" : "BASE"} · EVEN WORTH`;
     $("#inspect-time-label").value = clock(state.minute);
+    $("#lane-time-label").value = clock(state.minute);
+    const laneBounds = data.laneRange(state.minute);
+    $("#lane-range-label").textContent = state.ranges ? `RANGE ${format(laneBounds.min)}–${format(laneBounds.max)}` : "";
+    for (const id of ["#bounty-chart", "#lane-chart"]) $(id).setAttribute("aria-label", `Soul rewards at ${clock(state.minute)}. Hover to inspect; arrow keys change time, Shift plus arrow moves one minute.`);
     $("#selection-caption").textContent = `${visibleTypes().length} / ${types.length} CURVES · CAMPS = COMPOSITION ESTIMATES`;
     const active = state.show && milestones().length;
     $("#overlay-caption").textContent = active ? "DASHED = MODELED TIMING · SHADE = ±20% PACE" : state.hero ? "Hero overlay hidden" : "Select a hero to overlay milestones";
@@ -159,11 +169,25 @@
     const markers = state.show ? milestones() : [];
     const l = 48, r = 22, top = markers.length ? 64 : 28, bottom = 34;
     const shown = visibleTypes();
-    const { max: maximum, step } = niceMax(Math.max(100, ...shown.map(type => data.bounty(type.id, state.end, state))) * 1.06);
+    const { max: maximum, step } = niceMax(Math.max(100, ...shown.map(type => state.ranges
+      ? data.bountyRange(type.id, state.end, state).max : data.bounty(type.id, state.end, state))) * 1.06);
     const x = t => l + t / state.end * (w - l - r);
     const y = value => h - bottom - value / maximum * (h - bottom - top);
     svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
-    let html = '<title id="chart-title">Soul rewards versus match time</title><desc id="chart-desc">Compare Troopers, boxes, Sinner’s, three modeled camp sizes, equal-worth hero kills, Rift and Urn. Card checkboxes control visible curves. Urn values step at scheduled spawns. Rift defaults to one sixth of the team bounty. Hero-kill bounty caps at minute 40. Vertical green lines are estimated build milestones. Use the time slider for exact values.</desc>';
+    let html = '<title id="chart-title">Soul rewards versus match time</title><desc id="chart-desc">Compare Troopers, boxes, Sinner’s, camps, hero kills, Rift and Urn. Optional faint colored bands show modeled reward bounds, not probabilities. Hover or use arrow keys while focused to inspect. Both plots share the inspection time.</desc>';
+    function samples(type) {
+      const times = new Set([type.start, ...(type.breaks || []).filter(t => t > type.start && t < state.end), state.end]);
+      if (type.step) for (let t = type.start + type.step; t <= state.end; t += type.step) times.add(t);
+      return [...times].sort((a, b) => a - b).flatMap(t => t > type.start && (type.step || type.breaks?.includes(t))
+        ? [[t, t - 1e-7], [t, t]] : [[t, t]]);
+    }
+    if (state.ranges) shown.forEach(type => {
+      const points = samples(type);
+      const upper = points.map(([t, at]) => [x(t), y(data.bountyRange(type.id, at, state).max)]);
+      const lower = points.map(([t, at]) => [x(t), y(data.bountyRange(type.id, at, state).min)]).reverse();
+      const band = [...upper, ...lower].map(([px, py], index) => `${index ? "L" : "M"} ${px} ${py}`).join(" ") + " Z";
+      html += `<path class="reward-band" data-band="${type.id}" fill="${type.color}" d="${band}"/>`;
+    });
     html += grid({ w, h, l, r, top, bottom, maximum, step, x, y });
     markers.forEach((marker, index) => {
       if (marker.early > state.end) return;
@@ -194,16 +218,17 @@
     svg.innerHTML = html;
     svg.dataset.left = l;
     svg.dataset.right = r;
+    svg.dataset.width = w;
   }
 
   function renderLaneChart() {
     const svg = $("#lane-chart");
     const w = Math.max(280, svg.clientWidth), h = 190, l = 54, r = 25, top = 25, bottom = 34;
-    const { max: maximum, step } = niceMax(data.laneSupply(state.end) * 1.1);
+    const { max: maximum, step } = niceMax((state.ranges ? data.laneRange(state.end).max : data.laneSupply(state.end)) * 1.1);
     const x = t => l + t / state.end * (w - l - r);
     const y = value => h - bottom - value / maximum * (h - bottom - top);
     svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
-    let html = "<title>Potential lane souls per minute</title><desc>Four Troopers per wave, before sharing. Wave interval decreases from 30 to 25 seconds at minute 20 and to 20 seconds at minute 35.</desc>";
+    let html = "<title>Potential lane souls per minute</title><desc>Four Troopers per wave. The reference line is full unshared supply. The optional band spans six-player sharing through solo with maximum NPC comeback bonus. Hover or use arrow keys to inspect the shared time.</desc>";
     html += grid({ w, h, l, r, top, bottom, maximum, step, x, y });
     const points = [[0, data.laneSupply(0)]];
     [20, 35].filter(t => t <= state.end).forEach(t => {
@@ -213,8 +238,17 @@
     });
     points.push([state.end, data.laneSupply(state.end)]);
     const path = points.map(([t, val], index) => `${index ? "L" : "M"} ${x(t)} ${y(val)}`).join(" ");
-    html += `<path d="${path} L ${x(state.end)} ${y(0)} L ${x(0)} ${y(0)} Z" fill="#5bd8ea" opacity=".065"/><path class="chart-line" d="${path}" stroke="#5bd8ea"/><line class="cursor-line" x1="${x(state.minute)}" x2="${x(state.minute)}" y1="${top}" y2="${h - bottom}"/><circle cx="${x(state.minute)}" cy="${y(data.laneSupply(state.minute))}" r="4" fill="#081622" stroke="#5bd8ea" stroke-width="2"/>`;
+    if (state.ranges) {
+      const band = [...points.map(([t, value]) => [x(t), y(value * 1.30)]),
+        ...[...points].reverse().map(([t, value]) => [x(t), y(value * 0.16)])]
+        .map(([px, py], index) => `${index ? "L" : "M"} ${px} ${py}`).join(" ") + " Z";
+      html += `<path class="reward-band" data-band="lane" d="${band}" fill="#5bd8ea"/>`;
+    }
+    html += `<path class="chart-line" d="${path}" stroke="#5bd8ea"/><line class="cursor-line" x1="${x(state.minute)}" x2="${x(state.minute)}" y1="${top}" y2="${h - bottom}"/><circle cx="${x(state.minute)}" cy="${y(data.laneSupply(state.minute))}" r="4" fill="#081622" stroke="#5bd8ea" stroke-width="2"/>`;
     svg.innerHTML = html;
+    svg.dataset.left = l;
+    svg.dataset.right = r;
+    svg.dataset.width = w;
   }
 
   function renderCharts() { renderValues(); renderBountyChart(); renderLaneChart(); }
@@ -243,6 +277,10 @@
       update();
     });
     title.prepend(input);
+    const range = document.createElement("span");
+    range.className = "range-readout";
+    range.id = type.id + "-range";
+    title.parentElement.append(range);
   });
   document.querySelectorAll("[data-kill]").forEach(button => button.addEventListener("click", () => {
     state.soloKill = button.dataset.kill === "solo"; update();
@@ -255,13 +293,13 @@
   }));
   $("#time-window").addEventListener("change", event => { state.end = Number(event.target.value); state.minute = Math.min(state.minute, state.end); update(); });
   $("#on-drop").addEventListener("change", event => { state.onDrop = event.target.checked; update(); });
+  $("#show-ranges").addEventListener("change", event => { state.ranges = event.target.checked; update(); });
   $("#hero-select").addEventListener("change", event => { state.hero = event.target.value; state.show = true; update(); });
   $("#show-overlay").addEventListener("change", event => { state.show = event.target.checked; update(); });
   $("#income").addEventListener("input", event => { state.income = Number(event.target.value); update(); });
   $("#earlier-spend").addEventListener("change", event => { state.earlier = clamp(finite(event.target.value, 3200), 0, 50000); update(); });
   $("#custom-souls").addEventListener("change", event => { state.custom = clamp(finite(event.target.value, 10000), 600, 100000); update(); });
   $("#custom-enabled").addEventListener("change", event => { state.customEnabled = event.target.checked; update(); });
-  $("#inspect-time").addEventListener("input", event => { state.minute = Number(event.target.value); renderCharts(); save(); });
   $("#milestone-cards").addEventListener("click", event => {
     const marker = milestones().find(entry => entry.id === event.target.closest("[data-marker]")?.dataset.marker);
     if (!marker) return;
@@ -272,15 +310,31 @@
   function inspectPointer(event) {
     // A touch scroll should not drag the inspection cursor unless explicitly tapped.
     if (event.type === "pointermove" && event.pointerType === "touch") return;
-    const rect = $("#bounty-chart").getBoundingClientRect();
-    const l = Number($("#bounty-chart").dataset.left), r = Number($("#bounty-chart").dataset.right);
-    const minute = clamp((event.clientX - rect.left - l) / (rect.width - l - r) * state.end, 0, state.end);
+    const svg = event.currentTarget;
+    const rect = svg.getBoundingClientRect();
+    const scale = Number(svg.dataset.width) / rect.width;
+    const l = Number(svg.dataset.left), r = Number(svg.dataset.right);
+    const minute = clamp(((event.clientX - rect.left) * scale - l) / (Number(svg.dataset.width) - l - r) * state.end, 0, state.end);
     cancelAnimationFrame(pointerFrame);
     pointerFrame = requestAnimationFrame(() => { state.minute = Math.round(minute * 10) / 10; renderCharts(); });
   }
-  $("#bounty-chart-wrap").addEventListener("pointermove", inspectPointer);
-  $("#bounty-chart-wrap").addEventListener("pointerdown", inspectPointer);
-  $("#bounty-chart-wrap").addEventListener("pointerleave", save);
+  for (const id of ["#bounty-chart", "#lane-chart"]) {
+    const svg = $(id);
+    svg.addEventListener("pointermove", inspectPointer);
+    svg.addEventListener("pointerdown", inspectPointer);
+    svg.addEventListener("pointerleave", () => {
+      cancelAnimationFrame(pointerFrame);
+      save();
+    });
+    svg.addEventListener("keydown", event => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      cancelAnimationFrame(pointerFrame);
+      state.minute = event.key === "Home" ? 0 : event.key === "End" ? state.end
+        : clamp(Math.round((state.minute + (event.key === "ArrowRight" ? 1 : -1) * (event.shiftKey ? 1 : 0.1)) * 10) / 10, 0, state.end);
+      renderCharts(); save();
+    });
+  }
   document.querySelectorAll(".help-wrap").forEach(help => {
     help.addEventListener("pointerenter", () => help.classList.remove("tooltip-dismissed"));
     help.addEventListener("focusin", () => help.classList.remove("tooltip-dismissed"));

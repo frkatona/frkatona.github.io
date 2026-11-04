@@ -102,8 +102,40 @@
   };
   const waveInterval = minute => minute >= 35 ? 20 : minute >= 20 ? 25 : 30;
   const laneSupply = minute => bounty("creep", minute, { wave: true }) * 60 / waveInterval(minute);
+  // Scenario envelopes, not confidence intervals. First-kill/item bonuses and
+  // passive catch-up pools are excluded. Rift/hero special bonuses use the
+  // linked reward-formula reference; no generic NPC bonus is stacked on them.
+  const bountyRange = (type, minute, options = {}) => {
+    const value = bounty(type, minute, options);
+    if (value == null) return null;
+    if (type === "hero-kill") {
+      const base = bounty(type, minute, { soloKill: false });
+      const cap = minute < 8 ? 5 : 7;
+      return { min: base * 0.498 * 2.2 / 7.2,
+        max: base * 1.25 * (1 + 0.30 * 0.40 * (cap + 0.15 - 1)),
+        note: "Killer payout: five assisters with no bonus → solo plus the reference formula's maximum direct comeback share. Excludes first-kill and hero/item bonuses. Not an assist payout; special-bonus bounds are formula estimates." };
+    }
+    if (type === "creep") return { min: value * 0.16, max: value * 1.30,
+      note: "Personal reward: six-player lane share → solo with up to 30% NPC comeback bonus. Full wave when selected. No denies or passive catch-up pool." };
+    if (type === "box") return { min: options.onDrop ? value : 0,
+      max: bounty(type, minute, { ...options, onDrop: true }),
+      note: options.onDrop ? "Every selected box is assumed to drop; no random-drop band in this mode."
+        : "Possible drop outcomes: zero drops → every selected box drops. The line is the 60% drop-rate mean, not the center of a confidence interval." };
+    if (type === "urn") return { min: 0, max: value,
+      note: "Zero after decay/denies → full courier bounty before bonuses. Orb sharing can reduce the courier's reward. Urn's special comeback bonus has no verified cap here and is excluded; rewards can exceed this band." };
+    if (type === "rift") return { min: value, max: value * (1 + 10 / 7),
+      note: "Successful capture: normal reward → maximum special comeback extra in the linked formula reference. Uses the selected per-hero or team basis. Excludes draw/orb outcomes and is a formula estimate." };
+    if (type === "sinner") return { min: value / 6, max: value * 1.30,
+      note: "One machine, shared six ways → solo with up to 30% NPC comeback bonus. Excludes permanent buffs and passive catch-up pools." };
+    const s = 45 + 0.49 * minute, m = 75 + 0.81 * minute, l = 199 + 2.15 * minute;
+    const layouts = { "small-camp": [3 * s, 3 * s], "medium-camp": [2 * s + m, 3 * m], "large-camp": [l + 2 * m, 3 * l] };
+    const [low, high] = layouts[type];
+    return { min: low / 6, max: high * 1.30,
+      note: "Modeled camp layouts: lowest modeled composition shared six ways → highest modeled composition solo with up to 30% NPC comeback bonus. Current map has additional layouts outside this model." };
+  };
+  const laneRange = minute => ({ min: laneSupply(minute) * 0.16, max: laneSupply(minute) * 1.30 });
   const milestoneTime = (totalSouls, income) => Math.max(0, (totalSouls - 600) / Math.max(1, income));
-  const api = Object.freeze({ heroes, guides, sources, campCompositions, initialHiddenSeries, bounty, waveInterval, laneSupply, milestoneTime });
+  const api = Object.freeze({ heroes, guides, sources, campCompositions, initialHiddenSeries, bounty, bountyRange, laneRange, waveInterval, laneSupply, milestoneTime });
   if (typeof window !== "undefined") window.DeadlockEconomy = api;
   if (typeof module !== "undefined") module.exports = api;
 })();
