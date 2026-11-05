@@ -30,6 +30,7 @@
     ["reactive-barrier", "Reactive Barrier", 1600, "reactive-barrier.webp", "vitality"],
     ["return-fire", "Return Fire", 1600, "return-fire.webp", "vitality"],
     ["healbane", "Healbane", 1600, "healbane.webp", "vitality"],
+    ["spirit-shielding", "Spirit Shielding", 1600, "spirit-shielding.png", "vitality"],
     ["enchanters-emblem", "Enchanter's Emblem", 1600, "enchanter-s-emblem.webp", "vitality"],
     ["decay", "Decay", 3200, "decay.webp", "spirit"],
     ["toxic-bullets", "Toxic Bullets", 3200, "toxic-bullets.webp", "weapon"],
@@ -100,7 +101,12 @@
       rec("counterspell", "Ultimate silence", "Can answer the ultimate before or after its silence lands."),
       rec("spellbreaker", "Spirit burst", "Large spirit resistance blunts his burst window."),
     ]),
-    hero("baba", "Baba", "#df96b7", [], hudPortrait("baba", 88, "hero_baba")),
+    hero("baba", "Baba", "#df96b7", [
+      rec("rebuttal", "Granny Long Legs stomps", "Shorter parry cooldown and successful-parry healing help punish repeated stomps. Time the parry rather than trading into her melee."),
+      rec("slowing-hex", "Granny Long Legs jump", "Prevents charging her high jump and helps your team kite her. Does not end the transformation or disable her stomps."),
+      rec("dispel-magic", "Threadsap + stolen Spirit", "Remove Threadsap to recover your Spirit and remove what she stole from you. Also clears eligible Brew debuffs."),
+      rec("silence-wave", "Brew + follow-up casts", "Deny fresh ability casts during your team's focus window. Silence does not interrupt a channel already running."),
+    ], hudPortrait("baba", 88, "hero_baba")),
     hero("bebop", "Bebop", "#d4a86f", [
       rec("warp-stone", "Hook follow-up", "Break line of sight or escape around a corner after the hook."),
       rec("counterspell", "Sticky Bomb", "Block the bomb timing when the target is predictable."),
@@ -129,7 +135,11 @@
       rec("dispel-magic", "Light Eater Sack", "Removing the buff nullifies much of her damage."),
       rec("disarming-hex", "Gun follow-up", "Turns off the weapon damage hidden inside her kit."),
     ]),
-    hero("deadman-danny", "Deadman Danny", "#e6bb57", [], hudPortrait("deadman-danny", 78, "hero_deadpack")),
+    hero("deadman-danny", "Deadman Danny", "#e6bb57", [
+      rec("slowing-hex", "Jetpack overheat / dive", "Hinders his airborne movement and prevents his overheat dive, making him explode in place. Time it near overheat; it does not fully disable flight."),
+      rec("knockdown", "Airborne jetpack", "The stun lasts longer on airborne targets and creates a window to bring him down. Follow up before he can resume flying."),
+      rec("cursed-relic", "Chimera Mk1 + escape", "Curse explicitly disables the jetpack and blocks ability/item responses. Coordinate damage while your own damage is reduced by the item."),
+    ], hudPortrait("deadman-danny", 78, "hero_deadpack")),
     hero("the-doorman", "The Doorman", "#7fb5db", [
       rec("silence-wave", "Door setup", "His door is not movement, so use silence or crowd control instead of Slowing Hex."),
       rec("warp-stone", "Ultimate exit", "Reposition after the combo to avoid the prepared follow-up."),
@@ -236,7 +246,12 @@
       rec("indomitable", "Combo", "Automatic control protection in a 1v1 scenario."),
       rec("unstoppable", "Combo", "Reliable immunity when multiple enemy controls justify it."),
     ]),
-    hero("nurse-harrow", "Nurse Harrow", "#82c5ae", [], hudPortrait("nurse-harrow", 87, "hero_nurse")),
+    hero("nurse-harrow", "Nurse Harrow", "#82c5ae", [
+      rec("healbane", "Healing Needles recipients", "Apply spirit damage to the enemy she is healing. Anti-heal on Nurse alone does not reduce the healing received by her allies."),
+      rec("decay", "Sustained healing on a patient", "Apply to her patient during the healing window for sustained anti-heal and current-health damage. Choose the threatened target, not automatically Nurse."),
+      rec("disarming-hex", "Healing Needles gun", "Disarm her healing gun, then pressure her or the patient. Silence alone does not stop a healing magazine she has already loaded."),
+      rec("knockdown", "Lurking Terrors channel", "Interrupt the channeled ultimate with a stun. Account for Indomitable or Unstoppable; coordinate a follow-up disable if she counters the first."),
+    ], hudPortrait("nurse-harrow", 87, "hero_nurse")),
     hero("paige", "Paige", "#8eb4f7", [
       rec("dispel-magic", "Root + Knockdown", "Removes both her root and the Knockdown she commonly buys."),
       rec("unstoppable", "Control chain", "Required if repeated roots and purchased control are overwhelming."),
@@ -252,7 +267,11 @@
       rec("cursed-relic", "Escape chain", "A hard disable that prevents Cloak and Satchel escapes."),
       rec("divine-barrier", "Affliction", "Absorbs much of the ultimate when reactions are slower."),
     ]),
-    hero("rat-king", "Rat King", "#bf9675", [], hudPortrait("rat-king", 84, "hero_ratking")),
+    hero("rat-king", "Rat King", "#bf9675", [
+      rec("decay", "Health-stacking durability", "Current-health damage pressures his large health pool and limits item-based healing. Anti-heal does not remove Royal Pestments' barrier."),
+      rec("toxic-bullets", "Health-stacking gun matchup", "A gun-build option for max-health bleed and anti-heal. Apply outside Royal Pestments when possible: reflected bullets can block item procs."),
+      rec("dispel-magic", "Rat Swarm + grenade debuffs", "Clear Rat Swarm and other eligible debuffs so you can reposition. This does not remove his armor or the banner aura."),
+    ], hudPortrait("rat-king", 84, "hero_ratking")),
     hero("rem", "Rem", "#d995c5", [
       rec("slowing-hex", "Ally jump", "Stops the movement ability and can strand both Rem and the intended ally."),
       rec("healbane", "Team healing", "A cheap answer to Rem's high recent healing output."),
@@ -283,7 +302,12 @@
       rec("unstoppable", "Copied crowd control", "Protects against the most dangerous control ultimates he can copy."),
       rec("spellbreaker", "Spirit bolts", "Mitigates the extremely high-damage spirit bolts."),
     ]),
-    hero("solomon", "Solomon", "#72c4c2", [], hudPortrait("solomon", 85, "hero_chessmaster")),
+    hero("solomon", "Solomon", "#72c4c2", [
+      rec("debuff-reducer", "Rook Battery immobilize", "An early defensive option that shortens his immobilize and other eligible debuffs. Keep moving out of his ground zones."),
+      rec("spirit-shielding", "Bishop + spell pressure in lane", "Repeated spell damage can trigger its barrier and temporary Spirit Resist. Helps survive lane pressure; it does not cleanse his root."),
+      rec("dispel-magic", "Rook Battery + Bishop debuffs", "Cleanse the immobilize and eligible Bishop debuffs to leave the threatened ground. It cannot remove an ultimate effect."),
+      rec("counterspell", "Rooks / Queen impact", "Time a spell parry against an incoming rook or the Queen's damage/control window. This protects a brief impact window, not the entire zone."),
+    ], hudPortrait("solomon", 85, "hero_chessmaster")),
     hero("venator", "Venator", "#95b5e3", [
       rec("metal-skin", "Gun + ultimate", "Blocks both his primary weapon damage and the full ultimate."),
       rec("disarming-hex", "Gun + ultimate", "If he cannot fire, he cannot deliver his core damage."),
@@ -300,7 +324,12 @@
       rec("knockdown", "Flight", "Brings her to the ground and forces a defensive counter purchase."),
       rec("phantom-strike", "Flight", "Hard-engages and ruins her ability to play at aerial range."),
     ]),
-    hero("violet", "Violet", "#b698df", [], hudPortrait("violet", 86, "hero_artist")),
+    hero("violet", "Violet", "#b698df", [
+      rec("dispel-magic", "Still Life before its stun", "Cleanse eligible Still Life / Flow State debuffs before the stun lands. Dispel Magic cannot be activated while stunned or slept and cannot clear her ultimate."),
+      rec("counterspell", "Still Life payoff", "Time a spell parry for the sketch's finishing damage and stun. It does not undo damage or item procs accumulated earlier in the channel."),
+      rec("warp-stone", "Abstract Landscape walls", "Blink past the ultimate's walls instead of walking through their effects. Reposition early; it is not a cleanse after control has landed."),
+      rec("indomitable", "First Still Life stun", "Automatically cleanses the first qualifying control effect. Other enemy disables can consume it before Violet's stun, so check that it is ready."),
+    ], hudPortrait("violet", 86, "hero_artist")),
     hero("viscous", "Viscous", "#8ece64", [
       rec("rebuttal", "Puddle Punch", "Parry a Puddle Punch to heal and gain the transcript's noted damage amplification."),
       rec("cursed-relic", "The Cube", "The Cube is a buff; Cursed Relic can remove it."),
@@ -338,6 +367,7 @@
     ]),
   ];
 
+  const researchedHeroes = new Set(["baba", "deadman-danny", "nurse-harrow", "rat-king", "solomon", "violet"]);
   const heroById = Object.fromEntries(heroes.map((entry) => [entry.id, entry]));
   // Read-only portrait catalog for recognition without exposing/mutating guide data.
   window.DeadlockHeroPortraits = Object.freeze(heroes.map(({ id, name, image, hudImage, gameHeroId, gameClassName }) => Object.freeze({
@@ -367,6 +397,9 @@
   });
 
   function bindEvents() {
+    document.querySelectorAll('a[href="#new-hero-sources"]').forEach(link => link.addEventListener("click", () => {
+      document.querySelector("#new-hero-sources").open = true;
+    }));
     lineupSlots.addEventListener("click", (event) => {
       const remove = event.target.closest("[data-remove-hero]");
       if (remove) {
@@ -527,7 +560,9 @@
     const cells = ['<div class="matrix-corner">SOUL TIER</div>'];
     selected.forEach((heroId) => {
       const entry = heroById[heroId];
-      const coverageInfo = entry.recommendations.length ? "" : `<button class="coverage-info" type="button" aria-label="${entry.name}: counter advice has not been added"><span aria-hidden="true">i</span><span class="coverage-tooltip" role="tooltip">Portrait available. This hero is not covered by the provided AShires video; counter-item advice has not been added yet.</span></button>`;
+      const coverageInfo = researchedHeroes.has(entry.id)
+        ? `<button class="coverage-info" type="button" aria-label="${entry.name}: researched counter advice"><span aria-hidden="true">i</span><span class="coverage-tooltip" role="tooltip">Researched addition · reviewed November 5, 2026. Ability/item mechanics and community judgments, approved for this guide. Sources are in New Hero Counters below; this advice is separate from the AShires video.</span></button>`
+        : entry.recommendations.length ? "" : `<button class="coverage-info" type="button" aria-label="${entry.name}: counter advice has not been added"><span aria-hidden="true">i</span><span class="coverage-tooltip" role="tooltip">Portrait available. Counter-item advice has not been added yet.</span></button>`;
       cells.push(`<div class="matrix-hero" style="--hero-color:${entry.color}"><img class="${entry.portraitLayout === "vertical" ? "portrait-vertical" : ""}" src="${entry.image}" alt=""><strong>${entry.name.toUpperCase()}</strong>${coverageInfo}</div>`);
     });
 
