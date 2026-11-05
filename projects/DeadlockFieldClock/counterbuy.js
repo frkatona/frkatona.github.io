@@ -77,11 +77,11 @@
     hudImage: window.DeadlockHudPortraits?.[id]?.hudImage || portrait.hudImage || null,
   });
 
-  // Original Valve top-bar portraits from client 6774, extracted Oct 10, 2026.
-  // Keep their exact HUD pixels available to the forthcoming lineup scanner.
+  // Use square Valve minimap artwork for the guide, like the older roster.
+  // The original tall HUD cards remain available separately for matching.
   const hudPortrait = (id, gameHeroId, gameClassName) => ({
+    image: `counterbuy-assets/heroes/${id}-icon.png`,
     hudImage: `counterbuy-assets/heroes/${id}.webp`,
-    portraitLayout: "vertical",
     gameHeroId,
     gameClassName,
   });

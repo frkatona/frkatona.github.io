@@ -9,6 +9,8 @@ A static, GitHub Pages-compatible set of second-monitor tools:
 
 The project has no build step or external runtime dependencies. Match events and timer behavior live in `app.js`; Counterbuy behavior and recommendation data live in `counterbuy.js`; Movement Lab rendering and simulation live in `movement.js`. Game assets are stored locally in `icons/` and `counterbuy-assets/` so the pages do not depend on hot-linked images.
 
+Counterbuy's six City Never Sleeps heroes use square, transparent Valve minimap icons (`heroes/*-icon.png`), sourced from each hero's Deadlock Wiki gallery on November 5, 2026. Their original tall `.webp` artwork and the separate `hud/` references are preserved for portrait recognition. Display icons and matching references must remain independent.
+
 Soul Lab formulas and the 44-hero roster live in `economy-data.js`; chart rendering and local preferences live in `plots.js`. Nine author-build milestones are currently curated. All other heroes show only shared ability thresholds (plus an optional custom target), not invented hero-specific timings. Minute estimates use an adjustable income model; they are not sourced match statistics. Formulas, guide dates, and modeling limits are available in the page's source drawer. Economy rewards were reviewed November 4, 2026, through the October 30 gameplay patch; curated hero guides retain their October 12 snapshot and individual source dates. No data updates automatically.
 
 Run the economy formula and asset checks with `node --test economy.test.cjs` from this directory.
