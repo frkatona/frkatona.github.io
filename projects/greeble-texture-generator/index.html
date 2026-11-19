@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Layer procedural greeble patterns and export seamless textures as PNGs.">
+    <meta name="color-scheme" content="dark">
+    <title>Greeble Texture Generator | Anthony Katona</title>
+    <link rel="icon" href="../../assets/images/icons/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="app.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="../../index.html#project-grid">Portfolio</a>
+            <h1>Greeble Texture Generator</h1>
+        </div>
+    </header>
+
+    <main class="workspace">
+        <aside class="control-panel" aria-label="Texture controls">
+            <section class="control-section">
+                <h2>Texture</h2>
+                <div class="fields texture-fields">
+                    <div class="field">
+                        <label for="seed">Seed</label>
+                        <div class="seed-field">
+                            <input id="seed" type="number" min="0" max="4294967295" step="1" value="41827" inputmode="numeric">
+                            <button id="shuffle" type="button">Shuffle</button>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="palette">Palette</label>
+                        <select id="palette">
+                            <option value="titanium">Titanium</option>
+                            <option value="graphite">Graphite</option>
+                            <option value="oxide">Oxide</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="control-section">
+                <div class="section-heading">
+                    <div class="heading-with-help">
+                        <h2>Layers</h2>
+                        <span class="help">
+                            <button type="button" class="info-button" aria-label="About layer order" aria-describedby="stack-help">i</button>
+                            <span id="stack-help" role="tooltip">Layers at the top are drawn over the layers below them. The checkbox controls whether a layer appears in the composite.</span>
+                        </span>
+                    </div>
+                    <button class="accent-button" id="add-layer" type="button">Add layer</button>
+                </div>
+                <ul id="layer-stack" class="layer-stack" aria-label="Layers, top to bottom"></ul>
+                <p id="empty-stack" class="empty-state" hidden>Add a layer to start building your texture.</p>
+            </section>
+
+            <section class="control-section inspector" id="inspector" hidden>
+                <div class="section-heading">
+                    <h2>Layer settings</h2>
+                    <div class="layer-actions" role="group" aria-label="Layer order">
+                        <button id="raise-layer" type="button">Raise</button>
+                        <button id="lower-layer" type="button">Lower</button>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <label for="layer-type">Pattern</label>
+                        <select id="layer-type"></select>
+                    </div>
+                    <div class="field">
+                        <label for="layer-blend">Blend</label>
+                        <select id="layer-blend">
+                            <option value="source-over">Normal</option>
+                            <option value="multiply">Multiply</option>
+                            <option value="screen">Screen</option>
+                            <option value="overlay">Overlay</option>
+                            <option value="soft-light">Soft light</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="sliders">
+                    <div class="slider">
+                        <label for="layer-density">Density</label>
+                        <input id="layer-density" type="range" min="3" max="24" step="1">
+                        <output id="density-value" for="layer-density"></output>
+                    </div>
+                    <div class="slider">
+                        <label for="layer-detail">Detail</label>
+                        <input id="layer-detail" type="range" min="0" max="100" step="1">
+                        <output id="detail-value" for="layer-detail"></output>
+                    </div>
+                    <div class="slider">
+                        <label for="layer-opacity">Opacity</label>
+                        <input id="layer-opacity" type="range" min="0" max="100" step="1">
+                        <output id="opacity-value" for="layer-opacity"></output>
+                    </div>
+                </div>
+                <button id="remove-layer" class="remove-button" type="button">Remove layer</button>
+            </section>
+        </aside>
+
+        <section class="preview-panel" aria-labelledby="preview-title">
+            <header class="preview-heading">
+                <h2 id="preview-title">Preview</h2>
+                <div class="view-modes" role="group" aria-label="Preview mode">
+                    <button type="button" data-view="composite" aria-pressed="true">Composite</button>
+                    <button type="button" data-view="layer" aria-pressed="false">Selected layer</button>
+                    <button type="button" data-view="tile" aria-pressed="false">Tile check</button>
+                </div>
+            </header>
+            <div class="preview-stage">
+                <canvas id="preview" width="768" height="768" role="img" aria-label="Composite greeble texture preview">
+                    The texture preview requires canvas support.
+                </canvas>
+            </div>
+            <div class="export-bar">
+                <div class="field">
+                    <label for="resolution">Resolution</label>
+                    <select id="resolution">
+                        <option value="512">512 × 512</option>
+                        <option value="1024" selected>1024 × 1024</option>
+                        <option value="2048">2048 × 2048</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <div class="heading-with-help">
+                        <label for="export-format">Files</label>
+                        <span class="help">
+                            <button type="button" class="info-button" aria-label="About export options" aria-describedby="export-help">i</button>
+                            <span id="export-help" role="tooltip">The ZIP contains the composite and every visible layer. Layer PNG exports the selected layer. Layer PNGs use transparency and layer opacity without blending against the other layers.</span>
+                        </span>
+                    </div>
+                    <select id="export-format">
+                        <option value="composite">Composite PNG</option>
+                        <option value="layer">Layer PNG</option>
+                        <option value="bundle">Layers ZIP</option>
+                    </select>
+                </div>
+                <button id="export" class="primary-button" type="button">Download</button>
+                <p id="export-status" class="export-status" role="status"></p>
+            </div>
+        </section>
+        <template id="layer-row-template">
+            <li class="layer-row">
+                <label class="layer-visibility"><input type="checkbox"></label>
+                <button class="layer-pick" type="button" aria-controls="inspector">
+                    <span class="layer-swatch" aria-hidden="true"></span>
+                    <span class="layer-name"></span>
+                    <span class="layer-strength" aria-hidden="true"></span>
+                </button>
+            </li>
+        </template>
+        <noscript>Enable JavaScript to generate and export textures.</noscript>
+    </main>
+</body>
+</html>
